@@ -144,9 +144,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <section>
         <div class="container">
-            <form id="signin-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+            <form id="signin-form" action="<?php echo htmlspecialchars($_SERVER[" PHP_SELF"]); ?>" method="POST">
                 <h1>Application for Identity Card</h1>
-                <!-- <h1><span id="msgx"></span></h1> -->
                 <div class="step step-1 active">
                     <h2>Personal Details</h2>
                     <div class="Form-group">
@@ -240,7 +239,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="division">Division</label></b></dt>
-                            <dd><input type="text" id="division" name="birthDivision" placeholder="Division..." required>
+                            <dd><input type="text" id="division" name="birthDivision" placeholder="Division..."
+                                    required>
                             </dd>
                         </dl>
                     </div>
@@ -248,7 +248,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="district">District</label></b></dt>
-                            <dd><input type="text" id="district" name="birthDistrict" placeholder="District..." required>
+                            <dd><input type="text" id="district" name="birthDistrict" placeholder="District..."
+                                    required>
                             </dd>
                         </dl>
                     </div>
@@ -260,14 +261,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt><b><label for="countryOfBirth">Country of Birth</label></b></dt>
                             <dd><input type="text" id="countryOfBirth" name="countryOfBirth"
-                                    placeholder="Country of Birth..." required></dd>
+                                    placeholder="Country of Birth..."></dd>
                         </dl>
                     </div>
 
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="city">City</label></b></dt>
-                            <dd><input type="text" id="city" name="birthCity" placeholder="City..." required>
+                            <dd><input type="text" id="city" name="birthCity" placeholder="City...">
                             </dd>
                         </dl>
                     </div>
@@ -276,7 +277,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt><b><label for="certificateNo">Certificate No.</label></b></dt>
                             <dd><input type="number" id="certificateNo" name="f citizenshipCertificateNo"
-                                    placeholder="Certificate No..." required>
+                                    placeholder="Certificate No...">
                             </dd>
                         </dl>
                     </div>
@@ -296,7 +297,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <dd><b> <label for="road">Road/Street/Lane/Place/Garden </label></b></dd>
                             <dd><input type="text" id="road" name="permRoad" placeholder="Road..." required></dd>
                             <dd><b> <label for="village">Village/City</label></b></dd>
-                            <dd><input type="text" id="village" name="permVillage" placeholder="Village..." required></dd>
+                            <dd><input type="text" id="village" name="permVillage" placeholder="Village..." required>
+                            </dd>
                             <dd><b> <label for="village">Postal Code</label></b></dd>
                             <dd><input type="number" id="postalCode" name="permPostalCode" placeholder="Postal Code..."
                                     required></dd>
@@ -312,10 +314,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <dd><b> <label for="road">Road/Street/Lane/Place/Garden </label></b></dd>
                             <dd><input type="text" id="road" name="postalRoad" placeholder="Road..." required></dd>
                             <dd><b> <label for="village">Village/City</label></b></dd>
-                            <dd><input type="text" id="village" name="postalVillage" placeholder="Village..." required></dd>
+                            <dd><input type="text" id="village" name="postalVillage" placeholder="Village..." required>
+                            </dd>
                             <dd><b> <label for="village">Postal Code</label></b></dd>
-                            <dd><input type="number" id="postalCode" name="postalPostalCode" placeholder="Postal Code..."
-                                    required></dd>
+                            <dd><input type="number" id="postalCode" name="postalPostalCode"
+                                    placeholder="Postal Code..." required></dd>
                         </dl>
                     </div>
 
@@ -358,7 +361,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt><b><label for="telephoneNo">Telephone Number</label></b></dt>
                             <dd><b><label for="residence">Residence</label></b></dd>
-                            <dd><input type="tel" id="residence" name="residenceTelNo" placeholder="Residence..." required>
+                            <dd><input type="tel" id="residence" name="residenceTelNo" placeholder="Residence..."
+                                    required>
                             </dd>
                             <dd><b><label for="mobile">Mobile</label></b></dd>
                             <dd><input type="tel" id="mobile" name="mobileTelNo" placeholder="Mobile..." required>
@@ -379,7 +383,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 </div>
 
-                <div class="step step-5">
+                <!-- <div class="step step-5">
                     <h2>If the duplicate of the Identity Card is applied for, please complete this section.</h2>
 
                     <div class="Form-group">
@@ -432,12 +436,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </dl>
                     </div>
 
-                    <h2>Photographs</h2>
-
                     <button type="button" class="previous-btn">Previous</button>
-                    <button type="next" class="next-btn">Next</button>
+                    <button type="button" class="next-btn">Next</button>
 
-                </div>
+                </div> -->
 
                 <div class="step step=6">
                     <h2>Photographs</h2>
@@ -459,7 +461,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <dl>
                         <dt><b><label for="receiptNo">Number of the receipt or the certificate</label></b></dt>
                         <dd><input type="number" id="receiptNo" name="receiptNo"
-                                placeholder="Number of the receipt or the certificate"></dd>
+                                placeholder="Number of the receipt or the certificate" required></dd>
                     </dl>
 
                     <dl>
@@ -469,7 +471,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </dl>
 
                     <button type="button" class="previous-btn">Previous</button>
-                    <button type="next" class="next-btn">Next</button>
+                    <button type="button" class="next-btn">Next</button>
 
                 </div>
 
@@ -480,10 +482,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <dl>
                         <p>I hereby certify that the photograph affixed to this application and details furnished in
                             this
-                            application form are of <input type="number" id="photographs" name="para_1"
-                                style="width:300px">
+                            application form are of <input type="number" id="applicationNum" name="para_1"
+                                style="width:300px" placeholder="Application Number" required>
                             residing at the address mentioned in the application form bearing number <input type="text"
-                                id="photographs" name="para_2" style="width:300px">
+                                id="applicantName" name="para_2" style="width:300px" placeholder="Applicant Name"
+                                required>
                             and that the photograph affixed is duplicating the natural status of the applicant without
                             disguise or concealment. I certify that I have placed my signature and official franh and
                             that
@@ -493,7 +496,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <dl>
                         <dt><b><label for="certifyName">Name of the Certifying Officer</label></b></dt>
                         <dd><input type="text" id="certifyName" name="certifyName"
-                                placeholder="Name of the Certifying Officer"></dd>
+                                placeholder="Name of the Certifying Officer" required></dd>
                     </dl>
 
                     <dl>
@@ -506,12 +509,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </dl>
 
                     <button type="button" class="previous-btn">Previous</button>
-                    <div style="align-items: left">
-                    <input type="submit"class="submit-btn" value="Submit">
-                    <!-- <button type="submit" class="submit-btn">Submit</button> -->
+                    <input type="submit" class="submit-btn" value="Submit">
                 </div>
-                </div>
-            </form>
+        </div>
+        </form>
         </div>
     </section>
 
