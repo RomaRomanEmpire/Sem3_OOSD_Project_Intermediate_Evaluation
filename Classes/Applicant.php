@@ -9,13 +9,13 @@ class Applicant extends L_P_User implements Approvable
   public function __construct($attributeArray)
   {
 
-    super($attributeArray);
+    parent::__construct($attributeArray);
     $this->address = $attributeArray["Address"];
     $this->gender = $attributeArray["gender"];
     $this->bday = $attributeArray["Birthday"];
 
     $this->u_type = "applicant";
-    $db = DB_OP::get_connection();
+    
   }
 
 

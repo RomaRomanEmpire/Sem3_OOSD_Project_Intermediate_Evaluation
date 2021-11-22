@@ -3,11 +3,10 @@ session_start();
 include 'autoloader.php';
 
 $con = DB_OP::get_connection();
-$last_staff_id = (!is_null($con->get_row_id("user_details","staff_id",">","0","staff_id","ORDER BY staff_id DESC"))) ? $con->get_row_id("user_details","staff_id",">","0","staff_id","ORDER BY staff_id DESC"):0;
+$last_staff_id = (!is_null($con->get_column_value("user_details","staff_id",">","0","staff_id","ORDER BY staff_id DESC"))) ? $con->get_column_value("user_details","staff_id",">","0","staff_id","ORDER BY staff_id DESC"):0;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
       
-
       if($_POST['officer']=="Database_Manager"){
             $staff_member = new DatabaseManager($_POST);
 

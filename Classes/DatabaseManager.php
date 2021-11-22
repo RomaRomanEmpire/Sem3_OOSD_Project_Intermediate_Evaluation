@@ -10,9 +10,8 @@ class DatabaseManager extends User
 
 	public function __construct($attributeArray)
 	{
-		super($attributeArray);
+		parent::__construct($attributeArray);
 		$this->u_type = "db_manager";
-		$db = DB_OP::get_connection();
 	}
 
 	public function add_L_P_User($staff_id,$u_type,$username,$email,$pwd,$u_object)

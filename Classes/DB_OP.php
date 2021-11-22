@@ -72,11 +72,11 @@ class DB_OP
             $_SESSION["user_id"] = $row['user_id'];
                         // Redirect user to welcome page
             if($row['u_type']=='applicant'){
-              header("location: applicant_dashboard.html");
+              header("location: applicant_dashboard.php");
             }else if($row['u_type']=='db_manager'){
-              header("location: DatabaseManagerDashboard.html");
+              header("location: DatabaseManagerDashboard.php");
             }else if($row['u_type']=='rap1' || $row['u_type']=='ds'|| $row['u_type']=='admin'){
-              header("location: Grama Niladari Dash Board.html");
+              header("location: Grama Niladari Dash Board.php");
             }
           } else 
           {
@@ -267,7 +267,7 @@ public function get_column_value($table,$key,$operator,$key_value,$id_name,$orde
                 // Check if Username exists, if yes then verify Password
 
               //check is there are exactly one entry or not
-      if ($result->num_rows == 1) {
+      if ($result->num_rows >= 1) {
 
         $row = $result->fetch_assoc();
         return $row[$id_name];

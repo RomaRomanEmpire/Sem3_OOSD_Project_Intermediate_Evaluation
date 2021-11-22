@@ -4,7 +4,10 @@
  */
 abstract class R_A_P extends L_P_User implements Approvable
 {
-  protected $u_type;
+  function __construct($attributeArray)
+  {
+     parent::__construct($attributeArray);
+  }
   
   public function view_application()
   {
@@ -14,7 +17,7 @@ abstract class R_A_P extends L_P_User implements Approvable
   {
     // code...
   }
-  public abstract function approve_application();
+  public abstract function approve_application($application);
   
 
 }

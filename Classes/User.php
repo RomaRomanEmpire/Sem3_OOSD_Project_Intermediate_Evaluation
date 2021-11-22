@@ -24,6 +24,7 @@ abstract class User
 		$this->email = $attributeArray['email'];
 		$this->mobile_no = $attributeArray['mobileNo'];
 		$this->password = $attributeArray['password'];
+		$this->db = DB_OP::get_connection();
 	}
 
 
