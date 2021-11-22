@@ -1,0 +1,150 @@
+ body{
+      margin: 0;
+      padding: 0;
+      background: url(Id.jpg);
+      background-size: cover;
+      background-position: center;
+      font-family:sans-serif;
+      background: rgba(0, 0, 0, 0.486);
+
+
+}
+
+.loginbox{
+      width: 520px;
+      height: 520px;
+      background: rgba(0, 0, 0, 0.486);
+      color: #fff;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      transform: translate(-50%,-50%);
+      box-sizing: border-box;
+      padding: 70px 30px;
+}
+.Idimage{
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      position: absolute;
+      top: -50px;
+      left: calc(50% - 50px);
+}
+h1{
+      margin: 0;
+      padding: 0 0 20px;
+      text-align: center;
+      font-size: 30px;
+     color:rgb(68, 165, 230);
+
+}
+.loginbox p{
+      margin: 0;
+      padding: 0;
+      font-weight: bold;
+      font-size: large;
+}
+.loginbox a{
+      color:white ;
+}
+.loginbox a:hover{
+      cursor: pointer;
+      color: blue;
+      
+}
+.loginbox input{
+      width: 100%;
+      margin-bottom: 20px;
+}
+.loginbox input[type="text"],input[type="password"]{
+      border: none;
+      border-bottom: 1px solid #fff;
+      background: transparent;
+      outline: none;
+      height: 40px;
+      color: white;
+      font-size: 16px;
+}
+
+.loginbox input[type="submit"],input[type="button"]{
+      font-size: x-large;
+      color: white;
+      height: 40px;
+      left : calc(50% - 50px);
+      border: none;
+      outline: none;
+      background: #1c8adb;
+      background-position: center;
+      border-radius: 20px;
+      text-decoration: underline;
+
+     
+}
+.loginbox input[type="submit"]:hover,input[type="button"]:hover
+{
+      cursor: pointer;
+      background: #39dc79;
+      color: #000;
+}
+.SelectBox{
+      width: 730px;
+      height: 690px;
+      background: rgba(0, 0, 0, 0.884);
+      color: #fff;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      transform: translate(-50%,-50%);
+      box-sizing: border-box;
+      padding: 40px 50px;
+}
+.Idimage2{
+      width: 170px;
+      height: 170px;
+      border-radius: 100%;
+      }
+.SelectBox input[type="submit"]{
+      font-size: x-large;
+      color: white;
+      height: 40px;
+      width: 170px;
+      left : calc(50% - 50px);
+      border: none;
+      outline: none;
+      background: #1c8adb;
+      background-position: center;
+      border-radius: 20px;
+      text-decoration: underline;
+      text-align: center;
+      
+}
+.SelectBox table {
+      border-collapse: separate;
+      border-spacing: 100px 0; 
+    }
+    
+    td {
+      padding: 10px 0;
+      
+    }
+    .SelectBox input[type="submit"]:hover
+    {
+          cursor: pointer;
+          background: #39dc79;
+          color: #000;
+    }
+
+    .SelectBox h1{
+          text-align: center;
+          color: #1c8adb;
+          
+    }
+    .SelectBox h1:hover
+    {
+      color: #1cdb92;
+      
+}
+.background_image .Back_img img{
+      width: 100%;
+      height: 100%;
+}

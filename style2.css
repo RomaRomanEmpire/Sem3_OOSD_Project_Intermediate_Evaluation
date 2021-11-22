@@ -1,0 +1,327 @@
+*{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppings' , sans-serif;
+}
+body{
+      min-height: 100vh;
+}
+a{
+      text-decoration: none;
+}
+li{
+      list-style: none;
+}
+h1,h2{
+      color: rgb(238, 234, 234);
+}
+
+
+
+
+.side_menu{
+      position: fixed;
+      background-color: #050213fd;
+      width: 20%;
+      min-height: 100vh;
+      display: flex; 
+      flex-direction: column; 
+     
+      
+}
+.side_menu .barand_name{
+      height: 20vh;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+}
+.side_menu li{
+      font-size: 19px;
+      padding: 10px 70px;
+      color: white;
+      display: flex;
+      align-items: center;
+      
+
+}
+.side_menu li:hover,li a:hover {
+      background-color: white;
+      color: #f05462;
+}
+
+.side_menu li img{
+      width: 30px;
+      height: 30px;
+      border-radius:10px;
+}
+.side_menu li a {
+      font-size: 19px;
+      /* width: 200px;
+      height: 30px; */
+      background-color: #050213fd;
+      color: white; 
+      border: none;
+}
+
+.side_menu li a:hover{
+      background-color: white;
+      color: #f05462;
+     
+}
+
+    
+.container{
+      position: absolute;
+      right: 0;
+      width: 80%;
+      height: 100%;
+      background: #f1f1f1;
+}
+.container img{
+      width: 100%;
+      height: 100%;
+}
+.container .header{
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 10vh;
+      width: 80%;
+      background-color: #050213fd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0, 0,0,0.2);
+
+}
+.container .header .nav{
+      width: 90%;
+      display: flex;
+      align-items: center;
+
+}
+.container .header .nav .search{
+      flex: 3;
+     display: flex;
+     justify-content: left;
+
+
+}
+.container .header .nav .search input[type=text]{
+      border:none ;
+      background: #f1f1f1;
+      width: 50%;
+      left: 50px;
+}
+
+.container .header .nav .search button{
+      width: 40px;
+      height: 40px;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+}
+.container .header .nav .user .btn{
+      background-color:#03031b;
+      color :white;
+      padding: 5px 10px;
+      text-align: center;
+      border-color: azure;
+      width: 150px;
+}
+.container .header .nav .user .btn:hover{
+      background-color: rgb(233, 228, 228);
+      color: #7857ee;}
+.container .header .nav .search button img{
+      width:40px;
+      height: 40px;
+      /* border-bottom-left-radius:5px ;
+      border-bottom-right-radius:5px ;
+      border-top-left-radius:5px ;
+      border-top-left-radius:5px ; */
+      color: darkgrey;
+      border: #444;
+      
+     
+}
+.container .header .nav .user{
+      flex: 1;
+      display: flex;
+      justify-content:space-between ;
+      align-items: center;
+     
+      
+}
+.container .header .nav .user .img-case{
+      position: relative;
+      width: 50px;
+      height: 50px;
+
+}
+.container .header .nav .user .img-case img{
+      margin-top: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 40px;
+      margin-right: 90px;
+      color: black;
+     
+}
+.container .header .nav .user  img{
+      width: 30px;
+      height: 30px;
+      border-radius: 40px;
+      
+}
+.container .conten {
+      position: fixed;
+      margin: 10vh;
+      min-height: 90vh; 
+      top: 50%;
+      width: 50%;
+      height: 50%;
+      
+      
+
+      
+}
+.container .conten .cards{
+      padding: 20px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+}
+.container .conten .card {
+      width: 70%;
+      height: 70%;
+      top: 0;
+      left: 60%;
+      position: absolute;
+      transform: translate(-50%,-50%);
+      background: rgba(4, 49, 160, 0.486);
+      align-items: center;
+      
+      justify-content: space-around;
+      box-shadow: 0 4px 8px 0 rgba(0, 0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); 
+      
+}
+
+.container .conten .card .icon_case button{
+      width: 100%;
+      height: 60px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 15px;
+      color: antiquewhite;
+     background-color:rgba(9, 1, 12, 0.904);
+     border-color: antiquewhite;
+      /* box-shadow: 0 4px 8px 0 rgba(0, 0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); */
+}
+.container .conten .card .icon_case button:hover{
+      background-color: rgb(17, 0, 255);
+}
+.container .conten .card1 {
+      width: 100%;
+      height: 90%;
+      top: 0;
+      left: 70%;
+      position: absolute;
+      transform: translate(-50%,-50%);
+      /* background: rgba(4, 49, 160, 0.486); */
+      align-items: center;
+      
+      justify-content: space-around;
+      /* box-shadow: 0 4px 8px 0 rgba(0, 0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);  */
+      
+}
+.container .conten .card1 .icon_case button{
+      width: 100%;
+      height: 60px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 15px;
+      color: antiquewhite;
+     background-color:rgba(9, 1, 12, 0.904);
+     border-color: antiquewhite;
+      /* box-shadow: 0 4px 8px 0 rgba(0, 0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); */
+}
+.container .conten .card1 .icon_case .customers {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+ 
+    .container .conten .card1 .icon_case .customers td, th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    .container .conten .card1 .icon_case .customers tr:nth-child(even){background-color: #f2f2f2;}
+    
+    .container .conten .card1 .icon_case .customers tr:hover {background-color: #ddd;}
+    
+    .container .conten .card1 .icon_case .customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #04AA6D;
+      color: white;
+    }
+
+
+
+
+@media screen and (max-width:1050px) {
+      .side_menu li{
+            font-size: 18px;
+      }
+      .side_menu li select{
+            font-size: 18px;
+      }
+      
+}
+@media screen and (max-width:940px) {
+      .side_menu li span{
+            display: none;
+      }
+      .side_menu{
+            align-items: center;
+      }
+      .side_menu li img{
+            width: 40px;
+            height: 40px;
+
+      }
+      .side_menu li select{
+            width: 40px;
+            height:40px ;
+            display: none;
+      }
+     
+      
+}
+@media screen and (max-width:940px){
+      .barand_name h1{
+         font-size: 16px;   
+      }
+      .container .header .nav .user .btn{
+            font-size: 10px;
+            width: 100px;
+      }
+}
+@media screen and (max-width:440px){
+      .container .conten .card .icon_case button{
+            font-size: 8px;
+           
+      }
+      
+}
+
+
+
+
+
