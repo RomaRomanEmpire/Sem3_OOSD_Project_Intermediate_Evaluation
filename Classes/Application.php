@@ -64,7 +64,8 @@ class Application
 		$this->birthDistrict = $attributeArray['birthDistrict'];
 		$this->countryOfBirth = $attributeArray['countryOfBirth'];
 		$this->birthCity = $attributeArray['birthCity'];
-		$this->citizenshipCertificateNo = $attributeArray['citizenshipCertificateNo'];
+
+		$this->citizenshipCertificateNo = isset($attributeArray['citizenshipCertificateNo']) ? $attributeArray['citizenshipCertificateNo']:NULL;
 		$this->permHouseName = $attributeArray['permHouseName'];
 		$this->permRoad = $attributeArray['permRoad'];
 		$this->permVillage = $attributeArray['permVillage'];
@@ -79,25 +80,25 @@ class Application
 		$this->residenceTelNo = $attributeArray['residenceTelNo'];
 		$this->mobileTelNo = $attributeArray['mobileTelNo'];
 		$this->email = $attributeArray['email'];
-		$this->purpose = $attributeArray['purpose'];
-		$this->lostIdNum = $attributeArray['lostIdNum'];
-		$this->lostIdDate = $attributeArray['lostIdDate'];
-		$this->policeStationName = $attributeArray['policeStationName'];
-		$this->policeReportDate = $attributeArray['policeReportDate'];
+		$this->purpose = isset($attributeArray['purpose']) ? $attributeArray['purpose']:NULL;
+		$this->lostIdNum = isset($attributeArray['lostIdNum']) ? $attributeArray['lostIdNum']:NULL;
+		$this->lostIdDate = isset($attributeArray['lostIdDate']) ? $attributeArray['lostIdDate']:NULL;
+		$this->policeStationName = isset($attributeArray['policeStationName']) ? $attributeArray['policeStationName']:NULL;
+		$this->policeReportDate = isset($attributeArray['policeReportDate']) ? $attributeArray['policeReportDate']:NULL;
 		$this->photographs = $attributeArray['photographs'];
 		$this->receiptNo = $attributeArray['receiptNo'];
 		$this->receipt = $attributeArray['receipt'];
 		$this->para_1 = $attributeArray['para_1'];
 		$this->para_2 = $attributeArray['para_2'];
 		$this->certifyName = $attributeArray['certifyName'];
-		$approvableArray = array();
+		$this->approvableArray = array();
 		$this->fillApprovableArray($applicant_id);
 	}
 
 	
 	public function fillApprovableArray($user_id)
 	{
-		array_push($approvableArray,$user_id);
+		array_push($this->approvableArray,$user_id);
 	}
 }
 

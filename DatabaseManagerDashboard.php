@@ -42,7 +42,7 @@
                               <div class="img-case">
                                 
                               </div>
-                              <a href="#" class="btn">Log Out</a>
+                              <a href="logout.php" class="btn">Log Out</a>
                               
                   </div>
                   </div>
@@ -51,7 +51,7 @@
                   <div class="card1">
                   <div class="icon_case">
                         <br><br><br><br>
-                      <a href="Database_Details.html" > <button>View Database Details</button></a><br><br>
+                      <a href="Database_Details.php" > <button>View Database Details</button></a><br><br>
                         <!-- <button>View Principal Details</button> -->
                         <!-- <table class="customers" >
                               <tr>  

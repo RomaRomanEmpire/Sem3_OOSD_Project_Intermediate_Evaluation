@@ -3,7 +3,7 @@ session_start();
 include 'autoloader.php';
 
 $con = DB_OP::get_connection();
-$last_staff_id = (!is_null($con->get_column_value("user_details","staff_id",">","0","staff_id","ORDER BY staff_id DESC"))) ? $con->get_column_value("user_details","staff_id",">","0","staff_id","ORDER BY staff_id DESC"):0;
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
       
@@ -175,6 +175,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                           </div>
                           <div class="mb-3">
                               <label for="exampleInputIDnumber" class="form-label">Staff ID No.</label>
+                              <?php
+                                    $last_staff_id = (!is_null($con->get_column_value("user_details","staff_id",">","0","staff_id","ORDER BY staff_id DESC"))) ? $con->get_column_value("user_details","staff_id",">","0","staff_id","ORDER BY staff_id DESC"):0;
+                              ?>
                               <input type="text" class="form-control" name="staff_id" id="exampleInputIDnumber" aria-describedby="emailHelp" placeholder="Enter identticard number" value="<?php echo ($last_staff_id+1)?>" readonly>
                         </div>
                         <div class="mb-3">

@@ -47,7 +47,7 @@
                               </div>
                               <!-- <a href=""  class="btn" >Notification</a> 
                               <a href=""  class="btn"> Profile</a>   -->
-                              <a href="#" class="btn">Log Out</a>
+                              <a href="logout.php" class="btn">Log Out</a>
                               
                   </div>
                   </div>

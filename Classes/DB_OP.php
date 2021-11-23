@@ -70,12 +70,13 @@ class DB_OP
                         // Store data in session variables
 
             $_SESSION["user_id"] = $row['user_id'];
+            $_SESSION["u_object"] = $row['u_object'];
                         // Redirect user to welcome page
             if($row['u_type']=='applicant'){
               header("location: applicant_dashboard.php");
             }else if($row['u_type']=='db_manager'){
               header("location: DatabaseManagerDashboard.php");
-            }else if($row['u_type']=='rap1' || $row['u_type']=='ds'|| $row['u_type']=='admin'){
+            }else if($row['u_type']=='gn' || $row['u_type']=='ds'|| $row['u_type']=='admin'){
               header("location: Grama Niladari Dash Board.php");
             }
           } else 
@@ -141,7 +142,7 @@ class DB_OP
       $param_username = $username;
       $param_email = $email;
       $param_pwd = password_hash($pwd, PASSWORD_DEFAULT);
-      $param_u_object = serialize($u_object);
+      $param_u_object =serialize($u_object);
 
       if($stmt->execute()){
                // Redirect to login page
@@ -225,7 +226,7 @@ class DB_OP
 public function add_application($applicant_id,$gn_div_or_address,$ds,$application_object)
 {
   $sql = "INSERT INTO application_details (applicant_id,apply_date, gn_div_or_address,ds,application_object) VALUES (?,?,?,?,?)";
-  if ($stmt = $link->prepare($sql)) {
+  if ($stmt = $this->link->prepare($sql)) {
 
           // Bind variables to the prepared statement as parameters
 
@@ -241,7 +242,7 @@ public function add_application($applicant_id,$gn_div_or_address,$ds,$applicatio
 
     if($stmt->execute()){
              // Redirect to login page
-      echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'applicant_dashboard.html';</script>"; 
+      echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'applicant_dashboard.php';</script>"; 
 
     }else{
       echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>"; 
@@ -294,9 +295,6 @@ public function approve_application($application_id,$approve_level)
     if ($stmt->execute()) {
 
 
-
-
-
     } else
     {
       echo "Oops! Something went wrong. Please try again later.";
@@ -306,8 +304,45 @@ public function approve_application($application_id,$approve_level)
     $stmt->close();
   }
 }
+public function database_details($table,$key,$key_value,$order)
+{
+  $sql = "SELECT * FROM $table WHERE $key = ? $order";
+  if ($stmt = $this->link->prepare($sql)) {
+          // Bind variables to the prepared statement as parameters
+    $stmt->bind_param('s', $key_value);
+            // Attempt to execute the prepared statement
+            // just execute the prepared statement not checking values
+    if ($stmt->execute()) {
 
 
+      $result = $stmt->get_result();
+      return $result;
+
+            // Close statement
+      $stmt->close();
+    }
+  }
+}
+
+public function remove_data($table,$key,$key_value)
+{
+  $sql = "DELETE FROM $table WHERE $key = ?";
+
+  if ($stmt = $this->link->prepare($sql)) {
+
+    $stmt->bind_param('s', $key_value);
+
+    if ($stmt->execute()) {
+
+      // return true;
+
+    }else{
+
+      // return false;
+    }
+    $stmt->close();
+  }
+}
 }
 
 
