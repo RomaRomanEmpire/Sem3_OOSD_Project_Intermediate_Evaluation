@@ -17,25 +17,25 @@
           <h2 style="color: black;  ">View Database Deatails</h2>
           <br>
           <div class="mb-3 form-check">
-            <input type="radio" class="form-check-input" name="officer" value="Database_Manager" id="Officer_E" onclick="show_details()">
+            <input type="radio" class="form-check-input" name="officer" value="Database_Manager" id="Officer_E" onclick="show_details()" required>
             <label class="form-check-label" for="Officer_E">Estate Superintendent</label>
           </div>
           <div class="mb-3 form-check">
-            <input type="radio" class="form-check-input" name="officer" value="Divisional_Secretary" id="Officer_D" onclick="show_details()">
+            <input type="radio" class="form-check-input" name="officer" value="Divisional_Secretary" id="Officer_D" onclick="show_details()" required>
             <label class="form-check-label" for="Officer_D">Divitional Secretary</label>
           </div> <div class="mb-3 form-check">
-            <input type="radio" class="form-check-input" name="officer" value="Grama_Niladari" id="Officer_G" onclick="show_details()">
+            <input type="radio" class="form-check-input" name="officer" value="Grama_Niladari" id="Officer_G" onclick="show_details()" required>
             <label class="form-check-label" for="Officer_G">Grama Niladari</label>
           </div> <div class="mb-3 form-check">
-            <input type="radio" class="form-check-input" name="officer" value="Principal" id="Officer_P" onclick="show_details()">
+            <input type="radio" class="form-check-input" name="officer" value="Principal" id="Officer_P" onclick="show_details()" required>
             <label class="form-check-label" for="Officer_P">Principal</label>
           </div>
           <div class="mb-3 form-check">
-            <input type="radio" class="form-check-input" name="officer" value="National_Identity_Card_Issuer" id="Officer_N" onclick="show_details()">
+            <input type="radio" class="form-check-input" name="officer" value="National_Identity_Card_Issuer" id="Officer_N" onclick="show_details()" required>
             <label class="form-check-label" for="Officer_N">National Identity Card Issuer</label>
           </div> 
           <div class="mb-3 form-check">
-            <input type="radio" class="form-check-input" name="officer" value="Applicant" id="student" onclick="show_details()">
+            <input type="radio" class="form-check-input" name="officer" value="Applicant" id="student" onclick="show_details()" required>
             <label class="form-check-label" for="student">Applicant</label>
 
           </div>

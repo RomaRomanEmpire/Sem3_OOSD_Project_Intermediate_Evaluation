@@ -10,12 +10,10 @@ abstract class User
 	protected $mobile_no;
 	protected $password;
 
-	protected $gender;
-	protected $bday;
-	protected $address;
 	protected $db;
 	protected $row_id;
 	protected $u_type;
+	// protected static $user;
 
 	function __construct($attributeArray)
 	{
@@ -24,10 +22,17 @@ abstract class User
 		$this->email = $attributeArray['email'];
 		$this->mobile_no = $attributeArray['mobileNo'];
 		$this->password = $attributeArray['password'];
-		$this->db = DB_OP::get_connection();
 	}
 
-
+	public function set_row_id($row_id){
+		$this->row_id = $row_id;
+	}
+	public function set_db($db){
+		$this->db = $db;
+	}
+	// public static function set_user($user){
+	// 	self::$user = $user;
+	// }
 	public function get_user_type(){
 		return $this->u_type;
 	}
@@ -40,5 +45,13 @@ abstract class User
 	public function get_user_pwd(){
 		return $this->password;
 	}
+	// public static function get_user(){
+	// 	return self::$user;
+	// }
+	// public static function conn_stat()
+	// {
+	// 	return $this->db;
+	// }
+	
 }
 ?>

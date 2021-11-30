@@ -1,18 +1,18 @@
 <?php
 session_start();
+include 'autoloader.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include 'autoloader.php';
-    $con = DB_OP::get_connection();
+    
+    $conn = DB_OP::get_connection();
     $application = new Application($_POST,$_SESSION['user_id']);
-    $applicant = unserialize($con->get_column_value("user_details","user_id","=",$_SESSION['user_id'],"u_object",""));
-    // $_SESSION['u_object'] = preg_replace('!s:(\d+):"(.*?)";!e', "'s:'.strlen('$2').':\"$2\";'", $_SESSION['u_object']);
-    // $_SESSION['u_object'] = preg_replace_callback('!s:(\d+):"(.*?)";!e',function($matches), return )
-    // $applicant = unserialize($_SESSION['u_object']);
+    $applicant = unserialize($conn->get_column_value("user_details","user_id","=",$_SESSION['user_id'],"u_object",""));
+    $applicant->set_db($conn);
+    
     $applicant->set_row_id($_SESSION['user_id']);
     
-    // $applicant->apply_NIC($_SESSION['GN_division'],$_SESSION['DS_division'],$application);
-    $con->add_application($_SESSION['user_id'],$_SESSION['GN_division'],$_SESSION['DS_division'],$application);
+    $applicant->apply_NIC($_SESSION['GN_division'],$_SESSION['DS_division'],$application);
+    
 }
 ?>
 <!DOCTYPE html>

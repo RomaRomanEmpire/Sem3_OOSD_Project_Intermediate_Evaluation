@@ -2,39 +2,37 @@
 session_start();
 include 'autoloader.php';
 
-$con = DB_OP::get_connection();
+$conn = DB_OP::get_connection();
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      
+
       if($_POST['officer']=="Database_Manager"){
             $staff_member = new DatabaseManager($_POST);
-
       }
-      if($_POST['officer']=="Estate_Superintendent"){
+      else if($_POST['officer']=="Estate_Superintendent"){
             $staff_member = new E_S($_POST);
-
       }
-      if($_POST['officer']=="Grama_Niladari"){
+      else if($_POST['officer']=="Grama_Niladari"){
             $staff_member = new GramaNiladari($_POST);
-
       }
-      if($_POST['officer']=="Principal"){
+      else if($_POST['officer']=="Principal"){
             $staff_member = new Principal($_POST);
-
       }
-      if($_POST['officer']=="Divisional_Secretary"){
+      else if($_POST['officer']=="Divisional_Secretary"){
             $staff_member = new DivisionalSecretary($_POST);
-
       }
-      if($_POST['officer']=="National_Identity_Card_Issuer"){
+      else if($_POST['officer']=="National_Identity_Card_Issuer"){
             $staff_member = new NIC_Issuer($_POST);
-
       }
 
-      //have to done by database manager object
-      //tempory
-      $con->create_staff_acc($_POST['staff_id'],$staff_member->get_user_type(),$staff_member->get_user_name(),$staff_member->get_user_email(),$staff_member->get_user_pwd(),$staff_member);
+
+      
+      $db_manager = unserialize($conn->get_column_value("user_details","user_id","=",$_SESSION['user_id'],"u_object",""));  
+      $db_manager->set_db($conn);
+      $db_manager->set_row_id($_SESSION['user_id']);
+      $db_manager->add_L_P_User($_POST['staff_id'],$staff_member->get_user_type(),$staff_member->get_user_name(),$staff_member->get_user_email(),$staff_member->get_user_pwd(),$staff_member);
+
 
       
 }
@@ -76,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         document.getElementById("DeatilsG").style.display="none";
                         document.getElementById("DeatilsD").style.display="none"; 
                         document.getElementById("DeatilsP").style.display="none"; 
-                         
+
                   }
                   else if(Grama_Niladari.checked){
                         document.getElementById("DeatilsG").style.display="block";
@@ -84,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         Officer_form.style.display="block";
                         document.getElementById("DeatilsE").style.display="none";
                         document.getElementById("DeatilsP").style.display="none"; 
-                         
+
                   }
                   else if (Divitional_Secretary.checked){ 
                         document.getElementById("DeatilsD").style.display="block";  
@@ -92,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         document.getElementById("DeatilsG").style.display="none";
                         document.getElementById("DeatilsE").style.display="none";
                         document.getElementById("DeatilsP").style.display="none"; 
-                         
+
                   }
                   else if(Principal.checked){
                         document.getElementById("DeatilsP").style.display="block";
@@ -100,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         document.getElementById("DeatilsE").style.display="none";
                         document.getElementById("DeatilsG").style.display="none";
                         document.getElementById("DeatilsD").style.display="none"; 
-                       
+
                   }
                   else if(National_Identity_Card_Issuer.checked){
                         Officer_form.style.display="block";
@@ -108,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         document.getElementById("DeatilsG").style.display="none";
                         document.getElementById("DeatilsD").style.display="none";
                         document.getElementById("DeatilsP").style.display="none"; 
-                         
+
                   }
 
                   Password.style.display="block";
@@ -169,14 +167,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <input type="text" class="form-control" id="exampleInputUname" name="uname" aria-describedby="emailHelp" placeholder="Enter user name">
                               </div>
                               <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Email Address</label>
-                                <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email.address">
-                                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                          </div>
-                          <div class="mb-3">
+                                  <label for="exampleInputEmail1" class="form-label">Email Address</label>
+                                  <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email.address">
+                                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
                               <label for="exampleInputIDnumber" class="form-label">Staff ID No.</label>
                               <?php
-                                    $last_staff_id = (!is_null($con->get_column_value("user_details","staff_id",">","0","staff_id","ORDER BY staff_id DESC"))) ? $con->get_column_value("user_details","staff_id",">","0","staff_id","ORDER BY staff_id DESC"):0;
+                              $last_staff_id = (!is_null($conn->get_column_value("user_details","staff_id",">","0","staff_id","ORDER BY staff_id DESC"))) ? $conn->get_column_value("user_details","staff_id",">","0","staff_id","ORDER BY staff_id DESC"):0;
                               ?>
                               <input type="text" class="form-control" name="staff_id" id="exampleInputIDnumber" aria-describedby="emailHelp" placeholder="Enter identticard number" value="<?php echo ($last_staff_id+1)?>" readonly>
                         </div>
@@ -239,13 +237,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                               <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Enter password">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputCPassword" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="exampleInputCPassword" placeholder="Enter password,again">
-                      </div>
-                </fieldset>
-                <fieldset id="Submit_button" style="display: none;" ><button type="submit" class="btn btn-primary">Submit</button></fieldset>
-          </form>
-    </div> </div> </div>
+                          <label for="exampleInputCPassword" class="form-label">Confirm Password</label>
+                          <input type="password" class="form-control" id="exampleInputCPassword" placeholder="Enter password,again">
+                    </div>
+              </fieldset>
+              <fieldset id="Submit_button" style="display: none;" ><button type="submit" class="btn btn-primary">Submit</button></fieldset>
+        </form>
+  </div> </div> </div>
 
 </body>
 </html>

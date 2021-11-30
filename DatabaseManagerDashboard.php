@@ -4,7 +4,7 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Admin Dash Board</title>
+      <title>Database Manager Dashboard</title>
       <link rel="stylesheet" href="style2.css">
 </head>
 <body>
@@ -51,7 +51,8 @@
                   <div class="card1">
                   <div class="icon_case">
                         <br><br><br><br>
-                      <a href="Database_Details.php" > <button>View Database Details</button></a><br><br>
+                      <a href="Database_Details.php" ><button>View Database Details</button></a>
+                      <br><br>
                         <!-- <button>View Principal Details</button> -->
                         <!-- <table class="customers" >
                               <tr>  

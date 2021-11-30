@@ -46,32 +46,28 @@ class DB_OP
   {
     $sql = "SELECT * FROM user_details where username=? or email = ?";
     if ($stmt = $this->link->prepare($sql)) {
-            // Bind variables to the prepared statement as parameters
+      // Bind variables to the prepared statement as parameters
       $stmt->bind_param('ss', $uname_or_email,$uname_or_email);
 
-
-
-            // Attempt to execute the prepared statement
-            // just execute the prepared statement not checking values
+      // Attempt to execute the prepared statement
+      // just execute the prepared statement not checking values
       if ($stmt->execute()) {
 
 
         $result = $stmt->get_result();
 
-                // Check if Username exists, if yes then verify Password
-
-              //check is there are exactly one entry or not
+        // Check if Username exists, if yes then verify Password
+        //check is there are exactly one entry or not
         if ($result->num_rows == 1) {
 
           $row = $result->fetch_assoc();
           if (password_verify($password, $row['pwd']))
           {
 
-                        // Store data in session variables
-
+            // Store data in session variables
             $_SESSION["user_id"] = $row['user_id'];
-            $_SESSION["u_object"] = $row['u_object'];
-                        // Redirect user to welcome page
+            
+            // Redirect user to welcome page
             if($row['u_type']=='applicant'){
               header("location: applicant_dashboard.php");
             }else if($row['u_type']=='db_manager'){
@@ -85,7 +81,7 @@ class DB_OP
           }
         } else 
         {
-                    // Display an error message if Username doesn't exist 
+          // Display an error message if Username doesn't exist 
           echo "<script type='text/javascript'>alert('No account found with that Username!');</script>";
         }
       } else
@@ -93,7 +89,7 @@ class DB_OP
         echo "<script type='text/javascript'>alert('Oops! Something went wrong. Please try again later.!');</script>"; 
       }
 
-            // Close statement
+      // Close statement
       $stmt->close();
     }
   }
@@ -157,24 +153,6 @@ class DB_OP
     }
   }
 
-
-  public function remove_staff_acc($staff_id)
-  {
-    $sql = "DELETE FROM user_details WHERE staff_id=?";
-    if ($stmt = $link->prepare($sql)) {
-            // Bind variables to the prepared statement as parameters
-      $stmt->bind_param('s', $staff_id);
-
-
-
-            // Attempt to execute the prepared statement
-            // just execute the prepared statement not checking values
-      if ($stmt->execute()) {
-
-      }
-    }
-  }
-
   public function issue_ID($applicant_id,$issue_date,$nic_object)
   {
     $sql = "INSERT INTO issued_id_history (applicant_id,issue_date, nic_object) VALUES (?,?,?)";
@@ -204,145 +182,143 @@ class DB_OP
 
   public function add_notification($from_id,$to_id,$n_object)
   {
-   $sql = "INSERT INTO notification_details (from_id,to_id, n_object) VALUES (?,?,?)";
+    $sql = "INSERT INTO notification_details (from_id,to_id, n_object) VALUES (?,?,?)";
 
-   if ($stmt = $link->prepare($sql)) {
+    if ($stmt = $this->link->prepare($sql)) {
 
-    $stmt->bind_param("sss", $param_from_id, $param_to_id, $param_n_object);
+      $stmt->bind_param("sss", $param_from_id, $param_to_id, $param_n_object);
 
-    $param_from_id = $from_id;
-    $param_to_id = $to_id;
-    $param_n_object = serialize($n_object);
+      $param_from_id = $from_id;
+      $param_to_id = $to_id;
+      $param_n_object = serialize($n_object);
 
-    if($stmt->execute()){
-
-    }else{
-
+      if($stmt->execute()){
+        echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'applicant_dashboard.php';</script>"; 
+      }else{
+        echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'applicant_dashboard.php';</script>"; 
+      }
+      $stmt->close();
     }
-    $stmt->close();
   }
-}
 
-public function add_application($applicant_id,$gn_div_or_address,$ds,$application_object)
-{
-  $sql = "INSERT INTO application_details (applicant_id,apply_date, gn_div_or_address,ds,application_object) VALUES (?,?,?,?,?)";
-  if ($stmt = $this->link->prepare($sql)) {
+  public function add_application($applicant_id,$gn_div_or_address,$ds,$application_object)
+  {
+    $sql = "INSERT INTO application_details (applicant_id,apply_date, gn_div_or_address,ds,application_object) VALUES (?,?,?,?,?)";
+    if ($stmt = $this->link->prepare($sql)) {
 
-          // Bind variables to the prepared statement as parameters
+    // Bind variables to the prepared statement as parameters
 
-    $stmt->bind_param("sssss", $param_applicant_id, $param_apply_date, $param_gn_div_or_address,$param_ds,$param_application_object);
+      $stmt->bind_param("sssss", $param_applicant_id, $param_apply_date, $param_gn_div_or_address,$param_ds,$param_application_object);
 
           // Set parameters
-    date_default_timezone_set('Asia/Colombo');
-    $param_applicant_id = $applicant_id;
-    $param_apply_date = date('Y/m/d H:i:s');
-    $param_gn_div_or_address = $gn_div_or_address;
-    $param_ds = $ds;
-    $param_application_object = serialize($application_object);
+      date_default_timezone_set('Asia/Colombo');
+      $param_applicant_id = $applicant_id;
+      $param_apply_date = date('Y/m/d H:i:s');
+      $param_gn_div_or_address = $gn_div_or_address;
+      $param_ds = $ds;
+      $param_application_object = serialize($application_object);
 
-    if($stmt->execute()){
+      if($stmt->execute()){
              // Redirect to login page
-      echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'applicant_dashboard.php';</script>"; 
+        echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'applicant_dashboard.php';</script>"; 
 
-    }else{
-      echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>"; 
-    }
+      }else{
+        echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>"; 
+      }
 
            // Close statement
-    $stmt->close();
+      $stmt->close();
+    }
   }
-}
-public function get_column_value($table,$key,$operator,$key_value,$id_name,$order)
-{
-  $sql = "SELECT $id_name FROM $table WHERE $key $operator ? $order";
-  if ($stmt = $this->link->prepare($sql)) {
-          // Bind variables to the prepared statement as parameters
-    $stmt->bind_param('s', $key_value);
-            // Attempt to execute the prepared statement
-            // just execute the prepared statement not checking values
-    if ($stmt->execute()) {
+  public function get_column_value($table,$key,$operator,$key_value,$id_name,$order)
+  {
+    $sql = "SELECT $id_name FROM $table WHERE $key $operator ? $order";
+    if ($stmt = $this->link->prepare($sql)) {
+      // Bind variables to the prepared statement as parameters
+      $stmt->bind_param('s', $key_value);
 
+      // Attempt to execute the prepared statement
+      // just execute the prepared statement not checking values
+      if ($stmt->execute()) {
+        $result = $stmt->get_result();
 
-      $result = $stmt->get_result();
+        // Check if Username exists, if yes then verify Password
+        //check is there are exactly one entry or not
+        if ($result->num_rows >= 1) {
 
-                // Check if Username exists, if yes then verify Password
+          $row = $result->fetch_assoc();
+          return $row[$id_name];
 
-              //check is there are exactly one entry or not
-      if ($result->num_rows >= 1) {
+        } else{
+          return NULL;
+        }
 
-        $row = $result->fetch_assoc();
-        return $row[$id_name];
+        // Close statement
+        $stmt->close();
+      }
+    }
+  }
 
-      } else{
-        return NULL;
+  public function approve_application($application_id,$approve_level)
+  {
+    $sql = "UPDATE application_details SET stat=? WHERE app_id =?";
+
+    if ($stmt = $link->prepare($sql)) {
+
+      // Bind variables to the prepared statement as parameters
+      $stmt->bind_param('ss', $approve_level,$application_id);
+
+      // Attempt to execute the prepared statement
+      // just execute the prepared statement not checking values
+      if ($stmt->execute()) {
+
+      } else
+      {
+        echo "Oops! Something went wrong. Please try again later.";
       }
 
             // Close statement
       $stmt->close();
     }
   }
-}
+  public function database_details($table,$key,$key_value,$order)
+  {
+    $sql = "SELECT * FROM $table WHERE $key = ? $order";
+    if ($stmt = $this->link->prepare($sql)) {
 
-public function approve_application($application_id,$approve_level)
-{
-  $sql = "UPDATE application_details SET stat=? WHERE app_id =?";
+      // Bind variables to the prepared statement as parameters
+      $stmt->bind_param('s', $key_value);
 
-  if ($stmt = $link->prepare($sql)) {
-            // Bind variables to the prepared statement as parameters
-    $stmt->bind_param('ss', $approve_level,$application_id);
-            // Attempt to execute the prepared statement
-            // just execute the prepared statement not checking values
-    if ($stmt->execute()) {
-
-
-    } else
-    {
-      echo "Oops! Something went wrong. Please try again later.";
-    }
-
-            // Close statement
-    $stmt->close();
-  }
-}
-public function database_details($table,$key,$key_value,$order)
-{
-  $sql = "SELECT * FROM $table WHERE $key = ? $order";
-  if ($stmt = $this->link->prepare($sql)) {
-          // Bind variables to the prepared statement as parameters
-    $stmt->bind_param('s', $key_value);
-            // Attempt to execute the prepared statement
-            // just execute the prepared statement not checking values
-    if ($stmt->execute()) {
-
-
-      $result = $stmt->get_result();
-      return $result;
-
-            // Close statement
+      // Attempt to execute the prepared statement
+      // just execute the prepared statement not checking values
+      if ($stmt->execute()) {
+        $result = $stmt->get_result();
+        return $result;
+      }
+        // Close statement
       $stmt->close();
     }
   }
-}
 
-public function remove_data($table,$key,$key_value)
-{
-  $sql = "DELETE FROM $table WHERE $key = ?";
+  public function remove_data($table,$key,$key_value)
+  {
+    $sql = "DELETE FROM $table WHERE $key = ?";
 
-  if ($stmt = $this->link->prepare($sql)) {
+    if ($stmt = $this->link->prepare($sql)) {
 
-    $stmt->bind_param('s', $key_value);
+      $stmt->bind_param('s', $key_value);
 
-    if ($stmt->execute()) {
+      if ($stmt->execute()) {
 
-      // return true;
+        return true;
 
-    }else{
+      }else{
 
-      // return false;
+        return false;
+      }
+      $stmt->close();
     }
-    $stmt->close();
   }
-}
 }
 
 
