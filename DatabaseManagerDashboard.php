@@ -17,7 +17,7 @@
             <div>
                   <ul>
                         
-                        <li><img src="Image/student.jpg" alt="">&nbsp;<span> Profile</span></li>
+                        <li><img src="Image/student.jpg" alt="">&nbsp;<span><a href="Profile_Details.php"> Profile</a></span></li>
                        <li><img src="Image/notification.jpg" alt="">&nbsp;<span>Notification</span></li>
 
                          <li  href="Add_officer.html"><img src="Image/Add.png" alt="">&nbsp;<span><a href="Add_staff_member.php" >Add Officer</a> </span></li>
