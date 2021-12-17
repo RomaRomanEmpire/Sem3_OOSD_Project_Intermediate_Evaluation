@@ -17,7 +17,7 @@
             <div>
                   <ul>
                         
-                        <li><img src="Image/student.jpg" alt="">&nbsp;<span> Profile</span></li>
+                        <li><img src="Image/student.jpg" alt="">&nbsp;<span> <a href="Profile_Details.php">Profile</a></span></li>
                        <li><img src="Image/notification.jpg" alt="">&nbsp;<span>Notification</span></li>
                        <!--   <li><img src="Image/school.png" alt="">&nbsp;<span> School</span></li> -->
                         <!-- <li><img src="Image/help.png" alt="">&nbsp;<span> Help</span></li>

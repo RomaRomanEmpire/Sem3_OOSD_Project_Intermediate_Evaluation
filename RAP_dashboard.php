@@ -6,8 +6,11 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>RAP Dashboard</title>
       <link rel="stylesheet" href="style2.css">
+      <script src="Javascipt_File.js">
+           
+      </script>
 </head>
-<body>
+<body >
       
            
       <div class="side_menu">
@@ -17,7 +20,7 @@
             <div>
                   <ul>
                         
-                        <li><img src="Image/student.jpg" alt="">&nbsp;<span> Profile</span></li>
+                        <li><img src="Image/student.jpg" alt="">&nbsp;<span><a href="Profile_Details.php">Profile</a></span></li>
                        <li><img src="Image/notification.jpg" alt="">&nbsp;<span>Notification</span></li>
                        <li><select>
                         <option>Inbox</option>
@@ -56,7 +59,7 @@
                   <div class="card">
                   <div class="icon_case">
                         <br><br><br><br>
-                        <button>View Applications Details </button><br><br>
+                        <a href="View_Applications_Details.php"><button>View Applications Details </button></a><br><br>
                         <!-- <button>Applying For lost Identity Card </button> -->
                   </div>
                   </div>
