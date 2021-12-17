@@ -202,6 +202,86 @@ class Principal extends Student_And_Principal{
 class National_Identity_Card_Issuer {
 
 }
+var bool=false;
+var bool2=false;
+//This function use to change the password of user account
+function Change_Password(){
+      var ChangePassword=document.getElementById("ChangePassword");
+      var fieldDisplay=document.getElementById("CPassword");
+      var PreviousPassword=document.getElementById("InputPPassword");
+      var NewPassword=document.getElementById("InputNPassword");
+      var submit_button=document.getElementById("Submit_button");
+      if(ChangePassword.checked){
+          
+            fieldDisplay.style.display="block";
+            submit_button.style.display="block";
+            bool=true;
+           }
+     if(!(ChangePassword.checked) ){
+            fieldDisplay.style.display="none"
+            bool=false;
+            
+      }
+          
+      
+      if(!(ChangePassword.checked) && !(bool) && !(bool2)){
+            fieldDisplay.style.display="none"
+            submit_button.style.display="none"
+          }
+      
+}
+ //This function use to edit the profile details of the user 
+function Edit_Profile(){
+      var Button=document.getElementById("Submit_button");
+      var EditProfile=document.getElementById("EditProfile");
+      var Profile=document.getElementById("Profile");
+     if(EditProfile.checked){
+      
+      Profile.removeAttribute("disabled");
+     Button.style.display="block";
+     bool2=true;
+    
+     }
+     if(!(EditProfile.checked) ){
+      Profile.setAttribute('disabled', 'disabled');      
+      bool2=false;
+     
+}
+     if(!(EditProfile.checked) &&  !(bool) &&  !(bool2) ){
+      Profile.setAttribute('disabled', 'disabled'); 
+      Button.style.display="none";
+      
+     }
+}
+function GoPreviousFile(){
+      window.history.back();
+}
+  
+// class file{
+      
+//       constructor(RequirdFilePath,CurrentFilePath){
+//             this.RequirdFilePath=RequirdFilePath;//file path that is necessary to load
+//             this.CurrentFilePath=CurrentFilePath;//the current file path
+//       }
+//       static FilePath=[];
+//        GoToFile(){
+           
+//             window.location.href= this.FilePath[0].RequirdFilePath;
+//       }
+//        ReturnBack(){
+           
+//              window.location.href= this.FilePath[0].CurrentFilePath;
+//       }
+//       remove(){
+//             FilePath.pop();
+//       }
+      
+// }
 
 
+// function BodyLoad(){
+//       var file1=new file("Profile_Details.php","RAP_dashboard.php");
+//       file.FilePath.push(file1); 
+
+// }
 

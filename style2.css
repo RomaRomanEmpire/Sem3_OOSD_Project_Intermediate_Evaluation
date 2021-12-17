@@ -7,6 +7,7 @@
 body{
       min-height: 100vh;
 }
+
 a{
       text-decoration: none;
 }
@@ -78,6 +79,7 @@ h1,h2{
       height: 100%;
       background: #f1f1f1;
 }
+
 .container img{
       width: 100%;
       height: 100%;
@@ -92,8 +94,29 @@ h1,h2{
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 8px rgba(0, 0,0,0.2);
+      box-shadow: 0 4px 8px rgba(77, 51, 51, 0.2);
 
+}
+.container .header1{
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 10vh;
+      width: 100%;
+      /* background-color:  #050213fd; */
+      display: flex;
+      align-items: center;
+      justify-content: right;
+      /* box-shadow: 0 4px 8px rgba(0, 0,0,0.2); */
+      z-index: 2;
+
+}
+.container .header1 button{
+      float:right;
+    display:block;
+    margin-right:40px;
+    clear:left;
+    width: 100px;
 }
 .container .header .nav{
       width: 90%;
@@ -105,7 +128,7 @@ h1,h2{
       flex: 3;
      display: flex;
      justify-content: left;
-
+      
 
 }
 .container .header .nav .search input[type=text]{
@@ -121,6 +144,7 @@ h1,h2{
       border: none;
       display: flex;
       align-items: center;
+     
       justify-content: center;
 }
 .container .header .nav .user .btn{
@@ -175,6 +199,23 @@ h1,h2{
       border-radius: 40px;
       
 }
+.container .Profile_box{
+      width: 100%;
+      height: 100%;
+      background: rgba(32, 26, 122, 0.486);
+      color: rgb(19, 80, 131);
+      top: 50%;
+      left: 50%;
+      
+      position: absolute ;
+      transform: translate(-50%,-50%);
+      /* box-sizing: border-box; */
+      padding: 70px 30px;
+      z-index: 1;
+      
+}
+
+
 .container .conten {
       position: fixed;
       margin: 10vh;

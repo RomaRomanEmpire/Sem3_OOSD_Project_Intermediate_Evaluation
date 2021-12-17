@@ -6,9 +6,37 @@
       background-position: center;
       font-family:sans-serif;
       background: rgba(0, 0, 0, 0.486);
-
+      min-height: 100vh;
 
 }
+
+
+.side_menu2{
+      position: fixed;
+      background-color: #050213fd;
+      width: 20%;
+      height: 100%;
+      display: flex; 
+      flex-direction: column; }
+/* header{
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 10vh;
+            width: 80%;
+            background-color: #050213fd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0,0,0.2);
+      
+      }
+
+header.nav{
+      width: 90%;
+      display: flex;
+      align-items: center;
+} */
 
 .loginbox{
       width: 520px;
@@ -21,6 +49,7 @@
       transform: translate(-50%,-50%);
       box-sizing: border-box;
       padding: 70px 30px;
+     
 }
 .Idimage{
       width: 100px;
