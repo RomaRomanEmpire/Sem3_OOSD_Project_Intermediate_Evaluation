@@ -20,10 +20,10 @@ class DatabaseManager extends User
 	{
 		$this->db->remove_data("user_details","user_id",$user_id);
 	}
-	public static function getDBManager()
-	{
-		return $this;
-	}
+//	public static function getDBManager()
+//	{
+//		return $this;
+//	}
 
 }
 

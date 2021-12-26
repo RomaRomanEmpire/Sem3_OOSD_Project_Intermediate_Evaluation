@@ -5,9 +5,9 @@
  */
 class Applicant extends L_P_User implements Approvable
 {
-  private $gender;
-  private $bday;
-  private $address;
+  protected $gender;
+  protected $bday;
+  protected $address;
 
   public function __construct($attributeArray)
   {
@@ -27,9 +27,9 @@ class Applicant extends L_P_User implements Approvable
 
   }
 
-  public function apply_NIC($gn_div_or_address,$ds,$application_object)
+  public function apply_NIC($stat,$gn_div_or_address,$ds,$application_object)
   {
-    $this->db->add_application($this->row_id,$gn_div_or_address,$ds,$application_object);
+    $this->db->add_application($this->row_id,$stat,$gn_div_or_address,$ds,$application_object);
   }
 
   public function select_time_slot()
