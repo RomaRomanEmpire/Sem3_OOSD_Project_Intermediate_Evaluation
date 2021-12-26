@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $applicant->set_row_id($_SESSION['user_id']);
     
-    $applicant->apply_NIC($_SESSION['GN_division'],$_SESSION['DS_division'],$application);
+    $applicant->apply_NIC($application->getState(),$_SESSION['GN_division'],$_SESSION['DS_division'],$application);
     
 }
 ?>
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         p {
             font-size: 20px;
             font-weight: bold;
-            align-self: justify;
+            align: justify;
             padding: 10px;
             word-spacing: 10px;
             line-height: 20px;
@@ -137,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         body {
             background: linear-gradient(#21669b, #a6d8ff, #fff);
             height: 100vh;
-            background-position: relative;
+            /*background-position: relative;*/
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -382,64 +382,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <button type="button" class="next-btn">Next</button>
 
                 </div>
+                <?php if($_GET['id']==2){?>
+                    <div class="step step-5">
+                        <h2>If the duplicate of the Identity Card is applied for, please complete this section.</h2>
 
-                <!-- <div class="step step-5">
-                    <h2>If the duplicate of the Identity Card is applied for, please complete this section.</h2>
-
-                    <div class="Form-group">
-                        <dl>
-                            <dt>Purpose of application</dt>
-                            <dd><input type="radio" id="purpose" name="purpose" value=" if the Identity Card is lost">
-                                <label for="purpose"> if the Identity Card is lost </label><br>
-                                <input type="radio" id="purpose" name="purpose"
+                        <div class="Form-group">
+                            <dl>
+                                <dt>Purpose of application</dt>
+                                <dd><input type="radio" id="purpose" name="purpose" value=" if the Identity Card is lost">
+                                    <label for="purpose"> if the Identity Card is lost </label><br>
+                                    <input type="radio" id="purpose" name="purpose"
                                     value="to make changes to the Identity Card">
-                                <label for="purpose">to make changes to the Identity Card</label><br>
-                                <input type="radio" id="purpose" name="purpose"
+                                    <label for="purpose">to make changes to the Identity Card</label><br>
+                                    <input type="radio" id="purpose" name="purpose"
                                     value="to renew the period of validity ">
-                                <label for="purpose">to renew the period of validity </label><br>
-                                <input type="radio" id="purpose" name="purpose"
+                                    <label for="purpose">to renew the period of validity </label><br>
+                                    <input type="radio" id="purpose" name="purpose"
                                     value=" if the Identity card is damaged/ defaced /illegible">
-                                <label for="purpose"> if the Identity card is damaged/ defaced /illegible</label><br>
-                            </dd>
-                        </dl>
-                    </div>
-                    <div class="Form-group">
-                        <dl>
-                            <dt><b><label for="lostIdNum">Lost or last obtained Identity Card Number</label></b></dt>
-                            <dd><input type="text" id="lostIdNum" name="lostIdNum"
+                                    <label for="purpose"> if the Identity card is damaged/ defaced /illegible</label><br>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="Form-group">
+                            <dl>
+                                <dt><b><label for="lostIdNum">Lost or last obtained Identity Card Number</label></b></dt>
+                                <dd><input type="text" id="lostIdNum" name="lostIdNum"
                                     placeholder="Lost or last obtained Identity Card Number">
-                            </dd>
-                        </dl>
-                    </div>
+                                </dd>
+                            </dl>
+                        </div>
 
-                    <div class="Form-group">
-                        <dl>
-                            <dt><b><label for="lostIdDate">Date of the issue of the Identity Card</label></b></dt>
-                            <dd><input type="date" id="lostIdDate" name="lostIdDate"
+                        <div class="Form-group">
+                            <dl>
+                                <dt><b><label for="lostIdDate">Date of the issue of the Identity Card</label></b></dt>
+                                <dd><input type="date" id="lostIdDate" name="lostIdDate"
                                     placeholder="Date of the issue of the Identity Card">
-                            </dd>
-                        </dl>
-                    </div>
+                                </dd>
+                            </dl>
+                        </div>
 
-                    <div class="Form-group">
-                        <dl>
-                            <dt><b><label for="policeStationDetails">Details of the police report or other document
-                                        pertaining to the lost Identity Card</label></b></dt>
-                            <dd><b><label for="policeStationName">Name of the Police Station</label></b></dd>
-                            <dd><input type="text" id="policeStationName" name="policeStationName"
+                        <div class="Form-group">
+                            <dl>
+                                <dt><b><label for="policeStationDetails">Details of the police report or other document
+                                pertaining to the lost Identity Card</label></b></dt>
+                                <dd><b><label for="policeStationName">Name of the Police Station</label></b></dd>
+                                <dd><input type="text" id="policeStationName" name="policeStationName"
                                     placeholder="Name of the Police Station">
-                            </dd>
-                            <dd><b><label for="policeReportDate">Date of the issue of the Police report</label></b></dd>
-                            <dd><input type="date" id="policeReportDate" name="policeReportDate">
-                            </dd>
-                        </dl>
+                                </dd>
+                                <dd><b><label for="policeReportDate">Date of the issue of the Police report</label></b></dd>
+                                <dd><input type="date" id="policeReportDate" name="policeReportDate">
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <button type="button" class="previous-btn">Previous</button>
+                        <button type="button" class="next-btn">Next</button>
+
                     </div>
-
-                    <button type="button" class="previous-btn">Previous</button>
-                    <button type="button" class="next-btn">Next</button>
-
-                </div> -->
-
+<?php } ?>
                 <div class="step step=6">
                     <h2>Photographs</h2>
                     <div class="Form-group">

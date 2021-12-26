@@ -53,8 +53,8 @@
                   <div class="card">
                   <div class="icon_case">
                         <br><br><br><br>
-                        <a href="GNDivisionSelect.php"><button>Applying New Identity Card </button></a><br><br>
-                        <a href="GNDivisionSelect.php"><button>Applying For lost Identity Card </button></a>
+                        <a href="GNDivisionSelect.php?id=<?php echo 1?>"><button>Applying New Identity Card </button></a><br><br>
+                        <a href="GNDivisionSelect.php?id=<?php echo 2?>"><button>Applying For lost Identity Card </button></a>
                   </div>
                   </div>
                            

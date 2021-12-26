@@ -1,10 +1,13 @@
 <?php
 session_start();
+//echo isset($_GET['id']);
+$_SESSION['id'] = $_GET['id'] ?? $_SESSION['id'];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $_SESSION['GN_division'] = $_POST['GN_division'];
     $_SESSION['DS_division'] = $_POST['DS_division'];
-    header("location: IdRequestForm.php");
+    $id = $_SESSION['id'];
+    header("location: IdRequestForm.php?id=$id");
     
 }
 ?>
