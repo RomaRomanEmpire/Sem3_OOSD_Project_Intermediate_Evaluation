@@ -381,14 +381,14 @@ h1,h2{
 }
 .Center{
      
-      border: 5px solid #0e0e0d;
+      /* border: 5px solid #0e0e0d; */
       display: flex;
       justify-content: center;
       padding-top: 230px;
       padding-bottom: 50px;
       padding-left: 15%;
       /* padding-right: 100px; */
-      box-shadow: #03031b;
+      /* box-shadow: #03031b; */
 }
 .side_menu1{
       position: fixed;

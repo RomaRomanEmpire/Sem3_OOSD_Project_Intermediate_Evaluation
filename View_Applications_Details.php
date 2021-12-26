@@ -42,7 +42,7 @@
       <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-success" ><b>Application Details</b></button></a></td>
       <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-danger" ><b>Approve</b></button></a></td>
     </tr>
-    <tr >
+    <!-- <tr >
       <th scope="row">1</th>
       <td>Mark</td>
       <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-success" ><b>Application Details</b></button></a></td>
@@ -71,7 +71,7 @@
       <td>Mark</td>
       <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-success" ><b>Application Details</b></button></a></td>
       <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-danger" ><b>Approve</b></button></a></td>
-    </tr>
+    </tr> -->
     
   </tbody>
 </table></div></div></div></div>
