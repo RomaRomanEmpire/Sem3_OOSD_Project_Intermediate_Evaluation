@@ -35,7 +35,7 @@
   <br>
  </div>
  <div class="container">
-   <div class="header1"><div ><button  class="btn btn-primary" id="Back" onclick=" GoPreviousFile()" >Back</button></div></div> 
+   <div class="header1"><div ><button  class="btn btn-outline-light" id="Back" onclick=" GoPreviousFile()" >Back</button></div></div> 
      <div style="padding: 100px; " class="Profile_box" >
            
                  <h1 class="display-3" style="font-family: 'Times New Roman', Times, serif; text-align: left;">About</h1>
