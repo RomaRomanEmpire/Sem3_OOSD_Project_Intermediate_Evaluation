@@ -32,46 +32,17 @@
       <th scope="col">ID Number</th>
       <th scope="col">Applicant's Name</th>
       <th scope="col">View Application</th>
-      <th scope="col">Approve Application</th>
+      <!-- <th scope="col">Approve Application</th> -->
     </tr>
   </thead>
   <tbody class="table-secondary table-info">
     <tr >
       <th scope="row">1</th>
       <td>Mark</td>
-      <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-success" ><b>Application Details</b></button></a></td>
-      <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-danger" ><b>Approve</b></button></a></td>
+      <td><a href="Filled_Application.php"><button  type="submit" class="btn btn-sm btn-outline-success" ><b>Application Details</b></button></a></td>
+      <!-- <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-danger" ><b>Approve</b></button></a></td> -->
     </tr>
-    <!-- <tr >
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-success" ><b>Application Details</b></button></a></td>
-      <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-danger" ><b>Approve</b></button></a></td>
-    </tr>
-    <tr >
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-success" ><b>Application Details</b></button></a></td>
-      <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-danger" ><b>Approve</b></button></a></td>
-    </tr>
-    <tr >
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-success" ><b>Application Details</b></button></a></td>
-      <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-danger" ><b>Approve</b></button></a></td>
-    </tr>
-    <tr >
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-success" ><b>Application Details</b></button></a></td>
-      <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-danger" ><b>Approve</b></button></a></td>
-    </tr>
-    <tr >
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-success" ><b>Application Details</b></button></a></td>
-      <td><a href=""><button  type="submit" class="btn btn-sm btn-outline-danger" ><b>Approve</b></button></a></td>
-    </tr> -->
+    
     
   </tbody>
 </table></div></div></div></div>
