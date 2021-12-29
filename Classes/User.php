@@ -22,7 +22,7 @@ abstract class User
 		$this->uname = $attributeArray['uname'];
 		$this->email = $attributeArray['email'];
 		$this->mobile_no = $attributeArray['mobileNo'];
-		$this->password = $attributeArray['password'];
+		$this->password = password_hash($attributeArray['password'],PASSWORD_DEFAULT);
 	}
 
 	public function set_row_id($row_id){
@@ -46,9 +46,6 @@ abstract class User
 	public function set_bday($bday){
 		$this->bday = $bday;
 	}
-	// public static function set_user($user){
-	// 	self::$user = $user;
-	// }
 	public function get_user_type(){
 		return $this->u_type;
 	}
@@ -67,13 +64,22 @@ abstract class User
 	public function get_user_pwd(){
 		return $this->password;
 	}
-	// public static function get_user(){
-	// 	return self::$user;
-	// }
-	// public static function conn_stat()
-	// {
-	// 	return $this->db;
-	// }
+
+	/**
+	 * @return mixed
+	 */
+	public function get_bday()
+	{
+		return $this->bday;
+	}
+	public function update_fields($array){
+		$this->set_full_name($array['fname']);
+		$this->set_user_name($array['uname']);
+		$this->set_email($array['email']);
+		$this->set_mobile_no($array['mobile_no']);
+		$this->set_bday($array['bday']);
+        $this->db->update_user_account_details($this->row_id, $this->uname, $this->email, $_POST['new_pwd'] ?? NULL, $this);
+	}
 	
 }
-?>
+

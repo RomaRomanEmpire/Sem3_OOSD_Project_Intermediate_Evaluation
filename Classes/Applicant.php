@@ -17,15 +17,9 @@ class Applicant extends L_P_User implements Approvable
     $this->address = $attributeArray["Address"];
     $this->gender = $attributeArray["gender"];
     $this->bday = $attributeArray["Birthday"];
-
     $this->u_type = "applicant";
-    
   }
 
-
-  public function reqest_type(){
-
-  }
 
   public function apply_NIC($stat,$gn_div_or_address,$ds,$application_object)
   {

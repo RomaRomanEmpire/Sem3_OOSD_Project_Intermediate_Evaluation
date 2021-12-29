@@ -19,17 +19,17 @@ class DB_OP
 
     public function connect()
     {
-        $DB_SERVER = 'localhost';
-        $DB_USERNAME = 'root';
-        $DB_PASSWORD = '';
-        $DB_NAME = 'projectid';
+        $this->DB_SERVER = 'localhost';
+        $this->DB_USERNAME = 'root';
+        $this->DB_PASSWORD = '';
+        $this->DB_NAME = 'projectid';
 
         /* Attempt to connect to MySQL database */
-        $this->link = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_NAME);
+        $this->link = new mysqli($this->DB_SERVER, $this->DB_USERNAME, $this->DB_PASSWORD, $this->DB_NAME);
 
         // Check connection
         if ($this->link->connect_error === false) {
-            die("ERROR: Could not connect. " . $link->connect_error());
+            die("ERROR: Could not connect. " . $this->link->connect_error());
         }
 
     }
@@ -108,7 +108,7 @@ class DB_OP
 
             if ($stmt->execute()) {
                 // Redirect to login page
-                echo "<script type='text/javascript'>alert('The request has been send successfully!'); window.location.href = 'Login.php';</script>";
+                echo "<script type='text/javascript'>alert('The account created successfully!'); window.location.href = 'Login.php';</script>";
 
             } else {
                 echo "<script type='text/javascript'>alert('Ooops! Something went wrong!'); window.location.href = 'Create_Account.php';</script>";
@@ -147,6 +147,54 @@ class DB_OP
             // Close statement
             $stmt->close();
         }
+    }
+
+    public function update_user_account_details($user_id, $username, $email, $pwd, $u_object)
+    {
+
+        if (is_null($pwd)) {
+            $sql = "UPDATE user_details SET username=?, email=?, pwd=?, u_object=? WHERE user_id=?";
+            if ($stmt = $this->link->prepare($sql)) {
+                $stmt->bind_param("sssss", $param_username, $param_email, $param_pwd, $param_u_object, $param_user_id);
+
+                $param_username = $username;
+                $param_email = $email;
+                $param_pwd = password_hash($pwd, PASSWORD_DEFAULT);
+                $param_user_id = $user_id;
+                $param_u_object = serialize($u_object);
+
+                if ($stmt->execute()) {
+                    // Redirect to login page
+                    echo "<script type='text/javascript'>alert('The request has been send successfully!'); window.location.href = 'Profile_Details.php';</script>";
+
+                } else {
+                    echo "<script type='text/javascript'>alert('Ooops! Something went wrong!'); window.location.href = 'Profile_Details.php';</script>";
+                }
+            }
+        } else {
+            $sql = "UPDATE user_details SET username=?, email=?, u_object=? WHERE user_id=?";
+            if ($stmt = $this->link->prepare($sql)) {
+                $stmt->bind_param("ssss", $param_username, $param_email, $param_u_object, $param_user_id);
+
+                $param_username = $username;
+                $param_email = $email;
+                $param_user_id = $user_id;
+                $param_u_object = serialize($u_object);
+
+                if ($stmt->execute()) {
+                    // Redirect to login page
+                    echo "<script type='text/javascript'>alert('The request has been send successfully!'); window.location.href = 'Profile_Details.php';</script>";
+
+                } else {
+                    echo "<script type='text/javascript'>alert('Ooops! Something went wrong!'); window.location.href = 'Profile_Details.php';</script>";
+                }
+
+
+            }
+
+        }
+        // Close statement
+        $stmt->close();
     }
 
     public function issue_ID($applicant_id, $issue_date, $nic_object)
@@ -204,7 +252,7 @@ class DB_OP
 
             // Bind variables to the prepared statement as parameters
 
-            $stmt->bind_param("sssss", $param_applicant_id, $param_stat, $param_apply_date, $param_gn_div_or_address, $param_ds, $param_application_object);
+            $stmt->bind_param("ssssss", $param_applicant_id, $param_stat, $param_apply_date, $param_gn_div_or_address, $param_ds, $param_application_object);
 
             // Set parameters
             date_default_timezone_set('Asia/Colombo');
@@ -261,7 +309,7 @@ class DB_OP
     {
         $sql = "UPDATE application_details SET stat=? WHERE app_id =?";
 
-        if ($stmt = $link->prepare($sql)) {
+        if ($stmt = $this->link->prepare($sql)) {
 
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param('ss', $approve_level, $application_id);
@@ -318,6 +366,3 @@ class DB_OP
         }
     }
 }
-
-
-?>
