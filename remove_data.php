@@ -12,6 +12,6 @@ if(!empty($_GET)){
 	// $con->remove_data("user_details","user_id",$key_value);
 	$db_manager->remove_L_P_User($key_value);
 }
-header("location:Database_Details.php");
+header("location:user_Details.php");
 
 ?>
