@@ -7,11 +7,17 @@ $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SE
 $user->set_db($conn);
 $user->set_row_id($_SESSION['user_id']);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['prev_pwd']) && isset($_POST['new_pwd'])) {
-        if (password_verify($_POST['prev_pwd'],$user->get_user_pwd())) {
-
+    if (isset($_POST['pwd_checkbox'])) {
+        if (isset($_POST['prev_pwd'])) {
+            if (!password_verify($_POST['prev_pwd'], $user->get_user_pwd())) {
+                echo "<script type='text/javascript'>alert('previous password is not matched!'); window.location.href = 'Profile_Details.php';</script>";
+            }
+        } else {
+            echo "<script type='text/javascript'>alert('previous or new password is not set!'); window.location.href = 'Profile_Details.php';</script>";
         }
     }
+    $user->update_fields($_POST);
+
 }
 ?>
 <!DOCTYPE html>
@@ -45,7 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <br>
         <br>
         <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="ChangePassword" onclick="Change_Password()">
+            <input type="checkbox" name="pwd_checkbox" class="form-check-input" id="ChangePassword"
+                   onclick="Change_Password()">
             <label class="form-check-label" for="ChangePassword">Change Password</label>
         </div>
     </div>
@@ -61,13 +68,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <h1 class="display-3" style="font-family: 'Times New Roman', Times, serif; text-align: left;">About</h1>
         <br>
-        <form>
+        <form id="add-staff-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <fieldset id="Profile" disabled>
                 <div class="mb-3">
                     <label for="InputFName" class="form-label">Full Name</label>
                     <input type="text" class="form-control" id="InputFName" name="fname" aria-describedby="InputFName"
                            value="<?php echo $user->get_full_name() ?>"
-                           style=" background: transparent; border: solid rgb(252, 251, 251);  border-width: 1px 1px;">
+                           style=" background: transparent; border: 1px solid rgb(252, 251, 251);">
                 </div>
                 <div class="mb-3">
                     <label for="InputUName" class="form-label">UserName</label>
