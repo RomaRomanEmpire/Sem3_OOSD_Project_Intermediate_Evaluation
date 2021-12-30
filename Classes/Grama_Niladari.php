@@ -5,9 +5,9 @@
 class GramaNiladari extends R_A_P_1
 {
 	
-	public function __construct($objectArray)
+	public function __construct($attributeArray)
 	{
-		super($objectArray);
+		super($attributeArray);
 		$u_type="gn";
 	}
 

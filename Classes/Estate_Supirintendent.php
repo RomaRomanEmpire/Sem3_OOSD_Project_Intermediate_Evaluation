@@ -5,9 +5,9 @@
 class E_S extends R_A_P_1
 {
 	
-	function __construct($objectArray)
+	function __construct($attributeArray)
 	{
-		super($objectArray);
+		super($attributeArray);
 		$u_type = "es";
 	}
 

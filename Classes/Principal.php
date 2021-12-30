@@ -5,9 +5,9 @@
 class Principal extends R_A_P_1
 {
 	
-	public function __construct($objectArray)
+	public function __construct($attributeArray)
 	{
-		parent::__construct($objectArray);
+		parent::__construct($attributeArray);
 		$this->u_type = "principal";
 	}
 	public function approve_application($application)
