@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 30, 2021 at 07:18 AM
+-- Generation Time: Dec 30, 2021 at 07:59 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -43,7 +43,7 @@ INSERT INTO `ds` (`DS_code`, `DS`) VALUES
 (4, 'Seethawaka'),
 (5, 'Padukka'),
 (6, 'Maharagama'),
-(7, 'Sri'),
+(7, ' Sri Jayawardanapura Kotte'),
 (8, 'Thimbirigasyaya'),
 (9, 'Dehiwala'),
 (10, 'Ratmalana'),
