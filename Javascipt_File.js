@@ -235,7 +235,7 @@ function Edit_Profile(){
       var Button=document.getElementById("Submit_button");
       var EditProfile=document.getElementById("EditProfile");
       var Profile=document.getElementById("Profile");
-     if(EditProfile.checked){
+     if(EditProfile.checked ) {
       
       Profile.removeAttribute("disabled");
      Button.style.display="block";
