@@ -396,7 +396,7 @@
 
                    
                 </div>
-
+                <?php if($_GET['id']==2){?>
                     <div class="step step-5">
                         <h2>If the duplicate of the Identity Card is applied for, please complete this section.</h2>
 
@@ -449,8 +449,11 @@
                             </dl>
                         </div>
 
-                        
+                        <!-- <button type="button" class="previous-btn">Previous</button>
+                        <button type="button" class="next-btn">Next</button> -->
+
                     </div>
+<?php } ?>
 
                 <div class="step step=6">
                     <h2>Photographs</h2>
@@ -509,12 +512,7 @@
                     <dl>
                         <dt><b><label for="certifySignature">Signature and official frank of the certifying
                                     Officer</label></b>
-                                    <div class="mb-3">
-      <div class="form-check" style="color: black;float:right;">
-        <input class="form-check-input" type="checkbox" id="FieldsetCheck" >
-        <label class="form-check-label" for="FieldsetCheck">
-        Approve
-        </label>
+                                    <a href="" style="float: right;"><button  type="submit" class="btn btn-sm btn-outline-danger" ><b>Approve</b></button></a>
       </div>
                                 </dt>
                                    
@@ -522,14 +520,7 @@
                     <dl>
                         <dt><b><label for="certifySignature">Signature and official frank of the certifying
                                     Officer</label></b>
-                                    <div class="mb-3">
-      <div class="form-check" style="color: black;float:right;" >
-        <input class="form-check-input" type="checkbox" id="FieldsetCheck1" >
-        <label class="form-check-label" for="FieldsetCheck11" >
-          Approve 
-        </label>
-        
-      </div>
+                                    <a href="" style="float: right;"><button  type="submit" class="btn btn-sm btn-outline-danger" ><b>Approve</b></button></a> 
                                 </dt>
                                     
                     </dl>
