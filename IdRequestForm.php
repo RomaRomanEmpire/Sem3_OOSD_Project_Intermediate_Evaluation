@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         p {
             font-size: 20px;
             font-weight: bold;
-            text-align: justify;
+            align: justify;
             padding: 10px;
             word-spacing: 10px;
             line-height: 20px;
@@ -78,7 +78,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         input[type="number"],
         input[type="date"],
         input[type="tel"],
-        input[type="file"],
         select {
             width: 100%;
             padding: 12px 20px;
@@ -103,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             display: block;
         }
 
-        .step.step-1 {
+        .container {
             left: 50%;
             align-self: center;
             position: absolute;
@@ -112,7 +111,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 20px 20px;
             width: 1000px;
         }
-
 
         button.next-btn,
         button.previous-btn,
@@ -124,22 +122,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             outline: none;
             background-color: rgb(180, 220, 255);
             font-family: 'Montserrat';
-            font-size: 10px;
+            /* font-size: 10px; */
             cursor: pointer;
+            font-weight: bolder;
         }
 
         button.previous-btn {
             float: left;
+            font-weight: bolder;
         }
 
         button.submit-btn {
             background-color: seagreen;
+            font-weight: bolder;
         }
-
-        #canvas {
+        /* #canvas {
             border: 2px solid black;
-            box-sizing: border-box;
-        }
+            box-sizing: border-box;} */
 
         body {
             background: linear-gradient(#21669b, #a6d8ff, #fff);
@@ -148,31 +147,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-repeat: no-repeat;
             background-size: cover;
         }
+       .Button_1{
+           text-align: center;
+           background-color: #a6d8ff;
+           color: #000;
+           font-weight: bolder;
+           border: none;
+           outline: none;
+           width: 110px;
+       }
     </style>
 
 
 </head>
 
-<body onload="init()">
+<body  >
     <section>
-<<<<<<< HEAD
-        <!-- <div class="container"> -->
-            <form id="signin-form" action="<?php echo htmlspecialchars($_SERVER[" PHP_SELF"]); ?>" method="POST">
-            <div class="container">
-=======
-        <div class="container">
-            <form id="signin-form" action="<?php echo htmlspecialchars($_SERVER[" PHP_SELF"]); ?>" method="POST">
->>>>>>> 633480c72fe5eeac6b3eb49a3a74d5e0e71c288d
-                <h1>Application for Identity Card</h1>
+        <div>
+            <form id="signin-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+             <div class="container"> 
                 <!-- <h1><span id="msgx"></span></h1> -->
-                <div class="step step-1">
+                <div class="step step-1 active">
+                <h1>Application for Identity Card</h1><br>
                     <h2>Personal Details</h2>
                     <div class="Form-group">
                         <dl>
                             <dt>Name in full</dt>
                             <dd><b><label for="familyName">Family Name</label></b></dd>
-                            <dd><input type="text" id="familyNname" name="familyName" placeholder="Family name..."
-                                    required></dd>
+                            <dd><input type="text" id="familyNname" name="familyName" placeholder="Family name..." required></dd>
                             <dd><b> <label for="name">Name</label></b></dd>
                             <dd><input type="text" id="name" name="name" placeholder="Name..." required></dd>
                             <dd><b> <label for="surname">Surname</label></b></dd>
@@ -183,8 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt>Name to be appeared in the Identity Card</dt>
                             <dd><b><label for="familyName">Family Name</label></b></dd>
-                            <dd><input type="text" id="familyNname" name="familyName" placeholder="Family name..."
-                                    required></dd>
+                            <dd><input type="text" id="familyNname" name="familyName" placeholder="Family name..." required></dd>
                             <dd><b> <label for="name">Name</label></b></dd>
                             <dd><input type="text" id="name" name="name" placeholder="Name..." required></dd>
                             <dd><b> <label for="surname">Surname</label></b></dd>
@@ -221,8 +222,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="profession">Profession/Occupation/Designation</label></b></dt>
-                            <dd><input type="text" id="profession" name="profession" placeholder="Profession..."
-                                    required></dd>
+                            <dd><input type="text" id="profession" name="profession" placeholder="Profession..." required></dd>
                         </dl>
                     </div>
 
@@ -250,16 +250,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="placeOfBirth">Place of Birth</label></b></dt>
-                            <dd><input type="text" id="placeOfBirth" name="placeOfBirth" placeholder="Place of Birth..."
-                                    required></dd>
+                            <dd><input type="text" id="placeOfBirth" name="placeOfBirth"
+                                    placeholder="Place of Birth..." required></dd>
                         </dl>
                     </div>
 
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="division">Division</label></b></dt>
-                            <dd><input type="text" id="division" name="birthDivision" placeholder="Division..."
-                                    required>
+                            <dd><input type="text" id="division" name="birthDivision" placeholder="Division..." required>
                             </dd>
                         </dl>
                     </div>
@@ -267,8 +266,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="district">District</label></b></dt>
-                            <dd><input type="text" id="district" name="birthDistrict" placeholder="District..."
-                                    required>
+                            <dd><input type="text" id="district" name="birthDistrict" placeholder="District..." required>
                             </dd>
                         </dl>
                     </div>
@@ -319,8 +317,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <dd><input type="text" id="village" name="permVillage" placeholder="Village..." required>
                             </dd>
                             <dd><b> <label for="village">Postal Code</label></b></dd>
-                            <dd><input type="number" id="postalCode" name="permPostalCode" placeholder="Postal Code..."
-                                    required>
+                            <dd><input type="number" id="postalCode" name="permPostalCode" placeholder="Postal Code..." required>
                             </dd>
                         </dl>
                     </div>
@@ -381,8 +378,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt><b><label for="telephoneNo">Telephone Number</label></b></dt>
                             <dd><b><label for="residence">Residence</label></b></dd>
-                            <dd><input type="tel" id="residence" name="residenceTelNo" placeholder="Residence..."
-                                    required>
+                            <dd><input type="tel" id="residence" name="residenceTelNo" placeholder="Residence..." required>
                             </dd>
                             <dd><b><label for="mobile">Mobile</label></b></dd>
                             <dd><input type="tel" id="mobile" name="mobileTelNo" placeholder="Mobile..." required>
@@ -403,113 +399,71 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 </div>
                 <?php if($_GET['id']==2){?>
-                <div class="step step-5">
-                    <h2>If the duplicate of the Identity Card is applied for, please complete this section.</h2>
+                    <div class="step step-5">
+                        <h2>If the duplicate of the Identity Card is applied for, please complete this section.</h2>
 
-                    <div class="Form-group">
-                        <dl>
-                            <dt>Purpose of application</dt>
-                            <dd><input type="radio" id="purpose" name="purpose" value=" if the Identity Card is lost">
-                                <label for="purpose"> if the Identity Card is lost </label><br>
-                                <input type="radio" id="purpose" name="purpose"
+                        <div class="Form-group">
+                            <dl>
+                                <dt>Purpose of application</dt>
+                                <dd><input type="radio" id="purpose" name="purpose" value=" if the Identity Card is lost">
+                                    <label for="purpose"> if the Identity Card is lost </label><br>
+                                    <input type="radio" id="purpose" name="purpose"
                                     value="to make changes to the Identity Card">
-                                <label for="purpose">to make changes to the Identity Card</label><br>
-                                <input type="radio" id="purpose" name="purpose"
+                                    <label for="purpose">to make changes to the Identity Card</label><br>
+                                    <input type="radio" id="purpose" name="purpose"
                                     value="to renew the period of validity ">
-                                <label for="purpose">to renew the period of validity </label><br>
-                                <input type="radio" id="purpose" name="purpose"
+                                    <label for="purpose">to renew the period of validity </label><br>
+                                    <input type="radio" id="purpose" name="purpose"
                                     value=" if the Identity card is damaged/ defaced /illegible">
-                                <label for="purpose"> if the Identity card is damaged/ defaced /illegible</label><br>
-                            </dd>
-                        </dl>
-                    </div>
-                    <div class="Form-group">
-                        <dl>
-                            <dt><b><label for="lostIdNum">Lost or last obtained Identity Card Number</label></b></dt>
-                            <dd><input type="text" id="lostIdNum" name="lostIdNum"
+                                    <label for="purpose"> if the Identity card is damaged/ defaced /illegible</label><br>
+                                </dd>
+                            </dl>
+                        </div>
+                        <div class="Form-group">
+                            <dl>
+                                <dt><b><label for="lostIdNum">Lost or last obtained Identity Card Number</label></b></dt>
+                                <dd><input type="text" id="lostIdNum" name="lostIdNum"
                                     placeholder="Lost or last obtained Identity Card Number">
-                            </dd>
-                        </dl>
-                    </div>
-<<<<<<< HEAD
+                                </dd>
+                            </dl>
+                        </div>
 
-                    <div class="Form-group">
-                        <dl>
-                            <dt><b><label for="lostIdDate">Date of the issue of the Identity Card</label></b></dt>
-                            <dd><input type="date" id="lostIdDate" name="lostIdDate"
+                        <div class="Form-group">
+                            <dl>
+                                <dt><b><label for="lostIdDate">Date of the issue of the Identity Card</label></b></dt>
+                                <dd><input type="date" id="lostIdDate" name="lostIdDate"
                                     placeholder="Date of the issue of the Identity Card">
-                            </dd>
-                        </dl>
-                    </div>
+                                </dd>
+                            </dl>
+                        </div>
 
-                    <div class="Form-group">
-                        <dl>
-                            <dt><b><label for="policeStationDetails">Details of the police report or other document
-                                        pertaining to the lost Identity Card</label></b></dt>
-                            <dd><b><label for="policeStationName">Name of the Police Station</label></b></dd>
-                            <dd><input type="text" id="policeStationName" name="policeStationName"
+                        <div class="Form-group">
+                            <dl>
+                                <dt><b><label for="policeStationDetails">Details of the police report or other document
+                                pertaining to the lost Identity Card</label></b></dt>
+                                <dd><b><label for="policeStationName">Name of the Police Station</label></b></dd>
+                                <dd><input type="text" id="policeStationName" name="policeStationName"
                                     placeholder="Name of the Police Station">
-                            </dd>
-                            <dd><b><label for="policeReportDate">Date of the issue of the Police report</label></b></dd>
-                            <dd><input type="date" id="policeReportDate" name="policeReportDate">
-                            </dd>
-                        </dl>
+                                </dd>
+                                <dd><b><label for="policeReportDate">Date of the issue of the Police report</label></b></dd>
+                                <dd><input type="date" id="policeReportDate" name="policeReportDate">
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <button type="button" class="previous-btn">Previous</button>
+                        <button type="button" class="next-btn">Next</button>
+
                     </div>
-=======
-
-                    <div class="Form-group">
-                        <dl>
-                            <dt><b><label for="lostIdDate">Date of the issue of the Identity Card</label></b></dt>
-                            <dd><input type="date" id="lostIdDate" name="lostIdDate"
-                                    placeholder="Date of the issue of the Identity Card">
-                            </dd>
-                        </dl>
-                    </div>
-
-                    <div class="Form-group">
-                        <dl>
-                            <dt><b><label for="policeStationDetails">Details of the police report or other document
-                                        pertaining to the lost Identity Card</label></b></dt>
-                            <dd><b><label for="policeStationName">Name of the Police Station</label></b></dd>
-                            <dd><input type="text" id="policeStationName" name="policeStationName"
-                                    placeholder="Name of the Police Station">
-                            </dd>
-                            <dd><b><label for="policeReportDate">Date of the issue of the Police report</label></b></dd>
-                            <dd><input type="date" id="policeReportDate" name="policeReportDate">
-                            </dd>
-                        </dl>
-                    </div>
-
-                    <button type="button" class="previous-btn">Previous</button>
-                    <button type="button" class="next-btn">Next</button>
-
-                </div>
-                <?php } ?>
-
+<?php } ?>
                 <div class="step step=6">
                     <h2>Photographs</h2>
-                    <!-- <div class="Form-group"> -->
-                    <dl>
-                        <dt><b><label for="photographs">Add Photographs</label></b></dt>
-                        <dd><input type="file" id="photographs" name="photographs"></dd>
-                    </dl>
-                    <!-- </div> -->
->>>>>>> 633480c72fe5eeac6b3eb49a3a74d5e0e71c288d
-
-                    <button type="button" class="previous-btn">Previous</button>
-                    <button type="button" class="next-btn">Next</button>
-
-                </div>
-                <?php } ?>
-
-                <div class="step step=6">
-                    <h2>Photographs</h2>
-                    <!-- <div class="Form-group"> -->
-                    <dl>
-                        <dt><b><label for="photographs">Add Photographs</label></b></dt>
-                        <dd><input type="file" id="photographs" name="photographs"></dd>
-                    </dl>
-                    <!-- </div> -->
+                    <div class="Form-group">
+                        <dl>
+                            <dt><b><label for="photographs">Add Photographs</label></b></dt>
+                            <dd><input type="file" id="photographs" name="photographs"></dd>
+                        </dl>
+                    </div>
 
                     <button type="button" class="previous-btn">Previous</button>
                     <button type="button" class="next-btn">Next</button>
@@ -546,8 +500,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             application form are of <input type="number" id="applicationNum" name="para_1"
                                 style="width:300px" placeholder="Application Number" required>
                             residing at the address mentioned in the application form bearing number <input type="text"
-                                id="applicantName" name="para_2" style="width:300px" placeholder="Applicant Name"
-                                required>
+                                id="applicantName" name="para_2" style="width:300px" placeholder="Applicant Name" required>
                             and that the photograph affixed is duplicating the natural status of the applicant without
                             disguise or concealment. I certify that I have placed my signature and official franh and
                             that
@@ -558,67 +511,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dt><b><label for="certifyName">Name of the Certifying Officer</label></b></dt>
                         <dd><input type="text" id="certifyName" name="certifyName"
                                 placeholder="Name of the Certifying Officer" required></dd>
+                        
+
                     </dl>
-<<<<<<< HEAD
-                   
-                    <button type="button" class="previous-btn">Previous</button>
-                    <button type="button" class="next-btn">Next</button>
-=======
 
-                    <button type="button" class="previous-btn">Previous</button>
-                    <button type="button" class="next-btn">Next</button>
-
-                </div>
-
-                <div class="step step-9 active">
-
-                    <!-- <dt><b><label for="certifySignature">Signature and official frank of the certifying
-                                    Officer</label></b></dt> -->
-                    <!-- <canvas id="canvas"></canvas> -->
-                    <!-- <dl>
+                       
+                    <dl>
                         <dt><b><label for="certifySignature">Signature and official frank of the certifying
                                     Officer</label></b></dt>
-                        <canvas id="canvas"></canvas>
-                    </dl> -->
+                    </dl>
 
-                    <body onload="init()">
-                        <div><canvas id="can" width="400" height="400"
-                                style="position: absolute; left:30%; border:2px solid;"></canvas></div>
-
-                        <div>
-                            <input type="button" value="save" id="btn" size="30" onclick="save()"
-                                style="position:absolute;top:100%;left:30%;">
-                            <input type="button" value="clear" id="clr" size="23" onclick="erase()"
-                                style="position:absolute;top:100%;left:35%;">
-
-                            <button type="button" class="previous-btn" style="position:absolute;top:110%;left:30%;">Previous</button>
-                            <button type="button" class="next-btn" style="position:absolute;top:110%;left:80%;">Next</button>
-                        </div>
-                    </body>
->>>>>>> 633480c72fe5eeac6b3eb49a3a74d5e0e71c288d
-
-                </div>
-            </div>
-                <div class="step step-9 ">
-                    <div >
-                       <canvas id="can" width="700" height="420"
-                                style="position: absolute; left:30%; border:2px solid;"></canvas>
-
-                        
-                            <input type="button" value="save" id="btn" size="30" onclick="save()"
-                                style="position:absolute;top:590px;left:456px;">
-                            <input type="button" value="clear" id="clr" size="23" onclick="erase()"
-                                style="position:absolute;top:590px;left:500px;">
-
-                            <button type="button" class="previous-btn" style="position:absolute;top:600px;left:456px;">Previous</button>
-                            <button type="button" class="next-btn" style="position:absolute;top:600px;left:1080px;">Next</button>
+                    <button type="button" class="previous-btn">Previous</button>
+                    <button type="button" class="next-btn " onclick="canvers(1)">Next</button>
                     
+                    
+                </div></div>  
+                
+                <div class="step step-9 " style="position: fixed;">
+               
+               <div style="padding-left: 298px;padding-top:40px;"> <dl style="height:35px;width:900px;">
+                        <dt ><b><label for="certifySignature"  >Signature and official frank of the certifying
+                                    Officer</label></b></dt>
+                    </dl></div>
+                    <!-- <h2 style="border-color: #f1f1f1;padding-left: 80px;font-family: 'Times New Roman', Times, serif;font-weight: bolder;">Signature and official frank of the certifying
+                                    Officer</h2> -->
+                                 
+                    <div >
+                        <canvas id="can" width="910" height="400" 
+                            style="position: fixed; left:20%; border:2px solid; top:140px;"></canvas>
+                           
 
-                </div> </div>
+                        <input type="button" value="save" id="btn" size="30" onclick="save()" class="Button_1"
+                            style="position:absolute;top:540px;left:297px;">
+                        <input type="button" value="clear" id="clr" size="23" onclick="erase()" class="Button_1"
+                            style="position:absolute;top:540px;left:420px;">
+
+                        <button type="button" class="previous-btn" style="position:absolute;top:550px;left:297px;">Previous</button>
+                        <button type="button" class="next-btn" style="position:absolute;top:550px;left:1132px;" onclick="canvers(2)" >Next</button>
+
+
+                    </div></div>
+                    <div class="step step-10 " style="position: fixed;">
+                    <div style="padding-left: 298px;padding-top:40px;"> <dl style="height:35px;width:900px;">
+                        <dt ><b><label for="certifySignature"  >Signature and official frank of the certifying
+                                    Officer</label></b></dt>
+                    </dl></div>
+                    <!-- <h2 style="border-color: #f1f1f1;padding-left: 80px;font-family: 'Times New Roman', Times, serif;font-weight: bolder;">Signature and official frank of the certifying
+                                    Officer</h2> -->
+                                 
+                    <div >
+                        <canvas id="can1" width="910" height="400" 
+                            style="position: fixed; left:20%; border:2px solid; top:140px;"></canvas>
+                           
+
+                        <input type="button" value="save" id="btn" size="30" onclick="save()" class="Button_1"
+                            style="position:absolute;top:540px;left:297px;">
+                        <input type="button" value="clear" id="clr" size="23" onclick="erase()" class="Button_1"
+                            style="position:absolute;top:540px;left:420px;">
+
+                        <button type="button" class="previous-btn" style="position:absolute;top:550px;left:297px;">Previous</button>
+                        <button type="submit" class="submit-btn" style="position:absolute;top:550px;left:1110px;" >Submit</button>
+
+
+                    </div>
+                        
+
+
+                    </div>
+                
+            </div>
 
             </form>
         </div>
     </section>
+    
 
     <script>
         const steps = Array.from(document.querySelectorAll('form .step'));
@@ -651,129 +617,111 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             steps[index].classList.add('active');
         }
 
-        // window.addEventListener("load", () => {
-        //     const canvas = document.querySelector("#canvas");
-        //     const ctx = canvas.getContext("2d");
-
-        //     canvas.height = window.innerHeight;
-        //     canvas.width = window.innerWidth;
-
-        //     let painting = false;
-
-        //     function startPosition(e) {
-        //         painting = true;
-        //         draw(e);
-        //     }
-
-        //     function finishedPosition() {
-        //         painting = false;
-        //         ctx.beginPath();
-        //     }
-
-        //     function draw(e) {
-        //         if (!painting) return;
-        //         ctx.lineWidth = 3;
-        //         ctx.lineCap = "round";
-
-        //         ctx.lineTo(e.clientX, e.clientY);
-        //         ctx.stroke();
-        //         ctx.beginPath();
-        //         ctx.moveTo(e.clientX, e.clientY);
-
-        //     }
-
-        //     canvas.addEventListener('mousedown', startPosition);
-        //     canvas.addEventListener('mouseup', finishedPosition);
-        //     canvas.addEventListener('mousemove', draw);
-        // });
-        var canvas, ctx, flag = false,
-            prevX = 0,
-            currX = 0,
-            prevY = 0,
-            currY = 0,
-            dot_flag = false;
-
-        var x = "black",
-            y = 2;
-
-        function init() {
-            canvas = document.getElementById('can');
-            ctx = canvas.getContext("2d");
-            w = canvas.width;
-            h = canvas.height;
-
-            canvas.addEventListener("mousemove", function (e) {
-                findxy('move', e)
-            }, false);
-            canvas.addEventListener("mousedown", function (e) {
-                findxy('down', e)
-            }, false);
-            canvas.addEventListener("mouseup", function (e) {
-                findxy('up', e)
-            }, false);
-            canvas.addEventListener("mouseout", function (e) {
-                findxy('out', e)
-            }, false);
-        }
-<<<<<<< HEAD
+       
         
-=======
+        var canvas, ctx, flag = false,
+prevX = 0,
+currX = 0,
+prevY = 0,
+currY = 0,
+dot_flag = false;
 
->>>>>>> 633480c72fe5eeac6b3eb49a3a74d5e0e71c288d
-        function draw() {
-            ctx.beginPath();
-            ctx.moveTo(prevX, prevY);
-            ctx.lineTo(currX, currY);
-            ctx.strokeStyle = x;
-            ctx.lineWidth = y;
-            ctx.stroke();
-            ctx.closePath();
-        }
+var x = "black",
+y = 2;
 
-        function erase() {
-            var m = confirm("Want to clear");
-            if (m) {
-                ctx.clearRect(0, 0, w, h);
-                document.getElementById("canvasimg").style.display = "none";
+
+function init(name) {
+canvas = name;
+
+ctx = canvas.getContext("2d");
+w = canvas.width;
+h = canvas.height;
+
+canvas.addEventListener("mousemove", function (e) {
+    findxy('move', e)
+}, false);
+canvas.addEventListener("mousedown", function (e) {
+    findxy('down', e)
+}, false);
+canvas.addEventListener("mouseup", function (e) {
+    findxy('up', e)
+}, false);
+canvas.addEventListener("mouseout", function (e) {
+    findxy('out', e)
+}, false);
+}
+function getMousePos(canvas, evt) {
+var rect = canvas.getBoundingClientRect();
+return {
+    x: evt.clientX - rect.left,
+    y: evt.clientY - rect.top
+};
+}
+function draw() {
+ctx.beginPath();
+ctx.moveTo(prevX, prevY);
+ctx.lineTo(currX, currY);
+ctx.strokeStyle = x;
+ctx.lineWidth = y;
+ctx.stroke();
+ctx.closePath();
+}
+
+function erase() {
+var m = confirm("Want to clear");
+if (m) {
+    ctx.clearRect(0, 0, w, h);
+    document.getElementById("canvasimg").style.display = "none";
+}
+}
+
+function save() {
+document.getElementById("canvasimg").style.border = "2px solid";
+var dataURL = canvas.toDataURL();
+document.getElementById("canvasimg").src = dataURL;
+document.getElementById("canvasimg").style.display = "inline";
+}
+
+function findxy(res, e) {
+if (res == 'down') {
+    prevX = currX;
+    prevY = currY;
+    currX = e.clientX - canvas.offsetLeft;
+    currY = e.clientY - canvas.offsetTop;
+
+    flag = true;
+    dot_flag = true;
+    if (dot_flag) {
+        ctx.beginPath();
+        ctx.fillStyle = x;
+        ctx.fillRect(currX, currY, 2, 2);
+        ctx.closePath();
+        dot_flag = false;
+    }
+}
+if (res == 'up' || res == "out") {
+    flag = false;
+}
+if (res == 'move') {
+    if (flag) {
+        prevX = currX;
+        prevY = currY;
+        currX = e.clientX - canvas.offsetLeft;
+        currY = e.clientY - canvas.offsetTop;
+        draw();
+    }
+}
+}
+function canvers(Number){
+            if(Number==1){
+                var name1=document.getElementById('can');
+                 init(name1);
             }
-        }
-
-        function save() {
-            document.getElementById("canvasimg").style.border = "2px solid";
-            var dataURL = canvas.toDataURL();
-            document.getElementById("canvasimg").src = dataURL;
-            document.getElementById("canvasimg").style.display = "inline";
-        }
-
-        function findxy(res, e) {
-            if (res == 'down') {
-                prevX = currX;
-                prevY = currY;
-                currX = e.clientX - canvas.offsetLeft;
-                currY = e.clientY - canvas.offsetTop;
-
-                flag = true;
-                dot_flag = true;
-                if (dot_flag) {
-                    ctx.beginPath();
-                    ctx.fillStyle = x;
-                    ctx.fillRect(currX, currY, 2, 2);
-                    ctx.closePath();
-                    dot_flag = false;
-                }
+            else{
+                var name1=document.getElementById('can1');
+                 init(name1);
             }
-            if (res == 'up' || res == "out") {
-                flag = false;
-            }
-            if (res == 'move') {
-                if (flag) {
-                    prevX = currX;
-                    prevY = currY;
-                    currX = e.clientX - canvas.offsetLeft;
-                    currY = e.clientY - canvas.offsetTop;
-                    draw();
-                }
-            }
+            
         }
     </script>
 
