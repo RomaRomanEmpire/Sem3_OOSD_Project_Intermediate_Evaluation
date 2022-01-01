@@ -20,14 +20,18 @@ $user->set_row_id($_SESSION['user_id']);
             min-height: 100vh;
         }
     </style>
+
+    <script type="text/javascript" src="Javascipt_File.js">
+
+    </script>
 </head>
 <body class="p-3 mb-2 bg-info text-dark" style="background: linear-gradient(#1D2671 ,#667EEA);">
 <div>
     <div style="width: 100%; height: 70px;  display: flex; position: fixed;top: 0; right: 0;z-index: 3;box-shadow: 0 4px 8px rgba(77, 51, 51, 0.2); justify-content: right;">
 
-        <a class="btn btn-outline-light" href="RAP_dashboard.php" role="button"
-           style="height: 40px; width: 150px; padding-top:10px;margin:10px;">Back</a>
-<!--        <button class="btn btn-outline-light" id="Back" onclick=" GoPreviousFile()">Back</button>-->
+        <!-- <a class="btn btn-outline-light" href="RAP_dashboard.php" role="button"
+           style="height: 40px; width: 150px; padding-top:10px;margin:10px;">Back</a> -->
+       <button class="btn btn-outline-light" id="Back" onclick=" GoPreviousFile()">Back</button>
 
     </div>
     <br><br><br><br>

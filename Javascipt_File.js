@@ -256,6 +256,8 @@ function Edit_Profile(){
 function GoPreviousFile(){
       window.history.back();
 }
+
+
   
 // class file{
       
