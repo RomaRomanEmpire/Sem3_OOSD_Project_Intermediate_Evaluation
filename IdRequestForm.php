@@ -155,9 +155,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body onload="init()">
     <section>
+<<<<<<< HEAD
         <!-- <div class="container"> -->
             <form id="signin-form" action="<?php echo htmlspecialchars($_SERVER[" PHP_SELF"]); ?>" method="POST">
             <div class="container">
+=======
+        <div class="container">
+            <form id="signin-form" action="<?php echo htmlspecialchars($_SERVER[" PHP_SELF"]); ?>" method="POST">
+>>>>>>> 633480c72fe5eeac6b3eb49a3a74d5e0e71c288d
                 <h1>Application for Identity Card</h1>
                 <!-- <h1><span id="msgx"></span></h1> -->
                 <div class="step step-1">
@@ -426,6 +431,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </dd>
                         </dl>
                     </div>
+<<<<<<< HEAD
 
                     <div class="Form-group">
                         <dl>
@@ -449,6 +455,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </dd>
                         </dl>
                     </div>
+=======
+
+                    <div class="Form-group">
+                        <dl>
+                            <dt><b><label for="lostIdDate">Date of the issue of the Identity Card</label></b></dt>
+                            <dd><input type="date" id="lostIdDate" name="lostIdDate"
+                                    placeholder="Date of the issue of the Identity Card">
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="Form-group">
+                        <dl>
+                            <dt><b><label for="policeStationDetails">Details of the police report or other document
+                                        pertaining to the lost Identity Card</label></b></dt>
+                            <dd><b><label for="policeStationName">Name of the Police Station</label></b></dd>
+                            <dd><input type="text" id="policeStationName" name="policeStationName"
+                                    placeholder="Name of the Police Station">
+                            </dd>
+                            <dd><b><label for="policeReportDate">Date of the issue of the Police report</label></b></dd>
+                            <dd><input type="date" id="policeReportDate" name="policeReportDate">
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <button type="button" class="previous-btn">Previous</button>
+                    <button type="button" class="next-btn">Next</button>
+
+                </div>
+                <?php } ?>
+
+                <div class="step step=6">
+                    <h2>Photographs</h2>
+                    <!-- <div class="Form-group"> -->
+                    <dl>
+                        <dt><b><label for="photographs">Add Photographs</label></b></dt>
+                        <dd><input type="file" id="photographs" name="photographs"></dd>
+                    </dl>
+                    <!-- </div> -->
+>>>>>>> 633480c72fe5eeac6b3eb49a3a74d5e0e71c288d
 
                     <button type="button" class="previous-btn">Previous</button>
                     <button type="button" class="next-btn">Next</button>
@@ -513,9 +559,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dd><input type="text" id="certifyName" name="certifyName"
                                 placeholder="Name of the Certifying Officer" required></dd>
                     </dl>
+<<<<<<< HEAD
                    
                     <button type="button" class="previous-btn">Previous</button>
                     <button type="button" class="next-btn">Next</button>
+=======
+
+                    <button type="button" class="previous-btn">Previous</button>
+                    <button type="button" class="next-btn">Next</button>
+
+                </div>
+
+                <div class="step step-9 active">
+
+                    <!-- <dt><b><label for="certifySignature">Signature and official frank of the certifying
+                                    Officer</label></b></dt> -->
+                    <!-- <canvas id="canvas"></canvas> -->
+                    <!-- <dl>
+                        <dt><b><label for="certifySignature">Signature and official frank of the certifying
+                                    Officer</label></b></dt>
+                        <canvas id="canvas"></canvas>
+                    </dl> -->
+
+                    <body onload="init()">
+                        <div><canvas id="can" width="400" height="400"
+                                style="position: absolute; left:30%; border:2px solid;"></canvas></div>
+
+                        <div>
+                            <input type="button" value="save" id="btn" size="30" onclick="save()"
+                                style="position:absolute;top:100%;left:30%;">
+                            <input type="button" value="clear" id="clr" size="23" onclick="erase()"
+                                style="position:absolute;top:100%;left:35%;">
+
+                            <button type="button" class="previous-btn" style="position:absolute;top:110%;left:30%;">Previous</button>
+                            <button type="button" class="next-btn" style="position:absolute;top:110%;left:80%;">Next</button>
+                        </div>
+                    </body>
+>>>>>>> 633480c72fe5eeac6b3eb49a3a74d5e0e71c288d
 
                 </div>
             </div>
@@ -635,7 +715,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 findxy('out', e)
             }, false);
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> 633480c72fe5eeac6b3eb49a3a74d5e0e71c288d
         function draw() {
             ctx.beginPath();
             ctx.moveTo(prevX, prevY);

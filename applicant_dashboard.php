@@ -1,4 +1,14 @@
- <!DOCTYPE html>
+<?php
+session_start();
+include 'autoloader.php';
+$con = DB_OP::get_connection();
+$user = unserialize($con->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
+$user->set_db($con);
+$user->set_row_id($_SESSION['user_id']);
+$already_applied = is_null($con->get_column_value("application_details", "applicant_id", "=", $_SESSION['user_id'], "app_id", ""));
+echo $already_applied?"true":"false";
+?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
       <meta charset="UTF-8">

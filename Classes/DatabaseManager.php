@@ -21,6 +21,23 @@ class DatabaseManager extends User
 		$this->db->remove_data("user_details","user_id",$user_id);
 	}
 
+	/**
+	 * @throws Exception
+	 */
+	public function getGnDivOrAddress()
+	{
+		throw new Exception("No divisions for Database Manager");
+	}
+
+	/**
+	 * @return void
+	 * @throws Exception
+	 */
+	public function getDs()
+	{
+		throw new Exception("No divisions for Database Manager");
+	}
+
 
 }
 

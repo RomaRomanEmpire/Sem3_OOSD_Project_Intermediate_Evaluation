@@ -22,24 +22,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       <title>Account Creating</title>
       <style>
-
-
             input[type=submit] {
                   width: 100%;
                   background-color: rgb(83, 139, 100);
                   color: rgb(48, 40, 83);
                   padding: 14px 20px;
                   margin: 8px 0;
-
                   border: none;
                   border-radius: 4px;
-
                   cursor: pointer;
-
-
-
             }
-
             input[type=submit]:hover {
                 background-color:rgb(30, 17, 71) ;
           }
