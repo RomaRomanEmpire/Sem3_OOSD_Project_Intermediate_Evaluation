@@ -7,9 +7,9 @@ $_SESSION['id'] = $_GET['id'] ?? $_SESSION['id'];
 $applicant = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $applicant->set_db($conn);
 $applicant->set_row_id($_SESSION['user_id']);
-
+echo "testing";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+    echo "testing1";
     $_SESSION['GN_division'] = $_POST['GN_division'];
     $_SESSION['DS_division'] = $_POST['DS_division'];
     $id = $_SESSION['id'];
@@ -50,6 +50,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             submit_button.style.display = "block";
         }
+
+        function HideDetails() {
+            var student = document.getElementById("detailsStudents")
+            var estateWorker = document.getElementById("detailsEstateWorkers");
+            var other = document.getElementById("detailsOther");
+            var student_check = document.getElementById("student")
+            var estateWorker_check = document.getElementById("estateWorker");
+            var other_check = document.getElementById("otherAppliers");
+            var submit_button = document.getElementById("submit");
+            if (student_check.checked) {
+                estateWorker.style.display = "none";
+                other.style.display = "none";
+                student.style.display = "none";
+            } else if (estateWorker_check.checked) {
+                student.style.display = "none";
+                other.style.display = "none";
+                estateWorker.style.display = "none";
+            } else if (other_check.checked) {
+                student.style.display = "none";
+                estateWorker.style.display = "none";
+                other.style.display = "none";
+            }
+            submit_button.style.display = "none";
+        }
+
+
     </script>
 
     <style>
@@ -117,21 +143,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <br>
             <form id="division-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                 <div>
-                    <input type="radio" class="check-input" name="applier" id="student" onclick="ShowDetails()">
+                    <input type="radio" class="check-input" name="applier" id="student" onclick = "HideDetails()">
                     <label class="check-label" for="student">A Student</label>
                 </div>
                 <div>
-                    <input type="radio" class="check-input" name="applier" id="estateWorker" onclick="ShowDetails()">
+                    <input type="radio" class="check-input" name="applier" id="estateWorker" onclick = "HideDetails()" >
                     <label class="check-label" for="stateWorker">An Estate Worker</label>
                 </div>
                 <div>
-                    <input type="radio" class="check-input" name="applier" id="otherAppliers" onclick="ShowDetails()">
+                    <input type="radio" class="check-input" name="applier" id="otherAppliers" onclick = "HideDetails()" >
                     <label class="check-label" for="otherAppliers">Other</label>
                 </div>
-<!--                <input type="submit" name="Submit">-->
+               <button type="button" onclick="ShowDetails()">Get Details</button>
             </form>
         </fieldset>
 
+        <form id="division-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         <fieldset id="detailsStudents" style="display: none;">
             <div>
                 <h2>What is your school?</h2>
@@ -211,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <fieldset id="submit" style="display: none">
             <br>
-            <!-- <input type="submit" value="Submit"> -->
+
             <button type="submit">Submit</button>
         </fieldset>
         </form>
