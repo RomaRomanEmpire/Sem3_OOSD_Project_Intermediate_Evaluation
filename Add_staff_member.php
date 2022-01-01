@@ -62,6 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsG").style.display = "none";
                 document.getElementById("DeatilsD").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
+                Password.style.display = "block";
+                submit_button.style.display = "block";
 
             }else if (Admin.checked) {
                 Officer_form.style.display = "block";
@@ -69,6 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsG").style.display = "none";
                 document.getElementById("DeatilsD").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
+                Password.style.display = "block";
+                submit_button.style.display = "block";
 
             } else if (Estate_Superintendent.checked) {
                 Officer_form.style.display = "block";
@@ -76,6 +80,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsG").style.display = "none";
                 document.getElementById("DeatilsD").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
+                Password.style.display = "block";
+                submit_button.style.display = "block";
 
             } else if (Grama_Niladari.checked) {
                 document.getElementById("DeatilsG").style.display = "block";
@@ -83,6 +89,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Officer_form.style.display = "block";
                 document.getElementById("DeatilsE").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
+                Password.style.display = "block";
+                submit_button.style.display = "block";
 
             } else if (Divitional_Secretary.checked) {
                 document.getElementById("DeatilsD").style.display = "block";
@@ -90,6 +98,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsG").style.display = "none";
                 document.getElementById("DeatilsE").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
+                Password.style.display = "block";
+                submit_button.style.display = "block";
 
             } else if (Principal.checked) {
                 document.getElementById("DeatilsP").style.display = "block";
@@ -97,6 +107,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsE").style.display = "none";
                 document.getElementById("DeatilsG").style.display = "none";
                 document.getElementById("DeatilsD").style.display = "none";
+                Password.style.display = "block";
+                submit_button.style.display = "block";
 
             } else if (National_Identity_Card_Issuer.checked) {
                 Officer_form.style.display = "block";
@@ -104,11 +116,81 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsG").style.display = "none";
                 document.getElementById("DeatilsD").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
+                Password.style.display = "block";
+                submit_button.style.display = "block";
+            }
+
+        }
+
+        function HideDetails() {
+            document.getElementById("Create_form").disabled = false;
+            var Database_Manager = document.getElementById("Officer_DM")
+            var Admin = document.getElementById("Officer_A")
+            var Estate_Superintendent = document.getElementById("Officer_E")
+            var Grama_Niladari = document.getElementById("Officer_G");
+            var Divitional_Secretary = document.getElementById("Officer_D");
+            var Principal = document.getElementById("Officer_P");
+            var National_Identity_Card_Issuer = document.getElementById("Officer_N");
+            var Disable_Tag = document.getElementById("Disable_Tag");
+            var Deatils_NIC = document.getElementById("DeatilsN");
+            var Officer_form = document.getElementById("Create_form");
+            var submit_button = document.getElementById("Submit_button");
+            var Password = document.getElementById("Password");
+            var Estate_Superintendent = document.getElementById("Officer_E");
+
+            if (Database_Manager.checked) {
+                Officer_form.style.display = "none";
+                document.getElementById("DeatilsE").style.display = "none";
+                document.getElementById("DeatilsG").style.display = "none";
+                document.getElementById("DeatilsD").style.display = "none";
+                document.getElementById("DeatilsP").style.display = "none";
+
+            }else if (Admin.checked) {
+                Officer_form.style.display = "none";
+                document.getElementById("DeatilsE").style.display = "none";
+                document.getElementById("DeatilsG").style.display = "none";
+                document.getElementById("DeatilsD").style.display = "none";
+                document.getElementById("DeatilsP").style.display = "none";
+
+            } else if (Estate_Superintendent.checked) {
+                Officer_form.style.display = "none";
+                document.getElementById("DeatilsE").style.display = "none";
+                document.getElementById("DeatilsG").style.display = "none";
+                document.getElementById("DeatilsD").style.display = "none";
+                document.getElementById("DeatilsP").style.display = "none";
+
+            } else if (Grama_Niladari.checked) {
+                document.getElementById("DeatilsG").style.display = "none";
+                document.getElementById("DeatilsD").style.display = "none";
+                Officer_form.style.display = "none";
+                document.getElementById("DeatilsE").style.display = "none";
+                document.getElementById("DeatilsP").style.display = "none";
+
+            } else if (Divitional_Secretary.checked) {
+                document.getElementById("DeatilsD").style.display = "none";
+                Officer_form.style.display = "none";
+                document.getElementById("DeatilsG").style.display = "none";
+                document.getElementById("DeatilsE").style.display = "none";
+                document.getElementById("DeatilsP").style.display = "none";
+
+            } else if (Principal.checked) {
+                document.getElementById("DeatilsP").style.display = "none";
+                Officer_form.style.display = "none";
+                document.getElementById("DeatilsE").style.display = "none";
+                document.getElementById("DeatilsG").style.display = "none";
+                document.getElementById("DeatilsD").style.display = "none";
+
+            } else if (National_Identity_Card_Issuer.checked) {
+                Officer_form.style.display = "none";
+                document.getElementById("DeatilsE").style.display = "none";
+                document.getElementById("DeatilsG").style.display = "none";
+                document.getElementById("DeatilsD").style.display = "none";
+                document.getElementById("DeatilsP").style.display = "none";
 
             }
 
-            Password.style.display = "block";
-            submit_button.style.display = "block";
+            Password.style.display = "none";
+            submit_button.style.display = "none";
 
         }
     </script>
@@ -126,47 +208,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <form id="add-staff-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                     <fieldset id="Disable_Tag">
+                        <br>
                         <h2 style="color: black;  ">Select The Officer's Profession</h2>
                         <br>
                         <div class="mb-3 form-check">
                             <input type="radio" class="form-check-input" value="Database_Manager" name="officer"
-                                   id="Officer_DM" onclick="ShowDetails()">
+                                   id="Officer_DM" onclick="HideDetails()">
                             <label class="form-check-label" for="Officer_DM">Database Manager</label>
                         </div>
                         <div class="mb-3 form-check">
                             <input type="radio" class="form-check-input" value="Admin" name="officer"
-                                   id="Officer_A" onclick="ShowDetails()">
+                                   id="Officer_A" onclick="HideDetails()">
                             <label class="form-check-label" for="Officer_A">Admin</label>
                         </div>
                         <div class="mb-3 form-check">
                             <input type="radio" class="form-check-input" name="officer" value="Estate_Superintendent"
-                                   id="Officer_E" onclick="ShowDetails()">
+                                   id="Officer_E" onclick="HideDetails()">
                             <label class="form-check-label" for="Officer_E">Estate Superintendent</label>
                         </div>
                         <div class="mb-3 form-check">
                             <input type="radio" class="form-check-input" value="Divisional_Secretary" name="officer"
-                                   id="Officer_D" onclick="ShowDetails()">
+                                   id="Officer_D" onclick="HideDetails()">
                             <label class="form-check-label" for="Officer_D">Divisional Secretary</label>
                         </div>
                         <div class="mb-3 form-check">
                             <input type="radio" class="form-check-input" value="Grama_Niladari" name="officer"
-                                   id="Officer_G" onclick="ShowDetails()">
+                                   id="Officer_G" onclick="HideDetails()">
                             <label class="form-check-label" for="Officer_G">Grama Niladari</label>
                         </div>
                         <div class="mb-3 form-check">
                             <input type="radio" class="form-check-input" value="Principal" name="officer" id="Officer_P"
-                                   onclick="ShowDetails()">
+                                   onclick="HideDetails()">
                             <label class="form-check-label" for="Officer_P">Principal</label>
                         </div>
                         <div class="mb-3 form-check">
                             <input type="radio" class="form-check-input" name="officer"
-                                   value="National_Identity_Card_Issuer" id="Officer_N" onclick="ShowDetails()">
+                                   value="National_Identity_Card_Issuer" id="Officer_N" onclick="HideDetails()">
                             <label class="form-check-label" for="Officer_N">National Identity Card Issuer</label>
                         </div>
+
+                        <button type="button" class="btn btn-primary" onclick="ShowDetails()">Get Details</button>
 
                     </fieldset>
 
                     <fieldset id="Create_form" style="display: none;">
+                        <br>
                         <h2 style="color: black;  ">Create Staff Account</h2>
                         <br>
                         <div class="mb-3">
