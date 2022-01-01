@@ -516,10 +516,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </dl>
 
                        
-                    <dl>
+                    <!-- <dl>
                         <dt><b><label for="certifySignature">Signature and official frank of the certifying
                                     Officer</label></b></dt>
-                    </dl>
+                    </dl> -->
 
                     <button type="button" class="previous-btn">Previous</button>
                     <button type="button" class="next-btn " onclick="canvers(1)">Next</button>
