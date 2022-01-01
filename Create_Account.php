@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                   grade.high=high;
             }
             var regExp=/(?=.*[A-Z])\w{4,15}/;
-            if(pwd.match(regExp)){
+            if(pwd.match(regExp) && pwd.length>8){
                   msg.innerHTML="Strong Password";
                   showgrade(1,100,100,0,0);
             }
