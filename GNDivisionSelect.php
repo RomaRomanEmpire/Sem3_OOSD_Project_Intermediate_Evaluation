@@ -1,14 +1,20 @@
 <?php
 session_start();
-//echo isset($_GET['id']);
+include 'autoloader.php';
+$conn = DB_OP::get_connection();
 $_SESSION['id'] = $_GET['id'] ?? $_SESSION['id'];
+
+$applicant = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
+$applicant->set_db($conn);
+$applicant->set_row_id($_SESSION['user_id']);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $_SESSION['GN_division'] = $_POST['GN_division'];
     $_SESSION['DS_division'] = $_POST['DS_division'];
     $id = $_SESSION['id'];
     header("location: IdRequestForm.php?id=$id");
-    
+
 }
 ?>
 <!DOCTYPE html>
@@ -33,13 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 estateWorker.style.display = "none";
                 other.style.display = "none";
                 student.style.display = "block";
-            }
-            else if (estateWorker_check.checked) {
+            } else if (estateWorker_check.checked) {
                 student.style.display = "none";
                 other.style.display = "none";
                 estateWorker.style.display = "block";
-            }
-            else if (other_check.checked) {
+            } else if (other_check.checked) {
                 student.style.display = "none";
                 estateWorker.style.display = "none";
                 other.style.display = "block";
@@ -86,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: #000;
         }
 
-        button,input[type="submit"] {
+        button, input[type="submit"] {
             float: center;
             margin-top: 10px;
             padding: 10px 30px;
@@ -106,106 +110,113 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+<div>
     <div>
-        <div>
-            <fieldset>
-                <h1>Who are You?</h1>
-                <br>
-                <form id="division-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                    <div>
-                        <input type="radio" class="check-input" name="applier" id="student" onclick="ShowDetails()">
-                        <label class="check-label" for="student">A Student</label>
-                    </div>
-                    <div>
-                        <input type="radio" class="check-input" name="applier" id="estateWorker" onclick="ShowDetails()">
-                        <label class="check-label" for="stateWorker">An Estate Worker</label>
-                    </div>
-                    <div>
-                        <input type="radio" class="check-input" name="applier" id="otherAppliers" onclick="ShowDetails()">
-                        <label class="check-label" for="otherAppliers">Other</label>
-                    </div>
-                </fieldset>
-
-                <fieldset id="detailsStudents" style="display: none;">
-                    <div>
-                        <h2>What is your school?</h2>
-                        <b><label for="school">School</label></b><br>
-                        <input type="text" name="GN_division" list="schools" placeholder="Select your school....">
-                        <datalist id="schools">
-                            <option>Bandaranayake College Gampaha</option>
-                            <option>Royal College Colombo 7</option>
-                            <option>Ananda College Colmbo 10</option>
-                            <option>Veyangoda Central College Veyangoda</option>
-                            <option>Dharmaraja College Kandy</option>
-                            <option>Visaka Vidyalaya Colombo 5</option>
-                            <option>Nalanda College Colombo 10</option>
-                            <option>Rathnawali Balika Vidyalaya Gampaha</option>
-                            <option>Devi Balika Vidyalaya 8</option>
-                            <option>Mahamaya Girl's College Kandy</option>
-                        </datalist><br>
-                    </div>
-                </fieldset>
-
-                <fieldset id="detailsEstateWorkers" style="display: none;">
-                    <div>
-                        <h2>What is your Estate Division?</h2>
-                        <b><label for="estateDivision">Estate Division</label></b><br>
-                        <input type="text" name="GN_division" list="estateDivisions" placeholder="Select your Estate Division....">
-                        <datalist id="estateDivisions">
-                            <option>Mabopitiya, Undugoda</option>
-                            <option>Maddakelle, Madoolkelle</option>
-                            <option>wadupola, Kegalle</option>
-                            <option>Walgama, Kurunegala</option>
-                            <option>Dallokoya, Elkaduwa</option>
-                            <option>Dalugala, Matale</option>
-                            <option>Talawatta, Galaha</option>
-                            <option>Thalgaswala, Ahangama</option>
-                        </datalist><br>
-                    </div>
-                </fieldset>
-                <filedset id="detailsOther" style="display: none;">
-                    <div>
-                        <h2>What is your Grama Niladari Division and Divisional Secretariat Division?</h2>
-                        <b><label for="GN_division">Grama Niladari Division</label></b><br>
-                        <input type="text" list="GN_divisions" name="GN_division" placeholder="Select your GN Division....">
-                        <datalist id="GN_divisions">
-                            <option>Eldeniya East 286E</option>
-                            <option>Suriyapaluwa East 245B</option>
-                            <option>Kirillawela South 245B</option>
-                            <option>Wedamulla 261</option>
-                            <option>Makola North Ihala 270</option>
-                            <option>Makola South Ihala 271</option>
-                            <option>Heiyanthuduwa East 275B</option>
-                            <option>Yakkaduwa 207A</option>
-                            <option>Dippitigoda 260</option>
-                            <option>Kalawana 114</option>
-                        </datalist><br>
-
-                        <b><label for="DS_division">Divisional Secretariat Division</label></b><br>
-                        <input type="text" list="DS_divisions" name="DS_division" placeholder="Select your DS Division....">
-                        <datalist id="DS_divisions">
-                            <option>Attanagalla</option>
-                            <option>Biyagama</option>
-                            <option>Dompe</option>
-                            <option>Gampaha</option>
-                            <option>Katana</option>
-                            <option>Ja Ela</option>
-                            <option>Agalawatta</option>
-                            <option>Bandaragama</option>
-                            <option>Beruwala</option>
-                            <option>Ingiriya</option>
-                        </datalist><br>
-                    </div>
-                </filedset>
-
-                <fieldset id="submit" style="display: none">
-                    <br>
-                    <!-- <input type="submit" value="Submit"> -->
-                    <button type="submit">Submit</button>
-                </fieldset>
+        <fieldset>
+            <h1>Who are You?</h1>
+            <br>
+            <form id="division-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                <div>
+                    <input type="radio" class="check-input" name="applier" id="student" onclick="ShowDetails()">
+                    <label class="check-label" for="student">A Student</label>
+                </div>
+                <div>
+                    <input type="radio" class="check-input" name="applier" id="estateWorker" onclick="ShowDetails()">
+                    <label class="check-label" for="stateWorker">An Estate Worker</label>
+                </div>
+                <div>
+                    <input type="radio" class="check-input" name="applier" id="otherAppliers" onclick="ShowDetails()">
+                    <label class="check-label" for="otherAppliers">Other</label>
+                </div>
+<!--                <input type="submit" name="Submit">-->
             </form>
-        </div>
+        </fieldset>
+
+        <fieldset id="detailsStudents" style="display: none;">
+            <div>
+                <h2>What is your school?</h2>
+                <b><label for="school">School</label></b><br>
+                <input type="text" name="GN_division" list="schools" placeholder="Select your school....">
+                <datalist id="schools">
+                    <option>Bandaranayake College Gampaha</option>
+                    <option>Royal College Colombo 7</option>
+                    <option>Ananda College Colmbo 10</option>
+                    <option>Veyangoda Central College Veyangoda</option>
+                    <option>Dharmaraja College Kandy</option>
+                    <option>Visaka Vidyalaya Colombo 5</option>
+                    <option>Nalanda College Colombo 10</option>
+                    <option>Rathnawali Balika Vidyalaya Gampaha</option>
+                    <option>Devi Balika Vidyalaya 8</option>
+                    <option>Mahamaya Girl's College Kandy</option>
+                </datalist>
+                <br>
+            </div>
+        </fieldset>
+
+        <fieldset id="detailsEstateWorkers" style="display: none;">
+            <div>
+                <h2>What is your Estate Division?</h2>
+                <b><label for="estateDivision">Estate Division</label></b><br>
+                <input type="text" name="GN_division" list="estateDivisions"
+                       placeholder="Select your Estate Division....">
+                <datalist id="estateDivisions">
+                    <option>Mabopitiya, Undugoda</option>
+                    <option>Maddakelle, Madoolkelle</option>
+                    <option>wadupola, Kegalle</option>
+                    <option>Walgama, Kurunegala</option>
+                    <option>Dallokoya, Elkaduwa</option>
+                    <option>Dalugala, Matale</option>
+                    <option>Talawatta, Galaha</option>
+                    <option>Thalgaswala, Ahangama</option>
+                </datalist>
+                <br>
+            </div>
+        </fieldset>
+        <filedset id="detailsOther" style="display: none;">
+            <div>
+                <h2>What is your Grama Niladari Division and Divisional Secretariat Division?</h2>
+                <b><label for="GN_division">Grama Niladari Division</label></b><br>
+                <input type="text" list="GN_divisions" name="GN_division" placeholder="Select your GN Division....">
+                <datalist id="GN_divisions">
+                    <option>Eldeniya East 286E</option>
+                    <option>Suriyapaluwa East 245B</option>
+                    <option>Kirillawela South 245B</option>
+                    <option>Wedamulla 261</option>
+                    <option>Makola North Ihala 270</option>
+                    <option>Makola South Ihala 271</option>
+                    <option>Heiyanthuduwa East 275B</option>
+                    <option>Yakkaduwa 207A</option>
+                    <option>Dippitigoda 260</option>
+                    <option>Kalawana 114</option>
+                </datalist>
+                <br>
+
+                <b><label for="DS_division">Divisional Secretariat Division</label></b><br>
+                <input type="text" list="DS_divisions" name="DS_division" placeholder="Select your DS Division....">
+                <datalist id="DS_divisions">
+                    <option>Attanagalla</option>
+                    <option>Biyagama</option>
+                    <option>Dompe</option>
+                    <option>Gampaha</option>
+                    <option>Katana</option>
+                    <option>Ja Ela</option>
+                    <option>Agalawatta</option>
+                    <option>Bandaragama</option>
+                    <option>Beruwala</option>
+                    <option>Ingiriya</option>
+                </datalist>
+                <br>
+            </div>
+        </filedset>
+
+        <fieldset id="submit" style="display: none">
+            <br>
+            <!-- <input type="submit" value="Submit"> -->
+            <button type="submit">Submit</button>
+        </fieldset>
+        </form>
     </div>
+</div>
 </body>
 
 </html>

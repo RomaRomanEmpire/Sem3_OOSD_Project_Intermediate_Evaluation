@@ -514,7 +514,7 @@
                                     Officer</label></b>
                                     <a href="" style="float: right;"><button  type="submit" class="btn btn-sm btn-outline-danger" ><b>Approve</b></button></a>
       </div>
-                                </dt>
+                                </form>
                                    
                     </dl>
                     <dl>
