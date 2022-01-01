@@ -8,7 +8,8 @@ $user->set_db($conn);
 $user->set_row_id($_SESSION['user_id']);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['pwd_checkbox'])) {
-        if (isset($_POST['prev_pwd'])) {
+        echo "<script type='text/javascript'>alert('checked!');</script>";
+        if (isset($_POST['prev_pwd']) && isset($_POST['new_pwd'])) {
             if (!password_verify($_POST['prev_pwd'], $user->get_user_pwd())) {
                 echo "<script type='text/javascript'>alert('previous password is not matched!'); window.location.href = 'Profile_Details.php';</script>";
             }
@@ -44,14 +45,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   margin-left: 20px;
   margin-right: 20px;"><br> <br>
         <div class="mb-3 form-check">
-            <input type="checkbox" class="form-check-input" id="EditProfile" onchange="Edit_Profile()">
+            <input type="checkbox" value="checked" class="form-check-input" id="EditProfile" onchange="Edit_Profile()">
             <!-- This function use to edit the profile details of the user -->
             <label class="form-check-label" for="EditProfile">Update Account Deatils</label>
         </div>
         <br>
         <br>
         <div class="mb-3 form-check">
-            <input type="checkbox" name="pwd_checkbox" class="form-check-input" id="ChangePassword"
+            <input type="checkbox" name="pwd_checkbox" value="checked" class="form-check-input" id="ChangePassword"
                    onclick="Change_Password()">
             <label class="form-check-label" for="ChangePassword">Change Password</label>
         </div>

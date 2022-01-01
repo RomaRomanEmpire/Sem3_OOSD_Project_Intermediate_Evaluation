@@ -51,7 +51,9 @@
                   <div class="card1">
                   <div class="icon_case">
                         <br><br><br><br>
-                      <a href="Database_Details.php" ><button>View Database Details</button></a>
+                      <a href="user_Details.php" ><button>View Database Details</button></a>
+                      <br><br>
+                      <a href="View_Applications_Details.php" ><button>View Application Details</button></a>
                       <br><br>
                         <!-- <button>View Principal Details</button> -->
                         <!-- <table class="customers" >
