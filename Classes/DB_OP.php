@@ -71,7 +71,7 @@ class DB_OP
                             header("location: applicant_dashboard.php");
                         } else if ($row['u_type'] == 'db_manager') {
                             header("location: DatabaseManagerDashboard.php");
-                        } else if ($row['u_type'] == 'gn' || $row['u_type'] == 'ds' || $row['u_type'] == 'admin') {
+                        } else if ($row['u_type'] == 'gn' || $row['u_type'] == 'ds' || $row['u_type'] == 'admin'|| $row['u_type'] == 'es'|| $row['u_type'] == 'principal'|| $row['u_type'] == 'ni') {
                             header("location: RAP_Dashboard.php");
                         }
                     } else {
@@ -329,7 +329,10 @@ class DB_OP
 
     public function database_details($table, $key, $key_value, $order)
     {
-        $sql = "SELECT * FROM $table WHERE $key = ? $order";
+        if (empty($key))
+            $sql = "SELECT * FROM $table WHERE ''= ? $order";
+        else
+            $sql = "SELECT * FROM $table WHERE $key= ? $order";
         if ($stmt = $this->link->prepare($sql)) {
 
             // Bind variables to the prepared statement as parameters
@@ -340,6 +343,24 @@ class DB_OP
             if ($stmt->execute()) {
                 $result = $stmt->get_result();
                 return $result;
+            }
+            // Close statement
+            $stmt->close();
+        }
+    }
+
+    public function database_details_2($table, $key1, $key2, $key_value1, $key_value2, $order)
+    {
+        $sql = "SELECT * FROM $table WHERE ($key1 = ? or $key2 = ?)$order";
+        if ($stmt = $this->link->prepare($sql)) {
+
+            // Bind variables to the prepared statement as parameters
+            $stmt->bind_param('ss', $key_value1, $key_value2);
+
+            // Attempt to execute the prepared statement
+            // just execute the prepared statement not checking values
+            if ($stmt->execute()) {
+                return $stmt->get_result();
             }
             // Close statement
             $stmt->close();

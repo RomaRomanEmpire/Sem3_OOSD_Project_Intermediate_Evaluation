@@ -28,7 +28,7 @@ class Application
     private $postalVillage;
     private $postalPostalCode;
     private $citizenshipCertificateType;
-    // private $citizenshipCertificateNo;
+    private $citizenshipCertificateNo_9_1;
     private $citizenshipCertificateDate;
     private $residenceTelNo;
     private $mobileTelNo;
@@ -47,9 +47,10 @@ class Application
 
     private $approvableArray;
     private $state;
+    private $app_type_id;
+
     // private $
-    // private $
-    public function __construct($attributeArray, $applicant_id)
+    public function __construct($attributeArray, $applicant_id, $app_type_id)
     {
 
         $this->familyName = $attributeArray['familyName'];
@@ -66,7 +67,7 @@ class Application
         $this->countryOfBirth = $attributeArray['countryOfBirth'];
         $this->birthCity = $attributeArray['birthCity'];
 
-        $this->citizenshipCertificateNo = isset($attributeArray['citizenshipCertificateNo']) ? $attributeArray['citizenshipCertificateNo'] : NULL;
+        $this->citizenshipCertificateNo = $attributeArray['citizenshipCertificateNo'] ?? NULL;
         $this->permHouseName = $attributeArray['permHouseName'];
         $this->permRoad = $attributeArray['permRoad'];
         $this->permVillage = $attributeArray['permVillage'];
@@ -76,8 +77,8 @@ class Application
         $this->postalVillage = $attributeArray['postalVillage'];
         $this->postalPostalCode = $attributeArray['postalPostalCode'];
         $this->citizenshipCertificateType = $attributeArray['citizenshipCertificateType'];
-        //  $this->citizenshipCertificateNo = $attributeArray[''];
-        $this->citizenshipCertificateDate = $attributeArray['citizenshipCertificateDate'];
+        $this->citizenshipCertificateNo_9_1 = $attributeArray['certificateNo_9.1']??NULL;
+        $this->citizenshipCertificateDate = $attributeArray['citizenshipCertificateDate']??NULL;
         $this->residenceTelNo = $attributeArray['residenceTelNo'];
         $this->mobileTelNo = $attributeArray['mobileTelNo'];
         $this->email = $attributeArray['email'];
@@ -95,15 +96,16 @@ class Application
         $this->approvableArray = array();
         $this->fillApprovableArray($applicant_id);
 
+        $this->app_type_id = $app_type_id;
         $this->state = Unfilled::getUnfilled();
     }
 
     /**
-     * @return string
+     * @return State
      */
-    public function getState(): string
+    public function getState(): State
     {
-        return $this->state->getState();
+        return $this->state;
     }
 
     /**
@@ -119,6 +121,335 @@ class Application
     {
         array_push($this->approvableArray, $user_id);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getFamilyName()
+    {
+        return $this->familyName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCivilStatus()
+    {
+        return $this->civilStatus;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfession()
+    {
+        return $this->profession;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBirthCertificateNo()
+    {
+        return $this->birthCertificateNo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlaceOfBirth()
+    {
+        return $this->placeOfBirth;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBirthDivision()
+    {
+        return $this->birthDivision;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBirthDistrict()
+    {
+        return $this->birthDistrict;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCountryOfBirth()
+    {
+        return $this->countryOfBirth;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBirthCity()
+    {
+        return $this->birthCity;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getCitizenshipCertificateNo()
+    {
+        return $this->citizenshipCertificateNo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPermHouseName()
+    {
+        return $this->permHouseName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPermRoad()
+    {
+        return $this->permRoad;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPermVillage()
+    {
+        return $this->permVillage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPermPostalCode()
+    {
+        return $this->permPostalCode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostalHouseName()
+    {
+        return $this->postalHouseName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostalRoad()
+    {
+        return $this->postalRoad;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostalVillage()
+    {
+        return $this->postalVillage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPostalPostalCode()
+    {
+        return $this->postalPostalCode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCitizenshipCertificateType()
+    {
+        return $this->citizenshipCertificateType;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getCitizenshipCertificateNo91()
+    {
+        return $this->citizenshipCertificateNo_9_1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCitizenshipCertificateDate()
+    {
+        return $this->citizenshipCertificateDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResidenceTelNo()
+    {
+        return $this->residenceTelNo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMobileTelNo()
+    {
+        return $this->mobileTelNo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getPurpose()
+    {
+        return $this->purpose;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getLostIdNum()
+    {
+        return $this->lostIdNum;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getLostIdDate()
+    {
+        return $this->lostIdDate;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getPoliceStationName()
+    {
+        return $this->policeStationName;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getPoliceReportDate()
+    {
+        return $this->policeReportDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhotographs()
+    {
+        return $this->photographs;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReceiptNo()
+    {
+        return $this->receiptNo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReceipt()
+    {
+        return $this->receipt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPara1()
+    {
+        return $this->para_1;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPara2()
+    {
+        return $this->para_2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCertifyName()
+    {
+        return $this->certifyName;
+    }
+
+    /**
+     * @return array
+     */
+    public function getApprovableArray(): array
+    {
+        return $this->approvableArray;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAppTypeId()
+    {
+        return $this->app_type_id;
+    }
+
 
 }
 

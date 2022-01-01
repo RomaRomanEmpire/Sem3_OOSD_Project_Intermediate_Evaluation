@@ -31,6 +31,24 @@ class Applicant extends L_P_User implements Approvable
     // code..
   }
 
+  /**
+   * @return void
+   * @throws Exception
+   */
+  public function getGnDivOrAddress()
+  {
+    throw new Exception("Applicants not categorized in divisions");
+  }
+
+  /**
+   * @return void
+   * @throws Exception
+   */
+  public function getDs()
+  {
+    throw new Exception("Applicants not categorized in divisions");
+  }
+
 }
 
 
