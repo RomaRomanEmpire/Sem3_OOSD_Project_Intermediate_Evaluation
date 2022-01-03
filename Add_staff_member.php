@@ -399,12 +399,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
                             <input type="password" class="form-control" name="password" id="exampleInputPassword1"
-                                   placeholder="Enter password" required>
+                                   placeholder="Enter password" onkeyup="verifyPassword()" required>
+                            <meter min="1" max="100" value="0" low="0" high="0" id="grade"></meter>
+            <span id="msg"></span>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputCPassword" class="form-label">Confirm Password</label>
                             <input type="password" class="form-control" id="exampleInputCPassword"
-                                   placeholder="Enter password,again" required>
+                                   placeholder="Enter password,again" onchange="PasswordValidity()" required>
                         </div>
                     </fieldset>
                     <fieldset id="Submit_button" style="display: none;">
@@ -450,6 +452,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         });
 
+
+      var password_validate;
+      var age_validate;
+      var PW_length;
+      function verifyPassword(){
+            var pwd=document.getElementById("exampleInputPassword1").value;
+            var msg=document.getElementById("msg");
+            var grade=document.getElementById("grade");
+            function showgrade(min,max,value,low,high){
+                  grade.min=min;
+                  grade.max=max;
+                  grade.value=value;
+                  grade.low=low;
+                  grade.high=high;
+            }
+            var regExp=/(?=.*[A-Z])\w{4,15}/;
+            if(pwd.match(regExp) && pwd.length>8){
+                  msg.innerHTML="Strong Password";
+                  showgrade(1,100,100,0,0);
+            }
+            else{
+                  if(pwd.length<4){
+                        msg.innerHTML="poor password";
+                        showgrade(1,100,100,60,80);
+                  }
+                  else{
+                        msg.innerHTML="Weak Password";
+                        showgrade(1,100,100,40,80);
+                  }
+            }
+      }
+      function PasswordValidity(){
+            var pwd1=document.getElementById("exampleInputPassword1").value;
+            var pwd_conform=document.getElementById("exampleInputCPassword").value;
+            var btn=document.getElementById("button");
+
+            if  ((pwd1==pwd_conform) && (pwd1.length>=8 && pwd1.length<=14)){
+                return true;
+            }
+            else{
+                alert("Password conformation is wrong!! and must give strong password length.Charctor length must be in 8 to 14 range");
+                return false;
+            }
+      }
 
     </script>
 
