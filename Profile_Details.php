@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <h1 class="display-3" style="font-family: 'Times New Roman', Times, serif; text-align: left;">About</h1>
         <br>
-        <form id="add-staff-form" onsubmit = "return validation()" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
+        <form id="add-staff-form" onsubmit = "return required() && PasswordValidity()" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" >
             <fieldset id="Profile" disabled>
                 <div class="mb-3">
                     <label for="InputFName" class="form-label">Full Name</label>
@@ -152,7 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="InputNPassword" class="form-label">New Password</label>
                     <input type="password" class="form-control" name="new_pwd" id="InputNPassword"
                            aria-describedby="InputNPassword" 
-                           style=" background: transparent; border: solid rgb(252, 251, 251);  border-width: 1px 1px;" onkeyup="verifyPassword()">
+                           style=" background: transparent; border: solid rgb(252, 251, 251);  border-width: 1px 1px;" onkeyup="verifyPassword()" onchange="PasswordValidity()">
                     <meter min="1" max="100" value="0" low="0" high="0" id="grade"></meter>
                     <span id="msg"></span>
                 </div>

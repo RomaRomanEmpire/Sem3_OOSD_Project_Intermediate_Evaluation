@@ -278,23 +278,25 @@ function GoPreviousFile() {
 // }
 
 var required_;
+var required_copy;
+var password_validate;
 
 function required() {
     var changePwd = document.getElementById("ChangePassword");
+    var edit = document.getElementById("EditProfile");
     var value1 = document.getElementById("InputPPassword").value;
     var value2 = document.getElementById("InputNPassword").value;
     if (changePwd.checked) {
         if (value1 == "" && value2 == "") {
-            required_ = false;
+            alert("Please input a Value");
+            return false;
         } else {
-            required_ = true;
+            return true;
         }
     }
-
 }
 
-var password_validate;
-var PW_length;
+
 function verifyPassword() {
     var pwd = document.getElementById("InputNPassword").value;
     var msg = document.getElementById("msg");
@@ -326,28 +328,11 @@ function PasswordValidity() {
     var pwd = document.getElementById("InputNPassword").value;
 
     if (pwd.length >= 8 && pwd.length <= 14) {
-        password_validate = true;
-    }
-    else {
-        password_validate = false;
-    }
-}
-
-function validation() {
-    if (password_validate && required_) {
         return true;
     }
-    else if (!(required_)) {
-        required_ = true;
-        alert("Please input a Value");
-        return false;
-    }
-    else if (!(password_validate)) {
-        password_validate = true;
+    else {
         alert("Password conformation is wrong!! and must give strong password length.Charctor length must be in 8 to 14 range");
         return false;
     }
-
-
 }
 
