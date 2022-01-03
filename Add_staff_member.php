@@ -318,12 +318,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="mb-3">
                             <label for="exampleInputGDivition" class="form-label">Grama Niladari Division</label>
                             <input type="text" class="form-control" name="gdivision" id="exampleInputGDivition"
-                                   placeholder="Enter current working grama niladari divition">
+                                   placeholder="Enter current working grama niladari division">
 
                              <script>
                                $(function () {
                                  <?php
-                                 $php_array = $conn->get_table_info("ds", "DS");
+                                 $php_array = $conn->get_table_info("gn", "GN_division");
                                  $js_array = json_encode($php_array);
                                  ?>
                                  var variables = <?php echo $js_array;?>;
