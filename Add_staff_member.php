@@ -38,6 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="jquery/jquery.min.js"></script>
+    <link rel="stylesheet" href="jquery-ui/jquery-ui.css">
+    <script src="jquery-ui/jquery-ui.min.js"></script>
+
+
     <title>Add Staff</title>
     <script>
         function ShowDetails() {
@@ -293,13 +299,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="exampleInputSchool" class="form-label">Current Working School</label>
                             <input type="text" class="form-control" name="school" id="exampleInputSchool"
                                    placeholder="Enter current working school">
+
+                             <script>
+                               $(function () {
+                                 <?php
+                                 $php_array = $conn->get_table_info("schools", "school");
+                                 $js_array = json_encode($php_array);
+                                 ?>
+                                 var variables = <?php echo $js_array;?>;
+                                 $("#exampleInputSchool").autocomplete({
+                                   source: variables
+                                 });
+                               });
+                             </script>
                         </div>
                     </fieldset>
                     <fieldset id="DeatilsG" style="display: none;">
                         <div class="mb-3">
-                            <label for="exampleInputGDivition" class="form-label">Grama Niladari Divition</label>
+                            <label for="exampleInputGDivition" class="form-label">Grama Niladari Division</label>
                             <input type="text" class="form-control" name="gdivision" id="exampleInputGDivition"
                                    placeholder="Enter current working grama niladari divition">
+
+                             <script>
+                               $(function () {
+                                 <?php
+                                 $php_array = $conn->get_table_info("ds", "DS");
+                                 $js_array = json_encode($php_array);
+                                 ?>
+                                 var variables = <?php echo $js_array;?>;
+                                 $("#exampleInputGDivition").autocomplete({
+                                   source: variables
+                                 });
+                               });
+                             </script>
                         </div>
                     </fieldset>
                     <fieldset id="DeatilsD" style="display: none;">
@@ -307,6 +339,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="exampleInputDSecretariat" class="form-label">Divisional Secretariat</label>
                             <input type="text" class="form-control" name="ds" id="exampleInputDSecretariat"
                                    placeholder="Enter current working divisional secretariat">
+
+                             <script>
+                               $(function () {
+                                 <?php
+                                 $php_array = $conn->get_table_info("ds", "DS");
+                                 $js_array = json_encode($php_array);
+                                 ?>
+                                 var variables = <?php echo $js_array;?>;
+                                 $("#exampleInputDSecretariat").autocomplete({
+                                   source: variables
+                                 });
+                               });
+                             </script>
                         </div>
                     </fieldset>
                     <fieldset id="DeatilsE" style="display: none;">
@@ -314,6 +359,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="exampleInputEAddress" class="form-label">Estate Address</label>
                             <input type="text" class="form-control" name="estate" id="exampleInputEAddress"
                                    placeholder="Enter current working estate address">
+
+                             <script>
+                               $(function () {
+                                 <?php
+                                 $php_array = $conn->get_table_info("estates", "estate");
+                                 $js_array = json_encode($php_array);
+                                 ?>
+                                 var variables = <?php echo $js_array;?>;
+                                 $("#exampleInputEAddress").autocomplete({
+                                   source: variables
+                                 });
+                               });
+                             </script>
+
                         </div>
                     </fieldset>
 
