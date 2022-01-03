@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
   <script src="jquery/jquery.min.js"></script>
   <link rel="stylesheet" href="jquery-ui/jquery-ui.css">
   <script src="jquery-ui/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="Javascipt_File.js"></script>
 
   <script>
   function ShowDetails() {
@@ -137,10 +138,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
     outline: none;
     background-color: rgb(180, 220, 255);
     font-family: 'Montserrat';
-    font-size: 10px;
+    font-size: 15px;
     cursor: pointer;
   }
-
   body {
     background-color: cornsilk;
   }
@@ -150,7 +150,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
 
 <body>
   <div>
-    <div>
+  <div class="header1">
+        <div>
+            <button class="btn btn-outline-light" id="Back" style = "background-color: pink; float: right; margin-right: 50px; height: 50px; width: 100px; " onclick=" GoPreviousFile()">Back</button>
+        </div>
+    </div>
+
+    <div style="padding-top: 50px;">
       <fieldset>
         <h1>Who are You?</h1>
         <br>
@@ -178,9 +184,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
             <h2>What is your school?</h2>
             <b><label for="school">School</label></b><br>
 
-
-
-
             <input type="text" name="GN_division" id="sch_data" list="schools" placeholder="Select your school...." >
             <datalist id="schools">
 
@@ -196,6 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
                   source: variables
                 });
               });
+
               </script>
 
 
@@ -238,7 +242,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
             <h2>What is your Grama Niladari Division and Divisional Secretariat Division?</h2>
 
             <b><label for="DS_division">Divisional Secretariat Division</label></b><br>
-            <input type="text" id="ds_data" list="DS_divisions" name="DS_division" placeholder="Select your DS Division...." value="1">
+            <input type="text" id="ds_data" list="DS_divisions" name="DS_division" placeholder="Select your DS Division....">
             <datalist id="DS_divisions">
 
               <script>
@@ -296,7 +300,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
               //   }
               // });
 
-              </script>
+            // document.getElementById("student").addEventListener('change', function(){
+            // document.getElementById("sch_data").required = this.checked;
+            // });
+
+            </script>
 
 
             </datalist>
@@ -313,6 +321,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
       </form>
     </div>
   </div>
+
+    <script>
+        $('#student').change(function () {
+            if(this.checked) {
+                $('#sch_data').prop('required', true);
+            } else {
+                $('#sch_data').prop('required', false);
+            }
+        });
+
+        $('#estateWorker').change(function () {
+            if(this.checked) {
+                $('#est_data').prop('required', true);
+            } else {
+                $('#est_data').prop('required', false);
+            }
+        });
+
+        $('#otherAppliers').change(function () {
+            if(this.checked) {
+                $('#ds_data').prop('required', true);
+                $('#gn_data').prop('required', true);
+            } else {
+                $('#ds_data').prop('required', false);
+                $('#gn_data').prop('required', flase);
+            }
+        });
+
+
+    </script>
 </body>
 
 </html>
