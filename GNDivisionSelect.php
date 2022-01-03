@@ -43,16 +43,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
       estateWorker.style.display = "none";
       other.style.display = "none";
       student.style.display = "block";
+      submit_button.style.display = "block";
     } else if (estateWorker_check.checked) {
       student.style.display = "none";
       other.style.display = "none";
       estateWorker.style.display = "block";
+      submit_button.style.display = "block";
     } else if (other_check.checked) {
       student.style.display = "none";
       estateWorker.style.display = "none";
       other.style.display = "block";
+      submit_button.style.display = "block";
     }
-    submit_button.style.display = "block";
   }
 
   function HideDetails() {
@@ -79,10 +81,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
     submit_button.style.display = "none";
   }
 
-  function validate_gn_ds() {
-    var secretatiat_div = document.getElementById();
-    var gn_div = document.getElementById();
-    }
+  // function validate_gn_ds() {
+  //   console.log("================");
+  //   var inp = document.getElementById("DS_division");
+  //   console.log(inp);
+  //   }
+
 
 
   </script>
@@ -177,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
 
 
 
-            <input type="text" name="GN_division" id="sch_data" list="schools" placeholder="Select your school....">
+            <input type="text" name="GN_division" id="sch_data" list="schools" placeholder="Select your school...." >
             <datalist id="schools">
 
               <script>
@@ -234,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
             <h2>What is your Grama Niladari Division and Divisional Secretariat Division?</h2>
 
             <b><label for="DS_division">Divisional Secretariat Division</label></b><br>
-            <input type="text" id="ds_data" list="DS_divisions" name="DS_division" onchange="onCheck()" placeholder="Select your DS Division....">
+            <input type="text" id="ds_data" list="DS_divisions" name="DS_division" placeholder="Select your DS Division...." value="1">
             <datalist id="DS_divisions">
 
               <script>
@@ -250,6 +254,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
                 });
               });
 
+              var ds = document.getElementById("ds_data");
+              ds.addEventListner("input", function() {
+                document.getElementById("gn_data").disabled = this.value != "";
+              });
+
               </script>
 
             </datalist>
@@ -258,7 +267,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
 
             <b><label for="GN_division">Grama Niladari Division</label></b><br>
 
-            <input type="text" id="gn_data" list="GN_divisions" name="GN_division" placeholder="Select your GN Division...." disabled>
+            <input type="text" id="gn_data" list="GN_divisions" name="GN_division" placeholder="Select your GN Division...." disabled=true >
             <datalist id="GN_divisions">
 
               <script>
@@ -273,7 +282,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
                   source: variables
                 });
               });
+
+              var ds_data = document.getElementById("ds_data");
+              ds_data.addEventListener("input", function () {
+                  document.getElementById("gn_data").disabled = this.value == "";
+              });
+              validate_gn_ds();
+              // validate_gn_ds();
+              // ds_data.addEventListener("keydown", function (e) {
+              //   if(e.code == "Enter") {
+              //     document.getElementById("gn_data").disabled = this.value == "";
+              //     validate_gn_ds(e);
+              //   }
+              // });
+
               </script>
+
 
             </datalist>
             <br>
@@ -284,7 +308,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
         <fieldset id="submit" style="display: none">
           <br>
 
-          <button type="submit" onclick="validate_gn_ds()">Submit</button>
+          <button type="submit">Submit</button>
         </fieldset>
       </form>
     </div>
