@@ -234,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
             <h2>What is your Grama Niladari Division and Divisional Secretariat Division?</h2>
 
             <b><label for="DS_division">Divisional Secretariat Division</label></b><br>
-            <input type="text" id="ds_data" list="DS_divisions" name="DS_division" placeholder="Select your DS Division....">
+            <input type="text" id="ds_data" list="DS_divisions" name="DS_division" onchange="onCheck()" placeholder="Select your DS Division....">
             <datalist id="DS_divisions">
 
               <script>
@@ -258,7 +258,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
 
             <b><label for="GN_division">Grama Niladari Division</label></b><br>
 
-            <input type="text" id="gn_data" list="GN_divisions" name="GN_division" placeholder="Select your GN Division....">
+            <input type="text" id="gn_data" list="GN_divisions" name="GN_division" placeholder="Select your GN Division...." disabled>
             <datalist id="GN_divisions">
 
               <script>

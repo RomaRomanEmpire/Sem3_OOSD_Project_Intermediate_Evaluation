@@ -265,8 +265,9 @@ class DB_OP
 
             if ($stmt->execute()) {
                 // Redirect to login page
-                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'applicant_dashboard.php';</script>";
-
+//                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'applicant_dashboard.php';</script>";
+                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!');</script>";
+                return $this->get_column_value("application_details", "app_id", ">", "0", "app_id", "ORDER BY staff_id DESC") ?? 0;
             } else {
                 echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
             }
@@ -341,8 +342,7 @@ class DB_OP
             // Attempt to execute the prepared statement
             // just execute the prepared statement not checking values
             if ($stmt->execute()) {
-                $result = $stmt->get_result();
-                return $result;
+                return $stmt->get_result();
             }
             // Close statement
             $stmt->close();
@@ -385,5 +385,31 @@ class DB_OP
             }
             $stmt->close();
         }
+    }
+    public function get_table_info($table, $column)
+    {
+        $sql = "SELECT $column FROM $table";
+        if ($stmt = $this->link->prepare($sql)) {
+
+            // Bind variables to the prepared statement as parameters
+
+            // Attempt to execute the prepared statement
+            // just execute the prepared statement not checking values
+            if ($stmt->execute()) {
+                $result = $stmt->get_result();
+                $results = array();
+                while ($row = $result->fetch_array(MYSQLI_NUM)) {
+                    foreach ($row as $r) {
+                        array_push($results,$r);
+                    }
+
+                }
+                return $results;
+            }
+            // Close statement
+            $stmt->close();
+        }
+//        return $this->link->query($sql);
+//        return $result->fetch_array();
     }
 }

@@ -50,7 +50,7 @@ class Application
     private $app_type_id;
 
     // private $
-    public function __construct($attributeArray, $applicant_id, $app_type_id)
+    public function __construct($photographs,$receipt,$attributeArray, $applicant_id, $app_type_id)
     {
 
         $this->familyName = $attributeArray['familyName'];
@@ -87,9 +87,9 @@ class Application
         $this->lostIdDate = isset($attributeArray['lostIdDate']) ? $attributeArray['lostIdDate'] : NULL;
         $this->policeStationName = isset($attributeArray['policeStationName']) ? $attributeArray['policeStationName'] : NULL;
         $this->policeReportDate = isset($attributeArray['policeReportDate']) ? $attributeArray['policeReportDate'] : NULL;
-        $this->photographs = $attributeArray['photographs'];
+        $this->photographs = $photographs;
         $this->receiptNo = $attributeArray['receiptNo'];
-        $this->receipt = $attributeArray['receipt'];
+        $this->receipt = $receipt??NULL;
         $this->para_1 = $attributeArray['para_1'];
         $this->para_2 = $attributeArray['para_2'];
         $this->certifyName = $attributeArray['certifyName'];
