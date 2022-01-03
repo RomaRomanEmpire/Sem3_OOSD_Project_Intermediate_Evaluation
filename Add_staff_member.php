@@ -264,17 +264,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="mb-3">
                             <label for="exampleInputFname" class="form-label">Officer's Full Name</label>
                             <input type="text" class="form-control" id="exampleInputFname" name="fname"
-                                   aria-describedby="emailHelp" placeholder="Enter full name">
+                                   aria-describedby="emailHelp" placeholder="Enter full name" required>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputUname" class="form-label">Username</label>
                             <input type="text" class="form-control" id="exampleInputUname" name="uname"
-                                   aria-describedby="emailHelp" placeholder="Enter user name">
+                                   aria-describedby="emailHelp" placeholder="Enter user name" required>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Email Address</label>
                             <input type="email" class="form-control" name="email" id="exampleInputEmail1"
-                                   aria-describedby="emailHelp" placeholder="Enter email.address">
+                                   aria-describedby="emailHelp" placeholder="Enter email.address" required>
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
                         <div class="mb-3">
@@ -289,7 +289,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="mb-3">
                             <label for="exampleInputMNumber" class="form-label">Mobile Number</label>
                             <input type="number" class="form-control" name="mobileNo" id="exampleInputMNumber"
-                                   placeholder="Enter mobile number">
+                                   placeholder="Enter mobile number" required>
                         </div>
                     </fieldset>
 
@@ -399,12 +399,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Password</label>
                             <input type="password" class="form-control" name="password" id="exampleInputPassword1"
-                                   placeholder="Enter password">
+                                   placeholder="Enter password" required>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputCPassword" class="form-label">Confirm Password</label>
                             <input type="password" class="form-control" id="exampleInputCPassword"
-                                   placeholder="Enter password,again">
+                                   placeholder="Enter password,again" required>
                         </div>
                     </fieldset>
                     <fieldset id="Submit_button" style="display: none;">
@@ -414,6 +414,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
+
+    <script>
+        $('#Officer_E').change(function () {
+            if(this.checked) {
+                $('#exampleInputEAddress').prop('required', true);
+            } else {
+                $('#exampleInputEAddress').prop('required', false);
+            }
+        });
+
+        $('#Officer_D').change(function () {
+            if(this.checked) {
+                $('#exampleInputDSecretariat').prop('required', true);
+            } else {
+                $('#exampleInputDSecretariat').prop('required', false);
+            }
+        });
+
+        $('#Officer_G').change(function () {
+            if(this.checked) {
+                $('#exampleInputGDivition').prop('required', true);
+                $('#exampleInputDSecretariat').prop('required', true);
+            } else {
+                $('#exampleInputGDivition').prop('required', false);
+                $('#exampleInputDSecretariat').prop('required', false);
+            }
+        });
+
+        $('#Officer_P').change(function () {
+            if(this.checked) {
+                $('#exampleInputSchool').prop('required', true);
+            } else {
+                $('#exampleInputSchool').prop('required', false);
+            }
+        });
+
+
+    </script>
 
 </body>
 </html>
