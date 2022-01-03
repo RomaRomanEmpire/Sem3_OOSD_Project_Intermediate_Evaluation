@@ -323,11 +323,9 @@ function verifyPassword() {
     }
 }
 function PasswordValidity() {
-    var pwd1 = document.getElementById("password_1").value;
-    var pwd_conform = document.getElementById("password_2").value;
-    var btn = document.getElementById("button");
+    var pwd = document.getElementById("InputNPassword").value;
 
-    if ((pwd1 == pwd_conform) && (pwd1.length >= 8 && pwd1.length <= 14)) {
+    if (pwd.length >= 8 && pwd.length <= 14) {
         password_validate = true;
     }
     else {
@@ -340,7 +338,7 @@ function validation() {
         return true;
     }
     else if (!(required_)) {
-        required = true;
+        required_ = true;
         alert("Please input a Value");
         return false;
     }
@@ -349,16 +347,7 @@ function validation() {
         alert("Password conformation is wrong!! and must give strong password length.Charctor length must be in 8 to 14 range");
         return false;
     }
+
+
 }
-
-
-
-
-
-
-
-
-
-
-
 
