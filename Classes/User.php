@@ -107,6 +107,7 @@ abstract class User
         if(isset($array['email']))$this->set_email($array['email']);
         if(isset($array['mobile_no']))$this->set_mobile_no($array['mobile_no']);
         if(isset($array['bday']))$this->set_bday($array['bday']);
+
         $this->db->update_user_account_details($this->row_id, $this->uname, $this->email, $array['new_pwd'] ?? NULL, $this);
     }
 
