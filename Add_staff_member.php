@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $staff_member = new DatabaseManager($_POST);
     } else if ($_POST['officer'] == "Admin") {
         $staff_member = new Admin($_POST);
-    }else if ($_POST['officer'] == "Estate_Superintendent") {
+    } else if ($_POST['officer'] == "Estate_Superintendent") {
         $staff_member = new E_S($_POST);
     } else if ($_POST['officer'] == "Grama_Niladari") {
         $staff_member = new GramaNiladari($_POST);
@@ -27,8 +27,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_manager = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
     $db_manager->set_db($conn);
     $db_manager->set_row_id($_SESSION['user_id']);
-    $db_manager->add_L_P_User($_POST['staff_id'], $staff_member->get_user_type(), $_POST['uname'], $_POST['email'], $_POST['password'], $staff_member);
 
+    if (!($_POST['officer'] == "Database_Manager" || $_POST['officer'] == "Admin" || $_POST['officer'] == "National_Identity_Card_Issuer")) {
+        if (!empty($_POST['school'])) {
+            $table = 'schools';
+            $div = $_POST['school'];
+            $array = $_SESSION['val_array1'];
+        } else if (!empty($_POST['estate'])) {
+            $table = 'estates';
+            $div = $_POST['estate'];
+            $array = $_SESSION['val_array4'];
+        } else if(!empty($_POST['gdivision'])){
+            $table = 'gn';
+            $div = $_POST['gdivision'];
+            $div2 = $_POST['ds'];
+            $table2 = 'ds';
+            $array = $_SESSION['val_array2'];
+            $array2 = $_SESSION['val_array3'];
+        } else if(!empty($_POST['ds'])) {
+          $table = 'ds';
+          $div = $_POST['ds'];
+          $array = $_SESSION['val_array3'];
+        }
+
+        if (in_array("$div", $array)) {
+            if ($table == 'gn') {
+                if (in_array($div2, $array2)) {
+                    $ds_id = $conn->get_column_value($table2, 'DS', '=', $div2, 'DS_code', '');
+                    $gnCode = $conn->get_column_value2($table, 'basic_division', 'DS_code', '=', $div, $ds_id, 'GN_code', "");
+
+                    if (!is_null($gnCode)) {
+                        $db_manager->add_L_P_User($table, $_POST['staff_id'], $staff_member->get_user_type(), $_POST['uname'], $_POST['email'], $_POST['password'], $staff_member);
+                    } else {
+                        echo "<script type='text/javascript'>alert('two divisions are not connected');</script>";
+                    }
+                } else {
+                    echo "<script type='text/javascript'>alert('Check whether filled addresses are correct');</script>";
+                }
+            } else {
+                $db_manager->add_L_P_User($table, $_POST['staff_id'], $staff_member->get_user_type(), $_POST['uname'], $_POST['email'], $_POST['password'], $staff_member);
+            }
+
+        } else {
+//            echo "<script type='text/javascript'>alert('Check whether filled address is correct');</script>";
+
+        }
+    } else
+        $db_manager->add_L_P_User("", $_POST['staff_id'], $staff_member->get_user_type(), $_POST['uname'], $_POST['email'], $_POST['password'], $staff_member);
 
 }
 ?>
@@ -71,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Password.style.display = "block";
                 submit_button.style.display = "block";
 
-            }else if (Admin.checked) {
+            } else if (Admin.checked) {
                 Officer_form.style.display = "block";
                 document.getElementById("DeatilsE").style.display = "none";
                 document.getElementById("DeatilsG").style.display = "none";
@@ -151,7 +196,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsD").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
 
-            }else if (Admin.checked) {
+            } else if (Admin.checked) {
                 Officer_form.style.display = "none";
                 document.getElementById("DeatilsE").style.display = "none";
                 document.getElementById("DeatilsG").style.display = "none";
@@ -300,18 +345,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="text" class="form-control" name="school" id="exampleInputSchool"
                                    placeholder="Enter current working school">
 
-                             <script>
-                               $(function () {
-                                 <?php
-                                 $php_array = $conn->get_table_info("schools", "school");
-                                 $js_array = json_encode($php_array);
-                                 ?>
-                                 var variables = <?php echo $js_array;?>;
-                                 $("#exampleInputSchool").autocomplete({
-                                   source: variables
-                                 });
-                               });
-                             </script>
+                            <script>
+                                $(function () {
+                                    <?php
+                                    $php_array = $conn->get_table_info("schools", "basic_division");
+                                    $_SESSION['val_array1'] = $php_array;
+                                    $js_array = json_encode($php_array);
+                                    ?>
+                                    var variables = <?php echo $js_array;?>;
+                                    $("#exampleInputSchool").autocomplete({
+                                        source: variables
+                                    });
+                                });
+                            </script>
                         </div>
                     </fieldset>
                     <fieldset id="DeatilsG" style="display: none;">
@@ -320,18 +366,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="text" class="form-control" name="gdivision" id="exampleInputGDivition"
                                    placeholder="Enter current working grama niladari division">
 
-                             <script>
-                               $(function () {
-                                 <?php
-                                 $php_array = $conn->get_table_info("gn", "GN_division");
-                                 $js_array = json_encode($php_array);
-                                 ?>
-                                 var variables = <?php echo $js_array;?>;
-                                 $("#exampleInputGDivition").autocomplete({
-                                   source: variables
-                                 });
-                               });
-                             </script>
+                            <script>
+                                $(function () {
+                                    <?php
+                                    $php_array = $conn->get_table_info("gn", "basic_division");
+                                    $_SESSION['val_array2'] = $php_array;
+                                    $js_array = json_encode($php_array);
+                                    ?>
+                                    var variables = <?php echo $js_array;?>;
+                                    $("#exampleInputGDivition").autocomplete({
+                                        source: variables
+                                    });
+                                });
+                            </script>
                         </div>
                     </fieldset>
                     <fieldset id="DeatilsD" style="display: none;">
@@ -340,18 +387,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="text" class="form-control" name="ds" id="exampleInputDSecretariat"
                                    placeholder="Enter current working divisional secretariat">
 
-                             <script>
-                               $(function () {
-                                 <?php
-                                 $php_array = $conn->get_table_info("ds", "DS");
-                                 $js_array = json_encode($php_array);
-                                 ?>
-                                 var variables = <?php echo $js_array;?>;
-                                 $("#exampleInputDSecretariat").autocomplete({
-                                   source: variables
-                                 });
-                               });
-                             </script>
+                            <script>
+                                $(function () {
+                                    <?php
+                                    $php_array = $conn->get_table_info("ds", "DS");
+                                    $_SESSION['val_array3'] = $php_array;
+                                    $js_array = json_encode($php_array);
+                                    ?>
+                                    var variables = <?php echo $js_array;?>;
+                                    $("#exampleInputDSecretariat").autocomplete({
+                                        source: variables
+                                    });
+                                });
+                            </script>
                         </div>
                     </fieldset>
                     <fieldset id="DeatilsE" style="display: none;">
@@ -360,18 +408,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="text" class="form-control" name="estate" id="exampleInputEAddress"
                                    placeholder="Enter current working estate address">
 
-                             <script>
-                               $(function () {
-                                 <?php
-                                 $php_array = $conn->get_table_info("estates", "estate");
-                                 $js_array = json_encode($php_array);
-                                 ?>
-                                 var variables = <?php echo $js_array;?>;
-                                 $("#exampleInputEAddress").autocomplete({
-                                   source: variables
-                                 });
-                               });
-                             </script>
+                            <script>
+                                $(function () {
+                                    <?php
+                                    $php_array = $conn->get_table_info("estates", "basic_division");
+                                    $_SESSION['val_array4'] = $php_array;
+                                    $js_array = json_encode($php_array);
+                                    ?>
+                                    var variables = <?php echo $js_array;?>;
+                                    $("#exampleInputEAddress").autocomplete({
+                                        source: variables
+                                    });
+                                });
+                            </script>
 
                         </div>
                     </fieldset>
@@ -401,7 +450,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <input type="password" class="form-control" name="password" id="exampleInputPassword1"
                                    placeholder="Enter password" onkeyup="verifyPassword()" required>
                             <meter min="1" max="100" value="0" low="0" high="0" id="grade"></meter>
-            <span id="msg"></span>
+                            <span id="msg"></span>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputCPassword" class="form-label">Confirm Password</label>
@@ -419,7 +468,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <script>
         $('#Officer_E').change(function () {
-            if(this.checked) {
+            if (this.checked) {
                 $('#exampleInputEAddress').prop('required', true);
             } else {
                 $('#exampleInputEAddress').prop('required', false);
@@ -427,7 +476,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
 
         $('#Officer_D').change(function () {
-            if(this.checked) {
+            if (this.checked) {
                 $('#exampleInputDSecretariat').prop('required', true);
             } else {
                 $('#exampleInputDSecretariat').prop('required', false);
@@ -435,7 +484,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
 
         $('#Officer_G').change(function () {
-            if(this.checked) {
+            if (this.checked) {
                 $('#exampleInputGDivition').prop('required', true);
                 $('#exampleInputDSecretariat').prop('required', true);
             } else {
@@ -445,7 +494,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
 
         $('#Officer_P').change(function () {
-            if(this.checked) {
+            if (this.checked) {
                 $('#exampleInputSchool').prop('required', true);
             } else {
                 $('#exampleInputSchool').prop('required', false);
@@ -453,49 +502,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
 
 
-      var password_validate;
-      var age_validate;
-      var PW_length;
-      function verifyPassword(){
-            var pwd=document.getElementById("exampleInputPassword1").value;
-            var msg=document.getElementById("msg");
-            var grade=document.getElementById("grade");
-            function showgrade(min,max,value,low,high){
-                  grade.min=min;
-                  grade.max=max;
-                  grade.value=value;
-                  grade.low=low;
-                  grade.high=high;
-            }
-            var regExp=/(?=.*[A-Z])\w{4,15}/;
-            if(pwd.match(regExp) && pwd.length>8){
-                  msg.innerHTML="Strong Password";
-                  showgrade(1,100,100,0,0);
-            }
-            else{
-                  if(pwd.length<4){
-                        msg.innerHTML="poor password";
-                        showgrade(1,100,100,60,80);
-                  }
-                  else{
-                        msg.innerHTML="Weak Password";
-                        showgrade(1,100,100,40,80);
-                  }
-            }
-      }
-      function PasswordValidity(){
-            var pwd1=document.getElementById("exampleInputPassword1").value;
-            var pwd_conform=document.getElementById("exampleInputCPassword").value;
-            var btn=document.getElementById("button");
+        var password_validate;
+        var age_validate;
+        var PW_length;
 
-            if  ((pwd1==pwd_conform) && (pwd1.length>=8 && pwd1.length<=14)){
-                return true;
+        function verifyPassword() {
+            var pwd = document.getElementById("exampleInputPassword1").value;
+            var msg = document.getElementById("msg");
+            var grade = document.getElementById("grade");
+
+            function showgrade(min, max, value, low, high) {
+                grade.min = min;
+                grade.max = max;
+                grade.value = value;
+                grade.low = low;
+                grade.high = high;
             }
-            else{
+
+            var regExp = /(?=.*[A-Z])\w{4,15}/;
+            if (pwd.match(regExp) && pwd.length > 8) {
+                msg.innerHTML = "Strong Password";
+                showgrade(1, 100, 100, 0, 0);
+            } else {
+                if (pwd.length < 4) {
+                    msg.innerHTML = "poor password";
+                    showgrade(1, 100, 100, 60, 80);
+                } else {
+                    msg.innerHTML = "Weak Password";
+                    showgrade(1, 100, 100, 40, 80);
+                }
+            }
+        }
+
+        function PasswordValidity() {
+            var pwd1 = document.getElementById("exampleInputPassword1").value;
+            var pwd_conform = document.getElementById("exampleInputCPassword").value;
+            var btn = document.getElementById("button");
+
+            if ((pwd1 == pwd_conform) && (pwd1.length >= 8 && pwd1.length <= 14)) {
+                return true;
+            } else {
                 alert("Password conformation is wrong!! and must give strong password length.Charctor length must be in 8 to 14 range");
                 return false;
             }
-      }
+        }
 
     </script>
 
