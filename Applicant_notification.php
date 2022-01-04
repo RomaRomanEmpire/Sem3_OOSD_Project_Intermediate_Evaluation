@@ -109,7 +109,7 @@
 <div class="container1">
       <div class="header2">
             <div class="nav">
-            <div><h2 style="color: white;padding-left:800px;padding-top:20px;"  ><p id="Topic">Inbox Messages</p></h2></div>   
+            <div><h2 style="color: white;padding-left:800px;padding-top:20px;"  ><p id="Topic1">Inbox Messages</p></h2></div>   
             
 		
 		<table>
@@ -151,7 +151,7 @@
 		
             </div >
 		<div style="padding-top: 45px;">
-		<a class="btn btn-outline-light" href="RAP_dashboard.php" role="button" style="height: 35px; width: 150px; padding-right:10px;margin-right: 10px;">Back</a> 
+		<a class="btn btn-outline-light" href="applicant_dashboard.php" role="button" style="height: 35px; width: 150px; padding-right:10px;margin-right: 10px;">Back</a> 
 		</div>
                   
             </div>
@@ -160,141 +160,73 @@
 		
 	
                   <ul>
-				<li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedN" autocomplete="off" onclick="Notification()" >
-					<label class="btn btn-outline-primary" for="btn_check_outlinedN"><p style="font-weight: bold;width:150px; height:10px;" >New Message</p></label><br>
+			     <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedT1" autocomplete="off" onclick="Notification1()" >
+					<label class="btn btn-outline-primary" for="btn_check_outlinedT1"><p style="font-weight: bold;width:150px; height:10px;" >Appoinment Time</p></label><br>
 				</li>
-				<br>
-			     <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedI" autocomplete="off" onclick="Notification()" >
-					<label class="btn btn-outline-primary" for="btn_check_outlinedI"><p style="font-weight: bold;width:150px; height:10px;" >Inbox Messages</p></label><br>
-				</li>
-				<br>
-				<li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedS" autocomplete="off" onclick="Notification()">
-					<label class="btn btn-outline-primary" for="btn_check_outlinedS"><p style="font-weight: bold;width:150px; height:10px;" >Sent Messages</p></label>
-				</li>
-			<fieldset id="Sent" style="display: none;">
+			
 			<br>
 			<li>
-			<input type="radio" name="e" class="btn-check" id="btn_check_outlinedT" autocomplete="off" onclick="Notification()">
-			<label class="btn btn-outline-success" for="btn_check_outlinedT"><p style="font-weight: bold;width:150px; height:10px;" >Time Allocation</p></label>
-			</li>
-			<br>
-			<li>
-			<input type="radio" name="e" class="btn-check" id="btn_check_outlinedR" autocomplete="off" onclick="Notification()">
-			<label class="btn btn-outline-success" for="btn_check_outlinedR"><p style="font-weight: bold;width:150px; height:10px;" >Reject Application</p></label>
-			</li>
-			</fieldset>
+			<input type="radio" name="h" class="btn-check" id="btn_check_outlinedR1" autocomplete="off" onclick="Notification1()">
+			<label class="btn btn-outline-primary" for="btn_check_outlinedR1"><p style="font-weight: bold;width:150px; height:10px;" >Reject Application</p></label>
+			</li><br>
+		
+				<li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedS1" autocomplete="off" onclick="Notification1()">
+					<label class="btn btn-outline-primary" for="btn_check_outlinedS1"><p style="font-weight: bold;width:150px; height:10px;" >Sent Messages</p></label>
+				</li>
+			
       </ul>
           
-	
-			
-      
-
-	
 	</div>
      
      
       <div class="Center">
-	<fieldset id="New_message" style="display: none;"></fieldset>
-	<fieldset id="Inbox_message" style="display: block;"> 
+	
+	<fieldset id="Time1" style="display: block;"> 
 	<div>
       <table class="table table-primary table-hover" >
         
 	<thead>
 	<tr>
-		<th scope="col">ID Number</th>
-		<th scope="col">Applicant Name</th>
-		<th scope="col">Appointment Time</th>
-		<th scope="col">Add A Reply</th>
-	</tr>
-	</thead>
-	<tbody>
-	<tr>
-		<th scope="row">1</th>
-		<td>Mark</td>
-		<td>Otto</td>
-		<td><a href="Time_slot.php"><button type="button" class="btn btn-outline-success"><img src="Image/Add1.jpg" >Add reply</button></a></td>
-	</tr>
-	
-	
-	</tbody>
-	</table>
-      </div>
-	</fieldset>
-	<!-- <fieldset id="Sent_message1" style="display:none;">
-	<div>
-      <table class="table table-primary table-hover" >
-        
-	<thead>
-	<tr>
-		<th scope="col">ID Number</th>
-		<th scope="col">Applicant Name</th>
-		<th scope="col">Send Date</th>
-	</tr>
-	</thead>
-	<tbody>
-	<tr>
-		<th scope="row">1</th>
-		<td>Mark</td>
 		
-		<td>@mdo</td>
-	</tr>
-	<tr>
-		<th scope="row">2</th>
-		<td>Jacob</td>
-		<td>Thornton</td>
-		<td>@fat</td>
-	</tr>
-	
-	</tbody>
-	</table>
-      </div>
-	</fieldset> -->
-	
-	<fieldset  id="Sent_message" style="display:none;">
-	<div>
-      <table class="table table-primary table-hover" >
-        
-	<thead>
-	<tr>
-		<th scope="col">ID Number</th>
-		<th scope="col">Applicant Name</th>
+		<th scope="col">Autherize officer</th>
+            <th scope="col">Appoinment Date</th>
 		<th scope="col">Appointment Time</th>
-		<th scope="col">Send Date</th>
+		<th scope="col">Conform</th>
+            <th scope="col">Ask another date</th>
 	</tr>
 	</thead>
 	<tbody>
-	<tr>
-		<th scope="row">1</th>
+	<tr>  
+            <td>name</td>
 		<td>Mark</td>
 		<td>Otto</td>
-		<td>@mdo</td>
+		<td><button type="submit" class="btn btn-outline-success">Conform</button></td>
+            <td><button type="button" class="btn btn-outline-success">Another Date</button></td>
 	</tr>
-	<tr>
-		<th scope="row">2</th>
-		<td>Jacob</td>
-		<td>Thornton</td>
-		<td>@fat</td>
-	</tr>
+	
 	
 	</tbody>
 	</table>
       </div>
 	</fieldset>
-	<fieldset id="Reject_message" style="display: none;">
+	
+	
+	
+	<fieldset id="Reject_message1" style="display: none;">
 	<div>
       <table class="table table-primary table-hover" >
         
 	<thead>
 	<tr>
-		<th scope="col">ID Number</th>
-		<th scope="col">Applicant Name</th>
-		<th scope="col">Send Date</th>
+		
+		<th scope="col">Autherize officer</th>
+		<th scope="col">Received Date</th>
 		<th scope="col">View Message</th>
 	</tr>
 	</thead>
 	<tbody>
 	<tr>
-		<th scope="row">1</th>
+		
 		<td>Mark</td>
 		<td>Otto</td>
 		<td><a href="view_message.php"><button type="button" class="btn btn-outline-primary" style="width: 100px;"><img src="Image/view.png" > view</button></a></td>
@@ -302,6 +234,37 @@
 	</tbody>
 	</table>
       </div>	
+	</fieldset>
+
+      <fieldset  id="Sent_message1" style="display:none;">
+	<div>
+      <table class="table table-primary table-hover" >
+        
+	<thead>
+	<tr>
+		<th scope="col">Autherize officer</th>
+		<th scope="col">Appointment Date</th>
+		<th scope="col">Appointment Time</th>
+		<th scope="col">Send Date</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<th scope="row">1</th>
+		<td>Mark</td>
+		<td>Otto</td>
+		<td>@mdo</td>
+	</tr>
+	<tr>
+		<th scope="row">2</th>
+		<td>Jacob</td>
+		<td>Thornton</td>
+		<td>@fat</td>
+	</tr>
+	
+	</tbody>
+	</table>
+      </div>
 	</fieldset>
 </div></div>
 

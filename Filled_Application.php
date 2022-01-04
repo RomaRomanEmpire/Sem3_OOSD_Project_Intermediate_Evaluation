@@ -20,7 +20,7 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
     <style>
 
         html {
-            min-height: 930%;
+            min-height: 850%;
         }
 
         body {
@@ -31,6 +31,13 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
             background-image: radial-gradient(circle farthest-corner at 22.4% 21.7%, rgba(4, 189, 228, 1) 0%, rgba(2, 83, 185, 1) 100.2%);
 
 
+        }
+        td{
+            padding-left:  20px;
+            padding-right: 30px;
+            padding-bottom: 20px;
+            
+            
         }
 
         h1 {
@@ -110,7 +117,7 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
         .container {
             left: 50%;
             /* padding-top: 100px; */
-            margin-top: 100px;
+            margin-top: 160px;
             align-self: center;
             position: absolute;
             transform: translate(-50%);
@@ -121,6 +128,7 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
             background-image: linear-gradient(to right, #00b4db, #0083b0);
             border-radius: 50px;
             border-color: #000;
+            
 
 
         }
@@ -129,14 +137,12 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
             position: fixed;
             top: 0;
             right: 0;
-            height: 10vh;
+            height: 19vh;
             width: 100%;
             background-color: #00b4db;
-            /* background-image: linear-gradient(to right, #141e30, #243b55); */
             display: flex;
             align-items: center;
             justify-content: right;
-            /* box-shadow: 0 4px 8px rgba(0, 0,0,0.2); */
             z-index: 3;
 
         }
@@ -172,10 +178,28 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
 
 <body>
 <div class="header1">
-    <h1 style="text-align: center;font-size:60px; color:white;padding-right:400px; font-family: 'Times New Roman', Times, serif;">
-        Application </h1>
-    <a class="btn btn-outline-light" href="View_Applications_Details.php" role="button"
-       style="height: 40px; width: 150px; padding-top:10px;margin:10px;">Back</a>
+    <table>
+        <tbody>
+           <div ><tr><td><h1 style="text-align: center;font-size:60px; color:white;padding-right:100px; font-family: 'Times New Roman', Times, serif;">Application </h1></td></tr></div> 
+           <div> <div> <div style="top: 0px;"> <tr>
+                            <!-- This button id only viewed by RAP -->
+                            <td style="float: right;"><a href="Time_slot.php">
+                                   <button type="submit" class="btn btn-sm btn-outline-primary"><b style="color: #000; font-size:18px;">Send Time</b>  
+                                   </button>
+                            <!-- This button id only viewed by RAP -->
+                           <td><a href="Reject_Application.php">
+                                   <button type="submit" class="btn btn-sm btn-outline-primary"><b style="color: #000;font-size:18px;">Reject Application</b>
+                                   </button>
+                               </a></td>
+                               <td><a href="View_Applications_Details.php">
+                                   <button type="submit" class="btn btn-sm btn-outline-light" style="width: 100px;font-size:18px;"><b style="color:#000; ">Back</b>
+                                   </button>
+                                  </a></td>
+            </tr>
+        
+            </div></div></div>
+        </tbody>
+    </table>
 </div>
 <section>
     <div class="container">

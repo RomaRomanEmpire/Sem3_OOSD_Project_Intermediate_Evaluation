@@ -344,12 +344,12 @@ h1,h2{
 
 }
 .container1 .header2 .nav h1{
-      margin: 0 auto;
-      text-align: center;
+      /* margin: 0 auto; */
+      /* text-align: center; */
       font-style:italic;
       font-family:Verdana, Geneva, Tahoma, sans-serif;
-      padding-left: 50%;
-      padding-right: 50%;
+      /* padding-left: 50%;
+      padding-right: 50%; */
 }
 
 @media screen and (max-width:1050px) {
@@ -381,7 +381,7 @@ h1,h2{
      
       
 }
-.Center{
+.container1 .Center{
      
       /* border: 5px solid #0e0e0d; */
       display: flex;
@@ -391,6 +391,8 @@ h1,h2{
       padding-left: 15%;
       /* padding-right: 100px; */
       /* box-shadow: #03031b; */
+      /* width: 85%; */
+      
 }
 .side_menu1{
       position: fixed;
@@ -399,7 +401,30 @@ h1,h2{
       height: 100%;
       justify-content: left;
       display: flex; 
-      flex-direction: column; }
+      flex-direction: column; 
+      z-index: 6;
+     }
+.side_menu1 li{
+      /* font-size: 19px;
+      padding: 10px 70px;
+      color: white; */
+      display: flex;
+      align-items: center;
+       /* width: 25%;
+      padding-left: 0%; */
+      
+
+}
+/* .side_menu1 li:hover,li a:hover {
+      background-color: white;
+      color: #f05462;
+} */
+
+/* .side_menu1 li a:hover{
+      background-color: white;
+      color: #f05462;
+     
+}       */
      
 @media screen and (max-width:940px){
       .barand_name h1{
