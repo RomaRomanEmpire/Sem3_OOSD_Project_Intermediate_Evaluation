@@ -160,8 +160,8 @@
 		
 	
                   <ul>
-				<li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedN" autocomplete="off" onclick="Notification()" >
-					<label class="btn btn-outline-primary" for="btn_check_outlinedN"><p style="font-weight: bold;width:150px; height:10px;" >New Message</p></label><br>
+				<li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedc" autocomplete="off" onclick="Notification()" >
+					<label class="btn btn-outline-primary" for="btn_check_outlinedc"><p style="font-weight: bold;width:150px; height:10px;" >Confirm Messages</p></label><br>
 				</li>
 				<br>
 			     <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedI" autocomplete="off" onclick="Notification()" >
@@ -194,7 +194,31 @@
      
      
       <div class="Center">
-	<fieldset id="New_message" style="display: none;"></fieldset>
+	<fieldset id="confirmation_message" style="display: none;">
+	<div>
+      <table class="table table-primary table-hover" >
+        
+	<thead>
+	<tr>
+		<th scope="col">ID Number</th>
+		<th scope="col">Applicant Name</th>
+		<th scope="col">content</th>
+		<th scope="col">Confirmation</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>Mark</td>
+		<td>Mark</td>
+		<td>Otto</td>
+		<td>utton</td>
+	</tr>
+	
+	
+	</tbody>
+	</table>
+      </div>
+	</fieldset>
 	<fieldset id="Inbox_message" style="display: block;"> 
 	<div>
       <table class="table table-primary table-hover" >

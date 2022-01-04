@@ -90,6 +90,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     <title>Add Staff</title>
+    <style>
+        input[type="text"],input[type="email"],input[type="date"] , input[type="password"],input[type="number"]{
+            background-color: #84bbc7;
+        }
+        h2{
+            
+            font-weight: bolder;
+           
+        }
+    </style>
     <script>
         function ShowDetails() {
             document.getElementById("Create_form").disabled = false;
@@ -248,11 +258,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="bootstrap.css">
 
 </head>
-<body style="background-color:#9886e6fd;">
+<body style="color: white; background: rgb(10,30,235); 
+background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%, rgba(15,30,135,1) 100%, rgba(101,181,198,1) 100%);">
 <!-- Deatils_NIC.style.display="block"; -->
 
 
-<div style="padding: 100px;  background-color: #9886e6fd; font-weight: bolder;">
+<div style="padding: 100px;  background: rgb(10,30,235);
+background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%, rgba(15,30,135,1) 100%, rgba(101,181,198,1) 100%); font-weight: bolder;">
     <div>
         <div>
             <div>
@@ -320,14 +332,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="exampleInputEmail1" class="form-label">Email Address</label>
                             <input type="email" class="form-control" name="email" id="exampleInputEmail1"
                                    aria-describedby="emailHelp" placeholder="Enter email.address" required>
-                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            <!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div> -->
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputIDnumber" class="form-label">Staff ID No.</label>
                             <?php
                             $last_staff_id = (!is_null($conn->get_column_value("user_details", "staff_id", ">", "0", "staff_id", "ORDER BY staff_id DESC"))) ? $conn->get_column_value("user_details", "staff_id", ">", "0", "staff_id", "ORDER BY staff_id DESC") : 0;
                             ?>
-                            <input type="text" class="form-control" name="staff_id" id="exampleInputIDnumber"
+                            <input type="text" class="form-control" name="staff_id" id="exampleInputIDnumber" style=" background-color: #84bbc7;"
                                    aria-describedby="emailHelp" placeholder="Enter identticard number"
                                    value="<?php echo($last_staff_id + 1) ?>" readonly>
                         </div>

@@ -259,10 +259,10 @@ function GoPreviousFile(){
 
 //=================Notification File Functions===================
 function Notification(){
-      if (document.getElementById("btn_check_outlinedN").checked){
+      if (document.getElementById("btn_check_outlinedc").checked){
             
-            document.getElementById("Topic").innerHTML="New Message";
-            document.getElementById("New_message").style.display="block";
+            document.getElementById("Topic").innerHTML="Confirm Message";
+            document.getElementById("confirmation_message").style.display="block";
             document.getElementById("Inbox_message" ).style.display="none";
             document.getElementById("Sent_message" ).style.display="none";
             document.getElementById("Sent").style.display="none";
@@ -273,7 +273,7 @@ function Notification(){
      else if(document.getElementById("btn_check_outlinedI").checked){
             document.getElementById("Topic").innerHTML="Inbox Messages"
             document.getElementById("Inbox_message" ).style.display="block";
-            document.getElementById("New_message").style.display="none";
+            document.getElementById("confirmation_message").style.display="none";
             document.getElementById("Sent_message" ).style.display="none";
             document.getElementById("Sent").style.display="none";
             document.getElementById("Reject_message" ).style.display="none";
@@ -288,7 +288,7 @@ function Notification(){
                   document.getElementById("Topic").innerHTML="Sent Messages"
                   document.getElementById("Sent_message" ).style.display="block";
                   document.getElementById("Inbox_message" ).style.display="none";
-                  document.getElementById("New_message").style.display="none";   
+                  document.getElementById("confirmation_message").style.display="none";   
                   document.getElementById("Reject_message" ).style.display="none"; 
                   
             }
@@ -296,7 +296,7 @@ function Notification(){
             document.getElementById("Topic").innerHTML="Sent Messages"
             document.getElementById("Reject_message" ).style.display="block";
             document.getElementById("Inbox_message" ).style.display="none";
-            document.getElementById("New_message").style.display="none";
+            document.getElementById("confirmation_message").style.display="none";
             document.getElementById("Sent_message" ).style.display="none";
             }
       }
