@@ -8,15 +8,35 @@ $applicant = unserialize($conn->get_column_value("user_details", "user_id", "=",
 $applicant->set_db($conn);
 $applicant->set_row_id($_SESSION['user_id']);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
-
+if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['GN_division']))) {
   $_SESSION['GN_division'] = $_POST['GN_division'];
   $_SESSION['DS_division'] = $_POST['DS_division'];
   $id = $_SESSION['id'];
-  header("location: IdRequestForm.php?id=$id");
+
+  if(!empty($_POST['DS_division']) && !empty($_POST['GN_division'])){
+    $table = 'gn';
+    $div = $_POST['GN_division'];
+    $table2 = 'ds';
+    $div2 = $_POST['DS_division'];
+    $array = $_SESSION['val_array3'];
+    $array2 = $_SESSION['val_array4'];
+
+    $ds_id = $conn->get_column_value($table2, 'DS', '=', $div2, 'DS_code', '');
+    $gnCode = $conn->get_column_value2($table, 'basic_division', 'DS_code', '=', $div, $ds_id, 'GN_code', "");
+
+    if (!is_null($gnCode)) {
+      header("location: IdRequestForm.php?id=$id");
+    } else {
+      echo "<script type='text/javascript'>alert('Two divisions does not match. Fill again.');</script>";
+    }
+  } else {
+    header("location: IdRequestForm.php?id=$id");
+  }
 
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
   <script src="jquery-ui/jquery-ui.min.js"></script>
   <script type="text/javascript" src="Javascipt_File.js"></script>
 
-  <script>
+  <script type="text/javascript">
   function ShowDetails() {
     var student = document.getElementById("detailsStudents")
     var estateWorker = document.getElementById("detailsEstateWorkers");
@@ -82,11 +102,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
     submit_button.style.display = "none";
   }
 
-  // function validate_gn_ds() {
-  //   console.log("================");
-  //   var inp = document.getElementById("DS_division");
-  //   console.log(inp);
-  //   }
+  function validate_gn_ds() {
+    var school = document.getElementById("sch_data").value;
+    var estate = document.getElementById("est_data").value;
+    var ds_div = document.getElementById("ds_data").value;
+    var gn_div = document.getElementById("gn_data").value;
+    var student_check = document.getElementById("student")
+    var estateWorker_check = document.getElementById("estateWorker");
+    var other_check = document.getElementById("otherAppliers");
+
+    if (student_check.checked) {
+      var sch = <?php echo json_encode($_SESSION['val_array1']); ?>;
+      if(!sch.includes(school)) {
+        alert("Enter a correct School name");
+        return false;
+      }
+
+    } else if (estateWorker_check.checked) {
+      var est = <?php echo json_encode($_SESSION['val_array2']); ?>;
+      if(!est.includes(estate)) {
+        alert("Enter a correct Estate");
+        return false;
+      }
+
+    } else if (other_check.checked) {
+      var ds = <?php echo json_encode($_SESSION['val_array3']); ?>;
+      if(!ds.includes(ds_div)) {
+        alert("Enter a correct Divisional section");
+        return false;
+      }
+      var est = <?php echo json_encode($_SESSION['val_array4']); ?>;
+      if(!est.includes(gn_div)) {
+        alert("Enter a correct Grama niladari division");
+        return false;
+      }
+      return true;
+    }
+  }
 
 
 
@@ -150,10 +202,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
 
 <body>
   <div>
-  <div class="header1">
-        <div>
-            <button class="btn btn-outline-light" id="Back" style = "background-color: pink; float: right; margin-right: 50px; height: 50px; width: 100px; " onclick=" GoPreviousFile()">Back</button>
-        </div>
+    <div class="header1">
+      <div>
+        <button class="btn btn-outline-light" id="Back" style = "background-color: pink; float: right; margin-right: 50px; height: 50px; width: 100px; " onclick=" GoPreviousFile()">Back</button>
+      </div>
     </div>
 
     <div style="padding-top: 50px;">
@@ -162,15 +214,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
         <br>
         <form id="division-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
           <div>
-            <input type="radio" class="check-input" name="applier" id="student" onclick="HideDetails()">
+            <input type="radio" class="check-input" value="student" name="applier" id="student" onclick="HideDetails()">
             <label class="check-label" for="student">A Student</label>
           </div>
           <div>
-            <input type="radio" class="check-input" name="applier" id="estateWorker" onclick="HideDetails()">
+            <input type="radio" class="check-input" value="estateWorker" name="applier" id="estateWorker" onclick="HideDetails()">
             <label class="check-label" for="stateWorker">An Estate Worker</label>
           </div>
           <div>
-            <input type="radio" class="check-input" name="applier" id="otherAppliers" onclick="HideDetails()">
+            <input type="radio" class="check-input" value="otherAppliers" name="applier" id="otherAppliers" onclick="HideDetails()">
             <label class="check-label" for="otherAppliers">Other</label>
           </div>
           <button type="button" onclick="ShowDetails()">Get Details</button>
@@ -178,7 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
         </form>
       </fieldset>
 
-      <form id="division-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+      <form id="division-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" onsubmit="return validate_gn_ds()">
         <fieldset id="detailsStudents" style="display: none;">
           <div>
             <h2>What is your school?</h2>
@@ -190,7 +242,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
               <script>
               $(function () {
                 <?php
-                $php_array = $conn->get_table_info("schools", "school");
+                $php_array = $conn->get_table_info("schools", "basic_division", "1");
+                $_SESSION['val_array1'] = $php_array;
                 $js_array = json_encode($php_array);
 
                 ?>
@@ -222,7 +275,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
               <script>
               $(function () {
                 <?php
-                $php_array = $conn->get_table_info("estates", "estate");
+                $php_array = $conn->get_table_info("estates", "basic_division", "1");
+                $_SESSION['val_array2'] = $php_array;
                 $js_array = json_encode($php_array);
 
                 ?>
@@ -248,7 +302,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
               <script>
               $(function () {
                 <?php
-                $php_array = $conn->get_table_info("ds", "DS");
+                $php_array = $conn->get_table_info("ds", "DS", "1");
+                $_SESSION['val_array3'] = $php_array;
                 $js_array = json_encode($php_array);
 
                 ?>
@@ -277,7 +332,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
               <script>
               $(function () {
                 <?php
-                $php_array = $conn->get_table_info("gn", "GN_division");
+                $php_array = $conn->get_table_info("gn", "basic_division", "1");
+                $_SESSION['val_array4'] = $php_array;
                 $js_array = json_encode($php_array);
 
                 ?>
@@ -289,22 +345,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
 
               var ds_data = document.getElementById("ds_data");
               ds_data.addEventListener("input", function () {
-                  document.getElementById("gn_data").disabled = this.value == "";
+                document.getElementById("gn_data").disabled = this.value == "";
               });
-              validate_gn_ds();
-              // validate_gn_ds();
-              // ds_data.addEventListener("keydown", function (e) {
-              //   if(e.code == "Enter") {
-              //     document.getElementById("gn_data").disabled = this.value == "";
-              //     validate_gn_ds(e);
-              //   }
-              // });
 
-            // document.getElementById("student").addEventListener('change', function(){
-            // document.getElementById("sch_data").required = this.checked;
-            // });
-
-            </script>
+              </script>
 
 
             </datalist>
@@ -316,41 +360,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['GN_division'])) {
         <fieldset id="submit" style="display: none">
           <br>
 
-          <button type="submit">Submit</button>
+          <button type="submit" name='submit' value="Submit">Submit</button>
         </fieldset>
       </form>
     </div>
   </div>
 
-    <script>
-        $('#student').change(function () {
-            if(this.checked) {
-                $('#sch_data').prop('required', true);
-            } else {
-                $('#sch_data').prop('required', false);
-            }
-        });
+  <script>
+  $('#student').change(function () {
+    if(this.checked) {
+      $('#sch_data').prop('required', true);
+    } else {
+      $('#sch_data').prop('required', false);
+    }
+  });
 
-        $('#estateWorker').change(function () {
-            if(this.checked) {
-                $('#est_data').prop('required', true);
-            } else {
-                $('#est_data').prop('required', false);
-            }
-        });
+  $('#estateWorker').change(function () {
+    if(this.checked) {
+      $('#est_data').prop('required', true);
+    } else {
+      $('#est_data').prop('required', false);
+    }
+  });
 
-        $('#otherAppliers').change(function () {
-            if(this.checked) {
-                $('#ds_data').prop('required', true);
-                $('#gn_data').prop('required', true);
-            } else {
-                $('#ds_data').prop('required', false);
-                $('#gn_data').prop('required', flase);
-            }
-        });
+  $('#otherAppliers').change(function () {
+    if(this.checked) {
+      $('#ds_data').prop('required', true);
+      $('#gn_data').prop('required', true);
+    } else {
+      $('#ds_data').prop('required', false);
+      $('#gn_data').prop('required', flase);
+    }
+  });
 
 
-    </script>
+  </script>
 </body>
 
 </html>
