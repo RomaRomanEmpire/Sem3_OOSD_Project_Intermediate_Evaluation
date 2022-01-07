@@ -53,8 +53,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $receipt = checkImageValidity("receipt");
 
 
-    $application = new Application($photograph, $receipt, $_POST, $_SESSION['user_id'], $_SESSION['id']);
+
     $applicant = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
+    $application = $applicant->getApplication();
+    $application->setDetails($photograph, $receipt, $_POST, $_SESSION['user_id'], $_SESSION['id']);
     $applicant->set_db($conn);
 
 
@@ -602,8 +604,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div style="padding-left: 298px;padding-top:40px;">
                     <dl style="height:35px;width:900px;">
-                        <dt><b><label for="certifySignature">Signature and official frank of the certifying
-                                    Officer</label></b></dt>
+                        <dt><b><label for="certifySignature">Signature of the Applicant</label></b></dt>
                     </dl>
                 </div>
                 <!-- <h2 style="border-color: #f1f1f1;padding-left: 80px;font-family: 'Times New Roman', Times, serif;font-weight: bolder;">Signature and official frank of the certifying
@@ -630,6 +631,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             <div class="step step-10 " style="position: fixed;">
+
+                    <div style="padding-left: 298px;padding-top:40px;">
+                        <dl style="height:35px;width:900px;">
+                            <dt><b><label for="certifySignature">Signature and official frank of the certifying
+                                        Officer</label></b></dt>
+                        </dl>
+                    </div>
+                    <!-- <h2 style="border-color: #f1f1f1;padding-left: 80px;font-family: 'Times New Roman', Times, serif;font-weight: bolder;">Signature and official frank of the certifying
+                                    Officer</h2> -->
+
+                    <div>
+                        <canvas id="can2" width="910" height="400" name="sign_2"
+                                style="position: fixed; left:20%; border:2px solid; top:140px;"></canvas>
+
+
+                        <input type="button" value="save" id="btn" size="30" onclick="save()" class="Button_1"
+                            style="position:absolute;top:540px;left:297px;">
+                        <input type="button" value="clear" id="clr" size="23" onclick="erase()" class="Button_1"
+                            style="position:absolute;top:540px;left:420px;">
+
+                        <button type="button" class="previous-btn" style="position:absolute;top:550px;left:297px;">
+                            Previous
+                        </button>
+                        <button type="button" class="next-btn" style="position:absolute;top:550px;left:1132px;"
+                                onclick="canvers(3)">Next
+                        </button>
+
+
+                    </div>
+            </div>
+            <div class="step step-11 " style="position: fixed;">
                 <div style="padding-left: 298px;padding-top:40px;">
                     <dl style="height:35px;width:900px;">
                         <dt><b><label for="certifySignature">Signature and official frank of the certifying
@@ -640,7 +672,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 Officer</h2> -->
 
                 <div>
-                    <canvas id="can1" width="910" height="400"
+                    <canvas id="can1" width="910" height="400" name="sign_3"
                             style="position: fixed; left:20%; border:2px solid; top:140px;"></canvas>
 
 
@@ -754,15 +786,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         var m = confirm("Want to clear");
         if (m) {
             ctx.clearRect(0, 0, w, h);
-            document.getElementById("canvasimg").style.display = "none";
+            document.getElementById("can").style.display = "none";
         }
     }
 
     function save() {
-        document.getElementById("canvasimg").style.border = "2px solid";
+        document.getElementById("can").style.border = "2px solid";
         var dataURL = canvas.toDataURL();
-        document.getElementById("canvasimg").src = dataURL;
-        document.getElementById("canvasimg").style.display = "inline";
+        document.getElementById("can").src = dataURL;
+        document.getElementById("can").style.display = "inline";
+        document.getElementById("can").style.display = "inline";
     }
 
     function findxy(res, e) {
@@ -800,7 +833,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (Number == 1) {
             var name1 = document.getElementById('can');
             init(name1);
-        } else {
+        } else if(Number==2) {
+            var name1 = document.getElementById('can2');
+            init(name1);
+        }
+        else{
             var name1 = document.getElementById('can1');
             init(name1);
         }
