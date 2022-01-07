@@ -76,12 +76,13 @@ $user->update_fields($_POST);
             <img src="Image/Profile.jpg" id="photo"
                  style="width: 80px;height: 80px;border-radius: 50%;   margin-left: 40px; margin-right: 20px;">
             <!-- <img src="Image/Profile.jpg" id = "photo"> -->
-            <form>
+            <!-- <form> -->
                 <!--            <form> id="add-staff-form" action="-->
-                <?php //echo htmlspecialchars($_SERVER["PHP_SELF"]); ?><!--" method="POST"-->
+                <!-- <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> -->
+                <!--" method="POST"-->
                 <!--                  enctype="multipart/form-data">-->
 
-                <input name="profile_photo" type="file" id="file">
+                <!-- <input name="profile_photo" type="file" id="file">
                 <label for="file" id="uploadBtn"
                        style="top:250px; margin-right:60px;padding-left:15px;width:150px;border-color:green;border-radius:5px;">Choose
                     Photo</label>
@@ -90,7 +91,7 @@ $user->update_fields($_POST);
                     Save
                 </button>
 
-            </form>
+            </form> -->
 
         </div>
         <form id="add-staff-form" onsubmit="return (required() && PasswordValidity())"
@@ -138,6 +139,12 @@ $user->update_fields($_POST);
                        style=" background: transparent; border: solid rgb(252, 251, 251);  border-width: 1px 1px;">
 
             </div>
+           <br>
+            <div class="form-group" style=" margin-bottom:40px;">
+                
+                <label for="file" id="uploadBtn" style="width: 200px;left:100px; height:35px;border-color:white;padding-top:5px;padding-left:10px;border-radius:5px;" >Choose A Profile Photo</label>
+                <input type="file" class="form-control-file" name="profile_photo" id="file">
+            </div>
             <div class="mb-3">
                 <label for="InputEmail1" class="form-label">Email address</label>
                 <input type="text" class="form-control" id="InputEmail1" name="email" aria-describedby="emailHelp"
@@ -168,17 +175,25 @@ $user->update_fields($_POST);
             </div>
             <div class="mb-3">
                 <label for="InputNPassword" class="form-label">New Password</label>
-                <input type="password" class="form-control" name="new_pwd" id="InputNPassword"
+                <input type="password" class="form-control" name="new_pwd" id="InputNPassword" value=""
                        aria-describedby="InputNPassword"
                        style=" background: transparent; border: solid rgb(252, 251, 251);  border-width: 1px 1px;"
-                       onkeyup="verifyPassword()" onchange="PasswordValidity()">
+                       onkeyup="verifyPassword()" >
                 <meter min="1" max="100" value="0" low="0" high="0" id="grade"></meter>
                 <span id="msg"></span>
+            </div>
+            <div class="mb-3">
+                <label for="InputCPassword" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" name="new_pwd" id="InputCPassword" value=""
+                       aria-describedby="InputNPassword"
+                       style=" background: transparent; border: solid rgb(252, 251, 251);  border-width: 1px 1px;"
+                        onchange="PasswordValidity()">
+                
             </div>
         </fieldset>
 
         <fieldset id="Submit_button" style="display: none;">
-            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" name="submit" class="btn btn-primary" id="data" >Submit</button>
             <!-- <input type="submit" value="Submit"> -->
         </fieldset>
         </form>

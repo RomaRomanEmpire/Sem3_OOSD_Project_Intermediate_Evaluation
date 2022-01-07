@@ -354,8 +354,9 @@ function required() {
     var edit = document.getElementById("EditProfile");
     var value1 = document.getElementById("InputPPassword").value;
     var value2 = document.getElementById("InputNPassword").value;
+    var value3 = document.getElementById("InputCPassword").value;
     if (changePwd.checked) {
-        if (value1 == "" && value2 == "") {
+        if (value1 == "" && value2 == "" && value3 == "") {
             alert("Please input a Value");
             return false;
         } else {
@@ -394,8 +395,9 @@ function verifyPassword() {
 }
 function PasswordValidity() {
     var pwd = document.getElementById("InputNPassword").value;
-
-    if (pwd.length >= 8 && pwd.length <= 14) {
+    var pwd2=document.getElementById("InputCPassword").value;
+    if (pwd.length >= 8 && pwd.length <= 14 && pwd === pwd2) {
+        
         return true;
     }
     else {
@@ -403,7 +405,6 @@ function PasswordValidity() {
         return false;
     }
 }
-
 
 
 
