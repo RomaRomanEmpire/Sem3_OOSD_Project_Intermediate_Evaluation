@@ -14,15 +14,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
       <link rel="stylesheet" type="text/css" href="style.css">
+      <style>
+            body{
+                  background: rgba(240, 80, 214, 1.0);
+background: -webkit-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
+background: -moz-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
+background: linear-gradient(to bottom right, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
+            }
+      </style>
 </head>
 <body>
-      <div class="background_image">
+      <!-- <div class="background_image">
             <div class="Back_img">
                   <div>
                         <img src="Image/C.jpg" >
                   </div>
             </div>
-      </div>
+      </div> -->
 
       <div class="loginbox" >
             <img src="Image/icon.png" class="Idimage" >

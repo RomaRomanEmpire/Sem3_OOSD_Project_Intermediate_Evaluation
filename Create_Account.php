@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       
       $applicant = new Applicant($_POST);
 
-      $con->create_user_account($_POST["uname"],$_POST["email"],$_POST["password"],$applicant);
+      $con->create_applicant_acc($_POST["uname"],$_POST["email"],$_POST["password"],$applicant);
 
 
 }
@@ -53,7 +53,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
       div {
             border-radius: 5px;
-            background-color: rgb(155, 150, 170);
+            /* background-color: rgb(155, 150, 170); */
+            background: rgba(164, 91, 153, 1.0);
+background: -webkit-linear-gradient(top left, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0));
+background: -moz-linear-gradient(top left, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0));
+background: linear-gradient(to bottom right, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0));
             top: 70%;
             left: 50%;
 
@@ -61,8 +65,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             transform: translate(-50%,-50%);
             box-sizing: border-box;
             padding: 20px 20px;
-            width: 620px;
+            width: 1220px;
             height: 950px;
+            padding-bottom: 20px;
+            bottom: 200px;
 
 
       }
@@ -71,9 +77,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-align: left;
       }
       body{
-            background: rgb(55, 38, 104);
-      }
-
+                  background: rgba(240, 80, 214, 1.0);
+background: -webkit-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
+background: -moz-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
+background: linear-gradient(to bottom right, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
+           
+      height: 1000px;}
+            label{
+                  font-size: 20px;
+                  font-weight: bolder;
+            }
 </style>
 <script>
       var password_validate;
@@ -199,7 +212,7 @@ function validation(){
             <input type="password" id="password_2" placeholder="password" name="con_password" onchange="PasswordValidity()" required>
             <br>
 
-            <input type="submit" id="button">
+            <input type="submit" id="button" style="font-size: 17px;color:whitesmoke;font-weight:bolder;">
 
       </form>
 </div>
