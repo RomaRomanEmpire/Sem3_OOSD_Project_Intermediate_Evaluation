@@ -70,28 +70,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body style=" background: rgba(32, 26, 122, 0.486);">
 <div class="side_menu2">
-    <br> <br> <br> <br>
+    <br> <br> 
 
     <div style="color: whitesmoke; font-size: larger;   padding-left: 80px;">
-        <h1 class="display-3" style="font-family: 'Times New Roman', Times, serif; text-align: left;">Profile</h1><br>
-        <div class = "profile-pic-div">
-            <img src="Image/Profile.jpg" id = "photo" style="width: 100px;height: 100px;border-radius: 50%;  display: block; margin-left: 20px margin-right: 20px;"><br> <br>
+        <h1 class="display-3" style="font-family: 'Times New Roman', Times, serif; text-align: left;">Profile</h1>
+     
+        <div class = "profile-pic-div" >
+            <img src="Image/Profile.jpg" id = "photo" style="width: 80px;height: 80px;border-radius: 50%;   margin-left: 40px; margin-right: 20px;">
             <!-- <img src="Image/Profile.jpg" id = "photo"> -->
-            <input type = "file" id = "file">
-            <label for = "file" id = "uploadBtn">Choose Photo</label>
+           <form>
+           <input type = "file" id = "file" >
+            <label for = "file" id = "uploadBtn" style="top:250px; margin-right:60px;padding-left:15px;width:150px;border-color:green;border-radius:5px;"  >Choose Photo</label>
+            <button type="submit" class="btn btn-outline-success" style="margin-top:80px; margin-right:50px;padding-left:15px;width:120px;margin-left:25px;color:whitesmoke;">Save</button>
+            
+        </form>
+        
         </div>
-        <div class="mb-3 form-check">
+        
+        <div style="margin-top: 50px;"><div class="mb-3 form-check" >
             <input type="checkbox" value="checked" class="form-check-input" id="EditProfile" onchange="Edit_Profile()">
             <!-- This function use to edit the profile details of the user -->
             <label class="form-check-label" for="EditProfile">Update Account Deatils</label>
         </div>
-        <br>
-        <br>
+       
         <div class="mb-3 form-check">
             <input type="checkbox" name="pwd_checkbox" value="checked" class="form-check-input" id="ChangePassword"
                    onclick="Change_Password()">
             <label class="form-check-label" for="ChangePassword">Change Password</label>
-        </div>
+        </div></div> 
     </div>
     <br>
 </div>
