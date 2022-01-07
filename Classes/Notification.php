@@ -2,13 +2,18 @@
 /**
  *
  */
-class Notification
+class Notification implements IVisitable
 {
 
   function __construct($argument)
   {
-    // code...
+
   }
+
+    function accept($visitor)
+    {
+        $visitor.visit($this);
+    }
 }
 
  ?>

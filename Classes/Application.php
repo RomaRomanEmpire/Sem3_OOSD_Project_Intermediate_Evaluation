@@ -3,7 +3,7 @@
 /**
  *
  */
-class Application
+class Application implements IVisitable
 {
     private $familyName;
     private $name;
@@ -45,59 +45,66 @@ class Application
     private $para_2;
     private $certifyName;
 
-    private $approvableArray;
+    private $approvers;
     private $state;
     private $app_type_id;
 
     // private $
-    public function __construct($photographs,$receipt,$attributeArray, $applicant_id, $app_type_id)
+    public function __construct()
+    {
+        $this->state = Unfilled::getUnfilled();
+    }
+
+    public function setDetails($photographs, $receipt, $attributeArray, $applicant_id, $app_type_id)
     {
 
-        $this->familyName = $attributeArray['familyName'];
-        $this->name = $attributeArray['name'];
-        $this->surname = $attributeArray['surname'];
-        $this->gender = $attributeArray['gender'];
-        $this->civilStatus = $attributeArray['civilStatus'];
-        $this->profession = $attributeArray['profession'];
-        $this->birthday = $attributeArray['birthday'];
-        $this->birthCertificateNo = $attributeArray['birthCertificateNo'];
-        $this->placeOfBirth = $attributeArray['placeOfBirth'];
-        $this->birthDivision = $attributeArray['birthDivision'];
-        $this->birthDistrict = $attributeArray['birthDistrict'];
-        $this->countryOfBirth = $attributeArray['countryOfBirth'];
-        $this->birthCity = $attributeArray['birthCity'];
+        $this->familyName = $attributeArray['familyName']?? NULL;
+        $this->name = $attributeArray['name']?? NULL;
+        $this->surname = $attributeArray['surname']?? NULL;
+        $this->gender = $attributeArray['gender']?? NULL;
+        $this->civilStatus = $attributeArray['civilStatus']?? NULL;
+        $this->profession = $attributeArray['profession']?? NULL;
+        $this->birthday = $attributeArray['birthday']?? NULL;
+        $this->birthCertificateNo = $attributeArray['birthCertificateNo']?? NULL;
+        $this->placeOfBirth = $attributeArray['placeOfBirth']?? NULL;
+        $this->birthDivision = $attributeArray['birthDivision']?? NULL;
+        $this->birthDistrict = $attributeArray['birthDistrict']?? NULL;
+        $this->countryOfBirth = $attributeArray['countryOfBirth']?? NULL;
+        $this->birthCity = $attributeArray['birthCity']?? NULL;
 
         $this->citizenshipCertificateNo = $attributeArray['citizenshipCertificateNo'] ?? NULL;
-        $this->permHouseName = $attributeArray['permHouseName'];
-        $this->permRoad = $attributeArray['permRoad'];
-        $this->permVillage = $attributeArray['permVillage'];
-        $this->permPostalCode = $attributeArray['permPostalCode'];
-        $this->postalHouseName = $attributeArray['postalHouseName'];
-        $this->postalRoad = $attributeArray['postalRoad'];
-        $this->postalVillage = $attributeArray['postalVillage'];
-        $this->postalPostalCode = $attributeArray['postalPostalCode'];
-        $this->citizenshipCertificateType = $attributeArray['citizenshipCertificateType'];
-        $this->citizenshipCertificateNo_9_1 = $attributeArray['certificateNo_9.1']??NULL;
-        $this->citizenshipCertificateDate = $attributeArray['citizenshipCertificateDate']??NULL;
-        $this->residenceTelNo = $attributeArray['residenceTelNo'];
-        $this->mobileTelNo = $attributeArray['mobileTelNo'];
-        $this->email = $attributeArray['email'];
-        $this->purpose = isset($attributeArray['purpose']) ? $attributeArray['purpose'] : NULL;
-        $this->lostIdNum = isset($attributeArray['lostIdNum']) ? $attributeArray['lostIdNum'] : NULL;
-        $this->lostIdDate = isset($attributeArray['lostIdDate']) ? $attributeArray['lostIdDate'] : NULL;
-        $this->policeStationName = isset($attributeArray['policeStationName']) ? $attributeArray['policeStationName'] : NULL;
-        $this->policeReportDate = isset($attributeArray['policeReportDate']) ? $attributeArray['policeReportDate'] : NULL;
-        $this->photographs = $photographs;
-        $this->receiptNo = $attributeArray['receiptNo'];
-        $this->receipt = $receipt??NULL;
-        $this->para_1 = $attributeArray['para_1'];
-        $this->para_2 = $attributeArray['para_2'];
-        $this->certifyName = $attributeArray['certifyName'];
-        $this->approvableArray = array();
+        $this->permHouseName = $attributeArray['permHouseName']?? NULL;
+        $this->permRoad = $attributeArray['permRoad']?? NULL;
+        $this->permVillage = $attributeArray['permVillage']?? NULL;
+        $this->permPostalCode = $attributeArray['permPostalCode']?? NULL;
+        $this->postalHouseName = $attributeArray['postalHouseName']?? NULL;
+        $this->postalRoad = $attributeArray['postalRoad']?? NULL;
+        $this->postalVillage = $attributeArray['postalVillage']?? NULL;
+        $this->postalPostalCode = $attributeArray['postalPostalCode']?? NULL;
+        $this->citizenshipCertificateType = $attributeArray['citizenshipCertificateType']?? NULL;
+        $this->citizenshipCertificateNo_9_1 = $attributeArray['certificateNo_9.1'] ?? NULL;
+        $this->citizenshipCertificateDate = $attributeArray['citizenshipCertificateDate'] ?? NULL;
+        $this->residenceTelNo = $attributeArray['residenceTelNo']?? NULL;
+        $this->mobileTelNo = $attributeArray['mobileTelNo']?? NULL;
+        $this->email = $attributeArray['email']?? NULL;
+        $this->purpose = $attributeArray['purpose'] ?? NULL;
+        $this->lostIdNum = $attributeArray['lostIdNum'] ?? NULL;
+        $this->lostIdDate = $attributeArray['lostIdDate'] ?? NULL;
+        $this->policeStationName = $attributeArray['policeStationName'] ?? NULL;
+        $this->policeReportDate = $attributeArray['policeReportDate'] ?? NULL;
+        $this->photographs = $photographs?? NULL;
+        $this->receiptNo = $attributeArray['receiptNo']?? NULL;
+        $this->receipt = $receipt ?? NULL;
+        $this->para_1 = $attributeArray['para_1']?? NULL;
+        $this->para_2 = $attributeArray['para_2']?? NULL;
+        $this->certifyName = $attributeArray['certifyName']?? NULL;
+        $this->approvers = array();
         $this->fillApprovableArray($applicant_id);
 
         $this->app_type_id = $app_type_id;
-        $this->state = Unfilled::getUnfilled();
+
+        $this->approve("applicant");
+
     }
 
     /**
@@ -119,7 +126,7 @@ class Application
 
     public function fillApprovableArray($user_id)
     {
-        array_push($this->approvableArray, $user_id);
+        array_push($this->approvers, $user_id);
     }
 
     /**
@@ -437,9 +444,9 @@ class Application
     /**
      * @return array
      */
-    public function getApprovableArray(): array
+    public function getApprovers(): array
     {
-        return $this->approvableArray;
+        return $this->approvers;
     }
 
     /**
@@ -451,6 +458,20 @@ class Application
     }
 
 
+    public function accept($visitor)
+    {
+        $visitor->visit($this);
+    }
+
+    public function approve($u_type)
+    {
+        $this->state->approve($u_type,$this);
+    }
+
+    public function reject($u_type)
+    {
+        $this->state->reject($u_type,$this);
+    }
 }
 
 

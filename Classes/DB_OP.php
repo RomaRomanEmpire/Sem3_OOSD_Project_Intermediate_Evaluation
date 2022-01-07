@@ -259,7 +259,7 @@ class DB_OP
                 // Redirect to login page
 //                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'applicant_dashboard.php';</script>";
                 echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!');</script>";
-                return $this->get_column_value("application_details", "app_id", ">", "0", "app_id", "ORDER BY staff_id DESC") ?? 0;
+//                return $this->get_column_value("application_details", "app_id", ">", "0", "app_id", "ORDER BY staff_id DESC") ?? 0;
             } else {
                 echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
             }
@@ -303,14 +303,13 @@ class DB_OP
         $sql = "SELECT $id_name FROM $table WHERE $key1 $operator ? and $key2 $operator ? $order";
         if ($stmt = $this->link->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param('ss', $key_value1,$key_value2);
+            $stmt->bind_param('ss', $key_value1, $key_value2);
 
             // Attempt to execute the prepared statement
             // just execute the prepared statement not checking values
             if ($stmt->execute()) {
                 $result = $stmt->get_result();
 
-                // Check if Username exists, if yes then verify Password
                 //check is there are exactly one entry or not
                 if ($result->num_rows >= 1) {
 
@@ -408,9 +407,12 @@ class DB_OP
         }
     }
 
-    public function get_table_info($table, $column)
+    public function get_table_info($table, $column, $value)
     {
-        $sql = "SELECT $column FROM $table WHERE staff_id = 0";
+        if ($value)
+            $sql = "SELECT $column FROM $table";
+        else
+            $sql = "SELECT $column FROM $table WHERE staff_id = 0";
         if ($stmt = $this->link->prepare($sql)) {
 
             if ($stmt->execute()) {

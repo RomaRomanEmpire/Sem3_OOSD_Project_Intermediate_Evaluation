@@ -1,30 +1,29 @@
 <?php
-// include 'autoloader.php';
 /**
  *
  */
-class Applicant extends L_P_User implements Approvable
+class Applicant extends L_P_User implements IApprover,IVisitor
 {
   protected $gender;
   protected $bday;
   protected $address;
-  private $application_id;
+  private $application;
 
   public function __construct($attributeArray)
   {
 
     parent::__construct($attributeArray);
-
     $this->address = $attributeArray["Address"];
     $this->gender = $attributeArray["gender"];
     $this->bday = $attributeArray["Birthday"];
     $this->u_type = "applicant";
+    $this->application = new Application();
   }
 
 
   public function apply_NIC($stat,$gn_div_or_address,$ds,$application_object)
   {
-    $this->setApplicationId($this->db->add_application($this->row_id,$stat,$gn_div_or_address,$ds,$application_object));
+    $this->db->add_application($this->row_id,$stat,$gn_div_or_address,$ds,$application_object);
   }
 
   public function select_time_slot()
@@ -51,22 +50,23 @@ class Applicant extends L_P_User implements Approvable
   }
 
   /**
-   * @return mixed
+   * @return Application
    */
-  public function getApplicationId()
+  public function getApplication()
   {
-    return $this->application_id;
-  }
-
-  /**
-   * @param mixed $application_id
-   */
-  public function setApplicationId($application_id): void
-  {
-    $this->application_id = $application_id;
+    return $this->application;
   }
 
 
+  public function visitApplication($application)
+  {
+    // TODO: Implement visitApplication() method.
+  }
+
+  public function visitNotification($notification)
+  {
+    // TODO: Implement visitNotification() method.
+  }
 }
 
 

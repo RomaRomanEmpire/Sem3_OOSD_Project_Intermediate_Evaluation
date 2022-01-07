@@ -3,7 +3,7 @@
 /**
  *
  */
-class DatabaseManager extends User
+class DatabaseManager extends User implements IVisitor
 {
     private $staff_id;
 
@@ -44,6 +44,15 @@ class DatabaseManager extends User
     }
 
 
+    function visitApplication($application)
+    {
+        // TODO: Implement visitApplication() method.
+    }
+
+    function visitNotification($notification)
+    {
+        // TODO: Implement visitNotification() method.
+    }
 }
 
 ?>

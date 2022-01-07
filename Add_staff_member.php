@@ -360,7 +360,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <script>
                                 $(function () {
                                     <?php
-                                    $php_array = $conn->get_table_info("schools", "basic_division");
+                                    $php_array = $conn->get_table_info("schools", "basic_division",0);
                                     $_SESSION['val_array1'] = $php_array;
                                     $js_array = json_encode($php_array);
                                     ?>
@@ -381,7 +381,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <script>
                                 $(function () {
                                     <?php
-                                    $php_array = $conn->get_table_info("gn", "basic_division");
+                                    $php_array = $conn->get_table_info("gn", "basic_division",0);
                                     $_SESSION['val_array2'] = $php_array;
                                     $js_array = json_encode($php_array);
                                     ?>
@@ -402,7 +402,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <script>
                                 $(function () {
                                     <?php
-                                    $php_array = $conn->get_table_info("ds", "DS");
+                                    $php_array = $conn->get_table_info("ds", "DS",0);
                                     $_SESSION['val_array3'] = $php_array;
                                     $js_array = json_encode($php_array);
                                     ?>
@@ -423,7 +423,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <script>
                                 $(function () {
                                     <?php
-                                    $php_array = $conn->get_table_info("estates", "basic_division");
+                                    $php_array = $conn->get_table_info("estates", "basic_division",0);
                                     $_SESSION['val_array4'] = $php_array;
                                     $js_array = json_encode($php_array);
                                     ?>

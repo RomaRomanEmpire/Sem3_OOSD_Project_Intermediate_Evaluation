@@ -2,7 +2,7 @@
 /**
  *
  */
-class Admin extends L_P_User
+class Admin extends L_P_User implements IVisitor
 {
 	public function __construct($attributeArray)
 	{
@@ -13,7 +13,7 @@ class Admin extends L_P_User
 
 	public function approve_application($application)
 	{
-		$db->approve_application($application_id,"level 3");
+//		$db->approve_application($application_id,"level 3");
 	}
 	/**
 	 * @throws Exception
@@ -32,6 +32,15 @@ class Admin extends L_P_User
 		throw new Exception("No divisions for Admin");
 	}
 
+	function visitApplication($application)
+	{
+		// TODO: Implement visitApplication() method.
+	}
+
+	function visitNotification($notification)
+	{
+		// TODO: Implement visitNotification() method.
+	}
 }
 
 
