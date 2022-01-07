@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       
       $applicant = new Applicant($_POST);
 
-      $con->create_applicant_acc($_POST["uname"],$_POST["email"],$_POST["password"],$applicant);
+      $con->create_user_account($_POST["uname"],$_POST["email"],$_POST["password"],$applicant);
 
 
 }

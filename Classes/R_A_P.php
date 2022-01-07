@@ -2,7 +2,7 @@
 /**
  *
  */
-abstract class R_A_P extends L_P_User implements Approvable
+abstract class R_A_P extends L_P_User implements IApprover,IVisitor
 {
   function __construct($attributeArray)
   {
@@ -18,7 +18,17 @@ abstract class R_A_P extends L_P_User implements Approvable
     // code...
   }
   public abstract function approve_application($application);
-  
+
+  function visitApplication($application)
+  {
+    // TODO: Implement visitApplication() method.
+  }
+
+  function visitNotification($notification)
+  {
+    // TODO: Implement visitNotification() method.
+  }
+
 
 }
 
