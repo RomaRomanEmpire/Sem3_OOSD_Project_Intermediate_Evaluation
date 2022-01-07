@@ -17,6 +17,7 @@ abstract class User
     protected $u_type;
     protected $gn_div_or_address;
     protected $ds;
+    protected $pf_photo;
 
     function __construct($attributeArray)
     {
@@ -24,7 +25,8 @@ abstract class User
         $this->uname = $attributeArray['uname'];
         $this->email = $attributeArray['email'];
         $this->mobile_no = $attributeArray['mobileNo'];
-        $this->password = password_hash($attributeArray['password'], PASSWORD_DEFAULT);
+        $this->set_pwd($attributeArray['password']);
+
     }
 
     public function set_row_id($row_id)
@@ -60,6 +62,31 @@ abstract class User
     public function set_bday($bday)
     {
         $this->bday = $bday;
+    }
+
+    /**
+     * @param false|string|null $password
+     */
+    public function set_pwd($password): void
+    {
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
+    }
+
+
+    /**
+     * @param mixed $pf_photo
+     */
+    public function setPfPhoto($pf_photo): void
+    {
+        $this->pf_photo = $pf_photo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPfPhoto()
+    {
+        return $this->pf_photo;
     }
 
     public function get_user_type()
@@ -102,13 +129,17 @@ abstract class User
 
     public function update_fields($array)
     {
-        if(isset($array['fname'])) $this->set_full_name($array['fname']);
-        if(isset($array['uname'])) $this->set_user_name($array['uname']);
-        if(isset($array['email']))$this->set_email($array['email']);
-        if(isset($array['mobile_no']))$this->set_mobile_no($array['mobile_no']);
-        if(isset($array['bday']))$this->set_bday($array['bday']);
+        if (isset($array['fname'])) $this->set_full_name($array['fname']);
+        if (isset($array['uname'])) $this->set_user_name($array['uname']);
+        if (isset($array['email'])) $this->set_email($array['email']);
+        if (isset($array['mobile_no'])) $this->set_mobile_no($array['mobile_no']);
+        if (isset($array['bday'])) $this->set_bday($array['bday']);
 
-        $this->db->update_user_account_details($this->row_id, $this->uname, $this->email, $array['new_pwd'] ?? NULL, $this);
+        if (isset($array['new_pwd'])) {
+            $this->set_pwd($array['new_pwd']);
+            $this->db->update_user_account_details($this->row_id, $this->uname, $this->email, $this->get_user_pwd(), $this);
+        } else
+            $this->db->update_user_account_details($this->row_id, $this->uname, $this->email, NULL, $this);
     }
 
     /**

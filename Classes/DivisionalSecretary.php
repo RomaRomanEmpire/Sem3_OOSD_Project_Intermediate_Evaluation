@@ -18,7 +18,7 @@ class DivisionalSecretary extends R_A_P
 
     public function approve_application($application)
     {
-        $application->getState()->approve();
+        $application->approve($this->u_type);
     }
 
     /**

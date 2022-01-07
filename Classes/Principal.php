@@ -12,7 +12,7 @@ class Principal extends R_A_P_1
 	}
 	public function approve_application($application)
 	{
-		$application->getState()->approve();
+		$application->approve($this->u_type);
 	}
     public function getGnDivOrAddress()
     {
