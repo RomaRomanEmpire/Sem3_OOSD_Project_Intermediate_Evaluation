@@ -40,14 +40,19 @@ h1,h2{
 .side_menu li{
       font-size: 19px;
       padding: 10px 70px;
-      color: white;
+      color: rgb(255, 255, 255);
       display: flex;
       align-items: center;
       
 
 }
-.side_menu li:hover,li a:hover {
-      background-color: white;
+.side_menu li:hover {
+      background-color: rgb(247, 247, 252);
+      color: #f05462;
+}
+.side_menu  li a:hover
+{
+      /* background-color: white; */
       color: #f05462;
 }
 
@@ -60,13 +65,13 @@ h1,h2{
       font-size: 19px;
       /* width: 200px;
       height: 30px; */
-      background-color: #050213fd;
+      /* background-color: #050213fd; */
       color: white; 
       border: none;
 }
 
 .side_menu li a:hover{
-      background-color: white;
+      /* background-color: white; */
       color: #f05462;
      
 }
