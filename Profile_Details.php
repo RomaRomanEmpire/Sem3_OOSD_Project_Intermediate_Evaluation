@@ -69,7 +69,7 @@ $user->update_fields($_POST);
 <div class="side_menu2">
     <br> <br>
 
-    <div style="color: whitesmoke; font-size: larger;   padding-left: 80px;">
+    <div style="color: whitesmoke; font-size: larger;   padding-left: 80px;margin-top:50px;">
         <h1 class="display-3" style="font-family: 'Times New Roman', Times, serif; text-align: left;">Profile</h1>
 
         <div class="profile-pic-div">
@@ -115,7 +115,7 @@ $user->update_fields($_POST);
     <br>
 </div>
 <div class="container">
-    <div class="header1">
+    <div class="header1" style="z-index: 4;background-color:#03031b;">
         <div>
             <button class="btn btn-outline-light" id="Back" onclick=" GoPreviousFile()">Back</button>
         </div>
