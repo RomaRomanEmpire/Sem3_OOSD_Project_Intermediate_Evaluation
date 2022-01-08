@@ -216,25 +216,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['GN_division']))) {
         <fieldset>
             <h1>Who are You?</h1>
             <br>
-            <form id="division-form">
-                <div>
-                    <input type="radio" class="check-input" value="student" name="applier" id="student"
-                           onclick="HideDetails()">
-                    <label class="check-label" for="student">A Student</label>
-                </div>
-                <div>
-                    <input type="radio" class="check-input" value="estateWorker" name="applier" id="estateWorker"
-                           onclick="HideDetails()">
-                    <label class="check-label" for="stateWorker">An Estate Worker</label>
-                </div>
-                <div>
-                    <input type="radio" class="check-input" value="otherAppliers" name="applier" id="otherAppliers"
-                           onclick="HideDetails()">
-                    <label class="check-label" for="otherAppliers">Other</label>
-                </div>
-                <button type="button" onclick="ShowDetails()">Get Details</button>
-                <!--                <button type="submit" >Get Details</button>-->
-            </form>
+
+            <div>
+                <input type="radio" class="check-input" value="student" name="applier" id="student"
+                       onclick="ShowDetails()">
+                <label class="check-label" for="student">A Student</label>
+            </div>
+
+            <div>
+                <input type="radio" class="check-input" value="estateWorker" name="applier" id="estateWorker"
+                       onclick="ShowDetails()">
+                <label class="check-label" for="estateWorker">An Estate Worker</label>
+            </div>
+            <div>
+                <input type="radio" class="check-input" value="otherAppliers" name="applier" id="otherAppliers"
+                       onclick="ShowDetails()">
+                <label class="check-label" for="otherAppliers">Other</label>
+            </div>
+
         </fieldset>
 
         <form id="division-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>
@@ -398,7 +397,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['GN_division']))) {
             $('#gn_data').prop('required', true);
         } else {
             $('#ds_data').prop('required', false);
-            $('#gn_data').prop('required', flase);
+            $('#gn_data').prop('required', false);
         }
     });
 
