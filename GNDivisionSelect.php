@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else if (!empty($_POST['school'])) {
         $basic_adr = $_POST['school'];
         $ds_adr = "";
-        header("location: IdRequestForm.php?id=$id&table='schools'&basic=$basic_adr");
+        header("location: IdRequestForm.php?id=$id&table='schools'&basic=$basic_adr&ds=$ds_adr");
     } else if (!empty($_POST['estate'])) {
         $basic_adr = $_POST['estate'];
         $ds_adr = "";
