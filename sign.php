@@ -24,7 +24,7 @@
    
 <div class="container">
    
-    <form method="POST" action="upload_sign.php?sign_no=<?php echo $_GET['sign_no'];?>">
+    <form action="upload_sign.php?sign_no=<?php echo $_GET['sign_no'];?>" method="POST" >
    
         <h1>PHP Signature Pad Example - Tutsmake.com</h1>
    

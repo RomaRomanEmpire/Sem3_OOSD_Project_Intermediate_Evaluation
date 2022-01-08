@@ -3,7 +3,7 @@
 function checkImageValidity($filename_in_form)
 {
     //upload a file
-    if ($_FILES[$filename_in_form]['size'] != 0) {
+    if (isset($_FILES[$filename_in_form]) && $_FILES[$filename_in_form]['size'] != 0) {
         $file = $_FILES[$filename_in_form];
         $fileName = $_FILES[$filename_in_form]['name'];
         $fileTmpName = $_FILES[$filename_in_form]['tmp_name'];
@@ -19,7 +19,7 @@ function checkImageValidity($filename_in_form)
 
         if (in_array($fileActualExt, $allowed)) {
             if ($fileError === 0) {
-                if ($fileSize < 1000000) {
+                if ($fileSize < 10000000) {
                     $fileNameNew = uniqid('', true) . "." . $fileActualExt;
                     $fileDestination = 'uploads/' . $fileNameNew;
                     move_uploaded_file($fileTmpName, $fileDestination);
@@ -29,7 +29,7 @@ function checkImageValidity($filename_in_form)
                     echo "<script type='text/javascript'>alert('your file is too big!');</script>";
                 }
             } else {
-                echo "<script type='text/javascript'>alert('There was an error uploadin your file!');</script>";
+                echo "<script type='text/javascript'>alert('There was an error uploading your file!');</script>";
             }
         } else {
             echo "<script type='text/javascript'>alert('You cannot upload files of this type!');</script>";
