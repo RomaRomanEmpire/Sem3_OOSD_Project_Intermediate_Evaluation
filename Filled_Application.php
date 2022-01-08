@@ -27,7 +27,7 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
         body {
             /* background: #21669b; */
             /* background: #667EEA; */
-            min-height: 720vh;
+            min-height: 780vh;
 
             background-image: radial-gradient(circle farthest-corner at 22.4% 21.7%, rgba(4, 189, 228, 1) 0%, rgba(2, 83, 185, 1) 100.2%);
 
