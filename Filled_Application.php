@@ -27,7 +27,7 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
         body {
             /* background: #21669b; */
             /* background: #667EEA; */
-            min-height: 780vh;
+            min-height: 980vh;
 
             background-image: radial-gradient(circle farthest-corner at 22.4% 21.7%, rgba(4, 189, 228, 1) 0%, rgba(2, 83, 185, 1) 100.2%);
 
@@ -36,7 +36,7 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
         td{
             padding-left:  20px;
             padding-right: 30px;
-            padding-bottom: 20px;
+            /* padding-bottom: 20px; */
             
             
         }
@@ -184,7 +184,7 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
 <div class="header1">
     <table>
         <tbody>
-           <div ><tr><td><h1 style="text-align: center;font-size:60px; color:white;padding-right:100px; font-family: 'Times New Roman', Times, serif;">Application </h1></td></tr></div> 
+           <div ><tr><td><h1 style="text-align: center;font-size:60px; color:white;padding-right:200px; font-family: 'Times New Roman', Times, serif;">Application </h1></td></tr></div> 
            <div> <div> <div style="top: 0px;"> <tr>
                             <!-- This button id only viewed by RAP -->
                             <td style="float: right;"><a href="Time_slot.php">
@@ -597,9 +597,9 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
 
                 <dl>
                     <dt><b><label for="certifySignature1">Signature of the applicant</label></b>
-                        <!-- <a href="" style="float: right;">
-                            <button type="submit" class="btn btn-sm btn-outline-success " style="color: black;"><b> Submit </b></button>
-                        </a> -->
+                        <a href="" style="float: right;">
+                            <button type="submit" class="btn btn-sm btn-outline-success " style="color: black;"><b> Add the sign </b></button>
+                        </a>
                     </dt></dl>
             </div>
         
@@ -607,7 +607,7 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
             <dt><b><label for="certifySignature2">Signature and official frank of the certifying
                         Officer</label></b>
                 <a href="" style="float: right;">
-                    <button type="submit" class="btn btn-sm btn-outline-danger" style="color: black;"><b>Approve</b></button>
+                    <button type="submit" class="btn btn-sm btn-outline-success" style="color: black;"><b>Add the sign</b></button>
                 </a>
             </dt>
 
@@ -616,7 +616,7 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
             <dt><b><label for="certifySignature3">Signature and official frank of the certifying
                         Officer</label></b>
                 <a href="" style="float: right;">
-                    <button type="submit" class="btn btn-sm btn-outline-danger" style="color: black;"><b>Approve</b></button>
+                    <button type="submit" class="btn btn-sm btn-outline-success" style="color: black;"><b>Add the sign</b></button>
                 </a>
             </dt>
 
