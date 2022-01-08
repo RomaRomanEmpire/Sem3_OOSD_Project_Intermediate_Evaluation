@@ -166,7 +166,7 @@ class DB_OP
                     // Redirect to login page
                     echo "<script type='text/javascript'>alert('The request has been send successfully!');</script>";
 
-                }else
+                } else
                     echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
 
                 // Close statement
@@ -187,7 +187,7 @@ class DB_OP
                     // Redirect to login page
                     echo "<script type='text/javascript'>alert('The request has been send successfully!');</script>";
 
-                }else
+                } else
                     echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
 
                 // Close statement
@@ -247,19 +247,19 @@ class DB_OP
     }
 
     public
-    function add_application($applicant_id, $stat, $gn_div_or_address, $ds, $table, $application_object)
+    function add_application($applicant_id, $gn_div_or_address, $ds, $table, $application_object)
     {
         $sql = "INSERT INTO application_details (applicant_id,stat,apply_date, gn_div_or_address,ds,address_type,application_object) VALUES (?,?,?,?,?,?,?)";
         if ($stmt = $this->link->prepare($sql)) {
 
             // Bind variables to the prepared statement as parameters
 
-            $stmt->bind_param("issssss", $param_applicant_id, $param_stat, $param_apply_date, $param_gn_div_or_address, $param_ds,$param_address_type, $param_application_object);
+            $stmt->bind_param("issssss", $param_applicant_id, $param_stat, $param_apply_date, $param_gn_div_or_address, $param_ds, $param_address_type, $param_application_object);
 
             // Set parameters
             date_default_timezone_set('Asia/Colombo');
             $param_applicant_id = $applicant_id;
-            $param_stat = $stat;
+            $param_stat = $application_object->getState()->getState();
             $param_apply_date = date('Y/m/d H:i:s');
             $param_gn_div_or_address = $gn_div_or_address;
             $param_ds = $ds;
@@ -268,9 +268,34 @@ class DB_OP
 
             if ($stmt->execute()) {
                 // Redirect to login page
-//                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'applicant_dashboard.php';</script>";
                 echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!');</script>";
-//                return $this->get_column_value("application_details", "app_id", ">", "0", "app_id", "ORDER BY staff_id DESC") ?? 0;
+            } else {
+                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
+            }
+
+            // Close statement
+            $stmt->close();
+        }
+    }
+
+    public
+    function add_signs_to_application($app_id, $application_object)
+    {
+        $sql = "UPDATE application_details SET application_object=? WHERE app_id=?;";
+        if ($stmt = $this->link->prepare($sql)) {
+
+            // Bind variables to the prepared statement as parameters
+
+            $stmt->bind_param("si", $param_application_object,$param_app_id);
+
+            // Set parameters
+
+            $param_app_id = $app_id;
+            $param_application_object = serialize($application_object);
+
+            if ($stmt->execute()) {
+                // Redirect
+                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!');</script>";
             } else {
                 echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
             }

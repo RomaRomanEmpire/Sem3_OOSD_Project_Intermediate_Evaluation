@@ -49,6 +49,10 @@ class Application implements IVisitable
     private $state;
     private $app_type_id;
 
+    private $applicant_sign;
+    private $rap_sign;
+    private $ds_sign;
+
     public function __construct()
     {
         $this->state = Unfilled::getUnfilled();
@@ -127,6 +131,55 @@ class Application implements IVisitable
     {
         array_push($this->approvers, $user);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getApplicantSign()
+    {
+        return $this->applicant_sign;
+    }
+
+    /**
+     * @param mixed $applicant_sign
+     */
+    public function setApplicantSign($applicant_sign): void
+    {
+        $this->applicant_sign = $applicant_sign;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRapSign()
+    {
+        return $this->rap_sign;
+    }
+
+    /**
+     * @param mixed $rap_sign
+     */
+    public function setRapSign($rap_sign): void
+    {
+        $this->rap_sign = $rap_sign;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDsSign()
+    {
+        return $this->ds_sign;
+    }
+
+    /**
+     * @param mixed $ds_sign
+     */
+    public function setDsSign($ds_sign): void
+    {
+        $this->ds_sign = $ds_sign;
+    }
+
 
     /**
      * @return mixed

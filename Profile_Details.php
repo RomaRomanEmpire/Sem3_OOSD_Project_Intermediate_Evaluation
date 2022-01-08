@@ -157,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="mb-3">
                 <label for="InputNPassword" class="form-label">New Password</label>
-                <input type="password" class="form-control" name="new_pwd" id="InputNPassword" value=""
+                <input type="password" class="form-control" name="new_pwd" id="InputNPassword"
                        aria-describedby="InputNPassword"
                        style=" background: transparent; border: solid rgb(252, 251, 251);  border-width: 1px 1px;"
                        onkeyup="verifyPassword()" >
@@ -166,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="mb-3">
                 <label for="InputCPassword" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" name="new_pwd" id="InputCPassword" value=""
+                <input type="password" class="form-control" name="new_pwd" id="InputCPassword"
                        aria-describedby="InputNPassword"
                        style=" background: transparent; border: solid rgb(252, 251, 251);  border-width: 1px 1px;"
                         onchange="PasswordValidity()">
