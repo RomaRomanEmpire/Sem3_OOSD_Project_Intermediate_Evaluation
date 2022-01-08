@@ -71,7 +71,7 @@ $already_applied = is_null($con->get_column_value("application_details", "applic
                     <button <?php if (!$already_applied){ ?> disabled<?php } ?>>Applying For lost Identity Card</button>
                 </a><br><br>
 
-                <a href="View_Applications_Details.php?id=<?php echo $applicant->getApplicationId() ?>">
+                <a href="Filled_Application.php?id=<?php echo $applicant->getApplicationId() ?>">
                     <button <?php if ($already_applied){ ?> disabled<?php } ?>>View application details in process</button>
                 </a>
             </div>
