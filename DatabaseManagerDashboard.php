@@ -6,6 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Database Manager Dashboard</title>
       <link rel="stylesheet" href="style2.css">
+      <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
 </head>
 <body>
       
@@ -42,7 +43,7 @@
                               <div class="img-case">
                                 
                               </div>
-                              <a href="logout.php" class="btn">Log Out</a>
+                              <a href="logout.php" class="btn"><i class="fas fa-sign-out-alt"></i> Log Out</a>
                               
                   </div>
                   </div>

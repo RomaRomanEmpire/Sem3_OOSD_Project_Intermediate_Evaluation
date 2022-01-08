@@ -6,6 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Notification</title>
       <link rel="stylesheet" href="bootstrap.css">
+      <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
       <style>
       body {
 			font-family: Arial, Helvetica, sans-serif;
@@ -17,15 +18,21 @@
             position: fixed;
             top: 0;
             right: 0;
-            height: 19vh;
+            height: 12vh;
             width: 100%;
-            
+            background: rgb(6,59,142);
+            background: linear-gradient(90deg, rgba(6,59,142,0.9671218829328606) 0%, rgba(4,106,38,1) 100%);
             display: flex;
             align-items: center;
             justify-content: right;
             z-index: 3;
 
         }
+        .header1 button:hover{
+            background-color: white;
+        }
+        
+
   </style>
 </head>
 <body>
@@ -41,7 +48,7 @@
   </form> 
   </div>
   <div>
-  <a href="DatabaseManagerDashboard.php"><button type="submit" class="btn btn-sm btn-outline-light" style="width: 100px;font-size:18px;margin-right:20px;"><b style="color:#000; ">Back</b> </button></a>
+  <a href="DatabaseManagerDashboard.php"><button type="button"  class="btn btn-sm btn-outline-light fas fa-arrow-left" style="width: 100px;font-size:18px;margin-right:20px;"><b> Back</b> </button></a>
 </div>
 </div>
  
