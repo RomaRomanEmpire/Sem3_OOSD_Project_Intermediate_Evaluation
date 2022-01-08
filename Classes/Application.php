@@ -49,13 +49,12 @@ class Application implements IVisitable
     private $state;
     private $app_type_id;
 
-    // private $
     public function __construct()
     {
         $this->state = Unfilled::getUnfilled();
     }
 
-    public function setDetails($photographs, $receipt, $attributeArray, $applicant_id, $app_type_id)
+    public function setDetails($photographs, $receipt, $attributeArray, $applicant, $app_type_id)
     {
 
         $this->familyName = $attributeArray['familyName']?? NULL;
@@ -99,11 +98,11 @@ class Application implements IVisitable
         $this->para_2 = $attributeArray['para_2']?? NULL;
         $this->certifyName = $attributeArray['certifyName']?? NULL;
         $this->approvers = array();
-        $this->fillApprovableArray($applicant_id);
+        $this->fillApprovableArray($applicant);
 
         $this->app_type_id = $app_type_id;
 
-        $this->approve("applicant");
+        $this->approve($applicant,"applicant");
 
     }
 
@@ -124,9 +123,9 @@ class Application implements IVisitable
     }
 
 
-    public function fillApprovableArray($user_id)
+    public function fillApprovableArray($user)
     {
-        array_push($this->approvers, $user_id);
+        array_push($this->approvers, $user);
     }
 
     /**
@@ -463,8 +462,9 @@ class Application implements IVisitable
         $visitor->visit($this);
     }
 
-    public function approve($u_type)
+    public function approve($user,$u_type)
     {
+        $this->fillApprovableArray($user);
         $this->state->approve($u_type,$this);
     }
 

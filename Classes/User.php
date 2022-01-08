@@ -127,13 +127,14 @@ abstract class User
         return $this->bday;
     }
 
-    public function update_fields($array)
+    public function update_fields($array,$pf)
     {
         if (isset($array['fname'])) $this->set_full_name($array['fname']);
         if (isset($array['uname'])) $this->set_user_name($array['uname']);
         if (isset($array['email'])) $this->set_email($array['email']);
         if (isset($array['mobile_no'])) $this->set_mobile_no($array['mobile_no']);
         if (isset($array['bday'])) $this->set_bday($array['bday']);
+        if (isset($pf)) $this->setPfPhoto($pf);
 
         if (isset($array['new_pwd'])) {
             $this->set_pwd($array['new_pwd']);

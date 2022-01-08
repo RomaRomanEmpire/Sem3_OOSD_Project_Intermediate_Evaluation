@@ -13,7 +13,7 @@ class E_S extends R_A_P_1
 
 	public function approve_application($application)
 	{
-        $application->approve($this->u_type);
+        $application->approve($this,$this->u_type);
 	}
     public function getGnDivOrAddress()
     {
