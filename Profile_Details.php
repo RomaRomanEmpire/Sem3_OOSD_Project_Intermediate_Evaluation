@@ -6,15 +6,15 @@ $conn = DB_OP::get_connection();
 $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $user->set_db($conn);
 $user->set_row_id($_SESSION['user_id']);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    require_once "functions.php";
     if (isset($_POST['pwd_checkbox'])) {
         if (!password_verify($_POST['prev_pwd'], $user->get_user_pwd())) {
-//                echo $_POST['prev_pwd'];
             echo "<script type='text/javascript'>alert('previous password is not matched!'); window.location.href = 'Profile_Details.php';</script>";
         }
     }
-
-$user->update_fields($_POST);
+    $user->update_fields($_POST,checkImageValidity("profile_photo")??NULL);
 
 }
 ?>
@@ -73,29 +73,11 @@ $user->update_fields($_POST);
         <h1 class="display-3" style="font-family: 'Times New Roman', Times, serif; text-align: left;">Profile</h1>
 
         <div class="profile-pic-div">
-            <img src="Image/Profile.jpg" id="photo"
+            <img id="photo" src="<?php echo $user->getPfPhoto() != null ?$user->getPfPhoto():'Image/Profile.jpg';?>"
                  style="width: 80px;height: 80px;border-radius: 50%;   margin-left: 40px; margin-right: 20px;">
-            <!-- <img src="Image/Profile.jpg" id = "photo"> -->
-            <!-- <form> -->
-                <!--            <form> id="add-staff-form" action="-->
-                <!-- <?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?> -->
-                <!--" method="POST"-->
-                <!--                  enctype="multipart/form-data">-->
-
-                <!-- <input name="profile_photo" type="file" id="file">
-                <label for="file" id="uploadBtn"
-                       style="top:250px; margin-right:60px;padding-left:15px;width:150px;border-color:green;border-radius:5px;">Choose
-                    Photo</label>
-                <button type="submit" class="btn btn-outline-success"
-                        style="margin-top:80px; margin-right:50px;padding-left:15px;width:120px;margin-left:25px;color:whitesmoke;">
-                    Save
-                </button>
-
-            </form> -->
-
         </div>
         <form id="add-staff-form" onsubmit="return (required() && PasswordValidity())"
-              action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+              action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
             <div style="margin-top: 50px;">
                 <div class="mb-3 form-check">
                     <input name="pf_checkbox" type="checkbox" value="checked" class="form-check-input" id="EditProfile"

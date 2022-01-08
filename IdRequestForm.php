@@ -2,67 +2,22 @@
 session_start();
 include 'autoloader.php';
 $conn = DB_OP::get_connection();
-$_SESSION['id'] = $_GET['id'] ?? $_SESSION['id'];
-
-function checkImageValidity($filename_in_form)
-{
-    //upload a file
-    if ($_FILES[$filename_in_form]['size'] != 0) {
-        $file = $_FILES[$filename_in_form];
-        $fileName = $_FILES[$filename_in_form]['name'];
-        $fileTmpName = $_FILES[$filename_in_form]['tmp_name'];
-        $file = file_get_contents($_FILES[$filename_in_form]['tmp_name']);
-        $fileSize = $_FILES[$filename_in_form]['size'];
-        $fileError = $_FILES[$filename_in_form]['error'];
-        $fileType = $_FILES[$filename_in_form]['type'];
-
-        $fileExt = explode('.', $fileName);
-        $fileActualExt = strtolower(end($fileExt));
-
-        $allowed = array('jpg', 'jpeg', 'png', 'pdf');
-
-        if (in_array($fileActualExt, $allowed)) {
-            if ($fileError === 0) {
-                if ($fileSize < 1000000) {
-                    $fileNameNew = uniqid('', true) . "." . $fileActualExt;
-                    $fileDestination = 'uploads/' . $fileNameNew;
-                    move_uploaded_file($fileTmpName, $fileDestination);
-                    return $fileDestination;
-
-                } else {
-                    echo "<script type='text/javascript'>alert('');</script>";
-//					$size_err = "your file is too big!";
-                }
-            } else {
-                echo "<script type='text/javascript'>alert('There was an error uploadin your file!');</script>";
-//				$unsuccess_err = "There was an error uploadin your file!";
-            }
-        } else {
-            echo "<script type='text/javascript'>alert('You cannot upload files of this type!');</script>";
-//			$type_err = "You cannot upload files of this type!";
-        }
-
-    }
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $conn = DB_OP::get_connection();
+    require_once "functions.php";
 
     $photograph = checkImageValidity("photographs");
     $receipt = checkImageValidity("receipt");
 
-
-
     $applicant = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
     $application = $applicant->getApplication();
-    $application->setDetails($photograph, $receipt, $_POST, $_SESSION['user_id'], $_SESSION['id']);
+    $application->setDetails($photograph, $receipt, $_POST, $applicant, $_GET['id']);
     $applicant->set_db($conn);
 
 
     $applicant->set_row_id($_SESSION['user_id']);
 
-    $applicant->apply_NIC($application->getState()->getState(), $_SESSION['GN_division'], $_SESSION['DS_division'], $application);
+    $applicant->apply_NIC($application->getState()->getState(), $_GET['basic'], $_GET['ds'], $_GET['table'], $application);
 
 }
 ?>
@@ -217,7 +172,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <section>
     <div>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?
+        id=<?php echo $_GET['id']; ?>&table=<?php echo $_GET['table']; ?>&
+        basic=<?php echo $_GET['basic']; ?>&ds=<?php echo $_GET['ds']; ?>" method="POST"
               enctype="multipart/form-data">
 
             <div class="container">
@@ -632,34 +589,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="step step-10 " style="position: fixed;">
 
-                    <div style="padding-left: 298px;padding-top:40px;">
-                        <dl style="height:35px;width:900px;">
-                            <dt><b><label for="certifySignature">Signature and official frank of the certifying
-                                        Officer</label></b></dt>
-                        </dl>
-                    </div>
-                    <!-- <h2 style="border-color: #f1f1f1;padding-left: 80px;font-family: 'Times New Roman', Times, serif;font-weight: bolder;">Signature and official frank of the certifying
-                                    Officer</h2> -->
+                <div style="padding-left: 298px;padding-top:40px;">
+                    <dl style="height:35px;width:900px;">
+                        <dt><b><label for="certifySignature">Signature and official frank of the certifying
+                                    Officer</label></b></dt>
+                    </dl>
+                </div>
+                <!-- <h2 style="border-color: #f1f1f1;padding-left: 80px;font-family: 'Times New Roman', Times, serif;font-weight: bolder;">Signature and official frank of the certifying
+                                Officer</h2> -->
 
-                    <div>
-                        <canvas id="can2" width="910" height="400" name="sign_2"
-                                style="position: fixed; left:20%; border:2px solid; top:140px;"></canvas>
-
-
-                        <input type="button" value="save" id="btn" size="30" onclick="save()" class="Button_1"
-                            style="position:absolute;top:540px;left:297px;">
-                        <input type="button" value="clear" id="clr" size="23" onclick="erase()" class="Button_1"
-                            style="position:absolute;top:540px;left:420px;">
-
-                        <button type="button" class="previous-btn" style="position:absolute;top:550px;left:297px;">
-                            Previous
-                        </button>
-                        <button type="button" class="next-btn" style="position:absolute;top:550px;left:1132px;"
-                                onclick="canvers(3)">Next
-                        </button>
+                <div>
+                    <canvas id="can2" width="910" height="400" name="sign_2"
+                            style="position: fixed; left:20%; border:2px solid; top:140px;"></canvas>
 
 
-                    </div>
+                    <input type="button" value="save" id="btn" size="30" onclick="save()" class="Button_1"
+                           style="position:absolute;top:540px;left:297px;">
+                    <input type="button" value="clear" id="clr" size="23" onclick="erase()" class="Button_1"
+                           style="position:absolute;top:540px;left:420px;">
+
+                    <button type="button" class="previous-btn" style="position:absolute;top:550px;left:297px;">
+                        Previous
+                    </button>
+                    <button type="button" class="next-btn" style="position:absolute;top:550px;left:1132px;"
+                            onclick="canvers(3)">Next
+                    </button>
+
+
+                </div>
             </div>
             <div class="step step-11 " style="position: fixed;">
                 <div style="padding-left: 298px;padding-top:40px;">
@@ -833,11 +790,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (Number == 1) {
             var name1 = document.getElementById('can');
             init(name1);
-        } else if(Number==2) {
+        } else if (Number == 2) {
             var name1 = document.getElementById('can2');
             init(name1);
-        }
-        else{
+        } else {
             var name1 = document.getElementById('can1');
             init(name1);
         }
