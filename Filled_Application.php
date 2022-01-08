@@ -27,14 +27,14 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
         body {
             /* background: #21669b; */
             /* background: #667EEA; */
-            min-height: 980vh;
+            min-height: 860vh;
 
             background-image: radial-gradient(circle farthest-corner at 22.4% 21.7%, rgba(4, 189, 228, 1) 0%, rgba(2, 83, 185, 1) 100.2%);
 
 
         }
         td{
-            padding-left:  20px;
+            padding-left:  10px;
             padding-right: 30px;
             /* padding-bottom: 20px; */
             
@@ -138,7 +138,7 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
             position: fixed;
             top: 0;
             right: 0;
-            height: 19vh;
+            height: 16vh;
             width: 100%;
             background-color: #00b4db;
             display: flex;
@@ -184,15 +184,25 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
 <div class="header1">
     <table>
         <tbody>
-           <div ><tr><td><h1 style="text-align: center;font-size:60px; color:white;padding-right:200px; font-family: 'Times New Roman', Times, serif;">Application </h1></td></tr></div> 
-           <div> <div> <div style="top: 0px;"> <tr>
+           <div ><tr><td><h1 style="text-align: center;font-size:60px; color:white;padding-right:100px; font-family: 'Times New Roman', Times, serif;">Application </h1></td></tr></div> 
+           <fieldset class="input-group" style="margin-left: 20px;margin-top:70px;" disabled >
+                            <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>Application State</b></span>
+                            <textarea class="form-control" aria-label="With textarea" style="margin-right:50px;height:35px;background-color:#00b4db;color:black;"></textarea>
+           </fieldset>
+           <div> <div> <div style="top: 0px;">
+            <tr>           
+                          
+                           <td >
+                            
+                            </td>
+                            
                             <!-- This button id only viewed by RAP -->
                             <td style="float: right;"><a href="Time_slot.php">
-                                   <button type="submit" class="btn btn-sm btn-outline-primary" style="color: black; font-size:18px;"><b >Send Time</b>  
-                                   </button>
+                                   <button type="submit" class="btn btn-sm btn-outline-primary" style="color: black;width:150px; font-size:15px;"><b >Send Time</b>  
+                                   </button></td>
                             <!-- This button id only viewed by RAP -->
                            <td><a href="Reject_Application.php">
-                                   <button type="submit" class="btn btn-sm btn-outline-primary" style="color:black;font-size:18px;" ><b >Reject Application</b>
+                                   <button type="submit" class="btn btn-sm btn-outline-primary" style="color:black;width:150px; font-size:15px;" ><b >Reject Application</b>
                                    </button>
                                </a></td>
                                <td><a href="View_Applications_Details.php">
