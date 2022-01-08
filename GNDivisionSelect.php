@@ -7,7 +7,7 @@ $applicant = unserialize($conn->get_column_value("user_details", "user_id", "=",
 $applicant->set_db($conn);
 $applicant->set_row_id($_SESSION['user_id']);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['GN_division']))) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_GET['id'];
 
     if (!empty($_POST['DS_division'])) {
@@ -27,11 +27,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['GN_division']))) {
     } else if (!empty($_POST['school'])) {
         $basic_adr = $_POST['school'];
         $ds_adr = "";
-        header("location: IdRequestForm.php?id=$id&table='schools'&basic=$basic_adr&ds=$ds_adr");
+        header("location: IdRequestForm.php?id=$id&table='schools'&basic=$basic_adr");
     } else if (!empty($_POST['estate'])) {
         $basic_adr = $_POST['estate'];
         $ds_adr = "";
         header("location: IdRequestForm.php?id=$id&table='estates'&basic=$basic_adr&ds=$ds_adr");
+    } else {
+        echo "fuck";
     }
 
 }
@@ -113,26 +115,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['GN_division']))) {
             var other_check = document.getElementById("otherAppliers");
 
             if (student_check.checked) {
-                var sch = <?php echo json_encode($_SESSION['val_array1']??NULL); ?>;
+                var sch = <?php echo json_encode($_SESSION['val_array1'] ?? NULL); ?>;
                 if (!sch.includes(school)) {
                     alert("Enter a correct School name");
                     return false;
                 }
 
             } else if (estateWorker_check.checked) {
-                var est = <?php echo json_encode($_SESSION['val_array2']??NULL); ?>;
+                var est = <?php echo json_encode($_SESSION['val_array2'] ?? NULL); ?>;
                 if (!est.includes(estate)) {
                     alert("Enter a correct Estate");
                     return false;
                 }
 
             } else if (other_check.checked) {
-                var ds = <?php echo json_encode($_SESSION['val_array3']??NULL); ?>;
+                var ds = <?php echo json_encode($_SESSION['val_array3'] ?? NULL); ?>;
                 if (!ds.includes(ds_div)) {
                     alert("Enter a correct Divisional section");
                     return false;
                 }
-                var est = <?php echo json_encode($_SESSION['val_array4']??NULL); ?>;
+                var est = <?php echo json_encode($_SESSION['val_array4'] ?? NULL); ?>;
                 if (!est.includes(gn_div)) {
                     alert("Enter a correct Grama niladari division");
                     return false;
@@ -236,8 +238,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['GN_division']))) {
 
         </fieldset>
 
-        <form id="division-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>
-      ?id=<?php echo $_GET['id']; ?>" method="POST" onsubmit="return validate_gn_ds()">
+        <form id="division-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?
+        id=<?php echo $_GET['id']; ?>" method="POST" onsubmit="return validate_gn_ds()">
             <fieldset id="detailsStudents" style="display: none;">
                 <div>
                     <h2>What is your school?</h2>
