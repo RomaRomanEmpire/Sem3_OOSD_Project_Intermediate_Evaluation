@@ -580,21 +580,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </dl> -->
 
                     <button type="button" class="previous-btn">Previous</button>
-                    <button type="button" class="next-btn " onclick="canvers(1)">Next</button>
+                    <button type="submit" class="submit-btn" >Submit</button>
 
 
                 </div>
             </div>
 
-            <div class="step step-9 " style="position: fixed;">
+            <!-- <div class="step step-9 " style="position: fixed;">
 
                 <div style="padding-left: 298px;padding-top:40px;">
                     <dl style="height:35px;width:900px;">
                         <dt><b><label for="certifySignature">Signature of the Applicant</label></b></dt>
                     </dl>
                 </div>
-                <!-- <h2 style="border-color: #f1f1f1;padding-left: 80px;font-family: 'Times New Roman', Times, serif;font-weight: bolder;">Signature and official frank of the certifying
-                                Officer</h2> -->
+               
 
                 <div>
                     <canvas id="can" width="910" height="400" name="sign_1"
@@ -623,11 +622,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dt><b><label for="certifySignature">Signature and official frank of the certifying
                                     Officer</label></b></dt>
                     </dl>
-                </div>
-                <!-- <h2 style="border-color: #f1f1f1;padding-left: 80px;font-family: 'Times New Roman', Times, serif;font-weight: bolder;">Signature and official frank of the certifying
-                                Officer</h2> -->
+                </div> -->
+               
 
-                <div>
+                <!-- <div>
                     <canvas id="can2" width="910" height="400" name="sign_2"
                             style="position: fixed; left:20%; border:2px solid; top:140px;"></canvas>
 
@@ -654,8 +652,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     Officer</label></b></dt>
                     </dl>
                 </div>
-                <!-- <h2 style="border-color: #f1f1f1;padding-left: 80px;font-family: 'Times New Roman', Times, serif;font-weight: bolder;">Signature and official frank of the certifying
-                                Officer</h2> -->
+                
 
                 <div>
                     <canvas id="can1" width="910" height="400" name="sign_3"
@@ -677,7 +674,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 
 
-            </div>
+            </div> -->
 
     </div>
 
