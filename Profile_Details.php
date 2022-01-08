@@ -99,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="container">
     <div class="header1" style="z-index: 4;background-color:#03031b;">
         <div>
-            <button type="button" class="btn btn-outline-light" id="Back" onclick=" GoPreviousFile()">Back</button>
+            <button type="button" class="btn btn-outline-light" id="Back" >Back</button>
         </div>
     </div>
     <div style="padding: 100px; " class="Profile_box">

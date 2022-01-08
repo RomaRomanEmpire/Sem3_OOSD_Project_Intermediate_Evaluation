@@ -6,6 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Database Manager Dashboard</title>
       <link rel="stylesheet" href="style2.css">
+      <script src="Javascipt_File.js"></script>
       <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -18,7 +19,7 @@
             <div>
                   <ul>
                         
-                        <li><img src="Image/student.jpg" alt="">&nbsp;<span><a href="Profile_Details.php"> Profile</a></span></li>
+                        <li><img src="Image/student.jpg" alt="">&nbsp;<span><a href="Profile_Details.php" > Profile</a></span></li>
                        <!-- <li><img src="Image/notification.jpg" alt="">&nbsp;<span>Notification</span></li> -->
 
                          <li  href="Add_officer.html"><img src="Image/Add.png" alt="">&nbsp;<span><a href="Add_staff_member.php" >Add Officer</a> </span></li>

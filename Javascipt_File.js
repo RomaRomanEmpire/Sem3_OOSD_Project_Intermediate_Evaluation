@@ -405,8 +405,35 @@ function PasswordValidity() {
         return false;
     }
 }
+//========================================================================
+// class StaticVariable{
+//    static Page_number=0;
+//    constructor(Page_number){
+//     this.Page_number=Page_number;
+//     // document.write(StaticVariable.Page_number);
+//    }
+//    static getPage_number(){
+//        return this.Page_number;
+//    }
+   
+// } 
 
-
+// function Change_File_Number(Page_number){
+//  StaticVariable.Page_number=Page_number;
+// //  document.write(StaticVariable.Page_number);
+    
+// }
+// function redirect(){
+//     document.write(StaticVariable.Page_number);
+//     if(StaticVariable.Page_number==1){
+//         document.write(StaticVariable.Page_number);
+//         // window.location="DatabaseManagerDashboard.php";
+//     }
+//     else{
+//         // window.location="DatabaseManagerDashboard.php";
+//         document.write("hello");
+//     }
+// }
 
 
 

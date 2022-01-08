@@ -146,7 +146,7 @@ abstract class User
         if (isset($array['bday'])) $this->set_bday($array['bday']);
         if (isset($pf)) $this->setPfPhoto($pf);
 
-        if (isset($array['new_pwd'])) {
+        if (!empty($array['new_pwd'])) {
             $this->set_pwd($array['new_pwd']);
             $this->db->update_user_account_details($this->row_id, $this->uname, $this->email, $this->get_user_pwd(), $this);
         } else

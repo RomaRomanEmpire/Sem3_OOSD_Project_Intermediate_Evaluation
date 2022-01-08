@@ -15,6 +15,7 @@ $already_applied = is_null($con->get_column_value("application_details", "applic
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Applicant Dashboard</title>
     <link rel="stylesheet" href="style2.css">
+    <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -53,12 +54,12 @@ $already_applied = is_null($con->get_column_value("application_details", "applic
                 </div>
                 <!-- <a href=""  class="btn" >Notification</a>
                 <a href=""  class="btn"> Profile</a>   -->
-                <a href="logout.php" class="btn">Log Out</a>
+                <a href="logout.php" class="btn"><i class="fas fa-sign-out-alt"></i> Log Out</a>
 
             </div>
         </div>
     </div>
-    <div class="conten">
+    <div class="content">
         <div class="card">
             <div class="icon_case">
                 <br><br><br><br>
