@@ -8,17 +8,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $photograph = checkImageValidity("photographs");
     $receipt = checkImageValidity("receipt");
+    if (!empty($photograph) && !empty($receipt)) {
+        $applicant = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
+        $application = $applicant->getApplication();
+        $application->setDetails($photograph, $receipt, $_POST, $applicant, $_GET['id']);
+        $applicant->set_db($conn);
 
-    $applicant = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
-    $application = $applicant->getApplication();
-    $application->setDetails($photograph, $receipt, $_POST, $applicant, $_GET['id']);
-    $applicant->set_db($conn);
 
+        $applicant->set_row_id($_SESSION['user_id']);
 
-    $applicant->set_row_id($_SESSION['user_id']);
-
-    $applicant->apply_NIC($application->getState()->getState(), $_GET['basic'], $_GET['ds'], $_GET['table'], $application);
-
+        $applicant->apply_NIC($application->getState()->getState(), $_GET['basic'], $_GET['ds'], $_GET['table'], $application);
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -164,33 +164,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             outline: none;
             width: 110px;
         }
+
         .header1 {
             position: absolute;
             top: 0;
             right: 0;
             height: 19vh;
             width: 100%;
-            
+
             display: flex;
             align-items: center;
             justify-content: right;
             z-index: 3;
-            
+
 
         }
-     .header1 button:hover{
-        background: whitesmoke;
-        color: #000;
-       }
-     .header1 button{
-        width: 120px;
-        font-size:18px;
-        margin-right:20px; 
-        color:white; 
-        background-color:black;
-        height: 35px;
-        border-radius: 5px;
-     }
+
+        .header1 button:hover {
+            background: whitesmoke;
+            color: #000;
+        }
+
+        .header1 button {
+            width: 120px;
+            font-size: 18px;
+            margin-right: 20px;
+            color: white;
+            background-color: black;
+            height: 35px;
+            border-radius: 5px;
+        }
     </style>
 
 
@@ -199,50 +202,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <!-- <div class="header1"><button type="submit" class="fas fa-arrow-left" onclick="goback()"> Back</button> </div> -->
 <section>
-    
+
     <div>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?
-        id=<?php echo $_GET['id']; ?>&table=<?php echo $_GET['table']; ?>&
-        basic=<?php echo $_GET['basic']; ?>&ds=<?php echo $_GET['ds']; ?>" method="POST"
-              enctype="multipart/form-data">
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?id=<?php echo $_GET['id']; ?>&
+        table=<?php echo $_GET['table']; ?>&basic=<?php echo $_GET['basic']; ?>&ds=<?php echo $_GET['ds']; ?>"
+              method="POST" enctype="multipart/form-data">
 
             <div class="container">
                 <!-- <h1><span id="msgx"></span></h1> -->
                 <div class="step step-1 active">
-               <div class="header1"><a href="applicant_dashboard.php"><button type="button" class="fas fa-arrow-left" > Back</button> </a></div>
+                    <div class="header1"><a href="applicant_dashboard.php">
+                            <button type="button" class="fas fa-arrow-left"> Back</button>
+                        </a></div>
                     <h1>Application for Identity Card</h1><br>
                     <h2>Personal Details</h2>
                     <div class="Form-group">
                         <dl>
                             <dt>Name in full</dt>
                             <dd><b><label for="familyName">Family Name</label></b></dd>
-                            <dd><input type="text" id="familyNname" name="familyName" placeholder="Family name..."
+                            <dd><input type="text" id="familyNname" name="familyName" value="<?php echo $_POST['familyName']??NULL?>" placeholder="Family name..."
                                        required></dd>
                             <dd><b> <label for="name">Name</label></b></dd>
-                            <dd><input type="text" id="name" name="name" placeholder="Name..." required></dd>
+                            <dd><input type="text" id="name" name="name" value="<?php echo $_POST['name']??NULL?>" placeholder="Name..." required></dd>
                             <dd><b> <label for="surname">Surname</label></b></dd>
-                            <dd><input type="text" id="surname" name="surname" placeholder="Surname..." required></dd>
+                            <dd><input type="text" id="surname" name="surname" value="<?php echo $_POST['surname']??NULL?>" placeholder="Surname..." required></dd>
                         </dl>
                     </div>
                     <div class="Form-group">
                         <dl>
                             <dt>Name to be appeared in the Identity Card</dt>
                             <dd><b><label for="familyName">Family Name</label></b></dd>
-                            <dd><input type="text" id="familyNname" name="familyName" placeholder="Family name..."
+                            <dd><input type="text" id="familyNname" name="familyName" value="<?php echo $_POST['familyName']??NULL?>" placeholder="Family name..."
                                        required></dd>
                             <dd><b> <label for="name">Name</label></b></dd>
-                            <dd><input type="text" id="name" name="name" placeholder="Name..." required></dd>
+                            <dd><input type="text" id="name" name="name" value="<?php echo $_POST['name']??NULL?>" placeholder="Name..." required></dd>
                             <dd><b> <label for="surname">Surname</label></b></dd>
-                            <dd><input type="text" id="surname" name="surname" placeholder="Surname..." required></dd>
+                            <dd><input type="text" id="surname" name="surname" value="<?php echo $_POST['surname']??NULL?>" placeholder="Surname..." required></dd>
                         </dl>
                     </div>
 
                     <div class="Form-group">
                         <dl>
                             <dt>Sex</dt>
-                            <dd><input type="radio" id="gender_" name="gender" value="Male" required>
+                            <dd><input type="radio" id="gender_" name="gender" value="Male" <?php echo $_POST['gender']??NULL=='Male'?'checked':NULL?> required>
                                 <label for="gender">Male</label>
-                                <input type="radio" id="gender_" name="gender" value="Female" required>
+                                <input type="radio" id="gender_" name="gender" value="Female" <?php echo $_POST['gender']??NULL=='Female'?'checked':NULL?> required>
                                 <label for="gender">Female</label>
                             </dd>
                         </dl>
@@ -251,13 +255,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt>Civil Status</dt>
-                            <dd><input type="radio" id="civilStatus_" name="civilStatus" value="Married" required>
+                            <dd><input type="radio" id="civilStatus_" name="civilStatus" value="Married" <?php echo $_POST['civilStatus']??NULL=='Married'?'checked':NULL?> required>
                                 <label for="civilStatus_">Married</label>
-                                <input type="radio" id="civilStatus_" name="civilStatus" value="Single" required>
+                                <input type="radio" id="civilStatus_" name="civilStatus" value="Single" <?php echo $_POST['civilStatus']??NULL=='Single'?'checked':NULL?> required>
                                 <label for="civilStatus_">Single</label>
-                                <input type="radio" id="civilStatus_" name="civilStatus" value="Widowed" required>
+                                <input type="radio" id="civilStatus_" name="civilStatus" value="Widowed" <?php echo $_POST['civilStatus']??NULL=='Widowed'?'checked':NULL?> required>
                                 <label for="civilStatus_">Widowed</label>
-                                <input type="radio" id="civilStatus_" name="civilStatus" value="Divorced" required>
+                                <input type="radio" id="civilStatus_" name="civilStatus" value="Divorced" <?php echo $_POST['civilStatus']??NULL=='Divorced'?'checked':NULL?> required>
                                 <label for="civilStatus_">Divorced</label>
                             </dd>
                         </dl>
@@ -266,7 +270,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="profession">Profession/Occupation/Designation</label></b></dt>
-                            <dd><input type="text" id="profession" name="profession" placeholder="Profession..."
+                            <dd><input type="text" id="profession" name="profession" value="<?php echo $_POST['profession']??NULL?>" placeholder="Profession..."
                                        required></dd>
                         </dl>
                     </div>
@@ -280,7 +284,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="birthday">BirthDay</label></b></dt>
-                            <dd><input type="date" id="birthday" name="birthday" required></dd>
+                            <dd><input type="date" id="birthday" name="birthday" value="<?php echo $_POST['birthday']??NULL?>" required></dd>
                         </dl>
                     </div>
 
@@ -288,7 +292,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt><b><label for="certificateNo">Birth Certificate No</label></b></dt>
                             <dd><input type="number" id="certificateNo" name="birthCertificateNo"
-                                       placeholder="Birth Certificate No..." required></dd>
+                                       value="<?php echo $_POST['birthCertificateNo']??NULL?>" placeholder="Birth Certificate No..." required></dd>
                         </dl>
                     </div>
 
@@ -296,14 +300,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt><b><label for="placeOfBirth">Place of Birth</label></b></dt>
                             <dd><input type="text" id="placeOfBirth" name="placeOfBirth"
-                                       placeholder="Place of Birth..." required></dd>
+                                       value="<?php echo $_POST['placeOfBirth']??NULL?>" placeholder="Place of Birth..." required></dd>
                         </dl>
                     </div>
 
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="division">Division</label></b></dt>
-                            <dd><input type="text" id="division" name="birthDivision" placeholder="Division..."
+                            <dd><input type="text" id="division" name="birthDivision" value="<?php echo $_POST['birthDivision']??NULL?>" placeholder="Division..."
                                        required>
                             </dd>
                         </dl>
@@ -312,7 +316,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="district">District</label></b></dt>
-                            <dd><input type="text" id="district" name="birthDistrict" placeholder="District..."
+                            <dd><input type="text" id="district" name="birthDistrict" value="<?php echo $_POST['birthDistrict']??NULL?>" placeholder="District..."
                                        required>
                             </dd>
                         </dl>
@@ -325,14 +329,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt><b><label for="countryOfBirth">Country of Birth</label></b></dt>
                             <dd><input type="text" id="countryOfBirth" name="countryOfBirth"
-                                       placeholder="Country of Birth..."></dd>
+                                       value="<?php echo $_POST['countryOfBirth']??NULL?>" placeholder="Country of Birth..."></dd>
                         </dl>
                     </div>
 
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="city">City</label></b></dt>
-                            <dd><input type="text" id="city" name="birthCity" placeholder="City...">
+                            <dd><input type="text" id="city" name="birthCity" value="<?php echo $_POST['birthCity']??NULL?>" placeholder="City...">
                             </dd>
                         </dl>
                     </div>
@@ -340,8 +344,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="certificateNo">Certificate No.</label></b></dt>
-                            <dd><input type="number" id="certificateNo" name="f citizenshipCertificateNo"
-                                       placeholder="Certificate No...">
+                            <dd><input type="number" id="certificateNo" name="citizenshipCertificateNo"
+                                       value="<?php echo $_POST['citizenshipCertificateNo']??NULL?>" placeholder="Certificate No...">
                             </dd>
                         </dl>
                     </div>
@@ -357,14 +361,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <dt>Permanent Address</dt>
                             <dd><b><label for="houseName">Name or number of the House</label></b></dd>
                             <dd><input type="text" id="houseName" name="permHouseName"
-                                       placeholder="Name or number of the House..." required></dd>
+                                       value="<?php echo $_POST['permHouseName']??NULL?>" placeholder="Name or number of the House..." required></dd>
                             <dd><b> <label for="road">Road/Street/Lane/Place/Garden </label></b></dd>
-                            <dd><input type="text" id="road" name="permRoad" placeholder="Road..." required></dd>
+                            <dd><input type="text" id="road" name="permRoad" value="<?php echo $_POST['permRoad']??NULL?>" placeholder="Road..." required></dd>
                             <dd><b> <label for="village">Village/City</label></b></dd>
-                            <dd><input type="text" id="village" name="permVillage" placeholder="Village..." required>
+                            <dd><input type="text" id="village" name="permVillage" value="<?php echo $_POST['permVillage']??NULL?>" placeholder="Village..." required>
                             </dd>
                             <dd><b> <label for="village">Postal Code</label></b></dd>
-                            <dd><input type="number" id="postalCode" name="permPostalCode" placeholder="Postal Code..."
+                            <dd><input type="number" id="postalCode" name="permPostalCode" value="<?php echo $_POST['permPostalCode']??NULL?>" placeholder="Postal Code..."
                                        required>
                             </dd>
                         </dl>
@@ -375,15 +379,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <dt>Postal Address</dt>
                             <dd><b><label for="houseName">Name or number of the House</label></b></dd>
                             <dd><input type="text" id="houseName" name="postalHouseName"
-                                       placeholder="Name or number of the House..." required></dd>
+                                       value="<?php echo $_POST['postalHouseName']??NULL?>" placeholder="Name or number of the House..." required></dd>
                             <dd><b> <label for="road">Road/Street/Lane/Place/Garden </label></b></dd>
-                            <dd><input type="text" id="road" name="postalRoad" placeholder="Road..." required></dd>
+                            <dd><input type="text" id="road" name="postalRoad" value="<?php echo $_POST['postalRoad']??NULL?>" placeholder="Road..." required></dd>
                             <dd><b> <label for="village">Village/City</label></b></dd>
-                            <dd><input type="text" id="village" name="postalVillage" placeholder="Village..." required>
+                            <dd><input type="text" id="village" name="postalVillage" value="<?php echo $_POST['postalVillage']??NULL?>" placeholder="Village..." required>
                             </dd>
                             <dd><b> <label for="village">Postal Code</label></b></dd>
                             <dd><input type="number" id="postalCode" name="postalPostalCode"
-                                       placeholder="Postal Code..." required></dd>
+                                       value="<?php echo $_POST['postalPostalCode']??NULL?>" placeholder="Postal Code..." required></dd>
                         </dl>
                     </div>
 
@@ -399,9 +403,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt><label for="Account_Type">Account Type</label></dt>
                             <dd><select name="citizenshipCertificateType">
-                                    <option selected disabled hidden>Select the type of the Certificate</option>
-                                    <option style="text-align: center;">Citizenship Certificate</option>
-                                    <option style="text-align: center;">Dual Citizenship Certificate</option>
+                                    <option disabled hidden <?php echo (!isset($_POST['citizenshipCertificateType']))?'selected':""?>>Select the type of the Certificate</option>
+                                    <option style="text-align: center;" <?php echo $_POST['citizenshipCertificateType']??NULL=='Citizenship Certificate'?'selected':NULL?>>Citizenship Certificate</option>
+                                    <option style="text-align: center;" <?php echo $_POST['citizenshipCertificateType']??NULL=='Dual Citizenship Certificate'?'selected':NULL?>>Dual Citizenship Certificate</option>
                                 </select></dd>
                         </dl>
                     </div>
@@ -410,14 +414,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt><b><label for="certificateNo">Certificate Number</label></b></dt>
                             <dd><input type="number" id="certificateNo" name="certificateNo"
-                                       placeholder="Certificate Number..." required></dd>
+                                       value="<?php echo $_POST['certificateNo']??NULL?>" placeholder="Certificate Number..." required></dd>
                         </dl>
                     </div>
 
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="certificateDate">Date of issue of Certificate </label></b></dt>
-                            <dd><input type="date" id="certificateDate" name="citizenshipCertificateDate" required></dd>
+                            <dd><input type="date" id="certificateDate" name="citizenshipCertificateDate" value="<?php echo $_POST['citizenshipCertificateDate']??NULL?>" required></dd>
                         </dl>
                     </div>
 
@@ -426,11 +430,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt><b><label for="telephoneNo">Telephone Number</label></b></dt>
                             <dd><b><label for="residence">Residence</label></b></dd>
-                            <dd><input type="tel" id="residence" name="residenceTelNo" placeholder="Residence..."
+                            <dd><input type="tel" id="residence" name="residenceTelNo" value="<?php echo $_POST['residenceTelNo']??NULL?>" placeholder="Residence..."
                                        required>
                             </dd>
                             <dd><b><label for="mobile">Mobile</label></b></dd>
-                            <dd><input type="tel" id="mobile" name="mobileTelNo" placeholder="Mobile..." required>
+                            <dd><input type="tel" id="mobile" name="mobileTelNo" value="<?php echo $_POST['mobileTelNo']??NULL?>" placeholder="Mobile..." required>
                             </dd>
                         </dl>
                     </div>
@@ -438,7 +442,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="email">Email</label></b></dt>
-                            <dd><input type="email" id="email" name="email" placeholder="Email..." required>
+                            <dd><input type="email" id="email" name="email" value="<?php echo $_POST['email']??NULL?>" placeholder="Email..." required>
                             </dd>
                         </dl>
                     </div>
@@ -455,16 +459,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <dl>
                                 <dt>Purpose of application</dt>
                                 <dd><input type="radio" id="purpose" name="purpose"
-                                           value=" if the Identity Card is lost">
+                                           value="if the Identity Card is lost" <?php echo $_POST['purpose']??NULL=='if the Identity Card is lost'?'checked':NULL?> >
                                     <label for="purpose"> if the Identity Card is lost </label><br>
                                     <input type="radio" id="purpose" name="purpose"
-                                           value="to make changes to the Identity Card">
+                                           value="to make changes to the Identity Card" <?php echo $_POST['purpose']??NULL=='to make changes to the Identity Card'?'checked':NULL?>>
                                     <label for="purpose">to make changes to the Identity Card</label><br>
                                     <input type="radio" id="purpose" name="purpose"
-                                           value="to renew the period of validity ">
+                                           value="to renew the period of validity" <?php echo $_POST['purpose']??NULL=='to renew the period of validity'?'checked':NULL?>>
                                     <label for="purpose">to renew the period of validity </label><br>
                                     <input type="radio" id="purpose" name="purpose"
-                                           value=" if the Identity card is damaged/ defaced /illegible">
+                                           value="if the Identity card is damaged/ defaced /illegible" <?php echo $_POST['purpose']??NULL=='if the Identity card is damaged/ defaced /illegible'?'checked':NULL?>>
                                     <label for="purpose"> if the Identity card is damaged/ defaced
                                         /illegible</label><br>
                                 </dd>
@@ -475,7 +479,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <dt><b><label for="lostIdNum">Lost or last obtained Identity Card Number</label></b>
                                 </dt>
                                 <dd><input type="text" id="lostIdNum" name="lostIdNum"
-                                           placeholder="Lost or last obtained Identity Card Number">
+                                           value="<?php echo $_POST['lostIdNum']??NULL?>" placeholder="Lost or last obtained Identity Card Number">
                                 </dd>
                             </dl>
                         </div>
@@ -484,7 +488,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <dl>
                                 <dt><b><label for="lostIdDate">Date of the issue of the Identity Card</label></b></dt>
                                 <dd><input type="date" id="lostIdDate" name="lostIdDate"
-                                           placeholder="Date of the issue of the Identity Card">
+                                           value="<?php echo $_POST['lostIdDate']??NULL?>" placeholder="Date of the issue of the Identity Card">
                                 </dd>
                             </dl>
                         </div>
@@ -495,11 +499,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             pertaining to the lost Identity Card</label></b></dt>
                                 <dd><b><label for="policeStationName">Name of the Police Station</label></b></dd>
                                 <dd><input type="text" id="policeStationName" name="policeStationName"
-                                           placeholder="Name of the Police Station">
+                                           value="<?php echo $_POST['policeStationName']??NULL?>" placeholder="Name of the Police Station">
                                 </dd>
                                 <dd><b><label for="policeReportDate">Date of the issue of the Police report</label></b>
                                 </dd>
-                                <dd><input type="date" id="policeReportDate" name="policeReportDate">
+                                <dd><input type="date" id="policeReportDate" name="policeReportDate" value="<?php echo $_POST['policeReportDate']??NULL?>">
                                 </dd>
                             </dl>
                         </div>
@@ -529,7 +533,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <dl>
                         <dt><b><label for="receiptNo">Number of the receipt or the certificate</label></b></dt>
                         <dd><input type="number" id="receiptNo" name="receiptNo"
-                                   placeholder="Number of the receipt or the certificate" required></dd>
+                                   value="<?php echo $_POST['receiptNo']??NULL?>" placeholder="Number of the receipt or the certificate" required></dd>
                     </dl>
 
                     <dl>
@@ -539,12 +543,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </dl>
 
                     <button type="button" class="previous-btn">Previous</button>
-                    <button type="button" class="next-btn">Next</button>
+                    <button type="submit" class="submit-btn">Submit</button>
 
                 </div>
 
 
-                <div class="step step-8">
+                <!-- <div class="step step-8">
                     <h2>Attestation of the Certifying Officer</h2>
 
                     <dl>
@@ -571,20 +575,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                    placeholder="Name of the Certifying Officer" required></dd>
 
 
-                    </dl>
-
-
-                    <!-- <dl>
-                        <dt><b><label for="certifySignature">Signature and official frank of the certifying
-                                    Officer</label></b></dt>
                     </dl> -->
 
-                    <button type="button" class="previous-btn">Previous</button>
-                    <button type="submit" class="submit-btn" >Submit</button>
+
+                    
+
+                    <!-- <button type="button" class="previous-btn">Previous</button> -->
+                    <!-- <button type="submit" class="submit-btn">Submit</button>
 
 
                 </div>
-            </div>
+            </div> -->
 
             <!-- <div class="step step-9 " style="position: fixed;">
 
@@ -623,58 +624,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     Officer</label></b></dt>
                     </dl>
                 </div> -->
-               
-
-                <!-- <div>
-                    <canvas id="can2" width="910" height="400" name="sign_2"
-                            style="position: fixed; left:20%; border:2px solid; top:140px;"></canvas>
 
 
-                    <input type="button" value="save" id="btn" size="30" onclick="save()" class="Button_1"
-                           style="position:absolute;top:540px;left:297px;">
-                    <input type="button" value="clear" id="clr" size="23" onclick="erase()" class="Button_1"
-                           style="position:absolute;top:540px;left:420px;">
-
-                    <button type="button" class="previous-btn" style="position:absolute;top:550px;left:297px;">
-                        Previous
-                    </button>
-                    <button type="button" class="next-btn" style="position:absolute;top:550px;left:1132px;"
-                            onclick="canvers(3)">Next
-                    </button>
+            <!-- <div>
+                <canvas id="can2" width="910" height="400" name="sign_2"
+                        style="position: fixed; left:20%; border:2px solid; top:140px;"></canvas>
 
 
-                </div>
+                <input type="button" value="save" id="btn" size="30" onclick="save()" class="Button_1"
+                       style="position:absolute;top:540px;left:297px;">
+                <input type="button" value="clear" id="clr" size="23" onclick="erase()" class="Button_1"
+                       style="position:absolute;top:540px;left:420px;">
+
+                <button type="button" class="previous-btn" style="position:absolute;top:550px;left:297px;">
+                    Previous
+                </button>
+                <button type="button" class="next-btn" style="position:absolute;top:550px;left:1132px;"
+                        onclick="canvers(3)">Next
+                </button>
+
+
             </div>
-            <div class="step step-11 " style="position: fixed;">
-                <div style="padding-left: 298px;padding-top:40px;">
-                    <dl style="height:35px;width:900px;">
-                        <dt><b><label for="certifySignature">Signature and official frank of the certifying
-                                    Officer</label></b></dt>
-                    </dl>
-                </div>
-                
-
-                <div>
-                    <canvas id="can1" width="910" height="400" name="sign_3"
-                            style="position: fixed; left:20%; border:2px solid; top:140px;"></canvas>
+        </div>
+        <div class="step step-11 " style="position: fixed;">
+            <div style="padding-left: 298px;padding-top:40px;">
+                <dl style="height:35px;width:900px;">
+                    <dt><b><label for="certifySignature">Signature and official frank of the certifying
+                                Officer</label></b></dt>
+                </dl>
+            </div>
 
 
-                    <input type="button" value="save" id="btn" size="30" onclick="save()" class="Button_1"
-                           style="position:absolute;top:540px;left:297px;">
-                    <input type="button" value="clear" id="clr" size="23" onclick="erase()" class="Button_1"
-                           style="position:absolute;top:540px;left:420px;">
-
-                    <button type="button" class="previous-btn" style="position:absolute;top:550px;left:297px;">
-                        Previous
-                    </button>
-                    <button type="submit" class="submit-btn" style="position:absolute;top:550px;left:1110px;">Submit
-                    </button>
+            <div>
+                <canvas id="can1" width="910" height="400" name="sign_3"
+                        style="position: fixed; left:20%; border:2px solid; top:140px;"></canvas>
 
 
-                </div>
+                <input type="button" value="save" id="btn" size="30" onclick="save()" class="Button_1"
+                       style="position:absolute;top:540px;left:297px;">
+                <input type="button" value="clear" id="clr" size="23" onclick="erase()" class="Button_1"
+                       style="position:absolute;top:540px;left:420px;">
+
+                <button type="button" class="previous-btn" style="position:absolute;top:550px;left:297px;">
+                    Previous
+                </button>
+                <button type="submit" class="submit-btn" style="position:absolute;top:550px;left:1110px;">Submit
+                </button>
 
 
-            </div> -->
+            </div>
+
+
+        </div> -->
 
     </div>
 
@@ -825,11 +826,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
     }
-    
-        function goBack() {
-            window.location.href = "applicant_dashboard.php";
-        }
-       
+
+    function goBack() {
+        window.location.href = "applicant_dashboard.php";
+    }
+
 </script>
 
 </body>
