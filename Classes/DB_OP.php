@@ -247,14 +247,14 @@ class DB_OP
     }
 
     public
-    function add_application($applicant_id, $stat, $gn_div_or_address, $ds, $application_object)
+    function add_application($applicant_id, $stat, $gn_div_or_address, $ds, $table, $application_object)
     {
-        $sql = "INSERT INTO application_details (applicant_id,stat,apply_date, gn_div_or_address,ds,application_object) VALUES (?,?,?,?,?,?)";
+        $sql = "INSERT INTO application_details (applicant_id,stat,apply_date, gn_div_or_address,ds,address_type,application_object) VALUES (?,?,?,?,?,?,?)";
         if ($stmt = $this->link->prepare($sql)) {
 
             // Bind variables to the prepared statement as parameters
 
-            $stmt->bind_param("isssss", $param_applicant_id, $param_stat, $param_apply_date, $param_gn_div_or_address, $param_ds, $param_application_object);
+            $stmt->bind_param("issssss", $param_applicant_id, $param_stat, $param_apply_date, $param_gn_div_or_address, $param_ds,$param_address_type, $param_application_object);
 
             // Set parameters
             date_default_timezone_set('Asia/Colombo');
@@ -263,6 +263,7 @@ class DB_OP
             $param_apply_date = date('Y/m/d H:i:s');
             $param_gn_div_or_address = $gn_div_or_address;
             $param_ds = $ds;
+            $param_address_type = $table;
             $param_application_object = serialize($application_object);
 
             if ($stmt->execute()) {
@@ -459,10 +460,10 @@ class DB_OP
 
             if ($stmt->execute()) {
                 // Redirect to login page
-                echo "<script type='text/javascript'>alert('The request has been send successfully!'); window.location.href = 'Profile_Details.php';</script>";
+                echo "<script type='text/javascript'>alert('The request has been send successfully!'); </script>";
 
             } else {
-                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!'); window.location.href = 'Profile_Details.php';</script>";
+                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!'); </script>";
             }
 
 
