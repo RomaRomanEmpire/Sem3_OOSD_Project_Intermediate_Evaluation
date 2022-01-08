@@ -27,6 +27,7 @@
     color: white;
     font-weight: bold;
     line-height: 25px;
+	text-decoration: none;
   }
 
   </style>
