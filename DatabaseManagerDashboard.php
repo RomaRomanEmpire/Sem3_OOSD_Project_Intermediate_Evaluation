@@ -48,7 +48,7 @@
                   </div>
                   </div>
             </div>
-            <div class="conten">
+            <div class="content">
                   <div class="card1">
                   <div class="icon_case">
                         <br><br><br><br>
