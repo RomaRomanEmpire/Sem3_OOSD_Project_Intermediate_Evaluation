@@ -19,8 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+      <link rel="stylesheet" href="bootstrap.css">
       <title>Account Creating</title>
+      <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
       <style>
             input[type=submit] {
                   width: 100%;
@@ -51,14 +52,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       ::placeholder{
             color: black;
       }
-      div {
+      .div1 {
             border-radius: 5px;
             /* background-color: rgb(155, 150, 170); */
             background: rgba(164, 91, 153, 1.0);
-background: -webkit-linear-gradient(top left, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0));
-background: -moz-linear-gradient(top left, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0));
-background: linear-gradient(to bottom right, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0));
-            top: 70%;
+            background: -webkit-linear-gradient(top left, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0));
+            background: -moz-linear-gradient(top left, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0));
+            background: linear-gradient(to bottom right, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0));
+            top: 85%;
             left: 50%;
 
             position: absolute;
@@ -66,10 +67,10 @@ background: linear-gradient(to bottom right, rgba(164, 91, 153, 1.0), rgba(75, 8
             box-sizing: border-box;
             padding: 20px 20px;
             width: 1220px;
-            height: 950px;
+            height: 1050px;
             padding-bottom: 20px;
             bottom: 200px;
-
+            z-index: 2;
 
       }
       td{
@@ -77,16 +78,37 @@ background: linear-gradient(to bottom right, rgba(164, 91, 153, 1.0), rgba(75, 8
             text-align: left;
       }
       body{
-                  background: rgba(240, 80, 214, 1.0);
-background: -webkit-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
-background: -moz-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
-background: linear-gradient(to bottom right, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
-           
-      height: 1000px;}
-            label{
+            background: rgba(240, 80, 214, 1.0);
+            background: -webkit-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
+            background: -moz-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
+            background: linear-gradient(to bottom right, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));      
+            height: 1200px;}
+      label{
                   font-size: 20px;
                   font-weight: bolder;
             }
+      .header1 {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 80px; 
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            z-index: 3;
+            background: rgb(182,39,150);
+            background: linear-gradient(90deg, rgba(182,39,150,0.9867297260701156) 6%, rgba(53,72,123,1) 100%, rgba(132,187,199,1) 100%, rgba(11,101,135,0.6786064767703957) 100%, rgba(129,15,139,0.2612395299916842) 100%);
+      }
+      h1{
+            text-align: center;
+      }
+      ::placeholder { 
+                  color: black;
+                  opacity: 1; 
+                  font-size: 15px;
+                  }
+      
 </style>
 <script>
       var password_validate;
@@ -172,9 +194,18 @@ function validation(){
 </script>
 </head>
 <body>
+<div class="header1">
 
- <div >
-       <h1>User Account</h1>
+<div style="justify-content: center;margin-right:460px;margin-top:5px;" ><b><h1 style="font-size:60px;font-family:'Times New Roman', Times, serif">User Account</h1> </b>   </div>
+      <a href="Login.php"><button class="btn btn-outline-light fas fa-arrow-left" id="Back"  style="width: 140px;margin-top:5px;margin-right:8px; "> 
+      <!-- <img src="Image/back.png" style="width: 40px;height:20px;">  -->
+      Back</button></a>    
+          
+      
+</div>
+
+ <div class="div1" >
+       
        <form id="signup-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" onsubmit="return validation()">
             <h1><span id="msgx"></span></h1>
             <b> <label for="full_name">Full Name</label></b>
