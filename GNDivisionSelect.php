@@ -113,26 +113,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['GN_division']))) {
             var other_check = document.getElementById("otherAppliers");
 
             if (student_check.checked) {
-                var sch = <?php echo json_encode($_SESSION['val_array1']); ?>;
+                var sch = <?php echo json_encode($_SESSION['val_array1']??NULL); ?>;
                 if (!sch.includes(school)) {
                     alert("Enter a correct School name");
                     return false;
                 }
 
             } else if (estateWorker_check.checked) {
-                var est = <?php echo json_encode($_SESSION['val_array2']); ?>;
+                var est = <?php echo json_encode($_SESSION['val_array2']??NULL); ?>;
                 if (!est.includes(estate)) {
                     alert("Enter a correct Estate");
                     return false;
                 }
 
             } else if (other_check.checked) {
-                var ds = <?php echo json_encode($_SESSION['val_array3']); ?>;
+                var ds = <?php echo json_encode($_SESSION['val_array3']??NULL); ?>;
                 if (!ds.includes(ds_div)) {
                     alert("Enter a correct Divisional section");
                     return false;
                 }
-                var est = <?php echo json_encode($_SESSION['val_array4']); ?>;
+                var est = <?php echo json_encode($_SESSION['val_array4']??NULL); ?>;
                 if (!est.includes(gn_div)) {
                     alert("Enter a correct Grama niladari division");
                     return false;
@@ -216,25 +216,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['GN_division']))) {
         <fieldset>
             <h1>Who are You?</h1>
             <br>
-            <form id="division-form">
-                <div>
-                    <input type="radio" class="check-input" value="student" name="applier" id="student"
-                           onclick="HideDetails()">
-                    <label class="check-label" for="student">A Student</label>
-                </div>
-                <div>
-                    <input type="radio" class="check-input" value="estateWorker" name="applier" id="estateWorker"
-                           onclick="HideDetails()">
-                    <label class="check-label" for="stateWorker">An Estate Worker</label>
-                </div>
-                <div>
-                    <input type="radio" class="check-input" value="otherAppliers" name="applier" id="otherAppliers"
-                           onclick="HideDetails()">
-                    <label class="check-label" for="otherAppliers">Other</label>
-                </div>
-                <button type="button" onclick="ShowDetails()">Get Details</button>
-                <!--                <button type="submit" >Get Details</button>-->
-            </form>
+
+            <div>
+                <input type="radio" class="check-input" value="student" name="applier" id="student"
+                       onclick="ShowDetails()">
+                <label class="check-label" for="student">A Student</label>
+            </div>
+
+            <div>
+                <input type="radio" class="check-input" value="estateWorker" name="applier" id="estateWorker"
+                       onclick="ShowDetails()">
+                <label class="check-label" for="estateWorker">An Estate Worker</label>
+            </div>
+            <div>
+                <input type="radio" class="check-input" value="otherAppliers" name="applier" id="otherAppliers"
+                       onclick="ShowDetails()">
+                <label class="check-label" for="otherAppliers">Other</label>
+            </div>
+
         </fieldset>
 
         <form id="division-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>
@@ -398,7 +397,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['GN_division']))) {
             $('#gn_data').prop('required', true);
         } else {
             $('#ds_data').prop('required', false);
-            $('#gn_data').prop('required', flase);
+            $('#gn_data').prop('required', false);
         }
     });
 
