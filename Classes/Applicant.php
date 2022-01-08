@@ -58,6 +58,12 @@ class Applicant extends L_P_User implements IApprover,IVisitor
   }
 
 
+  public function getApplicationId()
+  {
+    return $this->db->get_column_value('application_details', 'applicant_id', '=', $this->getRowId(), 'app_id', "");
+  }
+
+
   public function visitApplication($application)
   {
     // TODO: Implement visitApplication() method.

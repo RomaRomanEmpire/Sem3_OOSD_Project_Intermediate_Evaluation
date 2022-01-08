@@ -222,7 +222,7 @@ h1,h2{
 }
 
 
-.container .conten {
+.container .content {
       position: fixed;
       margin: 10vh;
       min-height: 90vh; 
@@ -234,14 +234,14 @@ h1,h2{
 
       
 }
-.container .conten .cards{
+.container .content .cards{
       padding: 20px 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
 }
-.container .conten .card {
+.container .content .card {
       width: 70%;
       height: 70%;
       top: 0;
@@ -256,7 +256,7 @@ h1,h2{
       
 }
 
-.container .conten .card .icon_case button{
+.container .content .card .icon_case button{
       width: 100%;
       height: 60px;
       border-radius: 20px;
@@ -268,11 +268,11 @@ h1,h2{
       /* box-shadow: 0 4px 8px 0 rgba(0, 0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); */
       
 }
-.container .conten .card .icon_case button:hover{
+.container .content .card .icon_case button:hover{
       background-color: rgb(17, 0, 255);
 }
 
-.container .conten .card1 {
+.container .content .card1 {
       width: 100%;
       height: 90%;
       top: 0;
@@ -286,7 +286,7 @@ h1,h2{
       /* box-shadow: 0 4px 8px 0 rgba(0, 0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);  */
       
 }
-.container .conten .card1 .icon_case button{
+.container .content .card1 .icon_case button{
       width: 100%;
       height: 60px;
       border-radius: 20px;
@@ -297,23 +297,23 @@ h1,h2{
      border-color: antiquewhite;
       /* box-shadow: 0 4px 8px 0 rgba(0, 0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); */
 }
-.container .conten .card1 .icon_case .customers {
+.container .content .card1 .icon_case .customers {
       font-family: Arial, Helvetica, sans-serif;
       border-collapse: collapse;
       width: 100%;
     }
     
  
-    .container .conten .card1 .icon_case .customers td, th {
+    .container .content .card1 .icon_case .customers td, th {
       border: 1px solid #ddd;
       padding: 8px;
     }
     
-    .container .conten .card1 .icon_case .customers tr:nth-child(even){background-color: #f2f2f2;}
+    .container .content .card1 .icon_case .customers tr:nth-child(even){background-color: #f2f2f2;}
     
-    .container .conten .card1 .icon_case .customers tr:hover {background-color: #ddd;}
+    .container .content .card1 .icon_case .customers tr:hover {background-color: #ddd;}
     
-    .container .conten .card1 .icon_case .customers th {
+    .container .content .card1 .icon_case .customers th {
       padding-top: 12px;
       padding-bottom: 12px;
       text-align: left;
@@ -441,7 +441,7 @@ h1,h2{
       }
 }
 @media screen and (max-width:440px){
-      .container .conten .card .icon_case button{
+      .container .content .card .icon_case button{
             font-size: 8px;
            
       }

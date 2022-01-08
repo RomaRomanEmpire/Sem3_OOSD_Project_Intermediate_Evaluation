@@ -113,26 +113,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && (isset($_POST['GN_division']))) {
             var other_check = document.getElementById("otherAppliers");
 
             if (student_check.checked) {
-                var sch = <?php echo json_encode($_SESSION['val_array1']); ?>;
+                var sch = <?php echo json_encode($_SESSION['val_array1']??NULL); ?>;
                 if (!sch.includes(school)) {
                     alert("Enter a correct School name");
                     return false;
                 }
 
             } else if (estateWorker_check.checked) {
-                var est = <?php echo json_encode($_SESSION['val_array2']); ?>;
+                var est = <?php echo json_encode($_SESSION['val_array2']??NULL); ?>;
                 if (!est.includes(estate)) {
                     alert("Enter a correct Estate");
                     return false;
                 }
 
             } else if (other_check.checked) {
-                var ds = <?php echo json_encode($_SESSION['val_array3']); ?>;
+                var ds = <?php echo json_encode($_SESSION['val_array3']??NULL); ?>;
                 if (!ds.includes(ds_div)) {
                     alert("Enter a correct Divisional section");
                     return false;
                 }
-                var est = <?php echo json_encode($_SESSION['val_array4']); ?>;
+                var est = <?php echo json_encode($_SESSION['val_array4']??NULL); ?>;
                 if (!est.includes(gn_div)) {
                     alert("Enter a correct Grama niladari division");
                     return false;

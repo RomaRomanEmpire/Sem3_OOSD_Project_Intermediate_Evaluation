@@ -127,6 +127,16 @@ abstract class User
         return $this->bday;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getRowId()
+    {
+        return $this->row_id;
+    }
+
+
+
     public function update_fields($array,$pf)
     {
         if (isset($array['fname'])) $this->set_full_name($array['fname']);
