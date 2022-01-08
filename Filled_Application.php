@@ -185,10 +185,12 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
     <table>
         <tbody>
            <div ><tr><td><h1 style="text-align: center;font-size:60px; color:white;padding-right:100px; font-family: 'Times New Roman', Times, serif;">Application </h1></td></tr></div> 
-           <fieldset class="input-group" style="margin-left: 20px;margin-top:70px;" disabled >
+           <fieldset class="input-group" style="margin-left: 10px;margin-top:70px;" disabled >
                             <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>Application State</b></span>
-                            <textarea class="form-control" aria-label="With textarea" style="margin-right:50px;height:35px;background-color:#00b4db;color:black;"></textarea>
-           </fieldset>
+                            <textarea class="form-control" aria-label="With textarea" style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"></textarea>
+                            <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>Updated Date</b></span>
+                            <textarea class="form-control" aria-label="With textarea" style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"></textarea>
+                        </fieldset>
            <div> <div> <div style="top: 0px;">
             <tr>           
                           
