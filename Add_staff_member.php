@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="jquery/jquery.min.js"></script>
     <link rel="stylesheet" href="jquery-ui/jquery-ui.css">
     <script src="jquery-ui/jquery-ui.min.js"></script>
-
+    <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
 
     <title>Add Staff</title>
     <style>
@@ -71,6 +71,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         h2 {
 
             font-weight: bolder;
+
+        }
+        .header1 {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 19vh;
+            width: 100%;
+            
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            z-index: 3;
 
         }
     </style>
@@ -294,7 +307,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body style="color: white; background: rgb(10,30,235);
 background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%, rgba(15,30,135,1) 100%, rgba(101,181,198,1) 100%);">
 <!-- Deatils_NIC.style.display="block"; -->
-
+<div class="header1"><a href="DatabaseManagerDashboard.php">
+                                   <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-left" style="width: 100px;font-size:18px;margin-right:20px;color:black;"> Back
+                                   </button>
+                                  </a> </div>
 
 <div style="padding: 100px;  background: rgb(10,30,235);
 background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%, rgba(15,30,135,1) 100%, rgba(101,181,198,1) 100%); font-weight: bolder;">

@@ -6,6 +6,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Notification</title>
       <link rel="stylesheet" href="bootstrap.css">
+      <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
+
       <style>
       body {
 			font-family: Arial, Helvetica, sans-serif;
@@ -26,6 +28,15 @@
             z-index: 3;
 
         }
+        .header1 button:hover{
+          color: black;
+        }
+        .header1 button{
+          width: 100px;
+          font-size:18px;
+          margin-right:20px;
+          color: #f7f2f2;
+        }
   </style>
 </head>
 <body>
@@ -34,14 +45,14 @@
    <form >
      <table>
     <tr >
-   <td style="padding-right:0%;"><button type="submit" style="padding-right:10px;"><img src="Image/search.png" alt="" style="width: 40px;height:37px;"></button></td>
+   <td style="padding-right:0%;"><button type="submit" style="padding-right:10px;width:40px;margin-right:8px;padding-right:5px;"><img src="Image/search.png" alt="" style="width: 40px;height:37px;"></button></td>
    <td style="padding-left:0%;"><input type="text" placeholder="    search....." style="width: 650px;height:40px; margin-left:0%;   background-color: #f7f2f2;"></td>
   </tr> 
   </table> 
   </form> 
   </div>
   <div>
-  <a href="DatabaseManagerDashboard.php"><button type="submit" class="btn btn-sm btn-outline-light" style="width: 100px;font-size:18px;margin-right:20px;"><b style="color:#000; ">Back</b> </button></a>
+  <a href="DatabaseManagerDashboard.php"><button type="submit"  class="btn btn-sm btn-outline-light fas fa-arrow-left" ><b >Back</b> </button></a>
 </div>
 </div>
  
