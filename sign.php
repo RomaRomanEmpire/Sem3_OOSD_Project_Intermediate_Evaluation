@@ -12,7 +12,7 @@
 
     <script type="text/javascript" src="jquery-signature/js/jquery.signature.min.js"></script>
     <link rel="stylesheet" type="text/css" href="jquery-signature/css/jquery.signature.css">
-
+    <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
     <style>
         body {
             background: linear-gradient(#ce5ca8, #da95c3, #1B2ABD);
@@ -32,13 +32,33 @@
             height: auto;
             
         }
+        .header1 {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 8vh;
+            width: 100%;
+            background: linear-gradient(#ce5ca8, #da95c3, #ce5ca8);
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            z-index: 3;
+
+        }
+        .header1 button:hover{
+            background-color: white;
+        }
     </style>
 
 </head>
 
 <body>
-
-    <div class="container">
+<div class="header1">
+<div>
+  <a href="Filled_Application.php"><button type="button"  class="btn btn-sm btn-outline-light fas fa-arrow-left" style="width: 100px;font-size:18px;margin-right:20px;"><b> Back</b> </button></a>
+</div>
+</div>
+    <div class="container" >
 
         <form method="POST" action="upload_sign.php">
 
