@@ -18,7 +18,7 @@
                   <ul>
                         
                         <li><img src="Image/student.jpg" alt="">&nbsp;<span><a href="Profile_Details.php"> Profile</a></span></li>
-                       <li><img src="Image/notification.jpg" alt="">&nbsp;<span>Notification</span></li>
+                       <!-- <li><img src="Image/notification.jpg" alt="">&nbsp;<span>Notification</span></li> -->
 
                          <li  href="Add_officer.html"><img src="Image/Add.png" alt="">&nbsp;<span><a href="Add_staff_member.php" >Add Officer</a> </span></li>
                         
@@ -31,11 +31,11 @@
             <div class="header">
                   
                   <div class="nav">
-                         <div class="search">
+                         <!-- <div class="search">
                               <button type="submit"><img src="Image/search.png" alt=""></button>
                               <input type="text" name="" id="" placeholder="Search....">
                               
-                        </div>
+                        </div> -->
                   <div class="user">
                               
                            
@@ -54,6 +54,8 @@
                       <a href="user_Details.php" ><button>View Database Details</button></a>
                       <br><br>
                       <a href="View_Applications_Details.php" ><button>View Application Details</button></a>
+                      <br><br>
+                      <a href="DBM_Notification.php" ><button>View Notification Details</button></a>
                       <br><br>
                         <!-- <button>View Principal Details</button> -->
                         <!-- <table class="customers" >

@@ -196,7 +196,7 @@ function validation(){
 <body>
 <div class="header1">
 
-<div style="justify-content: center;margin-right:460px;margin-top:5px;" ><b><h1 style="font-size:60px;font-family:'Times New Roman', Times, serif">User Account</h1> </b>   </div>
+<div style="justify-content: center;margin-right:460px;margin-top:5px;" ><b><h1 style="font-size:60px;font-family:'Times New Roman', Times, serif">Create Account</h1> </b>   </div>
       <a href="Login.php"><button class="btn btn-outline-light fas fa-arrow-left" id="Back"  style="width: 140px;margin-top:5px;margin-right:8px; "> 
       <!-- <img src="Image/back.png" style="width: 40px;height:20px;">  -->
       Back</button></a>    

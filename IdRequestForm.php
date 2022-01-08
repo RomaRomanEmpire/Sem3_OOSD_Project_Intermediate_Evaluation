@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
     <title>ID Requesting</title>
     <style>
         h1 {
@@ -209,13 +209,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             outline: none;
             width: 110px;
         }
+        .header1 {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 19vh;
+            width: 100%;
+            
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            z-index: 3;
+            
+
+        }
+     .header1 button:hover{
+        background: whitesmoke;
+        color: #000;
+       }
+     .header1 button{
+        width: 120px;
+        font-size:18px;
+        margin-right:20px; 
+        color:white; 
+        background-color:black;
+        height: 35px;
+        border-radius: 5px;
+     }
     </style>
 
 
 </head>
 
 <body>
+<!-- <div class="header1"><button type="submit" class="fas fa-arrow-left" onclick="goback()"> Back</button> </div> -->
 <section>
+    
     <div>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST"
               enctype="multipart/form-data">
@@ -223,7 +252,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="container">
                 <!-- <h1><span id="msgx"></span></h1> -->
                 <div class="step step-1 active">
-
+               <div class="header1"><a href="applicant_dashboard.php"><button type="button" class="fas fa-arrow-left" > Back</button> </a></div>
                     <h1>Application for Identity Card</h1><br>
                     <h2>Personal Details</h2>
                     <div class="Form-group">
@@ -843,6 +872,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
     }
+    
+        function goBack() {
+            window.location.href = "applicant_dashboard.php";
+        }
+       
 </script>
 
 </body>

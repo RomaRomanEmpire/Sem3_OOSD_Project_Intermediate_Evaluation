@@ -21,6 +21,11 @@ background: -webkit-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 
 background: -moz-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
 background: linear-gradient(to bottom right, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
             }
+            ::placeholder { 
+                  color: whitesmoke;
+                  opacity: 1; 
+                  font-size: 15px;
+                  }
       </style>
 </head>
 <body>

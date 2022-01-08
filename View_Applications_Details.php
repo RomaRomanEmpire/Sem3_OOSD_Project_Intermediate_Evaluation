@@ -14,7 +14,7 @@ $user->set_row_id($_SESSION['user_id']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application Details</title>
     <link rel="stylesheet" href="bootstrap.css">
-
+    <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
     <style>
         body {
             min-height: 100vh;
@@ -31,7 +31,7 @@ $user->set_row_id($_SESSION['user_id']);
 
         <!-- <a class="btn btn-outline-light" href="RAP_dashboard.php" role="button"
            style="height: 40px; width: 150px; padding-top:10px;margin:10px;">Back</a> -->
-        <button class="btn btn-outline-light" id="Back" style="height: 40px; width: 150px; padding-top:10px;margin:10px;" onclick=" GoPreviousFile()">Back</button>
+        <button class="btn btn-sm btn-outline-light fas fa-arrow-left" id="Back" style="height: 30px; width: 100px; padding-top:10px;margin:10px;" onclick=" GoPreviousFile()"> Back</button>
 
     </div>
     <br><br><br><br>

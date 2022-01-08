@@ -16,6 +16,7 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="bootstrap.css">
+    <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
     <title>ID Requesting</title>
     <style>
 
@@ -169,6 +170,9 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
             background-color: seagreen;
 
         }
+        .header1 button:hover{
+            background-color: white;
+        }
 
 
     </style>
@@ -184,15 +188,15 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
            <div> <div> <div style="top: 0px;"> <tr>
                             <!-- This button id only viewed by RAP -->
                             <td style="float: right;"><a href="Time_slot.php">
-                                   <button type="submit" class="btn btn-sm btn-outline-primary"><b style="color: #000; font-size:18px;">Send Time</b>  
+                                   <button type="submit" class="btn btn-sm btn-outline-primary" style="color: black; font-size:18px;"><b >Send Time</b>  
                                    </button>
                             <!-- This button id only viewed by RAP -->
                            <td><a href="Reject_Application.php">
-                                   <button type="submit" class="btn btn-sm btn-outline-primary"><b style="color: #000;font-size:18px;">Reject Application</b>
+                                   <button type="submit" class="btn btn-sm btn-outline-primary" style="color:black;font-size:18px;" ><b >Reject Application</b>
                                    </button>
                                </a></td>
                                <td><a href="View_Applications_Details.php">
-                                   <button type="submit" class="btn btn-sm btn-outline-light" style="width: 100px;font-size:18px;"><b style="color:#000; ">Back</b>
+                                   <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-left" style="width: 100px;font-size:18px;color:black;"><b >Back</b>
                                    </button>
                                   </a></td>
             </tr>
@@ -592,20 +596,27 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
                 </dl>
 
                 <dl>
-                    <dt><b><label for="certifySignature">Signature and official frank of the certifying
-                                Officer</label></b>
-                        <a href="" style="float: right;">
-                            <button type="submit" class="btn btn-sm btn-outline-danger"><b>Approve</b></button>
-                        </a>
+                    <dt><b><label for="certifySignature1">Signature of the applicant</label></b>
+                        <!-- <a href="" style="float: right;">
+                            <button type="submit" class="btn btn-sm btn-outline-success " style="color: black;"><b> Submit </b></button>
+                        </a> -->
+                    </dt></dl>
             </div>
-        </form>
+        
+        <dl>
+            <dt><b><label for="certifySignature2">Signature and official frank of the certifying
+                        Officer</label></b>
+                <a href="" style="float: right;">
+                    <button type="submit" class="btn btn-sm btn-outline-danger" style="color: black;"><b>Approve</b></button>
+                </a>
+            </dt>
 
         </dl>
         <dl>
-            <dt><b><label for="certifySignature">Signature and official frank of the certifying
+            <dt><b><label for="certifySignature3">Signature and official frank of the certifying
                         Officer</label></b>
                 <a href="" style="float: right;">
-                    <button type="submit" class="btn btn-sm btn-outline-danger"><b>Approve</b></button>
+                    <button type="submit" class="btn btn-sm btn-outline-danger" style="color: black;"><b>Approve</b></button>
                 </a>
             </dt>
 
@@ -613,10 +624,10 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
 
 
         <!-- <button type="submit" class="submit-btn">Submit</button> -->
-
+    </form>
     </div>
 
-    </form>
+    
     </div>
 </section>
 
