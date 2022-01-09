@@ -64,7 +64,9 @@ $already_applied = is_null($con->get_column_value("application_details", "applic
             <div class="icon_case">
                 <br><br><br><br>
                 <a href="GNDivisionSelect.php?id=<?php echo 1 ?>">
-                    <button <?php if (!$already_applied){ ?> disabled <?php } ?>>Applying New Identity Card</button>
+<!--                    <button>Applying New Identity Card</button>-->
+                    <button <?php if (!$already_applied){ ?> disabled <?php } ?>>
+                        Applying New Identity Card</button>
                 </a><br><br>
 
                 <a href="GNDivisionSelect.php?id=<?php echo 2 ?>">

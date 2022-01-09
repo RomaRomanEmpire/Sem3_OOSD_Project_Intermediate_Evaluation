@@ -32,8 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $basic_adr = $_POST['estate'];
         $ds_adr = "";
         header("location: IdRequestForm.php?id=$id&table='estates'&basic=$basic_adr&ds=$ds_adr");
-    } else {
-        echo "fuck";
     }
 
 }

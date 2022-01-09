@@ -1,14 +1,76 @@
 <?php
 include 'autoloader.php';
 session_start();
-$_SESSION['application_id'] = $_GET['application_id'];
 $conn = DB_OP::get_connection();
-$application = unserialize($conn->get_column_value("application_details", "app_id", "=", $_SESSION['application_id'], "application_object", ""));
+
+$application = unserialize($conn->get_column_value("application_details", "app_id", "=", $_GET['application_id'], "application_object", ""));
+
+//$application->setState(Sent_To_DS::getSentToDs());
+
 $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $user->set_db($conn);
 $user->set_row_id($_SESSION['user_id']);
 
+$already_sent = $conn->get_column_value3('notification_details', 'application_id', 'from_id', 'n_type',
+    '=', $_GET['application_id'], $_SESSION['user_id'], 'appointment', 'n_id', "");
+$type = $user->get_user_type();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['para_1']))
+        $application->setCertificationDetails($_POST['para_1'], $_POST['para_2'], $_POST['certifyName']);
+    elseif(isset($_POST['certifyName2']))
+        $application->setCertificationDetails2($_POST['certifyName2']);
+
+    $application_id = $_GET['application_id'];
+    //refine
+    $conn->add_signs_to_application($application_id, $application);
+    $sign_no = $_GET['sign_no'];
+    header("location: sign.php?application_id=$application_id&sign_no=$sign_no");
+}
+if ($type == "applicant") {
+    ?>
+    <style>#applicant_sign {
+            display: none;
+        }</style>
+    <style>#rap_sign {
+            display: none;
+        }</style>
+    <style>#ds_sign {
+            display: none;
+        }</style>
+    <?php
+}
+
+if ($user instanceof R_A_P_1) {
+    ?>
+    <style>#ds_sign {
+            display: none;
+        }</style>
+    <?php
+}
+if ($type == "db_manager") {
+    ?>
+    <style>#reject_button {
+            display: none;
+        }</style>
+    <?php
+}
+if ($type != "admin") {
+    ?>
+    <style>#admin_approve_button {
+            display: none;
+        }</style>
+    <?php
+}
+if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == null) {
+    ?>
+    <style>#ds_sign {
+            display: none;
+        }</style>
+    <?php
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -195,7 +257,7 @@ $user->set_row_id($_SESSION['user_id']);
             </tr>
         </div>
         <fieldset class="input-group" style="margin-left: 10px;margin-top:70px;" disabled>
-            <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>Application State</b></span>
+            <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>State</b></span>
             <textarea class="form-control" aria-label="With textarea"
                       style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"><?php echo $application->getState()->getState(); ?></textarea>
             <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>Applied Date</b></span>
@@ -213,15 +275,22 @@ $user->set_row_id($_SESSION['user_id']);
 
                         <!-- This button id only viewed by RAP -->
                         <td style="float: right;"><a href="Time_slot.php">
-                                <?php if ($user->get_user_object() instanceof R_A_P_1){ ?>
+                                <?php if ($already_sent){ ?>
                                 <button type="submit" class="btn btn-sm btn-outline-primary"
                                         style="color: black;width:150px; font-size:15px;"><b>Send Time</b>
                                 </button></td>
                         <?php } ?>
-                        <!-- This button id only viewed by RAP -->
-                        <td><a href="Reject_Application.php">
+
+                        <td id="admin_approve_button"><a href="sign.php.php?sign_no=<?php echo 4;?>&application_id=<?php echo $_GET['application_id'];?>">
                                 <button type="submit" class="btn btn-sm btn-outline-primary"
-                                        style="color:black;width:150px; font-size:15px;"><b>Reject Application</b>
+                                        style="color:black;width:150px; font-size:15px;"><b>Approve</b>
+                                </button>
+                            </a></td>
+
+                        <!-- This button id only viewed by RAP -->
+                        <td id="reject_button"><a href="Reject_Application.php">
+                                <button type="submit" class="btn btn-sm btn-outline-primary"
+                                        style="color:black;width:150px; font-size:15px;"><b>Reject</b>
                                 </button>
                             </a></td>
                         <td><a href="View_Applications_Details.php">
@@ -240,7 +309,7 @@ $user->set_row_id($_SESSION['user_id']);
 <section>
     <div class="container">
 
-        <!--        <form id="signin-form" action="">-->
+
         <fieldset disabled>
 
 
@@ -501,7 +570,7 @@ $user->set_row_id($_SESSION['user_id']);
 
 
             </div>
-            <?php if ($_GET['application_id'] == 2) { ?>
+            <?php if ($application->getAppTypeId() == 2) { ?>
                 <div class="step step-5">
                     <h2>If the duplicate of the Identity Card is applied for, please complete this section.</h2>
 
@@ -594,8 +663,9 @@ $user->set_row_id($_SESSION['user_id']);
 
             </div>
         </fieldset>
-        <form id="add-staff-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-            <fieldset disabled>
+        <form id="" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?
+        application_id=<?php echo $_GET['application_id']; ?>&sign_no=<?php echo 1; ?>" method="POST">
+            <fieldset <?php if ($application->getPara1() !== null){ ?>disabled<?php } ?>>
 
                 <div class="step step-8" style="display: block;">
                     <h2>Attestation of the Certifying Officer</h2>
@@ -628,71 +698,85 @@ $user->set_row_id($_SESSION['user_id']);
                                    placeholder="Name of the Certifying Officer" required></dd>
                     </dl>
 
-                    <dl>
-                        <dt><b><label for="certifySignature1">Signature of the applicant</label></b><br>
+                    <div id="applicant_sign">
+                        <dl>
+                            <dt><b><label for="certifySignature1">Signature of the applicant</label></b><br>
 
-                            <?php
-                            $receive_file = $application->getApplicantSign();
-                            if (isset($receive_file) && $user->get_user_type()!="applicant") {
-                                echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
+                                <?php
+                                $receive_file = $application->getApplicantSign();
+                                if (isset($receive_file)) {
+                                    echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
 													<embed src=\"$receive_file\", width=100px height=100px>";
-                            } else {
-                                ?>
-                                <a href="sign.php?sign_no=<?php echo 1; ?>" style="float: right;">
+                                } else {
+                                    ?>
                                     <button type="submit" class="btn btn-sm btn-outline-success " style="color: black;">
                                         <b>
                                             Add the signature </b></button>
-                                </a>
-                            <?php } ?>
-                        </dt>
-                    </dl>
+
+                                <?php } ?>
+                            </dt>
+                        </dl>
+                    </div>
                 </div>
             </fieldset>
         </form>
-        <dl>
-            <dt><b><label for="certifySignature2">Signature and official frank of the certifying
-                        Officer</label></b><br>
-                <?php
-                $receive_file = $application->getRapSign();
-                if (isset($receive_file)) {
-                    echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
-													<embed src=\"$receive_file\", width=100px height=100px>";
-                } else {
-                    ?>
-                    <a href="sign.php?sign_no=<?php echo 2; ?>" style="float: right;">
-                        <button type="button" class="btn btn-sm btn-outline-success " style="color: black;"><b> Add
-                                the signature </b></button>
-                    </a>
-                <?php } ?>
-            </dt>
+        <div id="rap_sign">
+            <dl>
+                <dt><b><label for="certifySignature2">Signature and official frank of the certifying
+                            Officer</label></b><br>
+                    <?php
+                    $receive_file = $application->getRapSign();
+                    if (isset($receive_file)) {
+                        echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
+                        <embed src=\"$receive_file\", width=100px height=100px>";
 
-        </dl>
-        <dl>
-            <dt><b><label for="certifySignature3">Signature and official frank of the certifying
-                        Officer</label></b><br>
-                <?php
-                $receive_file = $application->getDsSign();
-                if (isset($receive_file)) {
-                    echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
-													<embed src=\"$receive_file\", width=100px height=100px>";
-                } else {
-                    ?>
-                    <a href="sign.php?sign_no=<?php echo 3; ?>" style="float: right;">
-                        <button type="button" class="btn btn-sm btn-outline-success " style="color: black;"><b> Add
-                                the signature </b></button>
-                    </a>
-                <?php } ?>
-            </dt>
+                    } else { ?>
+                        <a href="sign.php?sign_no=<?php echo 2; ?>&application_id=<?php echo $_GET['application_id'] ?>"
+                           style="float: right;">
+                            <button type="button" class="btn btn-sm btn-outline-success " style="color: black;"><b> Add
+                                    the signature </b></button>
+                        </a>
 
-        </dl>
+                    <?php } ?>
+                </dt>
+
+            </dl>
+        </div>
+        <div id="ds_sign">
+            <form id="" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?
+        application_id=<?php echo $_GET['application_id']; ?>&sign_no=<?php echo 3; ?>" method="POST">
+                <dl>
+                    <dt><b><label for="certifyName2">Name of the Certifying Officer</label></b></dt>
+                    <dd><input type="text" id="certifyName2" name="certifyName2"
+                               value="<?php echo $application->getCertifyName2();?>"
+                               placeholder="Name of the Certifying Officer" required></dd>
+                </dl>
+                <dl>
+                    <dt><b><label for="certifySignature3">Signature and official frank of the certifying
+                                Officer</label></b><br>
+                        <?php
+                        $receive_file = $application->getDSSign();
+                        if (isset($receive_file)) {
+                            echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
+                        <embed src=\"$receive_file\", width=100px height=100px>";
+
+                        } else { ?>
+
+                            <button type="submit" class="btn btn-sm btn-outline-success " style="color: black;"><b>
+                                    Add
+                                    the signature </b></button>
+                        <?php } ?>
+                    </dt>
+
+                </dl>
 
 
-        <!-- <button type="submit" class="submit-btn">Submit</button> -->
-        <!--    </form>-->
+                <!-- <button type="submit" class="submit-btn">Submit</button> -->
+                <!--    </form>-->
+            </form>
+        </div>
     </div>
 
-
-    </div>
 </section>
 
 

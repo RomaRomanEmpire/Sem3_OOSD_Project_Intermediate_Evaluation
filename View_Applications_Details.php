@@ -49,14 +49,14 @@ $user->set_row_id($_SESSION['user_id']);
                     <tr>
 
                         <?php if($user->get_user_type() != "applicant"){?>
-                        <th scope="col">Index Number</th>
+                            <th scope="col">Index Number</th>
                         <?php } ?>
                         <th scope="col">Date</th>
                         <?php if ($user->get_user_type() == "db_manager" || $user->get_user_type() == "applicant") { ?>
-                        <th scope="col">Status</th>
+                            <th scope="col">Status</th>
                         <?php } ?>
                         <?php if($user->get_user_type() != "applicant"){?>
-                        <th scope="col">Applicant's Name</th>
+                            <th scope="col">Applicant's Name</th>
                         <?php } ?>
                         <th scope="col">View Application</th>
 
@@ -67,41 +67,41 @@ $user->set_row_id($_SESSION['user_id']);
 
 
                     if ($user->get_user_type() == "db_manager") {
-                    $result = $con->database_details('application_details', '', '', '');
+                        $result = $con->database_details('application_details', '', '', '');
                     } else if ($user->get_user_type() == "admin") {
-                    $result = $con->database_details('application_details', 'stat', 'sent_to_admin', "ORDER BY app_id DESC");
-                    } else if ($user->get_user_type() == "gn" || $user->get_user_type() == "es" || $user->get_user_type() == "principal" || $user->get_user_type() == "co") {
-                    $result = $con->database_details_2('application_details', 'stat', 'gn_div_or_address', 'sent_to_rap_1', "$user->getGnDivOrAddress()", "");
+                        $result = $con->database_details('application_details', 'stat', 'sent_to_admin', "ORDER BY app_id DESC");
+                    } else if ($user instanceof R_A_P_1) {
+                        $result = $con->database_details_2('application_details', 'stat', 'gn_div_or_address', 'sent_to_rap_1', $user->getGnDivOrAddress(), "");
                     } else if ($user->get_user_type() == "ds") {
-                    $result = $con->database_details_2('application_details', 'stat', 'ds', 'sent_to_ds', "$user->getDs()", "");
+                        $result = $con->database_details_2('application_details', 'stat', 'ds', 'sent_to_ds', $user->getDs(), "");
                     } else if ($user->get_user_type() == "ni") {
-                    $result = $con->database_details('application_details', 'stat', 'approved', "");
+                        $result = $con->database_details('application_details', 'stat', 'approved', "");
                     } else{
-                    $result = $con->database_details('application_details', 'applicant_id', $_SESSION['user_id'], "");
+                        $result = $con->database_details('application_details', 'applicant_id', $_SESSION['user_id'], "");
                     }
 
                     foreach ($result as $i => $row):
-                    $applicant = $con->get_column_value("user_details", "user_id", "=", $row['applicant_id'], "username", "") ?>
-                    <tr>
-                        <?php if($user->get_user_type() != "applicant"){?>
-                        <th scope="row"><?php echo $row['app_id'] ?></th>
-                        <?php } ?>
-                        <td><?php echo $row['apply_date']?></td>
-                        <?php if ($user->get_user_type() == "db_manager" || $user->get_user_type() == "applicant") { ?>
-                        <td><?php echo $row['stat'] ?></td>
-                        <?php } ?>
-                        <?php if($user->get_user_type() != "applicant"){?>
-                        <td><?php echo $applicant ?></td>
-                        <?php } ?>
-                        <td><a href="Filled_Application.php?application_id=<?php echo $row['app_id'] ?>">
-                                <button type="submit" class="btn btn-sm btn-outline-success"><b>Application
-                                        Details</b></button>
-                            </a></td>
-                        <!--                            <td><a href="">-->
-                        <!--                                    <button type="submit" class="btn btn-sm btn-outline-danger"><b>Approve</b>-->
-                        <!--                                    </button>-->
-                        <!--                                </a></td>-->
-                    </tr>
+                        $applicant = $con->get_column_value("user_details", "user_id", "=", $row['applicant_id'], "username", "") ?>
+                        <tr>
+                            <?php if($user->get_user_type() != "applicant"){?>
+                                <th scope="row"><?php echo $row['app_id'] ?></th>
+                            <?php } ?>
+                            <td><?php echo $row['apply_date']?></td>
+                            <?php if ($user->get_user_type() == "db_manager" || $user->get_user_type() == "applicant") { ?>
+                                <td><?php echo $row['stat'] ?></td>
+                            <?php } ?>
+                            <?php if($user->get_user_type() != "applicant"){?>
+                                <td><?php echo $applicant ?></td>
+                            <?php } ?>
+                            <td><a href="Filled_Application.php?application_id=<?php echo $row['app_id'] ?>">
+                                    <button type="submit" class="btn btn-sm btn-outline-success"><b>Application
+                                            Details</b></button>
+                                </a></td>
+                            <!--                            <td><a href="">-->
+                            <!--                                    <button type="submit" class="btn btn-sm btn-outline-danger"><b>Approve</b>-->
+                            <!--                                    </button>-->
+                            <!--                                </a></td>-->
+                        </tr>
                         <!-- <tr >
                           <th scope="row">1</th>
                           <td>Mark</td>

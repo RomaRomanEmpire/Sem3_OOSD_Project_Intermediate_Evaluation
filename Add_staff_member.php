@@ -26,37 +26,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_manager->set_db($conn);
     $db_manager->set_row_id($_SESSION['user_id']);
 
-//    if ($_POST['officer'] == "Grama_Niladari") {
-    if (!empty($_POST['gdivision'])) {
-        $table = 'gn';
-        $div = $_POST['gdivision'];
-        $div2 = $_POST['ds'];
-        $table2 = 'ds';
-        $array = $_SESSION['val_array2'];
-        $array2 = $_SESSION['val_array3'];
+    if ($_POST['officer'] == "Grama_Niladari") {
+        if (!empty($_POST['gdivision'])) {
+            $table = 'gn';
+            $div = $_POST['gdivision'];
+            $div2 = $_POST['ds'];
+            $table2 = 'ds';
+            $array = $_SESSION['val_array2'];
+            $array2 = $_SESSION['val_array3'];
 //        }
 
-        $ds_id = $conn->get_column_value($table2, 'DS', '=', $div2, 'DS_code', '');
-        $division_id = $conn->get_column_value2($table, 'basic_division', 'DS_code', '=', $div, $ds_id, 'division_id', "");
+            $ds_id = $conn->get_column_value($table2, 'DS', '=', $div2, 'DS_code', '');
+            $division_id = $conn->get_column_value2($table, 'basic_division', 'DS_code', '=', $div, $ds_id, 'division_id', "");
 
-        if (!is_null($division_id)) {
-            $db_manager->add_L_P_User($table,$div, $_POST['staff_id'], $staff_member);
-        } else {
-            echo "<script type='text/javascript'>alert('two divisions are not connected')window.location.href = 'Add_staff_member.php';;</script>";
+            if (!is_null($division_id)) {
+                $db_manager->add_user($table, $div, $_POST['staff_id'], $staff_member);
+            } else {
+                echo "<script type='text/javascript'>alert('two divisions are not connected')window.location.href = 'Add_staff_member.php';;</script>";
+            }
+
         }
-
-    } else if (!empty($_POST['school'])) {
-        $table = 'schools';
-        $div = $_POST['school'];
-    } else if (!empty($_POST['ds1'])) {
-        $table = 'ds';
-        $div = $_POST['ds1'];
-    } else if (!empty($_POST['estate'])) {
-        $table = 'estates';
-        $div = $_POST['estate'];
+    } else {
+        if (!empty($_POST['school'])) {
+            $table = 'schools';
+            $div = $_POST['school'];
+        } else if (!empty($_POST['ds1'])) {
+            $table = 'ds';
+            $div = $_POST['ds1'];
+        } else if (!empty($_POST['estate'])) {
+            $table = 'estates';
+            $div = $_POST['estate'];
+        } else {
+            $table = '';
+            $div = '';
+        }
+        $db_manager->add_user($table, $div, $_POST['staff_id'], $staff_member);
     }
-    $db_manager->add_L_P_User($table, $div, $_POST['staff_id'], $staff_member);
-
 }
 ?>
 <!DOCTYPE html>
@@ -478,8 +483,8 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                     </fieldset>
                     <fieldset id="DeatilsD" style="display: none;">
                         <div class="mb-3">
-                            <label for="exampleInputDSecretariat" class="form-label">Divisional Secretariat</label>
-                            <input type="text" class="form-control" name="ds1" id="exampleInputDSecretariat"
+                            <label for="exampleInputDSecretariat1" class="form-label">Divisional Secretariat</label>
+                            <input type="text" class="form-control" name="ds1" id="exampleInputDSecretariat1"
                                    placeholder="Enter current working divisional secretariat">
 
                             <script>
@@ -490,7 +495,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                                     $js_array = json_encode($php_array);
                                     ?>
                                     var variables = <?php echo $js_array;?>;
-                                    $("#exampleInputDSecretariat").autocomplete({
+                                    $("#exampleInputDSecretariat1").autocomplete({
                                         source: variables
                                     });
                                 });

@@ -44,7 +44,7 @@
 
 <body>
 
-  <a class="button" style="float:right" href="javascript:closeWindow();">Close tab</a>
+  <a class="button" style="float:right" href="javascript:closeWindow();">Close</a>
 
   <div class="image"><?php
   echo "<embed src='" . $_GET['path'] . "', width=100%, height=800px />";
