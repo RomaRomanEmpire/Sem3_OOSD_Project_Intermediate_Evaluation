@@ -11,8 +11,8 @@ class AuthorizedPPerson extends R_A_P_1
 		$u_type = "aup";
 	}
 
-	public function approve_application($application)
-	{
-        $application->approve($this,$this->u_type);
-	}
+//	public function approve_application($application)
+//	{
+//        $application->approve($this,$this->u_type);
+//	}
 }

@@ -17,7 +17,11 @@ abstract class R_A_P extends L_P_User implements IApprover,IVisitor
   {
     // code...
   }
-  public abstract function approve_application($application);
+  public function approve_application($application)
+  {
+    $this->db->add_signs_to_application($application->getRowId(), $application);
+    $application->approve($this);
+  }
 
   function visitApplication($application)
   {

@@ -21,7 +21,7 @@ class Approved extends State
     /**
      * @throws Exception
      */
-    public function approve($utype, $application)
+    public function approve($u_type, $application)
     {
         throw new Exception("No Approved state from Approved State");
     }

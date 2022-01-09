@@ -20,7 +20,7 @@ class Unfilled extends State
     }
 
 
-    public function approve($utype, $application)
+    public function approve($u_type, $application)
     {
         $application->setState(Sent_To_RAP_1::getSentToRap1());
 

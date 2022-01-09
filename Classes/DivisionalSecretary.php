@@ -16,10 +16,10 @@ class DivisionalSecretary extends R_A_P
         $this->u_type = "ds";
     }
 
-    public function approve_application($application)
-    {
-        $application->approve($this,$this->u_type);
-    }
+//    public function approve_application($application)
+//    {
+//        $application->approve($this,$this->u_type);
+//    }
 
     /**
      * @throws Exception

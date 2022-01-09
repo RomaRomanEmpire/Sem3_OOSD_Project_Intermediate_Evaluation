@@ -13,10 +13,11 @@ class DatabaseManager extends User implements IVisitor
         $this->u_type = "db_manager";
     }
 
-    public function add_L_P_User($table,$div, $staff_id, $u_object)
+    public function add_user($table, $div, $staff_id, $u_object)
     {
         $this->db->create_user_account($staff_id, $u_object);
-        $this->db->assign_staff_details($table, $div, $staff_id);
+        if (!empty($table))
+            $this->db->assign_staff_details($table, $div, $staff_id);
 
     }
 

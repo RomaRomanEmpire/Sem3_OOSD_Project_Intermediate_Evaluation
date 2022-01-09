@@ -52,8 +52,10 @@ class Application implements IVisitable
     private $applicant_sign;
     private $rap_sign;
     private $ds_sign;
+    private $certifyName2;
 
     private $apply_date;
+    private $row_id;
 
     public function __construct()
     {
@@ -107,7 +109,7 @@ class Application implements IVisitable
 
         $this->app_type_id = $app_type_id;
 
-        $this->approve($applicant, "applicant");
+        $this->approve($applicant);
 
     }
     public function setCertificationDetails($para_1,$para_2,$certifyName){
@@ -115,6 +117,37 @@ class Application implements IVisitable
         $this->para_2 = $para_2;
         $this->certifyName = $certifyName;
     }
+
+    public function setCertificationDetails2($certifyName2){
+        $this->certifyName2 = $certifyName2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCertifyName2()
+    {
+        return $this->certifyName2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRowId()
+    {
+        return $this->row_id;
+    }
+
+    /**
+     * @param mixed $row_id
+     */
+    public function setRowId($row_id): void
+    {
+        $this->row_id = $row_id;
+    }
+
+
+
     public function setApplyDate()
     {
         date_default_timezone_set('Asia/Colombo');
@@ -535,10 +568,10 @@ class Application implements IVisitable
         $visitor->visit($this);
     }
 
-    public function approve($user, $u_type)
+    public function approve($user)
     {
         $this->fillApprovableArray($user);
-        $this->state->approve($u_type, $this);
+        $this->state->approve($user->get_user_type(), $this);
     }
 
     public function reject($u_type)

@@ -19,7 +19,7 @@ class Sent_To_Admin extends State
         return self::$sent_to_admin;
     }
 
-    public function approve($utype, $application)
+    public function approve($u_type, $application)
     {
         $application->setState(Approved::getApproved());
     }

@@ -268,7 +268,7 @@ class DB_OP
 
             if ($stmt->execute()) {
                 // Redirect to login page
-                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!');</script>";
+                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!');window.location.href='applicant_dashboard.php';</script>";
             } else {
                 echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
             }
@@ -281,15 +281,16 @@ class DB_OP
     public
     function add_signs_to_application($app_id, $application_object)
     {
-        $sql = "UPDATE application_details SET application_object=? WHERE app_id=?;";
+        $sql = "UPDATE application_details SET application_object=?, stat=? WHERE app_id=?";
         if ($stmt = $this->link->prepare($sql)) {
 
             // Bind variables to the prepared statement as parameters
 
-            $stmt->bind_param("si", $param_application_object,$param_app_id);
+            $stmt->bind_param("ssi", $param_application_object, $param_stat, $param_app_id);
 
             // Set parameters
 
+            $param_stat = $application_object->getState()->getState();
             $param_app_id = $app_id;
             $param_application_object = serialize($application_object);
 
@@ -365,27 +366,56 @@ class DB_OP
     }
 
     public
-    function approve_application($application_id, $approve_level)
+    function get_column_value3($table, $key1, $key2, $key3, $operator, $key_value1, $key_value2, $key_value3, $id_name, $order)
     {
-        $sql = "UPDATE application_details SET stat=? WHERE app_id =?";
-
+        $sql = "SELECT $id_name FROM $table WHERE $key1 $operator ? and $key2 $operator ? and $key3 $operator ? $order";
         if ($stmt = $this->link->prepare($sql)) {
-
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param('si', $approve_level, $application_id);
+            $stmt->bind_param('sss', $key_value1, $key_value2, $key_value3);
 
             // Attempt to execute the prepared statement
             // just execute the prepared statement not checking values
             if ($stmt->execute()) {
+                $result = $stmt->get_result();
 
-            } else {
-                echo "Oops! Something went wrong. Please try again later.";
+                //check is there are exactly one entry or not
+                if ($result->num_rows >= 1) {
+
+                    $row = $result->fetch_assoc();
+                    return $row[$id_name];
+
+                } else {
+                    return NULL;
+                }
+
+                // Close statement
+                $stmt->close();
             }
-
-            // Close statement
-            $stmt->close();
         }
     }
+
+//    public
+//    function approve_application($application_id, $approve_level)
+//    {
+//        $sql = "UPDATE application_details SET stat=? WHERE app_id =?";
+//
+//        if ($stmt = $this->link->prepare($sql)) {
+//
+//            // Bind variables to the prepared statement as parameters
+//            $stmt->bind_param('si', $approve_level, $application_id);
+//
+//            // Attempt to execute the prepared statement
+//            // just execute the prepared statement not checking values
+//            if ($stmt->execute()) {
+//
+//            } else {
+//                echo "Oops! Something went wrong. Please try again later.";
+//            }
+//
+//            // Close statement
+//            $stmt->close();
+//        }
+//    }
 
     public
     function database_details($table, $key, $key_value, $order)
@@ -476,7 +506,7 @@ class DB_OP
     public
     function assign_staff_details($table, $division, $staff_id)
     {
-        if($table=='ds')
+        if ($table == 'ds')
             $sql = "UPDATE $table SET staff_id=? WHERE DS=?";
         else
             $sql = "UPDATE $table SET staff_id=? WHERE basic_division=?";

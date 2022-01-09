@@ -13,10 +13,10 @@ class GramaNiladari extends R_A_P_1
 		$this->u_type="gn";
 	}
 
-	public function approve_application($application)
-	{
-        $application->approve($this,$this->u_type);
-	}
+//	public function approve_application($application)
+//	{
+//        $application->approve($this);
+//	}
 
     /**
      * @return mixed

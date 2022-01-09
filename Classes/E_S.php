@@ -11,10 +11,10 @@ class E_S extends R_A_P_1
 		$this->u_type = "es";
 	}
 
-	public function approve_application($application)
-	{
-        $application->approve($this,$this->u_type);
-	}
+//	public function approve_application($application)
+//	{
+//        $application->approve($this,$this->u_type);
+//	}
     public function getGnDivOrAddress()
     {
         return $this->gn_div_or_address;

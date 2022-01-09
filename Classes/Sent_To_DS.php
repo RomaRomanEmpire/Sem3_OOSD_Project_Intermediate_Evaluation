@@ -1,4 +1,5 @@
 <?php
+
 class Sent_To_DS extends State
 {
     private static $sent_to_ds;
@@ -14,12 +15,12 @@ class Sent_To_DS extends State
     public static function getSentToDs()
     {
         if (self::$sent_to_ds == null)
-            self::$sent_to_ds == new Sent_To_DS();
+            self::$sent_to_ds = new Sent_To_DS();
         return self::$sent_to_ds;
     }
 
 
-    public function approve($utype, $application)
+    public function approve($u_type, $application)
     {
         $application->setState(Sent_To_Admin::getSentToAdmin());
     }
@@ -28,6 +29,7 @@ class Sent_To_DS extends State
     {
         $application->setState(Cancelled::getCancelled());
     }
+
     public function getState()
     {
         return $this->state;

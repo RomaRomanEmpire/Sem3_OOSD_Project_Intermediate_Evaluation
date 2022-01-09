@@ -18,9 +18,9 @@ class Sent_To_RAP_1 extends State
         return self::$sent_to_rap_1;
     }
 
-    public function approve($utype, $application)
+    public function approve($u_type, $application)
     {
-        if($utype == "gn"){
+        if($u_type == "gn"){
             $application->setState(Sent_To_DS::getSentToDs());
         }else
             $application->setState(Sent_To_Admin::getSentToAdmin());
