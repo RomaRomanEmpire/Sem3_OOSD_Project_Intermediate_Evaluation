@@ -197,10 +197,10 @@ $user->set_row_id($_SESSION['user_id']);
         <fieldset class="input-group" style="margin-left: 10px;margin-top:70px;" disabled>
             <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>Application State</b></span>
             <textarea class="form-control" aria-label="With textarea"
-                      style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"></textarea>
-            <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>Updated Date</b></span>
+                      style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"><?php echo $application->getState()->getState(); ?></textarea>
+            <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>Applied Date</b></span>
             <textarea class="form-control" aria-label="With textarea"
-                      style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"></textarea>
+                      style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"><?php echo $application->getApplyDate(); ?></textarea>
         </fieldset>
         <div>
             <div>
@@ -594,7 +594,7 @@ $user->set_row_id($_SESSION['user_id']);
 
             </div>
         </fieldset>
-        <form id="signin-form" action="">
+        <form id="add-staff-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
             <fieldset disabled>
 
                 <div class="step step-8" style="display: block;">
@@ -633,7 +633,7 @@ $user->set_row_id($_SESSION['user_id']);
 
                             <?php
                             $receive_file = $application->getApplicantSign();
-                            if (isset($receive_file)) {
+                            if (isset($receive_file) && $user->get_user_type()!="applicant") {
                                 echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
 													<embed src=\"$receive_file\", width=100px height=100px>";
                             } else {
@@ -641,8 +641,7 @@ $user->set_row_id($_SESSION['user_id']);
                                 <a href="sign.php?sign_no=<?php echo 1; ?>" style="float: right;">
                                     <button type="submit" class="btn btn-sm btn-outline-success " style="color: black;">
                                         <b>
-                                            Add
-                                            the signature </b></button>
+                                            Add the signature </b></button>
                                 </a>
                             <?php } ?>
                         </dt>
