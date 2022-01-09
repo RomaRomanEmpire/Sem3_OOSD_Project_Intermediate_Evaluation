@@ -90,26 +90,26 @@ class DB_OP
         }
     }
 
-    public function create_user_account($staff_id, $u_type, $username, $email, $pwd, $u_object)
+    public function create_user_account($staff_id, $u_object)
     {
         if ($staff_id) {
             $sql = "INSERT INTO user_details (staff_id,u_type,username, email, pwd ,u_object) VALUES (?,?,?,?,?,?)";
             if ($stmt = $this->link->prepare($sql)) {
 
                 // Bind variables to the prepared statement as parameters
-                $stmt->bind_param("issssb", $param_staff_id, $param_u_type, $param_username, $param_email, $param_pwd, $param_u_object);
+                $stmt->bind_param("isssss", $param_staff_id, $param_u_type, $param_username, $param_email, $param_pwd, $param_u_object);
 
                 // Set parameters
                 $param_staff_id = $staff_id;
-                $param_u_type = $u_type;
-                $param_username = $username;
-                $param_email = $email;
-                $param_pwd = $pwd;
+                $param_u_type = $u_object->get_user_type();
+                $param_username = $u_object->get_user_name();
+                $param_email = $u_object->get_user_email();
+                $param_pwd = $u_object->get_user_pwd();
                 $param_u_object = serialize($u_object);
 
                 if ($stmt->execute()) {
                     // Redirect to login page
-                    echo "<script type='text/javascript'>alert('The request has been send successfully!');window.location.href = 'Login.php';</script>";
+                    echo "<script type='text/javascript'>alert('The request has been send successfully!');</script>";
 
                 } else {
                     echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
@@ -127,10 +127,10 @@ class DB_OP
             }
 
             // Set parameters
-            $param_u_type = $u_type;
-            $param_username = $username;
-            $param_email = $email;
-            $param_pwd = password_hash($pwd, PASSWORD_DEFAULT);
+            $param_u_type = $u_object->get_user_type();
+            $param_username = $u_object->get_user_name();
+            $param_email = $u_object->get_user_name();
+            $param_pwd = $u_object->get_user_pwd();
             $param_u_object = serialize($u_object);
 
             if ($stmt->execute()) {
@@ -257,10 +257,10 @@ class DB_OP
             $stmt->bind_param("issssss", $param_applicant_id, $param_stat, $param_apply_date, $param_gn_div_or_address, $param_ds, $param_address_type, $param_application_object);
 
             // Set parameters
-            date_default_timezone_set('Asia/Colombo');
+//            date_default_timezone_set('Asia/Colombo');
             $param_applicant_id = $applicant_id;
             $param_stat = $application_object->getState()->getState();
-            $param_apply_date = date('Y/m/d H:i:s');
+            $param_apply_date = $application_object->getApplyDate();
             $param_gn_div_or_address = $gn_div_or_address;
             $param_ds = $ds;
             $param_address_type = $table;
@@ -474,14 +474,17 @@ class DB_OP
     }
 
     public
-    function assign_staff_details($table, $basic_division, $staff_id)
+    function assign_staff_details($table, $division, $staff_id)
     {
-        $sql = "UPDATE $table SET staff_id=? WHERE basic_division=?";
+        if($table=='ds')
+            $sql = "UPDATE $table SET staff_id=? WHERE DS=?";
+        else
+            $sql = "UPDATE $table SET staff_id=? WHERE basic_division=?";
         if ($stmt = $this->link->prepare($sql)) {
-            $stmt->bind_param("is", $param_staff_id, $param_basic_division);
+            $stmt->bind_param("is", $param_staff_id, $param_division);
 
             $param_staff_id = $staff_id;
-            $param_basic_division = $basic_division;
+            $param_division = $division;
 
             if ($stmt->execute()) {
                 // Redirect to login page

@@ -53,6 +53,8 @@ class Application implements IVisitable
     private $rap_sign;
     private $ds_sign;
 
+    private $apply_date;
+
     public function __construct()
     {
         $this->state = Unfilled::getUnfilled();
@@ -61,54 +63,72 @@ class Application implements IVisitable
     public function setDetails($photographs, $receipt, $attributeArray, $applicant, $app_type_id)
     {
 
-        $this->familyName = $attributeArray['familyName']?? NULL;
-        $this->name = $attributeArray['name']?? NULL;
-        $this->surname = $attributeArray['surname']?? NULL;
-        $this->gender = $attributeArray['gender']?? NULL;
-        $this->civilStatus = $attributeArray['civilStatus']?? NULL;
-        $this->profession = $attributeArray['profession']?? NULL;
-        $this->birthday = $attributeArray['birthday']?? NULL;
-        $this->birthCertificateNo = $attributeArray['birthCertificateNo']?? NULL;
-        $this->placeOfBirth = $attributeArray['placeOfBirth']?? NULL;
-        $this->birthDivision = $attributeArray['birthDivision']?? NULL;
-        $this->birthDistrict = $attributeArray['birthDistrict']?? NULL;
-        $this->countryOfBirth = $attributeArray['countryOfBirth']?? NULL;
-        $this->birthCity = $attributeArray['birthCity']?? NULL;
+        $this->familyName = $attributeArray['familyName'] ?? NULL;
+        $this->name = $attributeArray['name'] ?? NULL;
+        $this->surname = $attributeArray['surname'] ?? NULL;
+        $this->gender = $attributeArray['gender'] ?? NULL;
+        $this->civilStatus = $attributeArray['civilStatus'] ?? NULL;
+        $this->profession = $attributeArray['profession'] ?? NULL;
+        $this->birthday = $attributeArray['birthday'] ?? NULL;
+        $this->birthCertificateNo = $attributeArray['birthCertificateNo'] ?? NULL;
+        $this->placeOfBirth = $attributeArray['placeOfBirth'] ?? NULL;
+        $this->birthDivision = $attributeArray['birthDivision'] ?? NULL;
+        $this->birthDistrict = $attributeArray['birthDistrict'] ?? NULL;
+        $this->countryOfBirth = $attributeArray['countryOfBirth'] ?? NULL;
+        $this->birthCity = $attributeArray['birthCity'] ?? NULL;
 
         $this->citizenshipCertificateNo = $attributeArray['citizenshipCertificateNo'] ?? NULL;
-        $this->permHouseName = $attributeArray['permHouseName']?? NULL;
-        $this->permRoad = $attributeArray['permRoad']?? NULL;
-        $this->permVillage = $attributeArray['permVillage']?? NULL;
-        $this->permPostalCode = $attributeArray['permPostalCode']?? NULL;
-        $this->postalHouseName = $attributeArray['postalHouseName']?? NULL;
-        $this->postalRoad = $attributeArray['postalRoad']?? NULL;
-        $this->postalVillage = $attributeArray['postalVillage']?? NULL;
-        $this->postalPostalCode = $attributeArray['postalPostalCode']?? NULL;
-        $this->citizenshipCertificateType = $attributeArray['citizenshipCertificateType']?? NULL;
+        $this->permHouseName = $attributeArray['permHouseName'] ?? NULL;
+        $this->permRoad = $attributeArray['permRoad'] ?? NULL;
+        $this->permVillage = $attributeArray['permVillage'] ?? NULL;
+        $this->permPostalCode = $attributeArray['permPostalCode'] ?? NULL;
+        $this->postalHouseName = $attributeArray['postalHouseName'] ?? NULL;
+        $this->postalRoad = $attributeArray['postalRoad'] ?? NULL;
+        $this->postalVillage = $attributeArray['postalVillage'] ?? NULL;
+        $this->postalPostalCode = $attributeArray['postalPostalCode'] ?? NULL;
+        $this->citizenshipCertificateType = $attributeArray['citizenshipCertificateType'] ?? NULL;
         $this->citizenshipCertificateNo_9_1 = $attributeArray['certificateNo_9.1'] ?? NULL;
         $this->citizenshipCertificateDate = $attributeArray['citizenshipCertificateDate'] ?? NULL;
-        $this->residenceTelNo = $attributeArray['residenceTelNo']?? NULL;
-        $this->mobileTelNo = $attributeArray['mobileTelNo']?? NULL;
-        $this->email = $attributeArray['email']?? NULL;
+        $this->residenceTelNo = $attributeArray['residenceTelNo'] ?? NULL;
+        $this->mobileTelNo = $attributeArray['mobileTelNo'] ?? NULL;
+        $this->email = $attributeArray['email'] ?? NULL;
         $this->purpose = $attributeArray['purpose'] ?? NULL;
         $this->lostIdNum = $attributeArray['lostIdNum'] ?? NULL;
         $this->lostIdDate = $attributeArray['lostIdDate'] ?? NULL;
         $this->policeStationName = $attributeArray['policeStationName'] ?? NULL;
         $this->policeReportDate = $attributeArray['policeReportDate'] ?? NULL;
-        $this->photographs = $photographs?? NULL;
-        $this->receiptNo = $attributeArray['receiptNo']?? NULL;
+        $this->photographs = $photographs ?? NULL;
+        $this->receiptNo = $attributeArray['receiptNo'] ?? NULL;
         $this->receipt = $receipt ?? NULL;
-        $this->para_1 = $attributeArray['para_1']?? NULL;
-        $this->para_2 = $attributeArray['para_2']?? NULL;
-        $this->certifyName = $attributeArray['certifyName']?? NULL;
+
         $this->approvers = array();
         $this->fillApprovableArray($applicant);
+        $this->setApplyDate();
 
         $this->app_type_id = $app_type_id;
 
-        $this->approve($applicant,"applicant");
+        $this->approve($applicant, "applicant");
 
     }
+    public function setCertificationDetails($para_1,$para_2,$certifyName){
+        $this->para_1 = $para_1;
+        $this->para_2 = $para_2;
+        $this->certifyName = $certifyName;
+    }
+    public function setApplyDate()
+    {
+        date_default_timezone_set('Asia/Colombo');
+        $this->apply_date = date('Y/m/d H:i:s');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApplyDate()
+    {
+        return $this->apply_date;
+    }
+
 
     /**
      * @return State
@@ -515,15 +535,15 @@ class Application implements IVisitable
         $visitor->visit($this);
     }
 
-    public function approve($user,$u_type)
+    public function approve($user, $u_type)
     {
         $this->fillApprovableArray($user);
-        $this->state->approve($u_type,$this);
+        $this->state->approve($u_type, $this);
     }
 
     public function reject($u_type)
     {
-        $this->state->reject($u_type,$this);
+        $this->state->reject($u_type, $this);
     }
 }
 

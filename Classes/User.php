@@ -119,6 +119,11 @@ abstract class User
         return $this->password;
     }
 
+    public function get_user_object(): User
+    {
+        return $this;
+    }
+
     /**
      * @return mixed
      */
