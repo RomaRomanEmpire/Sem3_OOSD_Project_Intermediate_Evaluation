@@ -26,27 +26,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_manager->set_db($conn);
     $db_manager->set_row_id($_SESSION['user_id']);
 
-    if ($_POST['officer'] == "Grama_Niladari") {
-        if (!empty($_POST['gdivision'])) {
-            $table = 'gn';
-            $div = $_POST['gdivision'];
-            $div2 = $_POST['ds'];
-            $table2 = 'ds';
-            $array = $_SESSION['val_array2'];
-            $array2 = $_SESSION['val_array3'];
-        }
+//    if ($_POST['officer'] == "Grama_Niladari") {
+    if (!empty($_POST['gdivision'])) {
+        $table = 'gn';
+        $div = $_POST['gdivision'];
+        $div2 = $_POST['ds'];
+        $table2 = 'ds';
+        $array = $_SESSION['val_array2'];
+        $array2 = $_SESSION['val_array3'];
+//        }
 
         $ds_id = $conn->get_column_value($table2, 'DS', '=', $div2, 'DS_code', '');
-        $gnCode = $conn->get_column_value2($table, 'basic_division', 'DS_code', '=', $div, $ds_id, 'GN_code', "");
+        $division_id = $conn->get_column_value2($table, 'basic_division', 'DS_code', '=', $div, $ds_id, 'division_id', "");
 
-        if (!is_null($gnCode)) {
-            $db_manager->add_L_P_User($table, $_POST['staff_id'], $staff_member->get_user_type(), $_POST['uname'], $_POST['email'], $_POST['password'], $staff_member);
+        if (!is_null($division_id)) {
+            $db_manager->add_L_P_User($table,$div, $_POST['staff_id'], $staff_member);
         } else {
-            echo "<script type='text/javascript'>alert('two divisions are not connected');</script>";
+            echo "<script type='text/javascript'>alert('two divisions are not connected')window.location.href = 'Add_staff_member.php';;</script>";
         }
 
-    } else
-        $db_manager->add_L_P_User("", $_POST['staff_id'], $staff_member->get_user_type(), $_POST['uname'], $_POST['email'], $_POST['password'], $staff_member);
+    } else if (!empty($_POST['school'])) {
+        $table = 'schools';
+        $div = $_POST['school'];
+    } else if (!empty($_POST['ds1'])) {
+        $table = 'ds';
+        $div = $_POST['ds1'];
+    } else if (!empty($_POST['estate'])) {
+        $table = 'estates';
+        $div = $_POST['estate'];
+    }
+    $db_manager->add_L_P_User($table, $div, $_POST['staff_id'], $staff_member);
 
 }
 ?>
@@ -73,13 +82,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-weight: bolder;
 
         }
+
         .header1 {
             position: fixed;
             top: 0;
             right: 0;
             height: 19vh;
             width: 100%;
-            
+
             display: flex;
             align-items: center;
             justify-content: right;
@@ -263,32 +273,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             var g_check = document.getElementById("Officer_G");
 
             if (p_check.checked) {
-                var sch = <?php echo json_encode($_SESSION['val_array1']??NULL); ?>;
+                var sch = <?php echo json_encode($_SESSION['val_array1'] ?? NULL); ?>;
                 if (!sch.includes(school)) {
                     alert("Enter a correct School name");
                     return false;
                 }
 
             } else if (e_check.checked) {
-                var est = <?php echo json_encode($_SESSION['val_array4']??NULL); ?>;
+                var est = <?php echo json_encode($_SESSION['val_array4'] ?? NULL); ?>;
                 if (!est.includes(estate)) {
                     alert("Enter a correct Estate");
                     return false;
                 }
 
             } else if (d_check.checked) {
-                var ds = <?php echo json_encode($_SESSION['val_array3']??NULL); ?>;
+                var ds = <?php echo json_encode($_SESSION['val_array3'] ?? NULL); ?>;
                 if (!ds.includes(ds_div)) {
                     alert("Enter a correct Divisional section");
                     return false;
                 }
             } else if (g_check.checked) {
-                var ds = <?php echo json_encode($_SESSION['val_array3']??NULL); ?>;
+                var ds = <?php echo json_encode($_SESSION['val_array3'] ?? NULL); ?>;
                 if (!ds.includes(ds_div)) {
                     alert("Enter a correct Divisional section");
                     return false;
                 }
-                var gn = <?php echo json_encode($_SESSION['val_array2']??NULL); ?>;
+                var gn = <?php echo json_encode($_SESSION['val_array2'] ?? NULL); ?>;
                 if (!gn.includes(gn_div)) {
                     alert("Enter a correct Grama niladari division");
                     return false;
@@ -308,9 +318,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%, rgba(15,30,135,1) 100%, rgba(101,181,198,1) 100%);">
 <!-- Deatils_NIC.style.display="block"; -->
 <div class="header1"><a href="DatabaseManagerDashboard.php">
-                                   <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-left" style="width: 100px;font-size:18px;margin-right:20px;color:black;"> Back
-                                   </button>
-                                  </a> </div>
+        <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-left"
+                style="width: 100px;font-size:18px;margin-right:20px;color:black;"> Back
+        </button>
+    </a></div>
 
 <div style="padding: 100px;  background: rgb(10,30,235);
 background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%, rgba(15,30,135,1) 100%, rgba(101,181,198,1) 100%); font-weight: bolder;">
@@ -448,6 +459,27 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                         <div class="mb-3">
                             <label for="exampleInputDSecretariat" class="form-label">Divisional Secretariat</label>
                             <input type="text" class="form-control" name="ds" id="exampleInputDSecretariat"
+                                   placeholder="Enter current working divisional secretariat">
+
+                            <script>
+                                $(function () {
+                                    <?php
+                                    $php_array = $conn->get_table_info("ds", "DS", 1);
+                                    $_SESSION['val_array3'] = $php_array;
+                                    $js_array = json_encode($php_array);
+                                    ?>
+                                    var variables = <?php echo $js_array;?>;
+                                    $("#exampleInputDSecretariat").autocomplete({
+                                        source: variables
+                                    });
+                                });
+                            </script>
+                        </div>
+                    </fieldset>
+                    <fieldset id="DeatilsD" style="display: none;">
+                        <div class="mb-3">
+                            <label for="exampleInputDSecretariat" class="form-label">Divisional Secretariat</label>
+                            <input type="text" class="form-control" name="ds1" id="exampleInputDSecretariat"
                                    placeholder="Enter current working divisional secretariat">
 
                             <script>
