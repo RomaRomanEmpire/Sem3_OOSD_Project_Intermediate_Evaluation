@@ -268,7 +268,11 @@ h1,h2{
       /* box-shadow: 0 4px 8px 0 rgba(0, 0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); */
       
 }
-.container .content .card .icon_case button:hover{
+/*.container .content .card .icon_case button:hover{*/
+/*      background-color: rgb(17, 0, 255);*/
+/*}*/
+
+.container .content .card1 .icon_case button:hover{
       background-color: rgb(17, 0, 255);
 }
 
