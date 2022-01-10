@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Database Manager Dashboard</title>
-      <link rel="stylesheet" href="style2.css">
-      <script src="Javascipt_File.js"></script>
-      <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Manager Dashboard</title>
+    <link rel="stylesheet" href="style2.css">
+    <script src="Javascipt_File.js"></script>
+    <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
       
@@ -59,18 +60,6 @@
                       <br><br>
                       <a href="DBM_Notification.php" ><button>View Notification Details</button></a>
                       <br><br>
-                        <!-- <button>View Principal Details</button> -->
-                        <!-- <table class="customers" >
-                              <tr>  
-                                    <th>Identity Number</th>
-                                    <th>Officer Name</th>
-                                    <th>Distric</th>
-                                    <th>Divitional Secretariat </th>
-                                    <th>Action</th>
-                              </tr>
-                              <br><br>
-                              <tr> <th>Identity Number</th></tr>
-                        </table> -->
                   </div>
                   </div>
                   

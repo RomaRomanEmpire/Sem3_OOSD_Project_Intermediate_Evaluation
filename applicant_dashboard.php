@@ -6,7 +6,25 @@ $applicant = unserialize($con->get_column_value("user_details", "user_id", "=", 
 $applicant->set_db($con);
 $applicant->set_row_id($_SESSION['user_id']);
 $already_applied = is_null($con->get_column_value("application_details", "applicant_id", "=", $_SESSION['user_id'], "app_id", ""));
+
+if (!$already_applied) {
+    ?>
+    <style>#view:hover{
+            background-color: rgb(17, 0, 255);
+    }</style>
+    <?php
+}else{
+    ?>
+    <style>#new:hover{
+            background-color: rgb(17, 0, 255);
+        }</style>
+    <style>#lost:hover{
+            background-color: rgb(17, 0, 255);
+        }</style>
+    <?php
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +35,7 @@ $already_applied = is_null($con->get_column_value("application_details", "applic
     <link rel="stylesheet" href="style2.css">
     <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
 
 
@@ -65,16 +84,16 @@ $already_applied = is_null($con->get_column_value("application_details", "applic
                 <br><br><br><br>
                 <a href="GNDivisionSelect.php?id=<?php echo 1 ?>">
 <!--                    <button>Applying New Identity Card</button>-->
-                    <button <?php if (!$already_applied){ ?> disabled <?php } ?>>
+                    <button id="new"<?php if (!$already_applied){ ?> disabled <?php } ?>>
                         Applying New Identity Card</button>
                 </a><br><br>
 
                 <a href="GNDivisionSelect.php?id=<?php echo 2 ?>">
-                    <button <?php if (!$already_applied){ ?> disabled<?php } ?>>Applying For lost Identity Card</button>
+                    <button id="lost"<?php if (!$already_applied){ ?> disabled<?php } ?>>Applying For lost Identity Card</button>
                 </a><br><br>
 
-                <a href="Filled_Application.php?id=<?php echo $applicant->getApplicationId() ?>">
-                    <button <?php if ($already_applied){ ?> disabled<?php } ?>>View application details in process</button>
+                <a href="Filled_Application.php?application_id=<?php echo $applicant->getApplicationId() ?>">
+                    <button id="view"<?php if ($already_applied){ ?> disabled<?php } ?>>View application details in process</button>
                 </a>
             </div>
         </div>

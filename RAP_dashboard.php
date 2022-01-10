@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>RAP Dashboard</title>
-      <link rel="stylesheet" href="style2.css">
-      <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
-      <script src="Javascipt_File.js">
-           
-      </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAP Dashboard</title>
+    <link rel="stylesheet" href="style2.css">
+    <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
+    <script src="Javascipt_File.js"></script>
+    <style>
+        .container .content .card .icon_case button:hover{
+            background-color: rgb(17, 0, 255);
+        }
+    </style>
+
 </head>
 <body >
       
