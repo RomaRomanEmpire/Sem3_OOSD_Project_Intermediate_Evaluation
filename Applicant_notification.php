@@ -23,17 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" href="style2.css">
     <style>
-
-        /* html{
-              height: 100%;
-        } */
         body {
             font-family: Arial, Helvetica, sans-serif;
-
             text-align: center;
             min-height: 100vh;
-            background: rgb(2, 0, 36);
-            background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 1%, rgba(0, 212, 255, 1) 100%);
 
         }
 
@@ -50,40 +43,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: white;
             padding: 12px 12px;
             border: none;
-            /* border-radius: 10px; */
             cursor: pointer;
         }
 
-        input[type=submit]:hover {
+        .header2 button:hover{
             background-color: #525252;
         }
 
-        select:hover {
-            background-color: #494949;
+        .header2 select:hover {
+            background-color: #525252;
         }
 
-        select {
-            width: 50%;
-            padding: 12px;
+        .header2 button{
+            height:35px;
+            width:150px;
+            text-align:center;
+            background-color: #203169;
+            color:white;
+        }
+
+        .header2 select {
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
             margin-top: 6px;
             margin-bottom: 16px;
             resize: vertical;
+            height:35px;
+            width:150px;
+            text-align:center;
             background-color: #203169;
-            color: white;
-        }
-
-        /* h1,
-        h3 {
-            font-family: 'Permanent Marker', cursive;
-        } */
-
-        #Form {
-            margin: 5px;
-            padding: 5px;
-            width: 20%;
+            color:white;
         }
 
         table {
@@ -92,22 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         td {
             word-wrap: break-word;
-            /* padding-top: 15px; */
             padding-left: 10px;
-        }
-
-        #grad1 {
-            background-image: linear-gradient(to top, #64646b, #717176, #7e7e82, #8c8b8d, #999999);
-        }
-
-        #grad2 {
-            background-image: linear-gradient(to right top, #626262, #68686f, #6c6f7c, #6e7689, #6d7e97, #72839f, #7789a7, #7c8eaf, #8b92b2, #9995b4, #a699b5, #b19eb6);
-        }
-
-        .container {
-            border-radius: 5px;
-            background-color: #f2f2f2;
-            padding: 20px;
         }
 
         .container1 {
@@ -115,43 +90,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             right: 0;
             width: 100%;
             min-height: 100vh;
-            background: #f1f1f1;
+            background: linear-gradient(mediumpurple, white);
         }
     </style>
     <script src="Javascipt_File.js">
     </script>
 </head>
-<body style="background-color: red;">
+<body>
 <div class="container1">
-    <div class="header2">
+    <div class="header2" style="background-color:lightblue;">
         <div class="nav">
             <div>
-                <h2 style="color: white;padding-left:800px;padding-top:20px;"><p id="Topic1">Inbox Messages</p></h2>
+                <h1 style="color: black; padding-left:600px; padding-top:20px;"><p id="Topic1">Notifications</p></h1>
             </div>
             <table>
 
                 <tbody>
                 <tr>
 
-                    <div class="input-group mb-3" style="  width: 50%;padding-right:50px;padding-left:170px;"></div>
+                    <div class="input-group mb-3" style="width: 50%;p adding-left: 30px "></div>
 
 
                     <form id="order-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                        <td style="padding-top: 5px;padding-left:100px;">
+                        <td style="padding-top: 10px;padding-left:150px;">
                             <div>
 
-                                <select name="order" class="form-select" aria-label="Default select example"
-                                        style="height: 35px;width:150px; background-color: #203169;color:white;">
+                                <select name="order" class="form-select" aria-label="Default select example">
                                     <option value="latest" selected="selected">Latest</option>
                                     <option value="oldest">Oldest</option>
 
                                 </select>
                             </div>
                         </td>
-                        <td style="padding-left:60px;">
+                        <td style="margin-left:10px;">
                             <div>
-                                <button type="submit" class="btn btn-success"
-                                        style="height:35px; background-color: #203169;color:white;">Apply Filter
+                                <button type="submit" class="btn btn-success">Apply Filter
                                 </button>
                             </div>
                         </td>
@@ -163,20 +136,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         </div>
-        <div style="padding-top: 45px;">
+
+        <div style="padding-top: 50px;">
             <a class="btn btn-outline-light" href="applicant_dashboard.php" role="button"
-               style="height: 35px; width: 150px; padding-right:10px;margin-right: 10px;">Back</a>
+               style="height: 35px; width: 150px; background-color:#1cdb92; margin-top:30px; margin-right: 10px;">Back</a>
         </div>
 
     </div>
-    <div class="side_menu1" style="padding-top: 200px; padding-left:0px;">
+    <div class="side_menu1" style="padding-top: 200px; padding-left:0px; background-color: lightblue;">
 
 
         <ul>
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedT1" autocomplete="off"
                        onclick="Notification1()">
                 <label class="btn btn-outline-primary" for="btn_check_outlinedT1"><p
-                            style="font-weight: bold;width:150px; height:10px;">Appoinment Time</p></label><br>
+                            style="font-weight: bold;width:100px; height:25px; text-align: center;">Appoinment Time</p></label><br>
             </li>
 
             <br>
@@ -184,14 +158,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="radio" name="h" class="btn-check" id="btn_check_outlinedR1" autocomplete="off"
                        onclick="Notification1()">
                 <label class="btn btn-outline-primary" for="btn_check_outlinedR1"><p
-                            style="font-weight: bold;width:150px; height:10px;">Confirmation</p></label>
+                            style="font-weight: bold;width:100px; height:25px; text-align: center;">Confirmation</p></label>
             </li>
             <br>
 
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedS1" autocomplete="off"
                        onclick="Notification1()">
                 <label class="btn btn-outline-primary" for="btn_check_outlinedS1"><p
-                            style="font-weight: bold;width:150px; height:10px;">Sent Messages</p></label>
+                            style="font-weight: bold;width:100px; height:25px; text-align: center;">Sent Messages</p></label>
             </li>
 
         </ul>
