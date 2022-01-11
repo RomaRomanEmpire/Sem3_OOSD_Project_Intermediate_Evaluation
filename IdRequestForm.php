@@ -244,10 +244,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt>Sex</dt>
-                            <dd><input type="radio" id="gender_" name="gender" value="Male" <?php echo $_POST['gender']??NULL=='Male'?'checked':NULL?> required>
-                                <label for="gender">Male</label>
-                                <input type="radio" id="gender_" name="gender" value="Female" <?php echo $_POST['gender']??NULL=='Female'?'checked':NULL?> required>
-                                <label for="gender">Female</label>
+                            <dd><input type="radio" id="gender_1" name="gender" value="Male" <?php echo $_POST['gender']??NULL=='Male'?'checked':NULL?> required>
+                                <label for="gender_1">Male</label>
+                                <input type="radio" id="gender_2" name="gender" value="Female" <?php echo $_POST['gender']??NULL=='Female'?'checked':NULL?> required>
+                                <label for="gender_2">Female</label>
                             </dd>
                         </dl>
                     </div>
@@ -255,14 +255,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt>Civil Status</dt>
-                            <dd><input type="radio" id="civilStatus_" name="civilStatus" value="Married" <?php echo $_POST['civilStatus']??NULL=='Married'?'checked':NULL?> required>
-                                <label for="civilStatus_">Married</label>
-                                <input type="radio" id="civilStatus_" name="civilStatus" value="Single" <?php echo $_POST['civilStatus']??NULL=='Single'?'checked':NULL?> required>
-                                <label for="civilStatus_">Single</label>
-                                <input type="radio" id="civilStatus_" name="civilStatus" value="Widowed" <?php echo $_POST['civilStatus']??NULL=='Widowed'?'checked':NULL?> required>
-                                <label for="civilStatus_">Widowed</label>
-                                <input type="radio" id="civilStatus_" name="civilStatus" value="Divorced" <?php echo $_POST['civilStatus']??NULL=='Divorced'?'checked':NULL?> required>
-                                <label for="civilStatus_">Divorced</label>
+                            <dd><input type="radio" id="civilStatus_1" name="civilStatus" value="Married" <?php echo $_POST['civilStatus']??NULL=='Married'?'checked':NULL?> required>
+                                <label for="civilStatus_1">Married</label>
+                                <input type="radio" id="civilStatus_2" name="civilStatus" value="Single" <?php echo $_POST['civilStatus']??NULL=='Single'?'checked':NULL?> required>
+                                <label for="civilStatus_2">Single</label>
+                                <input type="radio" id="civilStatus_3" name="civilStatus" value="Widowed" <?php echo $_POST['civilStatus']??NULL=='Widowed'?'checked':NULL?> required>
+                                <label for="civilStatus_3">Widowed</label>
+                                <input type="radio" id="civilStatus_4" name="civilStatus" value="Divorced" <?php echo $_POST['civilStatus']??NULL=='Divorced'?'checked':NULL?> required>
+                                <label for="civilStatus_4">Divorced</label>
                             </dd>
                         </dl>
                     </div>
@@ -458,18 +458,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="Form-group">
                             <dl>
                                 <dt>Purpose of application</dt>
-                                <dd><input type="radio" id="purpose" name="purpose"
+                                <dd><input type="radio" id="purpose1" name="purpose"
                                            value="if the Identity Card is lost" <?php echo $_POST['purpose']??NULL=='if the Identity Card is lost'?'checked':NULL?> >
-                                    <label for="purpose"> if the Identity Card is lost </label><br>
-                                    <input type="radio" id="purpose" name="purpose"
+                                    <label for="purpose1"> if the Identity Card is lost </label><br>
+                                    <input type="radio" id="purpose2" name="purpose"
                                            value="to make changes to the Identity Card" <?php echo $_POST['purpose']??NULL=='to make changes to the Identity Card'?'checked':NULL?>>
-                                    <label for="purpose">to make changes to the Identity Card</label><br>
-                                    <input type="radio" id="purpose" name="purpose"
+                                    <label for="purpose2">to make changes to the Identity Card</label><br>
+                                    <input type="radio" id="purpose3" name="purpose"
                                            value="to renew the period of validity" <?php echo $_POST['purpose']??NULL=='to renew the period of validity'?'checked':NULL?>>
-                                    <label for="purpose">to renew the period of validity </label><br>
-                                    <input type="radio" id="purpose" name="purpose"
+                                    <label for="purpose3">to renew the period of validity </label><br>
+                                    <input type="radio" id="purpose4" name="purpose"
                                            value="if the Identity card is damaged/ defaced /illegible" <?php echo $_POST['purpose']??NULL=='if the Identity card is damaged/ defaced /illegible'?'checked':NULL?>>
-                                    <label for="purpose"> if the Identity card is damaged/ defaced
+                                    <label for="purpose4"> if the Identity card is damaged/ defaced
                                         /illegible</label><br>
                                 </dd>
                             </dl>
@@ -528,7 +528,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 
                 <div class="step step-7">
-                    <h2>Attestation of the Certifying Officer</h2>
+<!--                    <h2>Attestation of the Certifying Officer</h2>-->
 
                     <dl>
                         <dt><b><label for="receiptNo">Number of the receipt or the certificate</label></b></dt>

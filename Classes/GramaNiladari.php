@@ -4,19 +4,14 @@
  */
 class GramaNiladari extends R_A_P_1
 {
-
+    private $divisional_secretariat;
 	public function __construct($attributeArray)
 	{
 		parent::__construct($attributeArray);
         $this->gn_div_or_address = $attributeArray['gdivision'];
-        $this->ds = $attributeArray['ds'];
+        $this->divisional_secretariat = $attributeArray['ds1'];
 		$this->u_type="gn";
 	}
-
-//	public function approve_application($application)
-//	{
-//        $application->approve($this);
-//	}
 
     /**
      * @return mixed
@@ -31,7 +26,7 @@ class GramaNiladari extends R_A_P_1
      */
     public function getDs()
     {
-        return $this->ds;
+        return $this->divisional_secretariat;
     }
 
 }

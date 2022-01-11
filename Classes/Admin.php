@@ -4,10 +4,13 @@
  */
 class Admin extends L_P_User implements IVisitor
 {
+	private $staff_id;
+
 	public function __construct($attributeArray)
 	{
 		parent::__construct($attributeArray);
 		$this->u_type = "admin";
+		$this->staff_id = $attributeArray['staff_id'];
 	}
 
 	public function approve_application($application)

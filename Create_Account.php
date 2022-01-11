@@ -179,7 +179,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             }
             else if (!(password_validate )){
-                alert("Password conformation is wrong!! and must give strong password length.Charctor length must be in 8 to 14 range");
+                alert("Password confirmation is failed!! must be strong password in length must be in 8 to 14 range." +
+                    " And if it is check confirm password");
                 return false;
             }
 
@@ -225,11 +226,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <br>
         <b> <label for="">Gender</label></b>
         <br>
-        <b> <label for="gender_">Male</label></b>
-        <input type="radio" id="gender_" name="gender" value="male" required>
+        <b> <label for="gender_1">Male</label></b>
+        <input type="radio" id="gender_1" name="gender" value="male" required>
 
-        <b> <label for="gender_">Female</label></b>
-        <input type="radio" id="gender_" name="gender" value="female" required>
+        <b> <label for="gender_2">Female</label></b>
+        <input type="radio" id="gender_2" name="gender" value="female" required>
         <br><br><br>
         <b> <label for="BDate">Birthday</label></b>
         <input type="date" id="BDate" placeholder="Date of birthday" name="Birthday" onchange="Birthday_Validate()"  required>

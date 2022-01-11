@@ -26,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_GET['sign_no'] == 1) {
         //refine
         $application->setApplicantSign($file);
+        $user->add_applicant_sign($application);
     } elseif ($_GET['sign_no'] == 2) {
         $application->setRapSign($file);
         $user->approve_application($application);

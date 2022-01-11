@@ -18,17 +18,20 @@ $type = $user->get_user_type();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['para_1']))
         $application->setCertificationDetails($_POST['para_1'], $_POST['para_2'], $_POST['certifyName']);
-    elseif(isset($_POST['certifyName2']))
+    elseif (isset($_POST['certifyName2']))
         $application->setCertificationDetails2($_POST['certifyName2']);
 
     $application_id = $_GET['application_id'];
     //refine
-    $conn->add_signs_to_application($application_id, $application);
+    $conn->add_sign_to_application($application_id, $application);
     $sign_no = $_GET['sign_no'];
     header("location: sign.php?application_id=$application_id&sign_no=$sign_no");
 }
 if ($type == "applicant") {
     ?>
+    <style>#attestation-form {
+            display: none;
+        }</style>
     <style>#applicant_sign {
             display: none;
         }</style>
@@ -48,7 +51,7 @@ if ($user instanceof R_A_P_1) {
         }</style>
     <?php
 }
-if ($type == "db_manager") {
+if ($type == "db_manager" || $type == "applicant") {
     ?>
     <style>#reject_button {
             display: none;
@@ -259,7 +262,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
         <fieldset class="input-group" style="margin-left: 10px;margin-top:70px;" disabled>
             <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>State</b></span>
             <textarea class="form-control" aria-label="With textarea"
-                      style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"><?php echo $application->getState()->getState(); ?></textarea>
+                      style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;" ><?php echo $application->getState()->getState(); ?></textarea>
             <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>Applied Date</b></span>
             <textarea class="form-control" aria-label="With textarea"
                       style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"><?php echo $application->getApplyDate(); ?></textarea>
@@ -281,7 +284,8 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                                 </button></td>
                         <?php } ?>
 
-                        <td id="admin_approve_button"><a href="sign.php.php?sign_no=<?php echo 4;?>&application_id=<?php echo $_GET['application_id'];?>">
+                        <td id="admin_approve_button"><a
+                                    href="sign.php.php?sign_no=<?php echo 4; ?>&application_id=<?php echo $_GET['application_id']; ?>">
                                 <button type="submit" class="btn btn-sm btn-outline-primary"
                                         style="color:black;width:150px; font-size:15px;"><b>Approve</b>
                                 </button>
@@ -663,7 +667,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
 
             </div>
         </fieldset>
-        <form id="" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?
+        <form id="attestation-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?
         application_id=<?php echo $_GET['application_id']; ?>&sign_no=<?php echo 1; ?>" method="POST">
             <fieldset <?php if ($application->getPara1() !== null){ ?>disabled<?php } ?>>
 
@@ -748,7 +752,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                 <dl>
                     <dt><b><label for="certifyName2">Name of the Certifying Officer</label></b></dt>
                     <dd><input type="text" id="certifyName2" name="certifyName2"
-                               value="<?php echo $application->getCertifyName2();?>"
+                               value="<?php echo $application->getCertifyName2(); ?>"
                                placeholder="Name of the Certifying Officer" required></dd>
                 </dl>
                 <dl>

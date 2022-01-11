@@ -5,11 +5,13 @@
  */
 class NIC_Issuer extends L_P_User implements IApprover
 {
+    private $staff_id;
 
     function __construct($attributeArray)
     {
         parent::__construct($attributeArray);
         $this->u_type = "ni";
+        $this->staff_id = $attributeArray['staff_id'];
     }
 
     public function fetch_NIC_details($value = '')

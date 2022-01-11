@@ -571,6 +571,7 @@ class Application implements IVisitable
     public function approve($user)
     {
         $this->fillApprovableArray($user);
+        echo "application approve\t";
         $this->state->approve($user->get_user_type(), $this);
     }
 

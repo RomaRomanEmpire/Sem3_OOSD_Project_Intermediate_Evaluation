@@ -15,8 +15,8 @@ abstract class User
     protected $db;
     protected $row_id;
     protected $u_type;
-    protected $gn_div_or_address;
-    protected $ds;
+
+
     protected $pf_photo;
 
     function __construct($attributeArray)

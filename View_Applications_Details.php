@@ -5,6 +5,7 @@ $con = DB_OP::get_connection();
 $user = unserialize($con->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $user->set_db($con);
 $user->set_row_id($_SESSION['user_id']);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +32,9 @@ $user->set_row_id($_SESSION['user_id']);
 
         <!-- <a class="btn btn-outline-light" href="RAP_dashboard.php" role="button"
            style="height: 40px; width: 150px; padding-top:10px;margin:10px;">Back</a> -->
-        <button class="btn btn-sm btn-outline-light fas fa-arrow-left" id="Back" style="height: 30px; width: 100px; padding-top:10px;margin:10px;" onclick=" GoPreviousFile()"> Back</button>
+        <button class="btn btn-sm btn-outline-light fas fa-arrow-left" id="Back"
+                style="height: 30px; width: 100px; padding-top:10px;margin:10px;" onclick=" GoPreviousFile()"> Back
+        </button>
 
     </div>
     <br><br><br><br>
@@ -48,14 +51,14 @@ $user->set_row_id($_SESSION['user_id']);
                     <thead>
                     <tr>
 
-                        <?php if($user->get_user_type() != "applicant"){?>
+                        <?php if ($user->get_user_type() != "applicant") { ?>
                             <th scope="col">Index Number</th>
                         <?php } ?>
                         <th scope="col">Date</th>
-                        <?php if ($user->get_user_type() == "db_manager" || $user->get_user_type() == "applicant") { ?>
-                            <th scope="col">Status</th>
-                        <?php } ?>
-                        <?php if($user->get_user_type() != "applicant"){?>
+
+                        <th scope="col">Status</th>
+
+                        <?php if ($user->get_user_type() != "applicant") { ?>
                             <th scope="col">Applicant's Name</th>
                         <?php } ?>
                         <th scope="col">View Application</th>
@@ -69,28 +72,27 @@ $user->set_row_id($_SESSION['user_id']);
                     if ($user->get_user_type() == "db_manager") {
                         $result = $con->database_details('application_details', '', '', '');
                     } else if ($user->get_user_type() == "admin") {
-                        $result = $con->database_details('application_details', 'stat', 'sent_to_admin', "ORDER BY app_id DESC");
+                        $result = $con->database_details_2('application_details', 'stat', 'stat', '!=', '!=', 'sent_to_rap_1', 'sent_to_ds', "");
                     } else if ($user instanceof R_A_P_1) {
-                        $result = $con->database_details_2('application_details', 'stat', 'gn_div_or_address', 'sent_to_rap_1', $user->getGnDivOrAddress(), "");
+                        $result = $con->database_details('application_details', 'gn_div_or_address', $user->getGnDivOrAddress(), "");
                     } else if ($user->get_user_type() == "ds") {
-                        $result = $con->database_details_2('application_details', 'stat', 'ds', 'sent_to_ds', $user->getDs(), "");
-                    } else if ($user->get_user_type() == "ni") {
+                        $result = $con->database_details_2('application_details', 'ds', 'stat', '=', '!=', $user->getDs(), 'sent_to_rap_1', "");
+//                    } else if ($user->get_user_type() == "ni") {
+                    } else {
                         $result = $con->database_details('application_details', 'stat', 'approved', "");
-                    } else{
-                        $result = $con->database_details('application_details', 'applicant_id', $_SESSION['user_id'], "");
                     }
 
                     foreach ($result as $i => $row):
                         $applicant = $con->get_column_value("user_details", "user_id", "=", $row['applicant_id'], "username", "") ?>
                         <tr>
-                            <?php if($user->get_user_type() != "applicant"){?>
+                            <?php if ($user->get_user_type() != "applicant") { ?>
                                 <th scope="row"><?php echo $row['app_id'] ?></th>
                             <?php } ?>
-                            <td><?php echo $row['apply_date']?></td>
-                            <?php if ($user->get_user_type() == "db_manager" || $user->get_user_type() == "applicant") { ?>
-                                <td><?php echo $row['stat'] ?></td>
-                            <?php } ?>
-                            <?php if($user->get_user_type() != "applicant"){?>
+                            <td><?php echo $row['apply_date'] ?></td>
+
+                            <td><?php echo $row['stat'] ?></td>
+
+                            <?php if ($user->get_user_type() != "applicant") { ?>
                                 <td><?php echo $applicant ?></td>
                             <?php } ?>
                             <td><a href="Filled_Application.php?application_id=<?php echo $row['app_id'] ?>">

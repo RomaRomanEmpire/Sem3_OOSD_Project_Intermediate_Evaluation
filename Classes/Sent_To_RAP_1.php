@@ -9,9 +9,9 @@ class Sent_To_RAP_1 extends State
     }
 
     /**
-     * @return mixed
+     * @return Sent_To_RAP_1
      */
-    public static function getSentToRap1()
+    public static function getSentToRap1(): Sent_To_RAP_1
     {
         if (self::$sent_to_rap_1 == null)
             self::$sent_to_rap_1 = new Sent_To_RAP_1();
@@ -26,11 +26,11 @@ class Sent_To_RAP_1 extends State
             $application->setState(Sent_To_Admin::getSentToAdmin());
     }
 
-    public function reject($utype, $application)
+    public function reject($u_type, $application)
     {
         $application->setState(Cancelled::getCancelled());
     }
-    public function getState()
+    public function getState(): string
     {
         return $this->state;
     }

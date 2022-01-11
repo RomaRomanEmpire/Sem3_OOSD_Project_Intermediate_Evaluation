@@ -244,7 +244,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_receive_confirmation = $conn->database_details_2('notification_details', 'to_id', 'n_type', $_SESSION['user_id'], 'confirmation', $order);
+                $result_receive_confirmation = $conn->database_details_2('notification_details', 'to_id', 'n_type','=','=',$_SESSION['user_id'], 'confirmation', $order);
                 if (is_null($result_receive_confirmation)){
                     echo "No notifications!";}
                 else {
@@ -288,7 +288,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_appointment_reschedules = $conn->database_details_2('notification_details', 'to_id', 'n_type', $_SESSION['user_id'], 'answer', $order);
+                $result_appointment_reschedules = $conn->database_details_2('notification_details', 'to_id', 'n_type','=','=', $_SESSION['user_id'], 'answer', $order);
                 if (is_null($result_appointment_reschedules)) {
                     echo "No notifications!";
                 } else {
@@ -366,7 +366,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_appointment_schedules = $conn->database_details_2('notification_details', 'from_id', 'n_type', $_SESSION['user_id'], 'appointment', $order);
+                $result_appointment_schedules = $conn->database_details_2('notification_details', 'from_id', 'n_type', '=','=',$_SESSION['user_id'], 'appointment', $order);
                 if (is_null($result_appointment_schedules)) {
                     echo "No notifications!";
                 } else {
@@ -407,7 +407,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_confirmations = $conn->database_details_2('notification_details', 'to_id', 'n_type', $_SESSION['user_id'], 'confirmation', $order);
+                $result_confirmations = $conn->database_details_2('notification_details', 'to_id', 'n_type','=','=', $_SESSION['user_id'], 'confirmation', $order);
                 if (is_null($result_confirmations)) {
                     echo "No notifications!";
                 } else {

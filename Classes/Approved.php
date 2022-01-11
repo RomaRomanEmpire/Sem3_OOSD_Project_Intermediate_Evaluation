@@ -29,7 +29,7 @@ class Approved extends State
     /**
      * @throws Exception
      */
-    public function reject($utype, $application)
+    public function reject($u_type, $application)
     {
         throw new Exception("No Cancelled state from Approved State");
     }

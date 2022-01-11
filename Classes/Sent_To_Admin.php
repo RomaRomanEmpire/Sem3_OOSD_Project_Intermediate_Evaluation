@@ -24,7 +24,7 @@ class Sent_To_Admin extends State
         $application->setState(Approved::getApproved());
     }
 
-    public function reject($utype, $application)
+    public function reject($u_type, $application)
     {
         $application->setState(Cancelled::getCancelled());
     }

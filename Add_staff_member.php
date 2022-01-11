@@ -154,6 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsG").style.display = "block";
                 document.getElementById("DeatilsD1").style.display = "block";
                 Officer_form.style.display = "block";
+                document.getElementById("DeatilsD").style.display = "none";
                 document.getElementById("DeatilsE").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
                 Password.style.display = "block";
@@ -227,7 +228,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else if (g_check.checked) {
                 var ds = <?php echo json_encode($_SESSION['val_array5'] ?? NULL); ?>;
                 if (!ds.includes(ds_div1)) {
-                    alert("Enter a correct Divisional section");
+                    alert("Enter a correct Divisional section for Grama Niladhari Division");
                     return false;
                 }
                 var gn = <?php echo json_encode($_SESSION['val_array2'] ?? NULL); ?>;
@@ -248,7 +249,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body style="color: white; background: rgb(10,30,235);
 background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%, rgba(15,30,135,1) 100%, rgba(101,181,198,1) 100%);">
-<!-- Deatils_NIC.style.display="block"; -->
+
 <div class="header1"><a href="DatabaseManagerDashboard.php">
         <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-left"
                 style="width: 100px;font-size:18px;margin-right:20px;color:black;"> Back
@@ -302,8 +303,6 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                                    value="National_Identity_Card_Issuer" id="Officer_N" onclick="ShowDetails()">
                             <label class="form-check-label" for="Officer_N">National Identity Card Issuer</label>
                         </div>
-
-                        <!--          <button type="button" class="btn btn-primary" onclick="ShowDetails()">Get Details</button>-->
 
                     </fieldset>
 
@@ -498,7 +497,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                 $('#exampleInputDSecretariat1').prop('required', true);
             } else {
                 $('#exampleInputGDivition').prop('required', false);
-                $('#exampleInputDSecretariat').prop('required', false);
+                $('#exampleInputDSecretariat1').prop('required', false);
             }
         });
 
@@ -548,7 +547,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
             var pwd_conform = document.getElementById("exampleInputCPassword").value;
             var btn = document.getElementById("button");
 
-            if ((pwd1 == pwd_conform) && (pwd1.length >= 8 && pwd1.length <= 14)) {
+            if ((pwd1 === pwd_conform) && (pwd1.length >= 8 && pwd1.length <= 14)) {
                 return true;
             } else {
                 alert("Password conformation is wrong!! and must give strong password length.Charctor length must be in 8 to 14 range");

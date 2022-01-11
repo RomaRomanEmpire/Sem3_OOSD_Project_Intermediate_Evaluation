@@ -25,12 +25,12 @@ class Sent_To_DS extends State
         $application->setState(Sent_To_Admin::getSentToAdmin());
     }
 
-    public function reject($utype, $application)
+    public function reject($u_type, $application)
     {
         $application->setState(Cancelled::getCancelled());
     }
 
-    public function getState()
+    public function getState(): string
     {
         return $this->state;
     }

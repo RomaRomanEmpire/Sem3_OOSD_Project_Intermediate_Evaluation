@@ -10,16 +10,10 @@ class DivisionalSecretary extends R_A_P
     public function __construct($attributeArray)
     {
         parent::__construct($attributeArray);
-
         $this->divisional_secretariat = $attributeArray['ds'];
         $this->db = DB_OP::get_connection();
         $this->u_type = "ds";
     }
-
-//    public function approve_application($application)
-//    {
-//        $application->approve($this,$this->u_type);
-//    }
 
     /**
      * @throws Exception
@@ -34,7 +28,7 @@ class DivisionalSecretary extends R_A_P
      */
     public function getDs()
     {
-        return $this->ds;
+        return $this->divisional_secretariat;
     }
 }
 

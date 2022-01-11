@@ -191,7 +191,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </thead>
                     <tbody>
                     <?php
-                    $result_receive_appointment = $conn->database_details_2('notification_details', 'to_id', 'n_type', $_SESSION['user_id'], 'appointment', $order);
+                    $result_receive_appointment = $conn->database_details_2('notification_details', 'to_id', 'n_type','=','=', $_SESSION['user_id'], 'appointment', $order);
                     if (is_null($result_receive_appointment))
                         echo "No notifications!";
                     else {
@@ -233,7 +233,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </thead>
                     <tbody>
                     <?php
-                    $result_receive_confirmations = $conn->database_details_2('notification_details', 'to_id', 'n_type', $_SESSION['user_id'], 'confirmation', $order);
+                    $result_receive_confirmations = $conn->database_details_2('notification_details', 'to_id', 'n_type','=','=', $_SESSION['user_id'], 'confirmation', $order);
                     if (is_null($result_receive_confirmations)) {
                         echo "No notifications!";
                     } else {
@@ -270,7 +270,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </thead>
                     <tbody>
                     <?php
-                    $result_sent_answers = $conn->database_details_2('notification_details', 'from_id', 'n_type', $_SESSION['user_id'], 'answer', "ORDER BY user_id DESC");
+                    $result_sent_answers = $conn->database_details_2('notification_details', 'from_id', 'n_type','=','=', $_SESSION['user_id'], 'answer', "ORDER BY user_id DESC");
                     if (is_null($result_sent_answers)) {
                         echo "No notifications!";
                     } else {
