@@ -3,6 +3,7 @@ session_start();
 include 'autoloader.php';
 $conn = DB_OP::get_connection();
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($_POST['officer'] == "Database_Manager") {
@@ -21,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $staff_member = new NIC_Issuer($_POST);
     }
 
-
     $db_manager = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
     $db_manager->set_db($conn);
     $db_manager->set_row_id($_SESSION['user_id']);
@@ -30,16 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!empty($_POST['gdivision'])) {
             $table = 'gn';
             $div = $_POST['gdivision'];
-            $div2 = $_POST['ds'];
+            $div2 = $_POST['ds1'];
             $table2 = 'ds';
             $array = $_SESSION['val_array2'];
-            $array2 = $_SESSION['val_array3'];
-//        }
+            $array2 = $_SESSION['val_array5'];
 
-            $ds_id = $conn->get_column_value($table2, 'DS', '=', $div2, 'DS_code', '');
-            $division_id = $conn->get_column_value2($table, 'basic_division', 'DS_code', '=', $div, $ds_id, 'division_id', "");
+            $ds_id = $conn->get_column_value('ds', 'DS', '=', $div2, 'DS_code', '');
+            $gnCode = $conn->get_column_value2('gn', 'basic_division', 'DS_code', '=', $div, $ds_id, 'division_id', "");
 
-            if (!is_null($division_id)) {
+            if (!is_null($gnCode)) {
                 $db_manager->add_user($table, $div, $_POST['staff_id'], $staff_member);
             } else {
                 echo "<script type='text/javascript'>alert('two divisions are not connected')window.location.href = 'Add_staff_member.php';;</script>";
@@ -50,9 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!empty($_POST['school'])) {
             $table = 'schools';
             $div = $_POST['school'];
-        } else if (!empty($_POST['ds1'])) {
+        } else if (!empty($_POST['ds'])) {
             $table = 'ds';
-            $div = $_POST['ds1'];
+            $div = $_POST['ds'];
         } else if (!empty($_POST['estate'])) {
             $table = 'estates';
             $div = $_POST['estate'];
@@ -60,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $table = '';
             $div = '';
         }
+
         $db_manager->add_user($table, $div, $_POST['staff_id'], $staff_member);
     }
 }
@@ -103,15 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
     <script>
-        (function () {
-            if (window.localStorage) {
-                if (!localStorage.getItem('firstLoad')) {
-                    localStorage['firstLoad'] = true;
-                    window.location.reload();
-                } else
-                    localStorage.removeItem('firstLoad');
-            }
-        })();
+
 
         function ShowDetails() {
             document.getElementById("Create_form").disabled = false;
@@ -134,6 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsG").style.display = "none";
                 document.getElementById("DeatilsD").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
+                document.getElementById("DeatilsD1").style.display = "none";
                 Password.style.display = "block";
                 submit_button.style.display = "block";
 
@@ -143,6 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsG").style.display = "none";
                 document.getElementById("DeatilsD").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
+                document.getElementById("DeatilsD1").style.display = "none";
                 Password.style.display = "block";
                 submit_button.style.display = "block";
 
@@ -152,12 +146,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsG").style.display = "none";
                 document.getElementById("DeatilsD").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
+                document.getElementById("DeatilsD1").style.display = "none";
                 Password.style.display = "block";
                 submit_button.style.display = "block";
 
             } else if (Grama_Niladari.checked) {
                 document.getElementById("DeatilsG").style.display = "block";
-                document.getElementById("DeatilsD").style.display = "block";
+                document.getElementById("DeatilsD1").style.display = "block";
                 Officer_form.style.display = "block";
                 document.getElementById("DeatilsE").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
@@ -170,6 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsG").style.display = "none";
                 document.getElementById("DeatilsE").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
+                document.getElementById("DeatilsD1").style.display = "none";
                 Password.style.display = "block";
                 submit_button.style.display = "block";
 
@@ -179,6 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsE").style.display = "none";
                 document.getElementById("DeatilsG").style.display = "none";
                 document.getElementById("DeatilsD").style.display = "none";
+                document.getElementById("DeatilsD1").style.display = "none";
                 Password.style.display = "block";
                 submit_button.style.display = "block";
 
@@ -188,91 +185,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 document.getElementById("DeatilsG").style.display = "none";
                 document.getElementById("DeatilsD").style.display = "none";
                 document.getElementById("DeatilsP").style.display = "none";
+                document.getElementById("DeatilsD1").style.display = "none";
                 Password.style.display = "block";
                 submit_button.style.display = "block";
             }
 
         }
 
-        function HideDetails() {
-            document.getElementById("Create_form").disabled = false;
-            var Database_Manager = document.getElementById("Officer_DM")
-            var Admin = document.getElementById("Officer_A")
-            var Estate_Superintendent = document.getElementById("Officer_E")
-            var Grama_Niladari = document.getElementById("Officer_G");
-            var Divitional_Secretary = document.getElementById("Officer_D");
-            var Principal = document.getElementById("Officer_P");
-            var National_Identity_Card_Issuer = document.getElementById("Officer_N");
-            var Disable_Tag = document.getElementById("Disable_Tag");
-            var Deatils_NIC = document.getElementById("DeatilsN");
-            var Officer_form = document.getElementById("Create_form");
-            var submit_button = document.getElementById("Submit_button");
-            var Password = document.getElementById("Password");
-
-            if (Database_Manager.checked) {
-                Officer_form.style.display = "none";
-                document.getElementById("DeatilsE").style.display = "none";
-                document.getElementById("DeatilsG").style.display = "none";
-                document.getElementById("DeatilsD").style.display = "none";
-                document.getElementById("DeatilsP").style.display = "none";
-
-            } else if (Admin.checked) {
-                Officer_form.style.display = "none";
-                document.getElementById("DeatilsE").style.display = "none";
-                document.getElementById("DeatilsG").style.display = "none";
-                document.getElementById("DeatilsD").style.display = "none";
-                document.getElementById("DeatilsP").style.display = "none";
-
-            } else if (Estate_Superintendent.checked) {
-                Officer_form.style.display = "none";
-                document.getElementById("DeatilsE").style.display = "none";
-                document.getElementById("DeatilsG").style.display = "none";
-                document.getElementById("DeatilsD").style.display = "none";
-                document.getElementById("DeatilsP").style.display = "none";
-
-            } else if (Grama_Niladari.checked) {
-                document.getElementById("DeatilsG").style.display = "none";
-                document.getElementById("DeatilsD").style.display = "none";
-                Officer_form.style.display = "none";
-                document.getElementById("DeatilsE").style.display = "none";
-                document.getElementById("DeatilsP").style.display = "none";
-
-            } else if (Divitional_Secretary.checked) {
-                document.getElementById("DeatilsD").style.display = "none";
-                Officer_form.style.display = "none";
-                document.getElementById("DeatilsG").style.display = "none";
-                document.getElementById("DeatilsE").style.display = "none";
-                document.getElementById("DeatilsP").style.display = "none";
-
-            } else if (Principal.checked) {
-                document.getElementById("DeatilsP").style.display = "none";
-                Officer_form.style.display = "none";
-                document.getElementById("DeatilsE").style.display = "none";
-                document.getElementById("DeatilsG").style.display = "none";
-                document.getElementById("DeatilsD").style.display = "none";
-
-            } else if (National_Identity_Card_Issuer.checked) {
-                Officer_form.style.display = "none";
-                document.getElementById("DeatilsE").style.display = "none";
-                document.getElementById("DeatilsG").style.display = "none";
-                document.getElementById("DeatilsD").style.display = "none";
-                document.getElementById("DeatilsP").style.display = "none";
-
-            }
-
-            Password.style.display = "none";
-            submit_button.style.display = "none";
-
-        }
-
-
         function validate_fields() {
             var school = document.getElementById("exampleInputSchool").value;
             var estate = document.getElementById("exampleInputEAddress").value;
             var ds_div = document.getElementById("exampleInputDSecretariat").value;
+            var ds_div1 = document.getElementById("exampleInputDSecretariat1").value;
             var gn_div = document.getElementById("exampleInputGDivition").value;
 
-            var p_check = document.getElementById("Officer_P")
+            var p_check = document.getElementById("Officer_P");
             var e_check = document.getElementById("Officer_E");
             var d_check = document.getElementById("Officer_D");
             var g_check = document.getElementById("Officer_G");
@@ -298,8 +225,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     return false;
                 }
             } else if (g_check.checked) {
-                var ds = <?php echo json_encode($_SESSION['val_array3'] ?? NULL); ?>;
-                if (!ds.includes(ds_div)) {
+                var ds = <?php echo json_encode($_SESSION['val_array5'] ?? NULL); ?>;
+                if (!ds.includes(ds_div1)) {
                     alert("Enter a correct Divisional section");
                     return false;
                 }
@@ -403,7 +330,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                         <div class="mb-3">
                             <label for="exampleInputIDnumber" class="form-label">Staff ID No.</label>
                             <?php
-                            $last_staff_id = (!is_null($conn->get_column_value("user_details", "staff_id", ">", "0", "staff_id", "ORDER BY staff_id DESC"))) ? $conn->get_column_value("user_details", "staff_id", ">", "0", "staff_id", "ORDER BY staff_id DESC") : 0;
+                            $last_staff_id = $conn->get_column_value("user_details", "staff_id", ">", "0", "staff_id", "ORDER BY staff_id DESC") ?? 0;
                             ?>
                             <input type="text" class="form-control" name="staff_id" id="exampleInputIDnumber"
                                    style=" background-color: #84bbc7;"
@@ -469,7 +396,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <script>
                                 $(function () {
                                     <?php
-                                    $php_array = $conn->get_table_info("ds", "DS", 1);
+                                    $php_array = $conn->get_table_info("ds", "DS", 0);
                                     $_SESSION['val_array3'] = $php_array;
                                     $js_array = json_encode($php_array);
                                     ?>
@@ -481,7 +408,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             </script>
                         </div>
                     </fieldset>
-                    <fieldset id="DeatilsD" style="display: none;">
+                    <fieldset id="DeatilsD1" style="display: none;">
                         <div class="mb-3">
                             <label for="exampleInputDSecretariat1" class="form-label">Divisional Secretariat</label>
                             <input type="text" class="form-control" name="ds1" id="exampleInputDSecretariat1"
@@ -490,8 +417,8 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <script>
                                 $(function () {
                                     <?php
-                                    $php_array = $conn->get_table_info("ds", "DS", 0);
-                                    $_SESSION['val_array3'] = $php_array;
+                                    $php_array = $conn->get_table_info("ds", "DS", 1);
+                                    $_SESSION['val_array5'] = $php_array;
                                     $js_array = json_encode($php_array);
                                     ?>
                                     var variables = <?php echo $js_array;?>;
@@ -540,6 +467,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                         </div>
                     </fieldset>
                     <fieldset id="Submit_button" style="display: none;">
+
                         <button type="submit" class="btn btn-primary" name="submit" value="submit">Submit</button>
                     </fieldset>
                 </form>
@@ -567,7 +495,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
         $('#Officer_G').change(function () {
             if (this.checked) {
                 $('#exampleInputGDivition').prop('required', true);
-                $('#exampleInputDSecretariat').prop('required', true);
+                $('#exampleInputDSecretariat1').prop('required', true);
             } else {
                 $('#exampleInputGDivition').prop('required', false);
                 $('#exampleInputDSecretariat').prop('required', false);
