@@ -9,14 +9,9 @@ $user->set_row_id($_SESSION['user_id']);
 $u_type = $user->get_user_type();
 
 
-if ($u_type == "applicant") {
+if ($u_type === "applicant") {
     $already_applied = is_null($con->get_column_value("application_details", "applicant_id", "=", $_SESSION['user_id'], "app_id", ""));
-    echo "<style>#db_manager-links{
-            display: none;
-        }</style>";
-    echo "<style>#rap_links{
-            display: none;
-        }</style>";
+
     if (!$already_applied) {
         echo "<style>#view:hover{
             background-color: rgb(17, 0, 255);
@@ -25,28 +20,16 @@ if ($u_type == "applicant") {
     } else {
         echo "<style>#new:hover{
             background-color: rgb(17, 0, 255);
-        }</style>
-    <style>#lost:hover{
+        }</style>";
+        echo "<style>#lost:hover{
             background-color: rgb(17, 0, 255);
         }</style>";
     }
-} elseif ($u_type == "db_manager") {
+} elseif ($u_type === "db_manager") {
+
     echo "<style>#notification-panel{
             display: none;
-        }</style>";
-    echo "<style>#applicant-links{
-            display: none;
-        }</style>";
-    echo "<style>#rap_links{
-            display: none;
-        }</style>";
-} else {
-    echo "<style>#applicant-links{
-            display: none;
-        }</style>";
-    echo "<style>#db_manager-links{
-            display: none;
-        }</style>";
+     }</style>";
 }
 ?>
 
@@ -58,6 +41,7 @@ if ($u_type == "applicant") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="style2.css">
+    <script src="../Javascipt_File.js"></script>
     <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
 </head>
 
@@ -105,7 +89,9 @@ if ($u_type == "applicant") {
         </div>
     </div>
     <div class="content">
-        <div class="card">
+        <?php if ($u_type == "applicant") { ?>
+            <div class="card">
+
             <div id="applicant-links" class="icon_case">
                 <br><br><br><br>
                 <a href="GNDivisionSelect.php?id=<?php echo 1 ?>">
@@ -126,32 +112,37 @@ if ($u_type == "applicant") {
                         process
                     </button>
                 </a>
+            </div></div><?php } elseif ($u_type == "db_manager") { ?>
+            <div class="card1">
+                <div id="db_manager-links" class="icon_case">
+                    <br><br><br><br>
+                    <a href="user_Details.php">
+                        <button>View Database Details</button>
+                    </a>
+                    <br><br>
+                    <a href="View_Applications_Details.php">
+                        <button>View Application Details</button>
+                    </a>
+                    <br><br>
+                    <a href="DBM_Notification.php">
+                        <button>View Notification Details</button>
+                    </a>
+                    <br><br>
+                </div>
+            </div><?php } else { ?>
+            <div class="card1">
+                <div id="rap_links" class="icon_case">
+                    <br><br><br><br>
+                    <a href="View_Applications_Details.php">
+                        <button>View Applications Details</button>
+                    </a><br><br>
+                    <!-- <button>Applying For lost Identity Card </button> -->
+                </div>
             </div>
-            <div id="db_manager-links" class="icon_case">
-                <br><br><br><br>
-                <a href="user_Details.php">
-                    <button>View Database Details</button>
-                </a>
-                <br><br>
-                <a href="View_Applications_Details.php">
-                    <button>View Application Details</button>
-                </a>
-                <br><br>
-                <a href="DBM_Notification.php">
-                    <button>View Notification Details</button>
-                </a>
-                <br><br>
-            </div>
-            <div id="rap_links" class="icon_case">
-                <br><br><br><br>
-                <a href="View_Applications_Details.php">
-                    <button>View Applications Details</button>
-                </a><br><br>
-                <!-- <button>Applying For lost Identity Card </button> -->
-            </div>
-        </div>
-
+        <?php } ?>
     </div>
+
+</div>
 
 </div>
 
