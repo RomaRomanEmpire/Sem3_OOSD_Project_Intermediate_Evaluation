@@ -68,7 +68,7 @@ class DB_OP
 
                         // Redirect user to welcome page
                         if ($row['u_type'] == 'applicant') {
-                            header("location: applicant_dashboard.php");
+                            header("location: dashboard.php");
                         } else if ($row['u_type'] == 'db_manager') {
                             header("location: DatabaseManagerDashboard.php");
                         } else if ($row['u_type'] == 'gn' || $row['u_type'] == 'ds' || $row['u_type'] == 'admin' || $row['u_type'] == 'es' || $row['u_type'] == 'principal' || $row['u_type'] == 'ni') {
@@ -238,9 +238,9 @@ class DB_OP
             $param_n_object = serialize($n_object);
 
             if ($stmt->execute()) {
-                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'applicant_dashboard.php';</script>";
+                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'dashboard.php';</script>";
             } else {
-                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'applicant_dashboard.php';</script>";
+                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!'); window.location.href = 'dashboard.php';</script>";
             }
             $stmt->close();
         }
@@ -268,7 +268,7 @@ class DB_OP
 
             if ($stmt->execute()) {
                 // Redirect to login page
-                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!');window.location.href='applicant_dashboard.php';</script>";
+                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!');window.location.href='dashboard.php';</script>";
             } else {
                 echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
             }

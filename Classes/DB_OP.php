@@ -66,14 +66,9 @@ class DB_OP
                         // Store data in session variables
                         $_SESSION["user_id"] = $row['user_id'];
 
-                        // Redirect user to welcome page
-                        if ($row['u_type'] == 'applicant') {
-                            header("location: applicant_dashboard.php");
-                        } else if ($row['u_type'] == 'db_manager') {
-                            header("location: DatabaseManagerDashboard.php");
-                        } else if ($row['u_type'] == 'gn' || $row['u_type'] == 'ds' || $row['u_type'] == 'admin' || $row['u_type'] == 'es' || $row['u_type'] == 'principal' || $row['u_type'] == 'ni') {
-                            header("location: RAP_Dashboard.php");
-                        }
+                        // Redirect user to dashboard page
+                        header("location: dashboard.php");
+
                     } else {
                         echo "<script type='text/javascript'>alert('The Password you entered was not valid!');</script>";
                     }
@@ -90,7 +85,8 @@ class DB_OP
         }
     }
 
-    public function create_user_account($staff_id, $u_object)
+    public
+    function create_user_account($staff_id, $u_object)
     {
         if ($staff_id) {
             $sql = "INSERT INTO user_details (staff_id, u_type, username, email, pwd ,u_object) VALUES (?,?,?,?,?,?)";
@@ -268,7 +264,7 @@ class DB_OP
 
             if ($stmt->execute()) {
                 // Redirect to login page
-                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!');window.location.href='applicant_dashboard.php';</script>";
+                echo "<script type='text/javascript'>alert('Application has been sent. Keep in touch!');window.location.href='dashboard.php';</script>";
             } else {
                 echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
             }
@@ -417,7 +413,7 @@ class DB_OP
     public
     function database_details($table, $key, $key_value, $order)
     {
-        if($key == 'ds')
+        if ($key == 'ds')
             $sql = "SELECT * FROM $table WHERE stat != ? $order";
         elseif (empty($key))
             $sql = "SELECT * FROM $table WHERE ''= ? $order";
