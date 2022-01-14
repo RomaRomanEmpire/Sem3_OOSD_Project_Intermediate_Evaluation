@@ -250,7 +250,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body style="color: white; background: rgb(10,30,235);
 background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%, rgba(15,30,135,1) 100%, rgba(101,181,198,1) 100%);">
 
-<div class="header1"><a href="DatabaseManagerDashboard.php">
+<div class="header1"><a href="remove/DatabaseManagerDashboard.php">
         <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-left"
                 style="width: 100px;font-size:18px;margin-right:20px;color:black;"> Back
         </button>
@@ -476,37 +476,43 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
 
     <script>
         $('#Officer_E').change(function () {
-            if (this.checked) {
-                $('#exampleInputEAddress').prop('required', true);
-            } else {
-                $('#exampleInputEAddress').prop('required', false);
-            }
+
+            $('#exampleInputEAddress').prop('required', true);
+            $('#exampleInputDSecretariat').prop('required', false);
+            $('#exampleInputGDivition').prop('required', false);
+            $('#exampleInputDSecretariat1').prop('required', false);
+            $('#exampleInputSchool').prop('required', false);
         });
 
         $('#Officer_D').change(function () {
-            if (this.checked) {
-                $('#exampleInputDSecretariat').prop('required', true);
-            } else {
-                $('#exampleInputDSecretariat').prop('required', false);
-            }
+
+            $('#exampleInputDSecretariat').prop('required', true);
+            $('#exampleInputEAddress').prop('required', false);
+            $('#exampleInputGDivition').prop('required', false);
+            $('#exampleInputDSecretariat1').prop('required', false);
+            $('#exampleInputSchool').prop('required', false);
+
         });
 
         $('#Officer_G').change(function () {
-            if (this.checked) {
-                $('#exampleInputGDivition').prop('required', true);
-                $('#exampleInputDSecretariat1').prop('required', true);
-            } else {
-                $('#exampleInputGDivition').prop('required', false);
-                $('#exampleInputDSecretariat1').prop('required', false);
-            }
+
+            $('#exampleInputGDivition').prop('required', true);
+            $('#exampleInputDSecretariat1').prop('required', true);
+            $('#exampleInputEAddress').prop('required', false);
+            $('#exampleInputDSecretariat').prop('required', false);
+            $('#exampleInputSchool').prop('required', false);
+
         });
 
         $('#Officer_P').change(function () {
-            if (this.checked) {
-                $('#exampleInputSchool').prop('required', true);
-            } else {
-                $('#exampleInputSchool').prop('required', false);
-            }
+
+            $('#exampleInputSchool').prop('required', true);
+            $('#exampleInputEAddress').prop('required', false);
+            $('#exampleInputDSecretariat').prop('required', false);
+            $('#exampleInputGDivition').prop('required', false);
+            $('#exampleInputDSecretariat1').prop('required', false);
+
+
         });
 
 
@@ -550,7 +556,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
             if ((pwd1 === pwd_conform) && (pwd1.length >= 8 && pwd1.length <= 14)) {
                 return true;
             } else {
-                alert("Password conformation is wrong!! and must give strong password length.Charctor length must be in 8 to 14 range");
+                alert("Password conformation is wrong!! and must give strong password length.Character length must be in 8 to 14 range");
                 return false;
             }
         }

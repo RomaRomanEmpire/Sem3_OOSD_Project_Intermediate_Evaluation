@@ -31,6 +31,11 @@ if ($u_type === "applicant") {
             display: none;
      }</style>";
 }
+if($u_type!= 'db_manager'){
+    echo "<style>#add-staff{
+            display: none;
+     }</style>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +63,8 @@ if ($u_type === "applicant") {
             <li><img src="Image/student.jpg" alt="">&nbsp;<span> <a href="Profile_Details.php">Profile</a></span></li>
             <li id="notification-panel"><img src="Image/notification.jpg" alt="">&nbsp;<span><a
                             href="Applicant_notification.php">Notification</a></span></li>
+            <li id="add-staff" href="Add_officer.html"><img src="Image/Add.png" alt="">&nbsp;<span><a href="Add_staff_member.php" >
+                        Add Officer</a> </span></li>
             <!--   <li><img src="Image/school.png" alt="">&nbsp;<span> School</span></li> -->
             <!-- <li><img src="Image/help.png" alt="">&nbsp;<span> Help</span></li>
             <li><img src="Image/setting.png" alt="">&nbsp;<span>Setting</span></li> -->
