@@ -10,6 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $staff_member = new DatabaseManager($_POST);
     } else if ($_POST['officer'] == "Admin") {
         $staff_member = new Admin($_POST);
+    } else if ($_POST['officer'] == "authorized_person") {
+        $staff_member = new Admin($_POST);
     } else if ($_POST['officer'] == "Estate_Superintendent") {
         $staff_member = new E_S($_POST);
     } else if ($_POST['officer'] == "Grama_Niladari") {
@@ -109,6 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             document.getElementById("Create_form").disabled = false;
             var Database_Manager = document.getElementById("Officer_DM");
             var Admin = document.getElementById("Officer_A");
+            var authorized_person = document.getElementById("Officer_AP");
             var Estate_Superintendent = document.getElementById("Officer_E");
             var Grama_Niladari = document.getElementById("Officer_G");
             var Divitional_Secretary = document.getElementById("Officer_D");
@@ -131,6 +134,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 submit_button.style.display = "block";
 
             } else if (Admin.checked) {
+                Officer_form.style.display = "block";
+                document.getElementById("DeatilsE").style.display = "none";
+                document.getElementById("DeatilsG").style.display = "none";
+                document.getElementById("DeatilsD").style.display = "none";
+                document.getElementById("DeatilsP").style.display = "none";
+                document.getElementById("DeatilsD1").style.display = "none";
+                Password.style.display = "block";
+                submit_button.style.display = "block";
+
+            } else if (authorized_person.checked) {//===============================================================================
                 Officer_form.style.display = "block";
                 document.getElementById("DeatilsE").style.display = "none";
                 document.getElementById("DeatilsG").style.display = "none";
@@ -278,6 +291,13 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                                    id="Officer_A" onclick="ShowDetails()">
                             <label class="form-check-label" for="Officer_A">Admin</label>
                         </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="radio" class="form-check-input" value="authorized_person" name="officer"
+                                   id="Officer_AP" onclick="ShowDetails()">
+                            <label class="form-check-label" for="Officer_AP">Authorized Person</label>
+                        </div>
+
                         <div class="mb-3 form-check">
                             <input type="radio" class="form-check-input" name="officer" value="Estate_Superintendent"
                                    id="Officer_E" onclick="ShowDetails()">
