@@ -1,10 +1,12 @@
 <?php
 
-/**
- *
- */
+
+
 class Application implements IVisitable
 {
+    private $gn_div_or_address;
+    private $ds;
+
     private $familyName;
     private $name;
     private $surname;
@@ -41,11 +43,12 @@ class Application implements IVisitable
     private $photographs;
     private $receiptNo;
     private $receipt;
+
     private $para_1;
     private $para_2;
     private $certifyName;
 
-    private $approvers;
+    private array $approvers;
     private $state;
     private $app_type_id;
 
@@ -104,12 +107,13 @@ class Application implements IVisitable
         $this->receipt = $receipt ?? NULL;
 
         $this->approvers = array();
-        $this->fillApprovableArray($applicant);
+
         $this->setApplyDate();
 
         $this->app_type_id = $app_type_id;
 
-        $this->approve($applicant);
+        $this->approve($applicant, new Notification('',''));
+        $this->fillApprovableArray($applicant);
 
     }
     public function setCertificationDetails($para_1,$para_2,$certifyName){
@@ -144,6 +148,38 @@ class Application implements IVisitable
     public function setRowId($row_id): void
     {
         $this->row_id = $row_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGnDivOrAddress()
+    {
+        return $this->gn_div_or_address;
+    }
+
+    /**
+     * @param mixed $gn_div_or_address
+     */
+    public function setGnDivOrAddress($gn_div_or_address): void
+    {
+        $this->gn_div_or_address = $gn_div_or_address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDs()
+    {
+        return $this->ds;
+    }
+
+    /**
+     * @param mixed $ds
+     */
+    public function setDs($ds): void
+    {
+        $this->ds = $ds;
     }
 
 
@@ -568,17 +604,30 @@ class Application implements IVisitable
         $visitor->visit($this);
     }
 
-    public function approve($user)
+    public function approve($user, $notification)
     {
+        $this->notifyIApprovers($user,$notification);
         $this->fillApprovableArray($user);
-        echo "application approve\t";
         $this->state->approve($user->get_user_type(), $this);
     }
 
-    public function reject($u_type)
+    /**
+     * @throws Exception
+     */
+    public function reject($user, $notification)
     {
-        $this->state->reject($u_type, $this);
+        $this->notifyIApprovers($user, $notification);
+        $this->state->reject($user->get_user_type(), $this);
+    }
+
+    private function notifyIApprovers($user,$notification){
+
+        foreach ($this->approvers as $approver):
+            $notification->setFromId($user->getRowId());
+            $notification->setToId($approver->getRowId());
+            $notification->setApplicationId($this->getRowId());
+
+            $user->send_notification($notification);
+            endforeach;
     }
 }
-
-

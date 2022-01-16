@@ -12,12 +12,14 @@ class DB_OP
     private $link;
     private static $db;
 
-    private function __construct()
+    private
+    function __construct()
     {
         $this->connect();
     }
 
-    public function connect()
+    private
+    function connect()
     {
         $this->DB_SERVER = 'localhost';
         $this->DB_USERNAME = 'root';
@@ -34,7 +36,8 @@ class DB_OP
 
     }
 
-    public static function get_connection(): DB_OP
+    public
+    static function get_connection(): DB_OP
     {
         if (!isset(self::$db)) {
             self::$db = new DB_OP();
@@ -89,14 +92,17 @@ class DB_OP
     function create_user_account($staff_id, $u_object)
     {
         if ($staff_id) {
-            $sql = "INSERT INTO user_details (staff_id, u_type, username, email, pwd ,u_object) VALUES (?,?,?,?,?,?)";
+            $sql = "INSERT INTO user_details (user_id, staff_id, u_type, username, email, pwd ,u_object) VALUES (?,?,?,?,?,?,?)";
 
             if ($stmt = $this->link->prepare($sql)) {
 
                 // Bind variables to the prepared statement as parameters
-                $stmt->bind_param("isssss", $param_staff_id, $param_u_type, $param_username, $param_email, $param_pwd, $param_u_object);
+                $stmt->bind_param("iisssss", $param_user_id, $param_staff_id, $param_u_type, $param_username, $param_email, $param_pwd, $param_u_object);
 
                 // Set parameters
+                $param_user_id = ($this->get_column_value("user_details", "user_id", ">", "0",
+                            "user_id", "ORDER BY user_id DESC") ?? 0) + 1;
+                $u_object->set_row_id($param_user_id);
                 $param_staff_id = $staff_id;
                 $param_u_type = $u_object->get_user_type();
                 $param_username = $u_object->get_user_name();
@@ -117,12 +123,15 @@ class DB_OP
             }
 
         } else {
-            $sql = "INSERT INTO user_details (u_type,username, email, pwd ,u_object) VALUES (?,?,?,?,?)";
+            $sql = "INSERT INTO user_details (user_id,u_type,username, email, pwd ,u_object) VALUES (?,?,?,?,?,?)";
             if ($stmt = $this->link->prepare($sql)) {
                 // Bind variables to the prepared statement as parameters
-                $stmt->bind_param("sssss", $param_u_type, $param_username, $param_email, $param_pwd, $param_u_object);
+                $stmt->bind_param("isssss", $param_user_id, $param_u_type, $param_username, $param_email, $param_pwd, $param_u_object);
 
                 // Set parameters
+                $param_user_id = ($this->get_column_value("user_details", "user_id", ">", "0",
+                            "user_id", "ORDER BY user_id DESC") ?? 0) + 1;
+                $u_object->set_row_id($param_user_id);
                 $param_u_type = $u_object->get_user_type();
                 $param_username = $u_object->get_user_name();
                 $param_email = $u_object->get_user_email();
@@ -143,53 +152,30 @@ class DB_OP
     }
 
     public
-    function update_user_account_details($user_id, $username, $email, $pwd, $u_object)
+    function update_user_account_details($u_object)
     {
+        $sql = "UPDATE user_details SET username=?, email=?, pwd=?, u_object=? WHERE user_id=?";
+        if ($stmt = $this->link->prepare($sql)) {
+            $stmt->bind_param("ssssi", $param_username, $param_email, $param_pwd, $param_u_object, $param_user_id);
 
-        if (!is_null($pwd)) {
-            $sql = "UPDATE user_details SET username=?, email=?, pwd=?, u_object=? WHERE user_id=?";
-            if ($stmt = $this->link->prepare($sql)) {
-                $stmt->bind_param("ssssi", $param_username, $param_email, $param_pwd, $param_u_object, $param_user_id);
+            // Set parameters
+            $param_username = $u_object->get_user_name();
+            $param_email = $u_object->get_user_email();
+            $param_pwd = $u_object->get_user_pwd();
+            $param_u_object = serialize($u_object);
+            $param_user_id = $u_object->getRowId();
 
-                // Set parameters
-                $param_username = $username;
-                $param_email = $email;
-                $param_pwd = $pwd;
-                $param_u_object = serialize($u_object);
-                $param_user_id = $user_id;
+            if ($stmt->execute()) {
+                // Redirect to login page
+                echo "<script type='text/javascript'>alert('The request has been send successfully!');</script>";
 
-                if ($stmt->execute()) {
-                    // Redirect to login page
-                    echo "<script type='text/javascript'>alert('The request has been send successfully!');</script>";
+            } else
+                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
 
-                } else
-                    echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
-
-                // Close statement
-                $stmt->close();
-            }
-        } else {
-            $sql = "UPDATE user_details SET username=?, email=?, u_object=? WHERE user_id=?";
-            if ($stmt = $this->link->prepare($sql)) {
-                $stmt->bind_param("sssi", $username, $email, $param_u_object, $param_user_id);
-
-                // Set parameters
-                $param_username = $username;
-                $param_email = $email;
-                $param_u_object = serialize($u_object);
-                $param_user_id = $user_id;
-
-                if ($stmt->execute()) {
-                    // Redirect to login page
-                    echo "<script type='text/javascript'>alert('The request has been send successfully!');</script>";
-
-                } else
-                    echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
-
-                // Close statement
-                $stmt->close();
-            }
+            // Close statement
+            $stmt->close();
         }
+
     }
 
     public
@@ -221,16 +207,18 @@ class DB_OP
     }
 
     public
-    function add_notification($from_id, $to_id, $n_object)
+    function add_notification($n_object)
     {
-        $sql = "INSERT INTO notification_details (from_id,to_id, n_object) VALUES (?,?,?)";
+        $sql = "INSERT INTO notification_details (application_id, n_type, from_id, to_id, n_object) VALUES (?,?,?,?,?)";
 
         if ($stmt = $this->link->prepare($sql)) {
 
-            $stmt->bind_param("iis", $param_from_id, $param_to_id, $param_n_object);
+            $stmt->bind_param("isiis", $param_application_id, $param_n_type, $param_from_id, $param_to_id, $param_n_object);
 
-            $param_from_id = $from_id;
-            $param_to_id = $to_id;
+            $param_application_id = $n_object->getApplicationId();
+            $param_n_type = $n_object->getType();
+            $param_from_id = $n_object->getFromId();
+            $param_to_id = $n_object->getToId();
             $param_n_object = serialize($n_object);
 
             if ($stmt->execute()) {
@@ -239,21 +227,26 @@ class DB_OP
                 echo "<script type='text/javascript'>alert('Oops!! Something wend wrong!!');</script>";
             }
             $stmt->close();
+        } else {
+            echo "<script type='text/javascript'>alert('prepare failed!');</script>";
         }
     }
 
     public
     function add_application($applicant_id, $gn_div_or_address, $ds, $table, $application_object)
     {
-        $sql = "INSERT INTO application_details (applicant_id,stat,apply_date, gn_div_or_address,ds,address_type,application_object) VALUES (?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO application_details (app_id, applicant_id,stat,apply_date, gn_div_or_address,ds,address_type,application_object) 
+VALUES (?,?,?,?,?,?,?,?)";
         if ($stmt = $this->link->prepare($sql)) {
 
             // Bind variables to the prepared statement as parameters
 
-            $stmt->bind_param("issssss", $param_applicant_id, $param_stat, $param_apply_date, $param_gn_div_or_address, $param_ds, $param_address_type, $param_application_object);
+            $stmt->bind_param("iissssss", $param_app_id, $param_applicant_id, $param_stat, $param_apply_date, $param_gn_div_or_address, $param_ds, $param_address_type, $param_application_object);
 
             // Set parameters
-//            date_default_timezone_set('Asia/Colombo');
+            $param_app_id = ($this->get_column_value("application_details", "app_id", ">", "0",
+                        "app_id", "ORDER BY user_id DESC") ?? 0) + 1;
+            $application_object->setRowId($param_app_id);
             $param_applicant_id = $applicant_id;
             $param_stat = $application_object->getState()->getState();
             $param_apply_date = $application_object->getApplyDate();
@@ -275,7 +268,7 @@ class DB_OP
     }
 
     public
-    function add_sign_to_application($app_id, $application_object)
+    function save_state_of_application($app_id, $application_object)
     {
         $sql = "UPDATE application_details SET application_object=?, stat=? WHERE app_id=?";
         if ($stmt = $this->link->prepare($sql)) {
@@ -303,6 +296,34 @@ class DB_OP
         }
     }
 
+    public
+    function remove_application($key, $key_value)
+    {
+        $sql = "DELETE FROM 'application details' WHERE $key=?";
+        if ($stmt = $this->link->prepare($sql)) {
+
+            // Bind variables to the prepared statement as parameters
+
+            $stmt->bind_param("s", $param_application_object, $param_stat, $param_app_id);
+
+            // Set parameters
+
+            $param_stat = $application_object->getState()->getState();
+            $param_app_id = $app_id;
+            $param_application_object = serialize($application_object);
+
+            if ($stmt->execute()) {
+                // Redirect
+                echo "<script type='text/javascript'>alert('Signature added successfully!');</script>";
+                return true;
+            } else {
+                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
+            }
+
+            // Close statement
+            $stmt->close();
+        }
+    }
 
     public
     function get_column_value($table, $key, $operator, $key_value, $id_name, $order)

@@ -5,12 +5,23 @@ $conn = DB_OP::get_connection();
 
 $applicant = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $applicant->set_db($conn);
-$applicant->set_row_id($_SESSION['user_id']);
 $order = "";
+$already_answered = $conn->get_column_value("notification_details", "user_id", "=", $_SESSION['user_id'], "u_object", "");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST['order'] == 'latest')
         $order = "ORDER BY n_id DESC";
+    if(array_key_exists('confirm_time',$_POST)){
+       $notification = $applicant->prepare_notification('confirmation','date confirmed');
+       $notification->setFromId($_SESSION['user_id']);
+//        $notification->setToId();
+       $applicant->send_notification($notification);
+    }
+    elseif(array_key_exists('request_time',$_POST))    {
+        $notification = $applicant->prepare_notification('appointment','requesting for another date');
+        $applicant->send_notification($notification);
+    }
+
 }
 ?>
 <!DOCTYPE html>
@@ -138,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div style="padding-top: 50px;">
-            <a class="btn btn-outline-light" href="applicant_dashboard.php" role="button"
+            <a class="btn btn-outline-light" href="dashboard.php" role="button"
                style="height: 35px; width: 150px; background-color:#1cdb92; margin-top:30px; margin-right: 10px;">Back</a>
         </div>
 
@@ -174,7 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     <div class="Center">
-
+        <form id="appointment-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         <fieldset id="Time1" style="display: block;">
             <div>
                 <table class="table table-primary table-hover">
@@ -196,17 +207,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo "No notifications!";
                     else {
                         foreach ($result_receive_appointment as $i => $row):
-                            $notification = $conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order);
+                            $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order));
                             ?>
                             <tr>
-                                <td><?php echo $notification->getSender(); ?></td>
+                                <td><?php
+                                    $officer = unserialize($conn->get_column_value('user_details', 'user_id', '=', $notification->getFromId(), 'u_object', $order));
+                                    echo $officer->get_user_type().' '.$officer->get_user_name(); ?></td>
                                 <td><?php echo $notification->getAppointmentDate(); ?></td>
                                 <td><?php echo $notification->getAppointmentTime(); ?></td>
                                 <td>
-                                    <button type="submit" class="btn btn-outline-success">Confirm</button>
+                                    <button type="submit" name="confirm_time" class="btn btn-outline-success">Confirm</button>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-outline-success">Another Date</button>
+                                    <button type="button" name="request_time" class="btn btn-outline-success">Another Date</button>
                                 </td>
                             </tr>
                         <?php endforeach;
@@ -238,12 +251,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo "No notifications!";
                     } else {
                         foreach ($result_receive_confirmations as $i => $row):
-                            $notification = $conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', "");
+                            $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', ""));
                             ?>
                             <tr>
-                                <td><?php echo $notification->getSender(); ?></td>
+                                <td><?php echo $notification->getFromId(); ?></td>
                                 <td><?php echo $notification->getSendDate(); ?></td>
-                                <td><?php echo $notification->getText(); ?></td>
+                                <td><?php echo $notification->getContent(); ?></td>
                                 <td><?php
                                     $receive_file = $notification->getAttachment();
                                     echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>

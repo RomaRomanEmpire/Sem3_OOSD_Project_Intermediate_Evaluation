@@ -1,8 +1,7 @@
 <?php
 
-/**
- *
- */
+include 'Notification.php';
+
 abstract class User
 {
     protected $fname;
@@ -119,10 +118,6 @@ abstract class User
         return $this->password;
     }
 
-    public function get_user_object(): User
-    {
-        return $this;
-    }
 
     /**
      * @return mixed
@@ -140,9 +135,7 @@ abstract class User
         return $this->row_id;
     }
 
-
-
-    public function update_fields($array,$pf)
+    public function update_fields($array, $pf)
     {
         if (isset($array['fname'])) $this->set_full_name($array['fname']);
         if (isset($array['uname'])) $this->set_user_name($array['uname']);
@@ -153,9 +146,9 @@ abstract class User
 
         if (!empty($array['new_pwd'])) {
             $this->set_pwd($array['new_pwd']);
-            $this->db->update_user_account_details($this->row_id, $this->uname, $this->email, $this->get_user_pwd(), $this);
-        } else
-            $this->db->update_user_account_details($this->row_id, $this->uname, $this->email, NULL, $this);
+        }
+        $this->db->update_user_account_details($this);
+
     }
 
     /**
@@ -167,5 +160,14 @@ abstract class User
      * @return mixed
      */
     public abstract function getDs();
+
+    public function prepare_notification($type, $content){
+        return new Notification($type,$content);
+    }
+
+    public function send_notification($notification)
+    {
+        $this->db->add_notification($notification);
+    }
 }
 

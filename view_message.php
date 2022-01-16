@@ -49,7 +49,7 @@
 </head>
 <body>
 <div class="header1" style="padding-right:10px;">
-    <a href="Notfication.php">
+    <a href="Notification_dashboard.php">
         <button type="submit" class="btn btn-sm btn-outline-light" style="width: 100px;font-size:18px;"><b
                     style="color:#000; ">Back</b>
         </button>

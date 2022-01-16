@@ -15,8 +15,15 @@ class Admin extends L_P_User implements IVisitor
 
 	public function approve_application($application)
 	{
-		$application->approve($this,$this->u_type);
+		$application->approve($this);
+		$this->db->add_sign_to_application($application->getRowId(), $application);
 	}
+
+	public function reject_application($application,$notification){
+		$application->reject($this,$notification);
+		$this->db->add_sign_to_application($application->getRowId(), $application);
+	}
+
 	/**
 	 * @throws Exception
 	 */

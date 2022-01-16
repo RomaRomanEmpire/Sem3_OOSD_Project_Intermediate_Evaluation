@@ -6,12 +6,14 @@ $user = unserialize($con->get_column_value("user_details", "user_id", "=", $_SES
 $user->set_db($con);
 $user->set_row_id($_SESSION['user_id']);
 
+
+
+
 $u_type = $user->get_user_type();
 
 
 if ($u_type === "applicant") {
     $already_applied = is_null($con->get_column_value("application_details", "applicant_id", "=", $_SESSION['user_id'], "app_id", ""));
-
     if (!$already_applied) {
         echo "<style>#view:hover{
             background-color: rgb(17, 0, 255);
@@ -25,8 +27,19 @@ if ($u_type === "applicant") {
             background-color: rgb(17, 0, 255);
         }</style>";
     }
+    echo "<style>#notification-panel2{
+            display: none;
+    }</style>";
 } elseif ($u_type === "db_manager") {
 
+    echo "<style>#notification-panel{
+            display: none;
+     }</style>";
+    echo "<style>#notification-panel2{
+            display: none;
+     }</style>";
+}
+if($user instanceof R_A_P || $u_type === 'admin'){
     echo "<style>#notification-panel{
             display: none;
      }</style>";
@@ -63,7 +76,9 @@ if($u_type!= 'db_manager'){
             <li><img src="Image/student.jpg" alt="">&nbsp;<span> <a href="Profile_Details.php">Profile</a></span></li>
             <li id="notification-panel"><img src="Image/notification.jpg" alt="">&nbsp;<span><a
                             href="Applicant_notification.php">Notification</a></span></li>
-            <li id="add-staff" href="Add_officer.html"><img src="Image/Add.png" alt="">&nbsp;<span><a href="Add_staff_member.php" >
+            <li id="notification-panel2"><img src="Image/notification.jpg" alt="">&nbsp;<span><a
+                            href="Notification_dashboard.php">Notification</a></span></li>
+            <li id="add-staff"><img src="Image/Add.png" alt="">&nbsp;<span><a href="Add_staff_member.php" >
                         Add Officer</a> </span></li>
             <!--   <li><img src="Image/school.png" alt="">&nbsp;<span> School</span></li> -->
             <!-- <li><img src="Image/help.png" alt="">&nbsp;<span> Help</span></li>

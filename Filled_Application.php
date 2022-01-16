@@ -11,10 +11,6 @@ $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SE
 $user->set_db($conn);
 $user->set_row_id($_SESSION['user_id']);
 
-$already_sent = $conn->get_column_value3('notification_details', 'application_id', 'from_id', 'n_type',
-    '=', $_GET['application_id'], $_SESSION['user_id'], 'appointment', 'n_id', "");
-$type = $user->get_user_type();
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['para_1']))
         $application->setCertificationDetails($_POST['para_1'], $_POST['para_2'], $_POST['certifyName']);
@@ -23,54 +19,95 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $application_id = $_GET['application_id'];
     //refine
-    $conn->add_sign_to_application($application_id, $application);
+    $conn->save_state_of_application($application_id, $application);
     $sign_no = $_GET['sign_no'];
     header("location: sign.php?application_id=$application_id&sign_no=$sign_no");
 }
+
+
+$type = $user->get_user_type();
 if ($type == "applicant") {
-    ?>
-    <style>#attestation-form {
+    echo "<style>#attestation-form {
             display: none;
-        }</style>
-    <style>#applicant_sign {
+        }</style>";
+    echo "<style>#applicant_sign {
             display: none;
-        }</style>
-    <style>#rap_sign {
+        }</style>";
+    echo "<style>#rap_sign {
             display: none;
-        }</style>
-    <style>#ds_sign {
+        }</style>";
+    echo "<style>#ds_sign {
             display: none;
-        }</style>
-    <?php
+        }</style>";
+
 }
 
-if ($user instanceof R_A_P_1) {
-    ?>
-    <style>#ds_sign {
+elseif ($user instanceof R_A_P_1) {
+    $already_sent = $conn->get_column_value3('notification_details', 'application_id', 'from_id', 'n_type',
+        '=', $_GET['application_id'], $_SESSION['user_id'], 'appointment', 'n_id', "");
+    if($already_sent){
+        echo "<style>#send-time {
             display: none;
-        }</style>
-    <?php
-}
-if ($type == "db_manager" || $type == "applicant") {
-    ?>
-    <style>#reject_button {
+        }</style>";}
+    echo "<style>#ds_sign {
             display: none;
-        }</style>
-    <?php
+        }</style>";
+
 }
 if ($type != "admin") {
-    ?>
-    <style>#admin_approve_button {
+
+    echo "<style>#admin_approve_button {
             display: none;
-        }</style>
-    <?php
+        }</style>";
+
 }
-if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == null) {
-    ?>
-    <style>#ds_sign {
+if ($user instanceof R_A_P) {
+    $already_sent = $conn->get_column_value3('notification_details', 'application_id', 'from_id', 'n_type',
+        '=', $_GET['application_id'], $_SESSION['user_id'], 'confirmation', 'n_id', "");
+    if($already_sent){
+        echo "<style>#reject_button {
             display: none;
-        }</style>
-    <?php
+        }</style>";
+    }
+}
+
+if($type == 'admin'){
+    $already_sent = $conn->get_column_value3('notification_details', 'application_id', 'from_id', 'n_type',
+        '=', $_GET['application_id'], $_SESSION['user_id'], 'confirmation', 'n_id', "");
+    if($already_sent){
+        echo "<style>#reject_button {
+            display: none;
+        }</style>";
+        echo "<style>#admin_approve_button {
+            display: none;
+        }</style>";
+    }
+}
+
+if (!($user instanceof R_A_P_1)) {
+
+    echo "<style>#send-time {
+            display: none;
+        }</style>";
+}
+
+if ($type == "db_manager" || $type == "applicant") {
+
+    echo "<style>#reject_button {
+            display: none;
+        }</style>";
+    echo "<style>#admin_approve_button {
+            display: none;
+        }</style>";
+
+}
+
+if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == null) {
+
+    echo "<style>#ds_sign {
+            display: none;
+        }</style>";
+
 }
 ?>
 
@@ -262,7 +299,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
         <fieldset class="input-group" style="margin-left: 10px;margin-top:70px;" disabled>
             <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>State</b></span>
             <textarea class="form-control" aria-label="With textarea"
-                      style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;" ><?php echo $application->getState()->getState(); ?></textarea>
+                      style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"><?php echo $application->getState()->getState(); ?></textarea>
             <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>Applied Date</b></span>
             <textarea class="form-control" aria-label="With textarea"
                       style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"><?php echo $application->getApplyDate(); ?></textarea>
@@ -277,12 +314,14 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                         </td>
 
                         <!-- This button id only viewed by RAP -->
-                        <td style="float: right;"><a href="Time_slot.php">
-                                <?php if ($already_sent){ ?>
-                                <button type="submit" class="btn btn-sm btn-outline-primary"
-                                        style="color: black;width:150px; font-size:15px;"><b>Send Time</b>
-                                </button></td>
-                        <?php } ?>
+
+                            <td id="send-time" style="float: right;"><a
+                                        href="Time_slot.php?application_id=<?php echo $_GET['application_id']; ?>">
+
+                                    <button type="submit" class="btn btn-sm btn-outline-primary"
+                                            style="color: black;width:150px; font-size:15px;"><b>Send Time</b>
+                                    </button></td>
+
 
                         <td id="admin_approve_button"><a
                                     href="sign.php.php?sign_no=<?php echo 4; ?>&application_id=<?php echo $_GET['application_id']; ?>">
@@ -292,11 +331,14 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                             </a></td>
 
                         <!-- This button id only viewed by RAP -->
-                        <td id="reject_button"><a href="Reject_Application.php">
+
+                        <td id="reject_button"><a
+                                    href="Reject_Application.php?application_id=<?php echo $_GET['application_id']; ?>">
                                 <button type="submit" class="btn btn-sm btn-outline-primary"
                                         style="color:black;width:150px; font-size:15px;"><b>Reject</b>
                                 </button>
                             </a></td>
+
                         <td><a href="View_Applications_Details.php">
                                 <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-left"
                                         style="width: 100px;font-size:18px;color:black;"><b>Back</b>

@@ -1,6 +1,6 @@
 <?php
 
-function checkImageValidity($filename_in_form)
+function checkFileValidity($filename_in_form)
 {
     //upload a file
     if (isset($_FILES[$filename_in_form]) && $_FILES[$filename_in_form]['size'] != 0) {
@@ -38,7 +38,7 @@ function checkImageValidity($filename_in_form)
     }
 }
 
-function notifyIApprovers($conn)
+function notifyIApprovers_absent($conn)
 {
     $applications_in_progress = $conn->database_details_2('application_details', 'stat', 'stat', 'sent_to_rap_1', 'sent_to_ds', "");
     foreach ($applications_in_progress as $i => $row):
@@ -56,4 +56,16 @@ function notifyIApprovers($conn)
             endforeach;
         }
     endforeach;
+}
+
+function uploadSign($sign): string
+{
+    $folderPath = "uploads/";
+    $image_parts = explode(";base64,", $sign);
+    $image_type_aux = explode("image/", $image_parts[0]);
+    $image_type = $image_type_aux[1];
+    $image_base64 = base64_decode($image_parts[1]);
+    $file = $folderPath . uniqid() . '.' . $image_type;
+    file_put_contents($file, $image_base64);
+    return $file;
 }

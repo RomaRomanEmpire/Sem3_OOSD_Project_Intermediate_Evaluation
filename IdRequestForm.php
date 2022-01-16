@@ -6,12 +6,15 @@ $conn = DB_OP::get_connection();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require_once "functions.php";
 
-    $photograph = checkImageValidity("photographs");
-    $receipt = checkImageValidity("receipt");
-    if (!empty($photograph) && !empty($receipt)) {
+    $photograph = checkFileValidity("photographs");
+    $receipt = checkFileValidity("receipt");
+    if (!empty($photograph.$receipt)) {
         $applicant = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
         $application = $applicant->getApplication();
+        $application->setGnDivOrAddress($_GET['basic']);
+        $application->setDs($_GET['ds']);
         $application->setDetails($photograph, $receipt, $_POST, $applicant, $_GET['id']);
+
         $applicant->set_db($conn);
 
 
@@ -211,7 +214,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="container">
                 <!-- <h1><span id="msgx"></span></h1> -->
                 <div class="step step-1 active">
-                    <div class="header1"><a href="applicant_dashboard.php">
+                    <div class="header1"><a href="dashboard.php">
                             <button type="button" class="fas fa-arrow-left"> Back</button>
                         </a></div>
                     <h1>Application for Identity Card</h1><br>

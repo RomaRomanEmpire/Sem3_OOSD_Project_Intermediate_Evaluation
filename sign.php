@@ -6,38 +6,36 @@ $conn = DB_OP::get_connection();
 
 $application = unserialize($conn->get_column_value("application_details", "app_id", "=", $_GET['application_id'], "application_object", ""));
 $application->setRowId($_GET['application_id']);
+$application_id = $_GET['application_id'];
 
 $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $user->set_db($conn);
 $user->set_row_id($_SESSION['user_id']);
 
+if ($_GET['sign_no'] == 4) {
+    $notification = $user->prepare_notification('confirmation', 'application confirmation by '.$user->get_user_type());
+    $user->approve_application($application,$notification);
+    header("location: Filled_Application.php?application_id=$application_id");
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    $folderPath = "uploads/";
-    $image_parts = explode(";base64,", $_POST['signed']);
-    $image_type_aux = explode("image/", $image_parts[0]);
-    $image_type = $image_type_aux[1];
-    $image_base64 = base64_decode($image_parts[1]);
-    $file = $folderPath . uniqid() . '.' . $image_type;
-    file_put_contents($file, $image_base64);
-
-//echo "Signature Uploaded Successfully.";
+    include 'functions.php';
+    $sign = uploadSign($_POST['signed']);
 
     if ($_GET['sign_no'] == 1) {
         //refine
-        $application->setApplicantSign($file);
-        $user->add_applicant_sign($application);
+        $user->add_applicant_sign($application, $sign);
     } elseif ($_GET['sign_no'] == 2) {
-        $application->setRapSign($file);
-        $user->approve_application($application);
-//        $application->setState(Sent_To_RAP_1::getSentToRap1());
+        $application->setRapSign($sign);
+        $notification = $user->prepare_notification('confirmation', 'application confirmation by '.$user->get_user_type());
+        $user->approve_application($application,$notification);
+
     } elseif ($_GET['sign_no'] == 3) {
-        $application->setDsSign($file);
-        $user->approve_application($application);
+        $application->setDsSign($sign);
+        $notification = $user->prepare_notification('confirmation', 'application confirmation by '.$user->get_user_type());
+        $user->approve_application($application,$notification);
+
     }
-    $application_id = $_GET['application_id'];
-    //refine
-//    $conn->add_signs_to_application($application_id, $application);
+
 
     header("location: Filled_Application.php?application_id=$application_id");
 }

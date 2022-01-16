@@ -9,7 +9,7 @@ $applicant->set_row_id($_SESSION['user_id']);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_GET['id'];
-
+    $application = $applicant->getApplication();
     if (!empty($_POST['DS_division'])) {
         $array = $_SESSION['val_array3'];
         $array2 = $_SESSION['val_array4'];
@@ -18,8 +18,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $gnCode = $conn->get_column_value2('gn', 'basic_division', 'DS_code', '=', $_POST['GN_division'], $ds_id, 'division_id', "");
 
         if (!is_null($gnCode)) {
+
             $basic_adr = $_POST['GN_division'];
             $ds_adr = $_POST['DS_division'];
+
             header("location: IdRequestForm.php?id=$id&table='gn'&basic=$basic_adr&ds=$ds_adr");
         } else {
             echo "<script type='text/javascript'>alert('Two divisions does not match. Fill again.');</script>";

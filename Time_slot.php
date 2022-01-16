@@ -2,14 +2,28 @@
 session_start();
 include 'autoloader.php';
 $conn = DB_OP::get_connection();
-$_SESSION['application_id'] = $_GET['application_id'] ?? $_SESSION['application_id'];
-$_SESSION['to_id'] = $_GET['to_id'] ?? $_SESSION['to_id'];
-$_SESSION['n_type'] = $_GET['n_type'] ?? $_SESSION['n_type'];
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
     $user->set_db($conn);
-    $user->set_row_id($_SESSION['user_id']);
-    $notification = new Notification();
+
+
+    $not_content = 'appointment is scheduled on '.$_POST['date'].' '.$_POST['time']. 'Please confirm!';
+    $application_id = $_GET['application_id'];
+    $applicant_id = $conn->get_column_value("application_details", "app_id", "=", $application_id, "applicant_id", "");
+
+
+    $notification = $user->prepare_notification('appointment',$not_content);
+
+    $notification->setFromId($user->getRowId());
+    $notification->setToId($applicant_id);
+    $notification->setApplicationId($application_id);
+    $notification->setAppointmentTime($_POST['time']);
+    $notification->setAppointmentDate($_POST['date']);
+
+    $user->send_time_slot($notification);
+    header("location:Filled_Application.php?application_id=$application_id");
 }
 ?>
 <!DOCTYPE html>
@@ -33,8 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .Center {
-            padding: 50px;
-            padding-top: 200px;
+            padding: 200px 50px 50px;
             border-color: black;
 
         }
@@ -68,24 +81,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="Center">
 
     <fieldset id="time_slot">
-        <h1 class="display-3">Send Appoinment Time</h1>
+        <h1 class="display-3">Send Appointment Time</h1>
         <br><br>
-        <form action="">
+        <form id="appointment-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?application_id=<?php
+        echo $_GET['application_id'];?>" method="POST">
             <div class="mb-3">
                 <label for="Date" class="form-label" style="font-size: 20px;">Appointment Date</label>
                 <input type="date" class="form-control" id="Date"
-                       name="date" placeholder="Enter the appintment date" style=" background-color:bisque;">
+                       name="date" placeholder="Enter the appointment date" style=" background-color:bisque;">
             </div>
             <br>
             <label for="exampleDataList" class="form-label" style="font-size: 20px;">Appointment Time</label>
             <input class="form-control" list="datalistOptions" id="exampleDataList" name="time" placeholder="Type to search..."
                    type="text" style=" background-color:bisque;">
             <datalist id="datalistOptions">
-                <option value="San Francisco">
-                <option value="New York">
-                <option value="Seattle">
-                <option value="Los Angeles">
-                <option value="Chicago">
+                <option value="8.30 a.m.">
+                <option value="9.00 a.m.">
+                <option value="9.30 a.m.">
+                <option value="10.00 a.m.">
+                <option value="10.30 a.m.">
+                <option value="11.00 a.m.">
+                <option value="11.30 a.m.">
+                <option value="12.00 p.m.">
+                <option value="12.30 p.m.">
+                <option value="1.00 p.m.">
             </datalist>
             <br>
             <button type="submit" class="btn btn-primary" style="width: 100px;">Submit</button>
@@ -93,7 +112,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </fieldset>
 
 
-    </fieldset>
 </div>
 
 </body>

@@ -48,7 +48,7 @@
   </form> 
   </div>
   <div>
-  <a href="DatabaseManagerDashboard.php"><button type="button"  class="btn btn-sm btn-outline-light fas fa-arrow-left" style="width: 100px;font-size:18px;margin-right:20px;"><b> Back</b> </button></a>
+  <a href="remove/DatabaseManagerDashboard.php"><button type="button" class="btn btn-sm btn-outline-light fas fa-arrow-left" style="width: 100px;font-size:18px;margin-right:20px;"><b> Back</b> </button></a>
 </div>
 </div>
  

@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<script type='text/javascript'>alert('previous password is not matched!'); window.location.href = 'Profile_Details.php';</script>";
         }
     }
-    $user->update_fields($_POST,checkImageValidity("profile_photo")??NULL);
+    $user->update_fields($_POST,checkFileValidity("profile_photo")??NULL);
 
 }
 ?>

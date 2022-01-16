@@ -33,7 +33,7 @@
   </style>
 </head>
 <body>
-  <div class="header1"><a href="DatabaseManagerDashboard.php">
+  <div class="header1"><a href="remove/DatabaseManagerDashboard.php">
                                    <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-left" style="width: 100px;font-size:18px;margin-right:20px;color:black;"> Back
                                    </button>
                                   </a> </div>
