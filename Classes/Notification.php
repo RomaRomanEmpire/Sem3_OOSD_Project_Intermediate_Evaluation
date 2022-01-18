@@ -17,6 +17,8 @@ class Notification implements IVisitable
 
     private $attachment;
 
+    private $reference_notification_id;
+
 
     /**
      * @param $type
@@ -57,6 +59,22 @@ class Notification implements IVisitable
     {
         date_default_timezone_set('Asia/Colombo');
         $this->send_date = date('Y/m/d H:i:s');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReferenceNotificationId()
+    {
+        return $this->reference_notification_id;
+    }
+
+    /**
+     * @param mixed $reference_notification_id
+     */
+    public function setReferenceNotificationId($reference_notification_id): void
+    {
+        $this->reference_notification_id = $reference_notification_id;
     }
 
     /**

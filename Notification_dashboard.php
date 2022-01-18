@@ -180,7 +180,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </div>
     <div style="padding-top: 45px;">
-        <a class="btn btn-outline-light" href="RAP_dashboard.php" role="button"
+        <!--        correct back button-->
+        <a class="btn btn-outline-light" href="dashboard.php" role="button"
            style="height: 35px; width: 150px; padding-right:10px;margin-right: 10px;">Back</a>
     </div>
 
@@ -219,7 +220,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="radio" name="e" class="btn-check" id="btn_check_outlinedR" autocomplete="off"
                        onclick="Notification()">
                 <label class="btn btn-outline-success" for="btn_check_outlinedR"><p
-                            style="font-weight: bold;width:150px; height:10px;">Reject Application</p></label>
+                            style="font-weight: bold;width:150px; height:10px;">Confirmations</p></label>
             </li>
         </fieldset>
     </ul>
@@ -229,7 +230,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 <div class="Center">
-<!--    --><?php //if ($staff_member->get_user_type() != "admin" || $staff_member->get_user_type() != "db_manager") { ?>
     <fieldset id="confirmation_message" style="display: none;">
         <div>
             <table class="table table-primary table-hover">
@@ -244,10 +244,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_receive_confirmation = $conn->database_details_2('notification_details', 'to_id', 'n_type','=','=',$_SESSION['user_id'], 'confirmation', $order);
-                if (is_null($result_receive_confirmation)){
-                    echo "No notifications!";}
-                else {
+                $result_receive_confirmation = $conn->database_details_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'confirmation', $order);
+                if (is_null($result_receive_confirmation)) {
+                    echo "No notifications!";
+                } else {
                     foreach ($result_receive_confirmation as $i => $row):
                         $notification = $conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order);
                         ?>
@@ -258,11 +258,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
                                 echo $applicant;
                                 ?></td>
-                            <td><?php echo $notification->getText(); ?></td>
+                            <td><?php echo $notification->getContent(); ?></td>
                             <td><?php
+
                                 $receive_file = $notification->getAttachment();
-                                echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
-													<embed src=\"$receive_file\", width=100px height=100px>"; ?></td>
+                                if (isset($receive_file)) {
+                                    echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
+													<embed src=\"$receive_file\", width=100px height=100px>";
+                                } ?></td>
                         </tr>
                     <?php endforeach;
                 } ?>
@@ -288,15 +291,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_appointment_reschedules = $conn->database_details_2('notification_details', 'to_id', 'n_type','=','=', $_SESSION['user_id'], 'answer', $order);
+                $result_appointment_reschedules = $conn->database_details_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'appointment', $order);
                 if (is_null($result_appointment_reschedules)) {
                     echo "No notifications!";
                 } else {
                     foreach ($result_appointment_reschedules as $i => $row):
-                        $notification = $conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order);
+                        $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order));
                         ?>
                         <tr>
-                            <th scope="row"><?php echo $row['id']; ?></th>
+                            <th scope="row"><?php echo $row['n_id']; ?></th>
                             <td><?php
                                 $applicant_id = $conn->get_column_value('application_details', 'app_id', '=', $row['application_id'], 'applicant_id', $order);
                                 $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
@@ -304,11 +307,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 ?></td>
                             <td><?php echo $notification->getAppointmentDate(); ?></td>
                             <td><?php echo $notification->getAppointmentTime(); ?></td>
-                            <td><?php echo $notification->getText(); ?></td>
+                            <td><?php echo $notification->getContent(); ?></td>
                             <td>
-                                <a href="Time_slot.php?application_id=<?php echo $row['application_id']; ?>&to_id=<?php echo $applicant_id; ?>
-                            n_type=<?php echo $row['n_type']; ?>&">
-                                    <button type="button" class="btn btn-outline-success"><img src="Image/Add1.jpg">Add
+                                <a href="Time_slot.php?application_id=<?php echo $row['application_id']; ?>">
+                                    <button type="button" class="btn btn-outline-success"><img src="Image/Add1.jpg" alt="">Add
                                         reply
                                     </button>
                                 </a></td>
@@ -322,35 +324,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </table>
         </div>
     </fieldset>
-    <!-- <fieldset id="Sent_message1" style="display:none;">
-    <div>
-      <table class="table table-primary table-hover" >
-
-    <thead>
-    <tr>
-        <th scope="col">ID Number</th>
-        <th scope="col">Applicant Name</th>
-        <th scope="col">Send Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-    </tr>
-
-    </tbody>
-    </table>
-      </div>
-    </fieldset> -->
 
     <fieldset id="Sent_message" style="display:none;">
         <div>
@@ -359,6 +332,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <thead>
                 <tr>
                     <th scope="col">Application Number</th>
+                    <th scope="col">Notification Typer</th>
                     <th scope="col">Applicant Name</th>
                     <th scope="col">Appointment Date</th>
                     <th scope="col">Appointment Time</th>
@@ -367,7 +341,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_appointment_schedules = $conn->database_details_2('notification_details', 'from_id', 'n_type', '=','=',$_SESSION['user_id'], 'appointment', $order);
+                $result_appointment_schedules = $conn->database_details_2('notification_details', 'from_id','n_type','=', '=',$_SESSION['user_id'],'appointment',$order);
                 if (is_null($result_appointment_schedules)) {
                     echo "No notifications!";
                 } else {
@@ -376,6 +350,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         ?>
                         <tr>
                             <th scope="row"><?php echo $row['application_id']; ?></th>
+                            <td><?php echo $row['n_type'];?></td>
                             <td><?php
                                 $applicant_id = $conn->get_column_value('application_details', 'app_id', '=', $row['application_id'], 'applicant_id', $order);
                                 $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
@@ -408,7 +383,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_confirmations = $conn->database_details_2('notification_details', 'to_id', 'n_type','=','=', $_SESSION['user_id'], 'confirmation', $order);
+                $result_confirmations = $conn->database_details_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'confirmation', $order);
                 if (is_null($result_confirmations)) {
                     echo "No notifications!";
                 } else {
@@ -429,13 +404,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </button>
                                 </a></td>
                         </tr>
-                    <?php endforeach;}?>
+                    <?php endforeach;
+                } ?>
                 </tbody>
             </table>
         </div>
     </fieldset>
 </div>
-</div>
+
 
 </body>
 </html>
