@@ -14,17 +14,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <link rel="stylesheet" type="text/css" href="style.css">
     <style>
-        body{
+        /* body{
             background: rgba(240, 80, 214, 1.0);
             background: -webkit-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
             background: -moz-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
             background: linear-gradient(to bottom right, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
-        }
+        } */
         ::placeholder {
             color: whitesmoke;
             opacity: 1;
             font-size: 15px;
         }
+        .hero-image {
+            background-image: url("Image/R.jpg");
+            background-color: #cccccc;
+            height: 750px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+      
+    }
     </style>
 </head>
 <body>
@@ -35,9 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
       </div>
 </div> -->
-
+<div class="hero-image ">
 <div class="loginbox" >
-    <img src="Image/icon.png" class="Idimage" >
+    <!-- <img src="Image/icon.png" class="Idimage" > -->
     <br>
     <h1 >Login Here</h1>
     <br>
@@ -53,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="a">Forget password</a><br>
         <a href="Create_Account.php">If you don't have account!!!</a>
     </form>
+</div>
 </div>
 </body>
 </html>

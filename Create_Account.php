@@ -26,7 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         input[type=submit] {
             width: 100%;
             background-color: rgb(83, 139, 100);
-            color: rgb(48, 40, 83);
+            /* color: rgb(48, 40, 83); */
+            
             padding: 14px 20px;
             margin: 8px 0;
             border: none;
@@ -54,11 +55,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .div1 {
             border-radius: 5px;
+            background: rgba(0,0,0,0.5);
             /* background-color: rgb(155, 150, 170); */
-            background: rgba(164, 91, 153, 1.0);
+            /* background: rgba(164, 91, 153, 1.0);
             background: -webkit-linear-gradient(top left, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0));
             background: -moz-linear-gradient(top left, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0));
-            background: linear-gradient(to bottom right, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0));
+            background: linear-gradient(to bottom right, rgba(164, 91, 153, 1.0), rgba(75, 80, 138, 1.0)); */
             top: 620px;
             left: 50%;
 
@@ -71,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding-bottom: 20px;
             bottom: 200px;
             z-index: 2;
+            color: whitesmoke;
 
         }
         td{
@@ -78,17 +81,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-align: left;
         }
         body{
-            background: rgba(240, 80, 214, 1.0);
+            /* background: rgba(240, 80, 214, 1.0);
             background: -webkit-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
             background: -moz-linear-gradient(top left, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
-            background: linear-gradient(to bottom right, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0));
+            background: linear-gradient(to bottom right, rgba(240, 80, 214, 1.0), rgba(24, 35, 143, 1.0)); */
             height: 1200px;}
         label{
             font-size: 20px;
             font-weight: bolder;
         }
         .header1 {
-            position: fixed;
+            position: absolute;
             top: 0;
             right: 0;
             height: 80px;
@@ -97,17 +100,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             align-items: center;
             justify-content: right;
             z-index: 3;
-            background: rgb(182,39,150);
-            background: linear-gradient(90deg, rgba(182,39,150,0.9867297260701156) 6%, rgba(53,72,123,1) 100%, rgba(132,187,199,1) 100%, rgba(11,101,135,0.6786064767703957) 100%, rgba(129,15,139,0.2612395299916842) 100%);
+            background: rgba(0,0,0,0.5);
+            /* background: rgb(182,39,150);
+            background: linear-gradient(90deg, rgba(182,39,150,0.9867297260701156) 6%, rgba(53,72,123,1) 100%, rgba(132,187,199,1) 100%, rgba(11,101,135,0.6786064767703957) 100%, rgba(129,15,139,0.2612395299916842) 100%); */
         }
         h1{
             text-align: center;
+            color: whitesmoke;
         }
         ::placeholder {
             color: black;
             opacity: 1;
             font-size: 15px;
         }
+        .hero-image {
+            background-image: url("Image/u.jpg");
+            background-color: #cccccc;
+            height: 1200px;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+      
+    }
 
     </style>
     <script>
@@ -195,6 +210,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
 </head>
 <body>
+<div class="hero-image">
 <div class="header1">
 
     <div style="justify-content: center;margin-right:460px;margin-top:5px;" ><b><h1 style="font-size:60px;font-family:'Times New Roman', Times, serif">Create Account</h1> </b>   </div>
@@ -248,6 +264,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </form>
 </div>
-
+</div>
 </body>
 </html>

@@ -27,6 +27,16 @@ h1,h2{
       position: relative;
       
     }
+.BackGround_Image {
+      background-image: url("Image/x.jpeg");
+      background-color: #cccccc;
+      height: 750px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+      
+    }
 
 
 
@@ -38,6 +48,7 @@ h1,h2{
       min-height: 100vh;
       display: flex; 
       flex-direction: column; 
+      
      
       
 }
@@ -170,6 +181,7 @@ h1,h2{
       text-align: center;
       border-color: azure;
       width: 150px;
+      border-radius: 10px;
 }
 .container .header .nav .user .btn:hover{
       background-color: rgb(246, 245, 248);
@@ -236,7 +248,7 @@ h1,h2{
       position: fixed;
       margin: 10vh;
       min-height: 90vh; 
-      top: 50%;
+      top: 35%;
       width: 50%;
       height: 50%;
       
@@ -414,12 +426,13 @@ h1,h2{
       /* border: 5px solid #0e0e0d; */
       display: flex;
       justify-content: center;
-      padding-top: 230px;
+      padding-top: 180px;
       padding-bottom: 50px;
       padding-left: 15%;
       /* padding-right: 100px; */
       /* box-shadow: #03031b; */
       /* width: 85%; */
+     
       
 }
 .side_menu1{

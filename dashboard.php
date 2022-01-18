@@ -66,10 +66,9 @@ if($u_type!= 'db_manager'){
     <div>
         <ul>
 
-            <li>&nbsp;<span> <a href="Profile_Details.php"> <i class="fas fa-user"></i> Profile</a></span></li>
-            <li id="notification-panel">&nbsp;<span><a href="Applicant_notification.php"><i class="far fa-comment-alt"></i> Notification</a></span></li>
-            <li id="add-staff" href="Add_officer.html">&nbsp;<span><a href="Add_staff_member.php" >
-            <i class="fas fa-user-plus"></i> Add Officer</a> </span></li>
+        <a href="Profile_Details.php">  <li>&nbsp;<span>  <i class="fas fa-user"></i> Profile</span></li></a>
+        <a href="Applicant_notification.php">    <li id="notification-panel">&nbsp;<span><i class="far fa-comment-alt"></i> Notification</span></li></a>
+        <a href="Add_staff_member.php" >    <li id="add-staff" >&nbsp;<span><i class="fas fa-user-plus"></i> Add Officer </span></li></a>
             <!--   <li><img src="Image/school.png" alt="">&nbsp;<span> School</span></li> -->
             <!-- <li><img src="Image/help.png" alt="">&nbsp;<span> Help</span></li>
             <li><img src="Image/setting.png" alt="">&nbsp;<span>Setting</span></li> -->
@@ -95,7 +94,7 @@ if($u_type!= 'db_manager'){
                 </div>
                 <!-- <a href=""  class="btn" >Notification</a>
                 <a href=""  class="btn"> Profile</a>   -->
-                <a href="logout.php" class="btn"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                <a href="logout.php" class="btn" ><i class="fas fa-sign-out-alt"></i> Log Out</a>
 
             </div>
         </div>

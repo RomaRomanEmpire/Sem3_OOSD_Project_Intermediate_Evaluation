@@ -42,10 +42,11 @@ header.nav{
 .loginbox{
       width: 720px;
       height: 600px;
-      background: rgba(184, 25, 168, 1.0);
+      /* background: rgba(184, 25, 168, 1.0);
       background: -webkit-linear-gradient(top left, rgba(184, 25, 168, 1.0), rgba(42, 15, 154, 1.0));
       background: -moz-linear-gradient(top left, rgba(184, 25, 168, 1.0), rgba(42, 15, 154, 1.0));
-      background: linear-gradient(to bottom right, rgba(184, 25, 168, 1.0), rgba(42, 15, 154, 1.0));
+      background: linear-gradient(to bottom right, rgba(184, 25, 168, 1.0), rgba(42, 15, 154, 1.0)); */
+      background: rgba(0,0,0,0.5);
       color: #fff;
       top: 50%;
       left: 50%;
