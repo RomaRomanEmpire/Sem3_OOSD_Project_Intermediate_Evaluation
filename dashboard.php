@@ -6,14 +6,12 @@ $user = unserialize($con->get_column_value("user_details", "user_id", "=", $_SES
 $user->set_db($con);
 $user->set_row_id($_SESSION['user_id']);
 
-
-
-
 $u_type = $user->get_user_type();
 
 
 if ($u_type === "applicant") {
     $already_applied = is_null($con->get_column_value("application_details", "applicant_id", "=", $_SESSION['user_id'], "app_id", ""));
+
     if (!$already_applied) {
         echo "<style>#view:hover{
             background-color: rgb(17, 0, 255);
@@ -27,19 +25,8 @@ if ($u_type === "applicant") {
             background-color: rgb(17, 0, 255);
         }</style>";
     }
-    echo "<style>#notification-panel2{
-            display: none;
-    }</style>";
 } elseif ($u_type === "db_manager") {
 
-    echo "<style>#notification-panel{
-            display: none;
-     }</style>";
-    echo "<style>#notification-panel2{
-            display: none;
-     }</style>";
-}
-if($user instanceof R_A_P || $u_type === 'admin'){
     echo "<style>#notification-panel{
             display: none;
      }</style>";
@@ -61,25 +48,28 @@ if($u_type!= 'db_manager'){
     <link rel="stylesheet" href="style2.css">
     <script src="../Javascipt_File.js"></script>
     <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
+    <style>
+        h1{
+    font-size: 50px;
+    font-family: 'Times New Roman', Times, serif;
+}
+    </style>
 </head>
 
 <body>
 
-
-<div class="side_menu">
+<div class="hero-image">
+<div class="side_menu" style="background: rgba(0,0,0,0.5);">
     <div class="barand_name">
         <h1>Dashboard</h1>
     </div>
     <div>
         <ul>
 
-            <li><img src="Image/student.jpg" alt="">&nbsp;<span> <a href="Profile_Details.php">Profile</a></span></li>
-            <li id="notification-panel"><img src="Image/notification.jpg" alt="">&nbsp;<span><a
-                            href="Applicant_notification.php">Notification</a></span></li>
-            <li id="notification-panel2"><img src="Image/notification.jpg" alt="">&nbsp;<span><a
-                            href="Notification_dashboard.php">Notification</a></span></li>
-            <li id="add-staff"><img src="Image/Add.png" alt="">&nbsp;<span><a href="Add_staff_member.php" >
-                        Add Officer</a> </span></li>
+            <li>&nbsp;<span> <a href="Profile_Details.php"> <i class="fas fa-user"></i> Profile</a></span></li>
+            <li id="notification-panel">&nbsp;<span><a href="Applicant_notification.php"><i class="far fa-comment-alt"></i> Notification</a></span></li>
+            <li id="add-staff" href="Add_officer.html">&nbsp;<span><a href="Add_staff_member.php" >
+            <i class="fas fa-user-plus"></i> Add Officer</a> </span></li>
             <!--   <li><img src="Image/school.png" alt="">&nbsp;<span> School</span></li> -->
             <!-- <li><img src="Image/help.png" alt="">&nbsp;<span> Help</span></li>
             <li><img src="Image/setting.png" alt="">&nbsp;<span>Setting</span></li> -->
@@ -87,9 +77,9 @@ if($u_type!= 'db_manager'){
     </div>
 </div>
 
-<div class="container">
-    <img src="Image/A.jpg">
-    <div class="header">
+<div class="container" >
+    <!-- <img src="Image/Q.jpg"> -->
+    <div class="header" style="background: rgba(0,0,0,0.5);">
 
         <div class="nav">
             <!-- <div class="search">
@@ -110,53 +100,53 @@ if($u_type!= 'db_manager'){
             </div>
         </div>
     </div>
-    <div class="content">
+    <div class="content" >
         <?php if ($u_type == "applicant") { ?>
-            <div class="card">
+            <div class="card" style="margin-left: 100px; padding-bottom: 100px; " >
 
             <div id="applicant-links" class="icon_case">
                 <br><br><br><br>
                 <a href="GNDivisionSelect.php?id=<?php echo 1 ?>">
                     <!--                    <button>Applying New Identity Card</button>-->
                     <button id="new"<?php if (!$already_applied) { ?> disabled <?php } ?>>
-                        Applying New Identity Card
+                    <i class="fas fa-hand-point-right"></i> Applying New Identity Card
                     </button>
-                </a><br><br>
+                </a><br><br><br>
 
                 <a href="GNDivisionSelect.php?id=<?php echo 2 ?>">
-                    <button id="lost"<?php if (!$already_applied) { ?> disabled<?php } ?>>Applying For lost Identity
+                    <button id="lost"<?php if (!$already_applied) { ?> disabled<?php } ?>> <i class="fas fa-hand-point-right"></i> Applying For lost Identity
                         Card
                     </button>
-                </a><br><br>
+                </a><br><br><br>
 
                 <a href="Filled_Application.php?application_id=<?php echo $user->getApplicationId() ?>">
-                    <button id="view"<?php if ($already_applied) { ?> disabled<?php } ?>>View application details in
+                    <button id="view"<?php if ($already_applied) { ?> disabled<?php } ?>>  <i class="fas fa-hand-point-right"></i> View application details in
                         process
                     </button>
                 </a>
             </div></div><?php } elseif ($u_type == "db_manager") { ?>
-            <div class="card1">
+            <div class="card">
                 <div id="db_manager-links" class="icon_case">
                     <br><br><br><br>
                     <a href="user_Details.php">
-                        <button>View Database Details</button>
+                        <button>  <i class="fas fa-hand-point-right"></i> View Database Details</button>
                     </a>
-                    <br><br>
+                    <br><br><br>
                     <a href="View_Applications_Details.php">
-                        <button>View Application Details</button>
+                        <button>  <i class="fas fa-hand-point-right"></i> View Application Details</button>
                     </a>
-                    <br><br>
+                    <br><br><br>
                     <a href="DBM_Notification.php">
-                        <button>View Notification Details</button>
+                        <button>  <i class="fas fa-hand-point-right"></i>View Notification Details</button>
                     </a>
                     <br><br>
                 </div>
             </div><?php } else { ?>
-            <div class="card1">
+            <div class="card">
                 <div id="rap_links" class="icon_case">
                     <br><br><br><br>
                     <a href="View_Applications_Details.php">
-                        <button>View Applications Details</button>
+                        <button>  <i class="fas fa-hand-point-right"></i>View Applications Details</button>
                     </a><br><br>
                     <!-- <button>Applying For lost Identity Card </button> -->
                 </div>
@@ -168,6 +158,6 @@ if($u_type!= 'db_manager'){
 
 </div>
 
-
+<div>
 </body>
 </html>

@@ -17,13 +17,23 @@ li{
 h1,h2{
       color: rgb(238, 234, 234);
 }
-
+.hero-image {
+      background-image: url("Image/x.jpeg");
+      background-color: #cccccc;
+      height: 750px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+      
+    }
 
 
 
 .side_menu{
       position: fixed;
       background-color: #050213fd;
+      /* background-color: rgba(255, 255, 255, 0.5); */
       width: 20%;
       min-height: 100vh;
       display: flex; 
@@ -82,7 +92,7 @@ h1,h2{
       right: 0;
       width: 80%;
       height: 100%;
-      background: #f1f1f1;
+      /* background: #f1f1f1; */
 }
 
 .container img{
@@ -154,7 +164,7 @@ h1,h2{
       justify-content: center;
 }
 .container .header .nav .user .btn{
-      background-color:#03031b;
+      /* background-color:#03031b; */
       color :white;
       padding: 5px 10px;
       text-align: center;
@@ -162,8 +172,8 @@ h1,h2{
       width: 150px;
 }
 .container .header .nav .user .btn:hover{
-      background-color: rgb(233, 228, 228);
-      color: #7857ee;}
+      background-color: rgb(246, 245, 248);
+     color: #f05462;}
 .container .header .nav .search button img{
       width:40px;
       height: 40px;
@@ -242,18 +252,22 @@ h1,h2{
       flex-wrap: wrap;
 }
 .container .content .card {
-      width: 70%;
+      width: 90%;
       height: 70%;
       top: 0;
       left: 60%;
       position: absolute;
       transform: translate(-50%,-50%);
-      background: rgba(4, 49, 160, 0.486);
+      /* background: rgba(4, 49, 160, 0.486); */
+      background: transparent;
       align-items: center;
-      
+      padding: 20px;
       justify-content: space-around;
-      box-shadow: 0 4px 8px 0 rgba(0, 0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); 
-      
+      /* box-shadow: 0 4px 8px 0 rgba(0, 0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);  */
+      margin-left: 100px; 
+      padding-bottom: 100px;
+       /* background-color: rgba(0,0,0,0.5); */
+       border: none;
 }
 
 .container .content .card .icon_case button{
@@ -261,17 +275,22 @@ h1,h2{
       height: 60px;
       border-radius: 20px;
       font-weight: bold;
-      font-size: 15px;
+      font-size: 20px;
       color: antiquewhite;
-     background-color:rgba(9, 1, 12, 0.904);
-     border-color: antiquewhite;
+      
+     /* background-color:rgba(9, 1, 12, 0.904); */
+     background: rgba(0,0,0,0.5);
+     /* background: transparent; */
       /* box-shadow: 0 4px 8px 0 rgba(0, 0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); */
       
 }
 /*.container .content .card .icon_case button:hover{*/
 /*      background-color: rgb(17, 0, 255);*/
 /*}*/
-
+.container .content .card .icon_case button:hover{
+      background-color: rgb(246, 245, 248);
+      color: #f05462;
+ }
 .container .content .card1 .icon_case button:hover{
       background-color: rgb(17, 0, 255);
 }
