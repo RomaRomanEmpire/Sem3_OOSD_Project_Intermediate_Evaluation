@@ -33,7 +33,7 @@ if ($u_type === "applicant") {
             display: none;
      }</style>";
 }
-if(!($user instanceof R_A_P) || $u_type !== 'admin'){
+if(!($user instanceof R_A_P) && $u_type !== 'admin'){
     echo "<style>#notification-panel1{
             display: none;
      }</style>";
