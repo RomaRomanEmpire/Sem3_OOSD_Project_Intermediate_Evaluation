@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $applicant->set_row_id($_SESSION['user_id']);
 
-        $applicant->apply_NIC($_GET['basic'], $_GET['ds'], $_GET['table'], $application);
+        $applicant->apply_NIC($_GET['table'], $application);
     }
 }
 ?>
