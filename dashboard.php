@@ -25,9 +25,16 @@ if ($u_type === "applicant") {
             background-color: rgb(17, 0, 255);
         }</style>";
     }
-} elseif ($u_type === "db_manager") {
-
+    echo "<style>#notification-panel1{
+            display: none;
+     }</style>";
+} else {
     echo "<style>#notification-panel{
+            display: none;
+     }</style>";
+}
+if(!($user instanceof R_A_P) || $u_type !== 'admin'){
+    echo "<style>#notification-panel1{
             display: none;
      }</style>";
 }
@@ -66,12 +73,11 @@ if($u_type!= 'db_manager'){
     <div>
         <ul>
 
-        <a href="Profile_Details.php">  <li>&nbsp;<span>  <i class="fas fa-user"></i> Profile</span></li></a>
-        <a href="Applicant_notification.php">    <li id="notification-panel">&nbsp;<span><i class="far fa-comment-alt"></i> Notification</span></li></a>
-        <a href="Add_staff_member.php" >    <li id="add-staff" >&nbsp;<span><i class="fas fa-user-plus"></i> Add Officer </span></li></a>
-            <!--   <li><img src="Image/school.png" alt="">&nbsp;<span> School</span></li> -->
-            <!-- <li><img src="Image/help.png" alt="">&nbsp;<span> Help</span></li>
-            <li><img src="Image/setting.png" alt="">&nbsp;<span>Setting</span></li> -->
+            <a href="Profile_Details.php"> <li>&nbsp;<span>  <i class="fas fa-user"></i> Profile</span></li></a>
+            <a href="Applicant_notification.php"><li id="notification-panel">&nbsp;<span><i class="far fa-comment-alt"></i> Notification</span></li></a>
+            <a href="Notification_dashboard.php"><li id="notification-panel1">&nbsp;<span><i class="far fa-comment-alt"></i> Notification</span></li></a>
+            <a href="Add_staff_member.php" ><li id="add-staff">&nbsp;<span>
+            <i class="fas fa-user-plus"></i> Add Officer </span></li></a>
         </ul>
     </div>
 </div>
