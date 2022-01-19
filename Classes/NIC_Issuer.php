@@ -44,6 +44,14 @@ class NIC_Issuer extends L_P_User implements IApprover
     {
         throw new Exception("No divisions for NIC Issuer");
     }
+
+    public function fetch_object($table, $key, $key_value, $object){
+        return $this->db->get_column_value($table, $key, '=', $key_value, $object, "");
+    }
+
+    public function fetch_array($table, $key, $key_value){
+        return $this->db->database_details($table,$key, $key_value, "");
+    }
 }
 
 

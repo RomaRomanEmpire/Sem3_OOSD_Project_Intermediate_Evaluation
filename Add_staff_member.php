@@ -2,15 +2,15 @@
 session_start();
 include 'autoloader.php';
 $conn = DB_OP::get_connection();
-
+$db_manager = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
+$db_manager->set_db($conn);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include 'functions.php';
 
     $staff_member = createStaffMember($_POST);
 
-    $db_manager = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
-    $db_manager->set_db($conn);
+
 
     if ($_POST['officer'] == "Grama_Niladari") {
         if (!empty($_POST['gdivision'])) {
@@ -21,13 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $array = $_SESSION['val_array2'];
             $array2 = $_SESSION['val_array5'];
 
-            $ds_id = $conn->get_column_value('ds', 'DS', '=', $div2, 'DS_code', '');
-            $gnCode = $conn->get_column_value2('gn', 'basic_division', 'DS_code', '=', $div, $ds_id, 'division_id', "");
+            $gnCode = $db_manager->fetchGnCode($div, $div2);
 
             if (!is_null($gnCode)) {
                 $db_manager->add_user($table, $div, $_POST['staff_id'], $staff_member);
             } else {
-                echo "<script type='text/javascript'>alert('two divisions are not connected')window.location.href = 'Add_staff_member.php';;</script>";
+                echo "<script type='text/javascript'>alert('two divisions are not connected');</script>";
             }
 
         }
@@ -247,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body style="color: white; background: rgb(10,30,235);
 background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%, rgba(15,30,135,1) 100%, rgba(101,181,198,1) 100%);">
 
-<div class="header1"><a href="remove/DatabaseManagerDashboard.php">
+<div class="header1"><a href="dashboard.php">
         <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-left"
                 style="width: 100px;font-size:18px;margin-right:20px;color:black;"> Back
         </button>
@@ -332,13 +331,10 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputIDnumber" class="form-label">Staff ID No.</label>
-                            <?php
-                            $last_staff_id = $conn->get_column_value("user_details", "staff_id", ">", "0", "staff_id", "ORDER BY staff_id DESC") ?? 0;
-                            ?>
                             <input type="text" class="form-control" name="staff_id" id="exampleInputIDnumber"
                                    style=" background-color: #84bbc7;"
                                    aria-describedby="emailHelp" placeholder="Enter identticard number"
-                                   value="<?php echo($last_staff_id + 1) ?>" readonly>
+                                   value="<?php echo $db_manager->getNextStaffId(); ?>" readonly>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputMNumber" class="form-label">Mobile Number</label>
@@ -357,7 +353,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <script>
                                 $(function () {
                                     <?php
-                                    $php_array = $conn->get_table_info("schools", "basic_division", 0);
+                                    $php_array = $db_manager->getAutoloadArray("schools", "basic_division", 0);
                                     $_SESSION['val_array1'] = $php_array;
                                     $js_array = json_encode($php_array);
                                     ?>
@@ -378,7 +374,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <script>
                                 $(function () {
                                     <?php
-                                    $php_array = $conn->get_table_info("gn", "basic_division", 0);
+                                    $php_array = $db_manager->getAutoloadArray("gn", "basic_division", 0);
                                     $_SESSION['val_array2'] = $php_array;
                                     $js_array = json_encode($php_array);
                                     ?>
@@ -399,7 +395,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <script>
                                 $(function () {
                                     <?php
-                                    $php_array = $conn->get_table_info("ds", "DS", 0);
+                                    $php_array = $db_manager->getAutoloadArray("ds", "DS", 0);
                                     $_SESSION['val_array3'] = $php_array;
                                     $js_array = json_encode($php_array);
                                     ?>
@@ -420,7 +416,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <script>
                                 $(function () {
                                     <?php
-                                    $php_array = $conn->get_table_info("ds", "DS", 1);
+                                    $php_array = $db_manager->getAutoloadArray("ds", "DS", 1);
                                     $_SESSION['val_array5'] = $php_array;
                                     $js_array = json_encode($php_array);
                                     ?>
@@ -441,7 +437,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <script>
                                 $(function () {
                                     <?php
-                                    $php_array = $conn->get_table_info("estates", "basic_division", 0);
+                                    $php_array = $db_manager->getAutoloadArray("estates", "basic_division", 0);
                                     $_SESSION['val_array4'] = $php_array;
                                     $js_array = json_encode($php_array);
                                     ?>

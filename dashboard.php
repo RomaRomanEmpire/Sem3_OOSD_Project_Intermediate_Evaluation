@@ -10,7 +10,7 @@ $u_type = $user->get_user_type();
 
 
 if ($u_type === "applicant") {
-    $already_applied = is_null($con->get_column_value("application_details", "applicant_id", "=", $_SESSION['user_id'], "app_id", ""));
+    $already_applied = $user->isAlreadyApplied($_SESSION['user_id']);
 
     if (!$already_applied) {
         echo "<style>#view_application_app:hover{

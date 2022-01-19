@@ -76,7 +76,7 @@ if($type == 'db_manager'){
         </form>
     </div>
     <div>
-        <a href="remove/DatabaseManagerDashboard.php">
+        <a href="dashboard.php">
             <button type="button" class="btn btn-sm btn-outline-light fas fa-arrow-left"
                     style="width: 100px;font-size:18px;margin-right:20px;"><b> Back</b></button>
         </a>
@@ -98,9 +98,9 @@ if($type == 'db_manager'){
                 </thead>
                 <tbody>
                 <?php
-                $result = $con->database_details('notification_details', '', '', '');
+                $result = $user->fetch_array('notification_details', '', '','');
                 foreach ($result as $i => $row):
-                    $notification = $con->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order);
+                    $notification = $user->fetch_object('notification_details', 'n_id', $row['n_id'], 'n_object');
                     $notification_details = $notification->accept($user);
                     ?>
                     <tr scope="row" style="font-size: large;">
@@ -108,13 +108,13 @@ if($type == 'db_manager'){
                         <td style="color: whitesmoke;"><?php echo $notification_details['send_date']; ?></td>
                         <td style="color: whitesmoke;">
                             <?php
-                            $sender = unserialize($con->get_column_value('user_details', 'user_id', '=', $notification->getFromId(), 'username', $order));
+                            $sender = unserialize($user->fetch_object('user_details', 'user_id', $notification->getFromId(), 'username'));
                             echo $sender->get_user_type() . ' ' . $sender->get_user_name();
                             ?>
                         </td>
                         <td style="color: whitesmoke;">
                             <?php
-                            $receiver = unserialize($con->get_column_value('user_details', 'user_id', '=', $notification->getToId(), 'username', $order));
+                            $receiver = unserialize($user->fetch_object('user_details', 'user_id', $notification->getToId(), 'username'));
                             echo $receiver->get_user_type() . ' ' . $receiver->get_user_name();
                             ?>
                         </td>
@@ -143,9 +143,9 @@ if($type == 'db_manager'){
                 </thead>
                 <tbody>
                 <?php
-                $result = $con->database_details('application_details', 'stat', 'approved', $order);
+                $result = $user->fetch_array('application_details', 'stat', 'approved', $order);
                 foreach ($result as $i => $row):
-                    $application = $con->get_column_value('application_details', 'app_id', '=', $row['app_id'], 'application_object', $order);
+                    $application = $user->fetch_object('application_details', 'app_id', $row['app_id'], 'application_object');
                     $application_details = $application->accept($user);
                     ?>
                     <tr scope="row" style="font-size: large;">

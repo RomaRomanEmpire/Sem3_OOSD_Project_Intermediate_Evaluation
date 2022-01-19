@@ -47,7 +47,7 @@ class Applicant extends L_P_User implements IApprover,IVisitor
   /**
    * @return Application
    */
-  public function getApplication()
+  public function getApplication(): Application
   {
     return $this->application;
   }
@@ -68,7 +68,28 @@ class Applicant extends L_P_User implements IApprover,IVisitor
   {
     return $notification->getNotificationDetails();
   }
+
+  public function fetch_object($table, $key, $key_value, $object){
+    return $this->db->get_column_value($table, $key, '=', $key_value, $object, "");
+  }
+
+  public function fetch_array($table, $key, $key_value,$order){
+    return $this->db->database_details($table,$key, $key_value, $order);
+  }
+
+  public function fetch_array_2($table, $key1, $key2, $key_value1, $key_value2,$order){
+    return $this->db->database_details_2($table, $key1, $key2, '=', '=', $key_value1, $key_value2, $order);
+  }
+
+  public function updateNotificationDetails($notification){
+    $this->db->save_state_of_notification($notification);
+  }
+
+  public function isAlreadyApplied($user_id): bool
+  {
+    return $this->db->get_column_value("application_details", "applicant_id", "=", $user_id, "app_id", "") !== null;
+  }
 }
 
 
-?>
+
