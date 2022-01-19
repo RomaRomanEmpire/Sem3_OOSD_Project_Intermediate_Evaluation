@@ -4,7 +4,6 @@ include 'autoloader.php';
 $con = DB_OP::get_connection();
 $user = unserialize($con->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $user->set_db($con);
-$user->set_row_id($_SESSION['user_id']);
 
 ?>
 <!DOCTYPE html>

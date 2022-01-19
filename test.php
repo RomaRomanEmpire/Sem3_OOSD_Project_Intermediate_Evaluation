@@ -1,8 +1,11 @@
 <?php
-$array = array("Volvo", "BMW", "Toyota");
-foreach ($array as $i => $person):
-    echo $person;
-endforeach;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo $_POST['hi'];
 
-session_start();
-echo $_SESSION['fuck'];
+}
+?>
+<html>
+<form id="signin-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+    <input type="submit" value="Login">
+</form>
+</html>

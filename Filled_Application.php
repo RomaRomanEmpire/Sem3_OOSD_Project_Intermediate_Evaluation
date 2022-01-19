@@ -9,7 +9,8 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
 
 $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $user->set_db($conn);
-$user->set_row_id($_SESSION['user_id']);
+
+$application_details = $application->accept($user);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['para_1']))
@@ -19,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $application_id = $_GET['application_id'];
     //refine
-    $conn->save_state_of_application($application_id, $application);
+    $conn->save_state_of_application($application);
     $sign_no = $_GET['sign_no'];
     header("location: sign.php?application_id=$application_id&sign_no=$sign_no");
 }
@@ -40,15 +41,14 @@ if ($type == "applicant") {
             display: none;
         }</style>";
 
-}
-
-elseif ($user instanceof R_A_P_1) {
+} elseif ($user instanceof R_A_P_1) {
     $already_sent = $conn->get_column_value3('notification_details', 'application_id', 'from_id', 'n_type',
         '=', $_GET['application_id'], $_SESSION['user_id'], 'appointment', 'n_id', "");
-    if($already_sent){
+    if ($already_sent) {
         echo "<style>#send-time {
             display: none;
-        }</style>";}
+        }</style>";
+    }
     echo "<style>#ds_sign {
             display: none;
         }</style>";
@@ -64,17 +64,17 @@ if ($type != "admin") {
 if ($user instanceof R_A_P) {
     $already_sent = $conn->get_column_value3('notification_details', 'application_id', 'from_id', 'n_type',
         '=', $_GET['application_id'], $_SESSION['user_id'], 'confirmation', 'n_id', "");
-    if($already_sent){
+    if ($already_sent) {
         echo "<style>#reject_button {
             display: none;
         }</style>";
     }
 }
 
-if($type == 'admin'){
+if ($type == 'admin') {
     $already_sent = $conn->get_column_value3('notification_details', 'application_id', 'from_id', 'n_type',
         '=', $_GET['application_id'], $_SESSION['user_id'], 'confirmation', 'n_id', "");
-    if($already_sent){
+    if ($already_sent) {
         echo "<style>#reject_button {
             display: none;
         }</style>";
@@ -315,12 +315,12 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
 
                         <!-- This button id only viewed by RAP -->
 
-                            <td id="send-time" style="float: right;"><a
-                                        href="Time_slot.php?application_id=<?php echo $_GET['application_id']; ?>">
+                        <td id="send-time" style="float: right;"><a
+                                    href="Time_slot.php?application_id=<?php echo $_GET['application_id']; ?>">
 
-                                    <button type="submit" class="btn btn-sm btn-outline-primary"
-                                            style="color: black;width:150px; font-size:15px;"><b>Send Time</b>
-                                    </button></td>
+                                <button type="submit" class="btn btn-sm btn-outline-primary"
+                                        style="color: black;width:150px; font-size:15px;"><b>Send Time</b>
+                                </button></td>
 
 
                         <td id="admin_approve_button"><a
@@ -366,14 +366,15 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                         <dt>Name in full</dt>
                         <dd><b><label for="familyName">Family Name</label></b></dd>
                         <dd><input type="text" id="familyNname" name="familyName"
-                                   value="<?php echo $application->getFamilyName(); ?>" placeholder="Family name..."
+                                   value="<?php echo $application_details['familyName']; ?>"
+                                   placeholder="Family name..."
                                    required></dd>
                         <dd><b> <label for="name">Name</label></b></dd>
-                        <dd><input type="text" id="name" name="name" value="<?php echo $application->getName(); ?>"
+                        <dd><input type="text" id="name" name="name" value="<?php echo $application_details['name']; ?>"
                                    placeholder="Name..." required></dd>
                         <dd><b> <label for="surname">Surname</label></b></dd>
                         <dd><input type="text" id="surname" name="surname"
-                                   value="<?php echo $application->getSurname(); ?>" placeholder="Surname..."
+                                   value="<?php echo $application_details['surname']; ?>" placeholder="Surname..."
                                    required></dd>
                     </dl>
                 </div>
@@ -382,14 +383,15 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                         <dt>Name to be appeared in the Identity Card</dt>
                         <dd><b><label for="familyName">Family Name</label></b></dd>
                         <dd><input type="text" id="familyNname" name="familyName"
-                                   value="<?php echo $application->getFamilyName(); ?>" placeholder="Family name..."
+                                   value="<?php echo $application_details['familyName']; ?>"
+                                   placeholder="Family name..."
                                    required></dd>
                         <dd><b> <label for="name">Name</label></b></dd>
-                        <dd><input type="text" id="name" name="name" value="<?php echo $application->getName(); ?>"
+                        <dd><input type="text" id="name" name="name" value="<?php echo $application_details['name']; ?>"
                                    placeholder="Name..." required></dd>
                         <dd><b> <label for="surname">Surname</label></b></dd>
                         <dd><input type="text" id="surname" name="surname"
-                                   value="<?php echo $application->getSurname(); ?>" placeholder="Surname..."
+                                   value="<?php echo $application_details['surname']; ?>" placeholder="Surname..."
                                    required></dd>
                     </dl>
                 </div>
@@ -398,7 +400,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt>Sex</dt>
                         <dd><input type="text" id="gender_" name="gender"
-                                   value="<?php echo $application->getGender(); ?>" required></dd>
+                                   value="<?php echo $application_details['gender']; ?>" required></dd>
                     </dl>
                 </div>
 
@@ -406,7 +408,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt>Civil Status</dt>
                         <dd><input type="text" id="civilStatus_" name="civilStatus"
-                                   value="<?php echo $application->getCivilStatus(); ?>" required></dd>
+                                   value="<?php echo $application_details['civilStatus']; ?>" required></dd>
                     </dl>
                 </div>
 
@@ -414,7 +416,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="profession">Profession/Occupation/Designation</label></b></dt>
                         <dd><input type="text" id="profession" name="profession"
-                                   value="<?php echo $application->getProfession(); ?>" placeholder="Profession..."
+                                   value="<?php echo $application_details['profession']; ?>" placeholder="Profession..."
                                    required></dd>
                     </dl>
                 </div>
@@ -428,7 +430,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="birthday">BirthDay</label></b></dt>
                         <dd><input type="date" id="birthday" name="birthday"
-                                   value="<?php echo $application->getBirthday(); ?>" required></dd>
+                                   value="<?php echo $application_details['birthday']; ?>" required></dd>
                     </dl>
                 </div>
 
@@ -436,7 +438,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="certificateNo">Birth Certificate No</label></b></dt>
                         <dd><input type="number" id="certificateNo" name="birthCertificateNo"
-                                   value="<?php echo $application->getBirthCertificateNo(); ?>"
+                                   value="<?php echo $application_details['birthCertificateNo']; ?>"
                                    placeholder="Birth Certificate No..." required></dd>
                     </dl>
                 </div>
@@ -445,7 +447,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="placeOfBirth">Place of Birth</label></b></dt>
                         <dd><input type="text" id="placeOfBirth" name="placeOfBirth"
-                                   value="<?php echo $application->getPlaceOfBirth(); ?>"
+                                   value="<?php echo $application_details['placeOfBirth']; ?>"
                                    placeholder="Place of Birth..." required></dd>
                     </dl>
                 </div>
@@ -454,7 +456,8 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="division">Division</label></b></dt>
                         <dd><input type="text" id="division" name="birthDivision"
-                                   value="<?php echo $application->getBirthDivision(); ?>" placeholder="Division..."
+                                   value="<?php echo $application_details['birthDivision']; ?>"
+                                   placeholder="Division..."
                                    required>
                         </dd>
                     </dl>
@@ -464,7 +467,8 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="district">District</label></b></dt>
                         <dd><input type="text" id="district" name="birthDistrict"
-                                   value="<?php echo $application->getBirthDistrict(); ?>" placeholder="District..."
+                                   value="<?php echo $application_details['birthDistrict']; ?>"
+                                   placeholder="District..."
                                    required>
                         </dd>
                     </dl>
@@ -478,7 +482,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="countryOfBirth">Country of Birth</label></b></dt>
                         <dd><input type="text" id="countryOfBirth" name="countryOfBirth"
-                                   value="<?php echo $application->getCountryOfBirth(); ?>"
+                                   value="<?php echo $application_details['countryOfBirth']; ?>"
                                    placeholder="Country of Birth..."></dd>
                     </dl>
                 </div>
@@ -487,7 +491,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="city">City</label></b></dt>
                         <dd><input type="text" id="city" name="birthCity"
-                                   value="<?php echo $application->getBirthCity(); ?>" placeholder="City...">
+                                   value="<?php echo $application_details['birthCity']; ?>" placeholder="City...">
                         </dd>
                     </dl>
                 </div>
@@ -496,7 +500,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="certificateNo">Certificate No.</label></b></dt>
                         <dd><input type="number" id="certificateNo" name="f citizenshipCertificateNo"
-                                   value="<?php echo $application->getCitizenshipCertificateNo(); ?>"
+                                   value="<?php echo $application_details['citizenshipCertificateNo']; ?>"
                                    placeholder="Certificate No...">
                         </dd>
                     </dl>
@@ -512,20 +516,20 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                         <dt>Permanent Address</dt>
                         <dd><b><label for="houseName">Name or number of the House</label></b></dd>
                         <dd><input type="text" id="houseName" name="permHouseName"
-                                   value="<?php echo $application->getPermHouseName(); ?>"
+                                   value="<?php echo $application_details['permHouseName']; ?>"
                                    placeholder="Name or number of the House..." required></dd>
                         <dd><b> <label for="road">Road/Street/Lane/Place/Garden </label></b></dd>
                         <dd><input type="text" id="road" name="permRoad"
-                                   value="<?php echo $application->getPermRoad(); ?>" placeholder="Road..."
+                                   value="<?php echo $application_details['permRoad']; ?>" placeholder="Road..."
                                    required></dd>
                         <dd><b> <label for="village">Village/City</label></b></dd>
                         <dd><input type="text" id="village" name="permVillage"
-                                   value="<?php echo $application->getPermVillage(); ?>" placeholder="Village..."
+                                   value="<?php echo $application_details['permVillage']; ?>" placeholder="Village..."
                                    required>
                         </dd>
                         <dd><b> <label for="village">Postal Code</label></b></dd>
                         <dd><input type="number" id="postalCode" name="permPostalCode"
-                                   value="<?php echo $application->getPermPostalCode(); ?>"
+                                   value="<?php echo $application_details['permPostalCode']; ?>"
                                    placeholder="Postal Code..." required>
                         </dd>
                     </dl>
@@ -536,20 +540,20 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                         <dt>Postal Address</dt>
                         <dd><b><label for="houseName">Name or number of the House</label></b></dd>
                         <dd><input type="text" id="houseName" name="postalHouseName"
-                                   value="<?php echo $application->getPostalHouseName(); ?>"
+                                   value="<?php echo $application_details['postalHouseName']; ?>"
                                    placeholder="Name or number of the House..." required></dd>
                         <dd><b> <label for="road">Road/Street/Lane/Place/Garden </label></b></dd>
                         <dd><input type="text" id="road" name="postalRoad"
-                                   value="<?php echo $application->getPostalRoad(); ?>" placeholder="Road..."
+                                   value="<?php echo $application_details['postalRoad']; ?>" placeholder="Road..."
                                    required></dd>
                         <dd><b> <label for="village">Village/City</label></b></dd>
                         <dd><input type="text" id="village" name="postalVillage"
-                                   value="<?php echo $application->getPostalVillage(); ?>" placeholder="Village..."
+                                   value="<?php echo $application_details['postalVillage']; ?>" placeholder="Village..."
                                    required>
                         </dd>
                         <dd><b> <label for="village">Postal Code</label></b></dd>
                         <dd><input type="number" id="postalCode" name="postalPostalCode"
-                                   value="<?php echo $application->getPostalPostalCode(); ?>"
+                                   value="<?php echo $application_details['postalPostalCode']; ?>"
                                    placeholder="Postal Code..." required></dd>
                     </dl>
                 </div>
@@ -565,7 +569,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                         <dt><label for="Account_Type">Account Type</label></dt>
 
                         <dd><input type="text" name="citizenshipCertificateType"
-                                   value="<?php echo $application->getCitizenshipCertificateType(); ?>"
+                                   value="<?php echo $application_details['citizenshipCertificateType']; ?>"
                                    placeholder="Postal Code..." required></dd>
                     </dl>
                 </div>
@@ -574,7 +578,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="certificateNo">Certificate Number</label></b></dt>
                         <dd><input type="number" id="certificateNo" name="certificateNo_9.1"
-                                   value="<?php echo $application->getCitizenshipCertificateNo91(); ?>"
+                                   value="<?php echo $application_details['certificateNo_9.1']; ?>"
                                    placeholder="Certificate Number..." required></dd>
                     </dl>
                 </div>
@@ -583,7 +587,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="certificateDate">Date of issue of Certificate </label></b></dt>
                         <dd><input type="date" id="certificateDate" name="citizenshipCertificateDate"
-                                   value="<?php echo $application->getCitizenshipCertificateDate(); ?>" required>
+                                   value="<?php echo $application_details['citizenshipCertificateDate']; ?>" required>
                         </dd>
                     </dl>
                 </div>
@@ -594,12 +598,12 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                         <dt><b><label for="telephoneNo">Telephone Number</label></b></dt>
                         <dd><b><label for="residence">Residence</label></b></dd>
                         <dd><input type="tel" id="residence" name="residenceTelNo"
-                                   value="<?php echo $application->getResidenceTelNo(); ?>"
+                                   value="<?php echo $application_details['residenceTelNo']; ?>"
                                    placeholder="Residence..." required>
                         </dd>
                         <dd><b><label for="mobile">Mobile</label></b></dd>
                         <dd><input type="tel" id="mobile" name="mobileTelNo"
-                                   value="<?php echo $application->getMobileTelNo(); ?>" placeholder="Mobile..."
+                                   value="<?php echo $application_details['mobileTelNo']; ?>" placeholder="Mobile..."
                                    required>
                         </dd>
                     </dl>
@@ -609,14 +613,14 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="email">Email</label></b></dt>
                         <dd><input type="email" id="email" name="email"
-                                   value="<?php echo $application->getEmail(); ?>" placeholder="Email..." required>
+                                   value="<?php echo $application_details['email']; ?>" placeholder="Email..." required>
                         </dd>
                     </dl>
                 </div>
 
 
             </div>
-            <?php if ($application->getAppTypeId() == 2) { ?>
+            <?php if ($application_details['app_type_id'] == 2) { ?>
                 <div class="step step-5">
                     <h2>If the duplicate of the Identity Card is applied for, please complete this section.</h2>
 
@@ -624,7 +628,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                         <dl>
                             <dt>Purpose of application</dt>
                             <dd><input type="text" id="purpose" name="purpose"
-                                       value="<?php echo $application->getPurpose(); ?>" placeholder="Email..."
+                                       value="<?php echo $application_details['purpose']; ?>" placeholder="Email..."
                                        required>
                         </dl>
                     </div>
@@ -633,7 +637,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                             <dt><b><label for="lostIdNum">Lost or last obtained Identity Card Number</label></b>
                             </dt>
                             <dd><input type="text" id="lostIdNum" name="lostIdNum"
-                                       value="<?php echo $application->getLostIdNum(); ?>"
+                                       value="<?php echo $application_details['lostIdNum']; ?>"
                                        placeholder="Lost or last obtained Identity Card Number">
                             </dd>
                         </dl>
@@ -643,7 +647,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                         <dl>
                             <dt><b><label for="lostIdDate">Date of the issue of the Identity Card</label></b></dt>
                             <dd><input type="date" id="lostIdDate" name="lostIdDate"
-                                       value="<?php echo $application->getLostIdDate(); ?>"
+                                       value="<?php echo $application_details['lostIdDate']; ?>"
                                        placeholder="Date of the issue of the Identity Card">
                             </dd>
                         </dl>
@@ -655,13 +659,13 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                                         pertaining to the lost Identity Card</label></b></dt>
                             <dd><b><label for="policeStationName">Name of the Police Station</label></b></dd>
                             <dd><input type="text" id="policeStationName" name="policeStationName"
-                                       value="<?php echo $application->getPoliceStationName(); ?>"
+                                       value="<?php echo $application_details['policeStationName']; ?>"
                                        placeholder="Name of the Police Station">
                             </dd>
                             <dd><b><label for="policeReportDate">Date of the issue of the Police report</label></b>
                             </dd>
                             <dd><input type="date" id="policeReportDate" name="policeReportDate"
-                                       value="<?php echo $application->getPoliceReportDate(); ?>">
+                                       value="<?php echo $application_details['policeReportDate']; ?>">
                             </dd>
                         </dl>
                     </div>
@@ -678,7 +682,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                         <h2>Photographs</h2>
 
                         <?php
-                        $receive_file = $application->getPhotographs();
+                        $receive_file = $application_details['photograph'];
                         echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
 													<embed src=\"$receive_file\", width=100px height=100px>"; ?>
 
@@ -693,14 +697,14 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                 <dl>
                     <dt><b><label for="receiptNo">Number of the receipt or the certificate</label></b></dt>
                     <dd><input type="number" id="receiptNo" name="receiptNo"
-                               value="<?php echo $application->getReceiptNo(); ?>"
+                               value="<?php echo $application_details['receiptNo']; ?>"
                                placeholder="Number of the receipt or the certificate" required></dd>
                 </dl>
 
                 <dl>
                     <div>
                         <?php
-                        $receive_file = $application->getReceipt();
+                        $receive_file = $application_details['receipt'];
                         echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
 													<embed src=\"$receive_file\", width=100px height=100px>"; ?>
                     </div>
@@ -711,7 +715,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
         </fieldset>
         <form id="attestation-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?
         application_id=<?php echo $_GET['application_id']; ?>&sign_no=<?php echo 1; ?>" method="POST">
-            <fieldset <?php if ($application->getPara1() !== null){ ?>disabled<?php } ?>>
+            <fieldset <?php if (isset($application_details['para_1'])) { ?>disabled<?php } ?>>
 
                 <div class="step step-8" style="display: block;">
                     <h2>Attestation of the Certifying Officer</h2>
@@ -722,13 +726,13 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                             this
                             application form are of <input type="number" id="applicationNum" name="para_1"
                                                            style="width:300px"
-                                                           value="<?php echo $application->getPara1(); ?>"
+                                                           value="<?php echo $application_details['para_1'] ?? NULL; ?>"
                                                            placeholder="Application Number" required>
                             residing at the address mentioned in the application form bearing number <input type="text"
                                                                                                             id="applicantName"
                                                                                                             name="para_2"
                                                                                                             style="width:300px"
-                                                                                                            value="<?php echo $application->getPara2(); ?>"
+                                                                                                            value="<?php echo $application_details['para_2'] ?? NULL; ?>"
                                                                                                             placeholder="Applicant Name"
                                                                                                             required>
                             and that the photograph affixed is duplicating the natural status of the applicant without
@@ -740,7 +744,7 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <dl>
                         <dt><b><label for="certifyName">Name of the Certifying Officer</label></b></dt>
                         <dd><input type="text" id="certifyName" name="certifyName"
-                                   value="<?php echo $application->getCertifyName(); ?>"
+                                   value="<?php echo $application_details['certifyName'] ?? NULL; ?>"
                                    placeholder="Name of the Certifying Officer" required></dd>
                     </dl>
 
@@ -749,10 +753,10 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                             <dt><b><label for="certifySignature1">Signature of the applicant</label></b><br>
 
                                 <?php
-                                $receive_file = $application->getApplicantSign();
+                                $receive_file = $application_details['applicant_sign'] ?? NULL;
                                 if (isset($receive_file)) {
                                     echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
-													<embed src=\"$receive_file\", width=100px height=100px>";
+													<embed src=\"$receive_file\" width=100px height=100px>";
                                 } else {
                                     ?>
                                     <button type="submit" class="btn btn-sm btn-outline-success " style="color: black;">
@@ -771,16 +775,18 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                 <dt><b><label for="certifySignature2">Signature and official frank of the certifying
                             Officer</label></b><br>
                     <?php
-                    $receive_file = $application->getRapSign();
+                    $receive_file = $application_details['rap_sign'] ?? NULL;
                     if (isset($receive_file)) {
                         echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
-                        <embed src=\"$receive_file\", width=100px height=100px>";
+                        <embed src=\"$receive_file\" width=100px height=100px>";
 
-                    } else { ?>
+                    } else {
+                        ?>
                         <a href="sign.php?sign_no=<?php echo 2; ?>&application_id=<?php echo $_GET['application_id'] ?>"
                            style="float: right;">
-                            <button type="button" class="btn btn-sm btn-outline-success " style="color: black;"><b> Add
-                                    the signature </b></button>
+                            <button type="button" class="btn btn-sm btn-outline-success " style="color: black;">
+                                <b>
+                                    Add the signature </b></button>
                         </a>
 
                     <?php } ?>
@@ -794,14 +800,14 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                 <dl>
                     <dt><b><label for="certifyName2">Name of the Certifying Officer</label></b></dt>
                     <dd><input type="text" id="certifyName2" name="certifyName2"
-                               value="<?php echo $application->getCertifyName2(); ?>"
+                               value="<?php echo $application_details['certifyName2'] ?? NULL; ?>"
                                placeholder="Name of the Certifying Officer" required></dd>
                 </dl>
                 <dl>
                     <dt><b><label for="certifySignature3">Signature and official frank of the certifying
                                 Officer</label></b><br>
                         <?php
-                        $receive_file = $application->getDSSign();
+                        $receive_file = $application_details['ds_sign'] ?? NULL;
                         if (isset($receive_file)) {
                             echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
                         <embed src=\"$receive_file\", width=100px height=100px>";
