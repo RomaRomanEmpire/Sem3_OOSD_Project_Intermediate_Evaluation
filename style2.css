@@ -20,7 +20,7 @@ h1,h2{
 .hero-image {
       background-image: url("Image/x.jpeg");
       background-color: #cccccc;
-      height: 750px;
+      height: 585px;
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -299,10 +299,10 @@ h1,h2{
 /*.container .content .card .icon_case button:hover{*/
 /*      background-color: rgb(17, 0, 255);*/
 /*}*/
-.container .content .card .icon_case button:hover{
-      background-color: rgb(246, 245, 248);
-      color: #f05462;
- }
+/*.container .content .card .icon_case button:hover{*/
+/*      background-color: rgb(246, 245, 248);*/
+/*      color: #f05462;*/
+/* }*/
 .container .content .card1 .icon_case button:hover{
       background-color: rgb(17, 0, 255);
 }
