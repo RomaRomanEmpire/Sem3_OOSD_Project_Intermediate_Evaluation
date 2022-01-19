@@ -23,23 +23,23 @@ abstract class R_A_P extends L_P_User implements IApprover, IVisitor
     public function approve_application($application,$notification)
     {
         $application->approve($this,$notification);
-        $this->db->save_state_of_application($application->getRowId(), $application);
+        $this->db->save_state_of_application($application);
 
     }
     public function reject_application($application,$notification){
         $application->reject($this,$notification);
-        $this->db->save_state_of_application($application->getRowId(), $application);
+        $this->db->save_state_of_application($application);
         $this->db->delete_application();
     }
 
     function visitApplication($application)
     {
-        // TODO: Implement visitApplication() method.
+        return $application->getApplicationDetails();
     }
 
     function visitNotification($notification)
     {
-        // TODO: Implement visitNotification() method.
+        return $notification->getNotificationDetails();
     }
 
 

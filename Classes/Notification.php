@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  */
@@ -7,18 +8,10 @@ class Notification implements IVisitable
     private $from_id;
     private $to_id;
     private $application_id;
-
     private $type;
-    private $content;
-    private $send_date;
+    private $row_id;
 
-    private $appointment_date;
-    private $appointment_time;
-
-    private $attachment;
-
-    private $reference_notification_id;
-
+    private array $notification_details;
 
     /**
      * @param $type
@@ -27,14 +20,35 @@ class Notification implements IVisitable
     public function __construct($type, $content)
     {
         $this->type = $type;
-        $this->content = $content;
-        $this->setSendDate();
+        $this->notification_details['content'] = $content;
+
+        date_default_timezone_set('Asia/Colombo');
+
+        $this->notification_details['send_date'] = date('Y/m/d H:i:s');
+        $this->notification_details['has_reference_notification_id'] = false;
     }
 
 
-    function accept($visitor)
+    public function accept($visitor)
     {
-        $visitor.visit($this);
+        return $visitor->visitNotification($this);
+    }
+
+
+    /**
+     * @param mixed $row_id
+     */
+    public function setRowId($row_id): void
+    {
+        $this->row_id = $row_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRowId()
+    {
+        return $this->row_id;
     }
 
     /**
@@ -48,41 +62,17 @@ class Notification implements IVisitable
     /**
      * @return mixed
      */
-    public function getSendDate()
+    public function getToId()
     {
-        return $this->send_date;
+        return $this->to_id;
     }
 
     /**
+     * @param mixed $has_reference_notification_id
      */
-    public function setSendDate(): void
+    public function setHasReferenceNotificationId($has_reference_notification_id): void
     {
-        date_default_timezone_set('Asia/Colombo');
-        $this->send_date = date('Y/m/d H:i:s');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getReferenceNotificationId()
-    {
-        return $this->reference_notification_id;
-    }
-
-    /**
-     * @param mixed $reference_notification_id
-     */
-    public function setReferenceNotificationId($reference_notification_id): void
-    {
-        $this->reference_notification_id = $reference_notification_id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAppointmentDate()
-    {
-        return $this->appointment_date;
+        $this->notification_details['has_reference_notification_id'] = $has_reference_notification_id;
     }
 
     /**
@@ -90,15 +80,7 @@ class Notification implements IVisitable
      */
     public function setAppointmentDate($appointment_date): void
     {
-        $this->appointment_date = $appointment_date;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAppointmentTime()
-    {
-        return $this->appointment_time;
+        $this->notification_details['appointment_date'] = $appointment_date;
     }
 
     /**
@@ -106,7 +88,7 @@ class Notification implements IVisitable
      */
     public function setAppointmentTime($appointment_time): void
     {
-        $this->appointment_time = $appointment_time;
+        $this->notification_details['appointment_time'] = $appointment_time;
     }
 
 
@@ -126,13 +108,6 @@ class Notification implements IVisitable
         return $this->from_id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getToId()
-    {
-        return $this->to_id;
-    }
 
     /**
      * @return mixed
@@ -143,22 +118,12 @@ class Notification implements IVisitable
     }
 
     /**
-     * @return mixed
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
      * @param mixed $application_id
      */
     public function setApplicationId($application_id): void
     {
         $this->application_id = $application_id;
     }
-
-
 
     /**
      * @return mixed
@@ -169,24 +134,18 @@ class Notification implements IVisitable
     }
 
     /**
-     * @return mixed
-     */
-    public function getAttachment()
-    {
-        return $this->attachment;
-    }
-
-    /**
      * @param mixed $attachment
      */
     public function setAttachment($attachment): void
     {
-        $this->attachment = $attachment;
+        $this->notification_details['attachment'] = $attachment;
     }
 
-
-
-
+    /**
+     * @return array
+     */
+    public function getNotificationDetails(): array
+    {
+        return $this->notification_details;
+    }
 }
-
-

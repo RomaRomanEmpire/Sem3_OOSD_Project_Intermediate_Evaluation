@@ -5,28 +5,12 @@ $conn = DB_OP::get_connection();
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    include 'functions.php';
 
-    if ($_POST['officer'] == "Database_Manager") {
-        $staff_member = new DatabaseManager($_POST);
-    } else if ($_POST['officer'] == "Admin") {
-        $staff_member = new Admin($_POST);
-    } else if ($_POST['officer'] == "authorized_person") {
-        $staff_member = new Admin($_POST);
-    } else if ($_POST['officer'] == "Estate_Superintendent") {
-        $staff_member = new E_S($_POST);
-    } else if ($_POST['officer'] == "Grama_Niladari") {
-        $staff_member = new GramaNiladari($_POST);
-    } else if ($_POST['officer'] == "Principal") {
-        $staff_member = new Principal($_POST);
-    } else if ($_POST['officer'] == "Divisional_Secretary") {
-        $staff_member = new DivisionalSecretary($_POST);
-    } else if ($_POST['officer'] == "National_Identity_Card_Issuer") {
-        $staff_member = new NIC_Issuer($_POST);
-    }
+    $staff_member = createStaffMember($_POST);
 
     $db_manager = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
     $db_manager->set_db($conn);
-    $db_manager->set_row_id($_SESSION['user_id']);
 
     if ($_POST['officer'] == "Grama_Niladari") {
         if (!empty($_POST['gdivision'])) {

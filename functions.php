@@ -1,6 +1,6 @@
 <?php
 
-function checkFileValidity($filename_in_form)
+function checkFileValidity($filename_in_form): ?string
 {
     //upload a file
     if (isset($_FILES[$filename_in_form]) && $_FILES[$filename_in_form]['size'] != 0) {
@@ -36,6 +36,7 @@ function checkFileValidity($filename_in_form)
         }
 
     }
+    return NULL;
 }
 
 function notifyIApprovers_absent($conn)
@@ -45,10 +46,10 @@ function notifyIApprovers_absent($conn)
         if ($row['stat'] == 'sent_to_rap_1') {
             $div_id = $conn->get_column_value($row['address_type'], 'basic_division', '=', $row['gn_div_or_address'], 'staff_id', "");
 
-        }else {
+        } else {
             $div_id = $conn->get_column_value('ds', 'DS', '=', $row['ds'], 'staff_id', "");
         }
-        if ($div_id==0) {
+        if ($div_id == 0) {
             $approvers = unserialize($row['application_object'])->getApprovers();
 
             foreach ($approvers as $i => $person):
@@ -68,4 +69,29 @@ function uploadSign($sign): string
     $file = $folderPath . uniqid() . '.' . $image_type;
     file_put_contents($file, $image_base64);
     return $file;
+}
+
+function createStaffMember($dataArray)
+{
+    include 'autoloader.php';
+    if ($dataArray['officer'] == "Database_Manager") {
+        $staff_member = new DatabaseManager($dataArray);
+    } else if ($dataArray['officer'] == "Admin") {
+        $staff_member = new Admin($dataArray);
+    } else if ($dataArray['officer'] == "authorized_person") {
+        $staff_member = new Admin($dataArray);
+    } else if ($dataArray['officer'] == "Estate_Superintendent") {
+        $staff_member = new E_S($dataArray);
+    } else if ($dataArray['officer'] == "Grama_Niladari") {
+        $staff_member = new GramaNiladari($dataArray);
+    } else if ($dataArray['officer'] == "Principal") {
+        $staff_member = new Principal($dataArray);
+    } else if ($dataArray['officer'] == "Divisional_Secretary") {
+        $staff_member = new DivisionalSecretary($dataArray);
+    } else if ($dataArray['officer'] == "National_Identity_Card_Issuer") {
+        $staff_member = new NIC_Issuer($dataArray);
+    } else if ($dataArray['officer'] == 'authorized_person') {
+        $staff_member = new AuthorizedPPerson($dataArray);
+    }
+    return $staff_member;
 }

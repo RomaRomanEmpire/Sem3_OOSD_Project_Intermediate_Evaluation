@@ -250,7 +250,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     foreach ($result_receive_confirmation as $i => $row):
                         $notification = $conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order);
-                        ?>
+                        $notification_details = $notification->accept($staff_member);
+                    ?>
                         <tr>
                             <td><?php echo $row['id']; ?></td>
                             <td><?php
@@ -258,10 +259,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
                                 echo $applicant;
                                 ?></td>
-                            <td><?php echo $notification->getContent(); ?></td>
+                            <td><?php echo $notification_details['content']; ?></td>
                             <td><?php
 
-                                $receive_file = $notification->getAttachment();
+                                $receive_file = $notification_details['attachment'];
                                 if (isset($receive_file)) {
                                     echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
 													<embed src=\"$receive_file\", width=100px height=100px>";
@@ -297,6 +298,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     foreach ($result_appointment_reschedules as $i => $row):
                         $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order));
+                        $notification_details = $notification->accept($staff_member);
                         ?>
                         <tr>
                             <th scope="row"><?php echo $row['n_id']; ?></th>
@@ -305,9 +307,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
                                 echo $applicant;
                                 ?></td>
-                            <td><?php echo $notification->getAppointmentDate(); ?></td>
-                            <td><?php echo $notification->getAppointmentTime(); ?></td>
-                            <td><?php echo $notification->getContent(); ?></td>
+                            <td><?php echo $notification_details['appointment_date']; ?></td>
+                            <td><?php echo $notification_details['appointment_time']; ?></td>
+                            <td><?php echo $notification_details['content']; ?></td>
                             <td>
                                 <a href="Time_slot.php?application_id=<?php echo $row['application_id']; ?>">
                                     <button type="button" class="btn btn-outline-success"><img src="Image/Add1.jpg" alt="">Add
@@ -347,7 +349,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     foreach ($result_appointment_schedules as $i => $row):
                         $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order));
-                        ?>
+                        $notification_details = $notification->accept($staff_member);
+                    ?>
                         <tr>
                             <th scope="row"><?php echo $row['application_id']; ?></th>
                             <td><?php echo $row['n_type'];?></td>
@@ -356,9 +359,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
                                 echo $applicant;
                                 ?></td>
-                            <td><?php echo $notification->getAppointmentDate(); ?></td>
-                            <td><?php echo $notification->getAppointmentTime(); ?></td>
-                            <td><?php echo $notification->getSendDate(); ?></td>
+                            <td><?php echo $notification_details['appointment_date']; ?></td>
+                            <td><?php echo $notification_details['appointment_time']; ?></td>
+                            <td><?php echo $notification_details['send_date']; ?></td>
 
                         </tr>
 
@@ -389,6 +392,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     foreach ($result_confirmations as $i => $row):
                         $notification = $conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order);
+                        $notification_details = $notification->accept($staff_member);
                         ?>
                         <tr>
                             <th scope="row"><?php echo $row['id']; ?></th>
@@ -397,7 +401,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
                                 echo $applicant;
                                 ?></td>
-                            <td><?php echo $notification->getSendDate(); ?></td>
+                            <td><?php echo $notification_details['send_date']; ?></td>
                             <td><a href="view_message.php?n_id=<?php echo $row['n_id'] ?>">
                                     <button type="button" class="btn btn-outline-primary" style="width: 100px;"><img
                                                 src="Image/view.png"> view

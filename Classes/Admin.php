@@ -16,12 +16,13 @@ class Admin extends L_P_User implements IVisitor
 	public function approve_application($application)
 	{
 		$application->approve($this);
-		$this->db->add_sign_to_application($application->getRowId(), $application);
+		$application->setApprovedDate();
+		$this->db->save_state_of_application($application);
 	}
 
 	public function reject_application($application,$notification){
 		$application->reject($this,$notification);
-		$this->db->add_sign_to_application($application->getRowId(), $application);
+		$this->db->save_state_of_application($application);
 	}
 
 	/**
@@ -43,12 +44,12 @@ class Admin extends L_P_User implements IVisitor
 
 	function visitApplication($application)
 	{
-		// TODO: Implement visitApplication() method.
+		return $application->getApplicationDetails();
 	}
 
 	function visitNotification($notification)
 	{
-		// TODO: Implement visitNotification() method.
+		return $notification->getNotificationDetails();
 	}
 }
 

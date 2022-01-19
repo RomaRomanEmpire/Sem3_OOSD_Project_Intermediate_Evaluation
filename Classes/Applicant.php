@@ -21,14 +21,9 @@ class Applicant extends L_P_User implements IApprover,IVisitor
   }
 
 
-  public function apply_NIC($gn_div_or_address,$ds,$table,$application_object)
+  public function apply_NIC($table,$application_object)
   {
-    $this->db->add_application($this->row_id,$gn_div_or_address,$ds,$table,$application_object);
-  }
-
-  public function select_time_slot()
-  {
-    // code..
+    $this->db->add_application($this->row_id,$table,$application_object);
   }
 
   /**
@@ -66,12 +61,12 @@ class Applicant extends L_P_User implements IApprover,IVisitor
 
   public function visitApplication($application)
   {
-    // TODO: Implement visitApplication() method.
+    return $application->getApplicationDetails();
   }
 
   public function visitNotification($notification)
   {
-    // TODO: Implement visitNotification() method.
+    return $notification->getNotificationDetails();
   }
 }
 

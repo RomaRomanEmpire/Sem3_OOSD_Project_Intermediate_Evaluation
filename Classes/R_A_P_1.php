@@ -17,7 +17,7 @@ abstract class R_A_P_1 extends R_A_P
 
     public function add_applicant_sign($application,$file){
         $application->setApplicantSign($file);
-        $this->db->add_sign_to_application($application->getRowId(), $application);
+        $this->db->save_state_of_application($application);
     }
 
 

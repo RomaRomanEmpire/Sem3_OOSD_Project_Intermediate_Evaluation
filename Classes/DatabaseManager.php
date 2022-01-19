@@ -47,13 +47,13 @@ class DatabaseManager extends User implements IVisitor
 
     function visitApplication($application)
     {
-        // TODO: Implement visitApplication() method.
+        return $application->getApplicationDetails();
     }
 
     function visitNotification($notification)
     {
-        // TODO: Implement visitNotification() method.
+        return $notification->getNotificationDetails();
     }
 }
 
-?>
+
