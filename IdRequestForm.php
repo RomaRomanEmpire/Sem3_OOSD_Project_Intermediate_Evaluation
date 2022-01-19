@@ -332,14 +332,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt><b><label for="countryOfBirth">Country of Birth</label></b></dt>
                             <dd><input type="text" id="countryOfBirth" name="countryOfBirth"
-                                       value="<?php echo $_POST['countryOfBirth']??NULL?>" placeholder="Country of Birth..."></dd>
+                                       value="<?php echo $_POST['countryOfBirth']??NULL?>" placeholder="Country of Birth..." onchange="make_require()"></dd>
                         </dl>
                     </div>
 
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="city">City</label></b></dt>
-                            <dd><input type="text" id="city" name="birthCity" value="<?php echo $_POST['birthCity']??NULL?>" placeholder="City...">
+                            <dd><input type="text" id="city" name="birthCity" value="<?php echo $_POST['birthCity']??NULL?>" placeholder="City..." onchange="make_require()">
                             </dd>
                         </dl>
                     </div>
@@ -348,7 +348,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dl>
                             <dt><b><label for="certificateNo">Certificate No.</label></b></dt>
                             <dd><input type="number" id="certificateNo" name="citizenshipCertificateNo"
-                                       value="<?php echo $_POST['citizenshipCertificateNo']??NULL?>" placeholder="Certificate No...">
+                                       value="<?php echo $_POST['citizenshipCertificateNo']??NULL?>" placeholder="Certificate No..." onchange="make_require()">
                             </dd>
                         </dl>
                     </div>
@@ -581,7 +581,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </dl> -->
 
 
-                    
+
 
                     <!-- <button type="button" class="previous-btn">Previous</button> -->
                     <!-- <button type="submit" class="submit-btn">Submit</button>
@@ -597,7 +597,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <dt><b><label for="certifySignature">Signature of the Applicant</label></b></dt>
                     </dl>
                 </div>
-               
+
 
                 <div>
                     <canvas id="can" width="910" height="400" name="sign_1"
@@ -685,6 +685,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
     </div>
 </section>
+
+<script>
+  function make_require() {
+    var countryOfBirth = document.getElementById("countryOfBirth").value;
+    var city = document.getElementById("city").value;
+
+    if (countryOfBirth || city) {
+      countryOfBirth.required = true;
+      city.required = true;
+    } else {
+      countryOfBirth.removeAttribute("required");
+      city.removeAttribute("required");
+    }
+
+
+  }
+
+</script>
 
 
 <script>
