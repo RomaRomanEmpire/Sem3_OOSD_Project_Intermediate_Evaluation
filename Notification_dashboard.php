@@ -23,18 +23,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Notification</title>
     <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" href="style2.css">
+    <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
     <style>
 
-        /* html{
-              height: 100%;
-        } */
+       
         body {
             font-family: Arial, Helvetica, sans-serif;
 
             text-align: center;
             min-height: 100vh;
-            background: rgb(2, 0, 36);
-            background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 1%, rgba(0, 212, 255, 1) 100%);
+            /* background: rgb(2, 0, 36); */
+            /* background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 1%, rgba(0, 212, 255, 1) 100%); */
 
         }
 
@@ -60,26 +59,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         select:hover {
-            background-color: #494949;
+            
+            background: white;
+            color:black;
         }
 
         select {
-            width: 50%;
-            padding: 12px;
+            height: 35px;
+            width: 150px;
+            padding-left: 12px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
             margin-top: 6px;
             margin-bottom: 16px;
             resize: vertical;
-            background-color: #203169;
+            /* background-color: none; */
+            background: rgba(0,0,0,0.1);
             color: white;
         }
 
-        /* h1,
-        h3 {
-            font-family: 'Permanent Marker', cursive;
-        } */
+        
 
         #Form {
             margin: 5px;
@@ -116,18 +116,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             right: 0;
             width: 100%;
             min-height: 100vh;
-            background: #f1f1f1;
+            
         }
+        .BackGround_Image .container1 .header2 .nav button{
+            height: 35px;
+            width: 150px;
+            background: rgba(0,0,0,0.1);
+            color: white;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .BackGround_Image .container1 .header2 .nav button:hover{
+            background: white;
+            color:black;
+        }
+        .BackGround_Image .container1 .header2 .nav   ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: white;}
+         /* Microsoft Edge */
+        /* .BackGround_Image .container1 .header2 .nav     ::-ms-input-placeholder { */
+            
+           /* color: white;} */
+          
     </style>
     <script src="Javascipt_File.js">
     </script>
 </head>
-<body style="background-color: red;">
+<body >
+<div class="BackGround_Image">
 <div class="container1">
     <div class="header2">
         <div class="nav">
             <div>
-                <h2 style="color: white;padding-left:800px;padding-top:20px;"><p id="Topic">Inbox Messages</p></h2>
+                <h2 style="color: white;padding-left:400px;padding-top:20px;"><p id="Topic">Inbox Messages</p></h2>
             </div>
 
 
@@ -137,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <tr>
                     <form id="search-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                         <td>
-                            <div class="input-group mb-3" style="  width: 50%;padding-right:50px;padding-left:170px;">
+                            <div class="input-group mb-3" style="  width: 50%;padding-right:50px;padding-left:0px;">
                         <td style="padding-left: 0px;">
                             <button class="btn btn-outline-light" type="submit" id="button-addon1"
                                     style="height: 35px;border-radius: 0px;">Search
@@ -147,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                               placeholder="Enter ID Number........."
                                                               aria-label="Example text with button addon"
                                                               aria-describedby="button-addon1"
-                                                              style="height: 35px;border-radius: 0px;"></td>
+                                                              style="height: 35px;border-radius: 0px; background: rgba(0,0,0,0.1);color:white;"></td>
 
         </div>
         </td>
@@ -157,8 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <td style="padding-top: 5px;padding-left:100px;">
                 <div>
 
-                    <select name="order" class="form-select" aria-label="Default select example"
-                            style="height: 35px;width:150px; background-color: #203169;color:white;">
+                    <select name="order"  aria-label="Default select example"  >
                         <option value="latest" selected="selected">Latest</option>
                         <option value="oldest">Oldest</option>
                     </select>
@@ -166,9 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </td>
             <td style="padding-left:60px;">
                 <div>
-                    <button type="submit" class="btn btn-success"
-                            style="height:35px; background-color: #203169;color:white;">Apply Filter
-                    </button>
+                    <button type="submit" >Apply Filter </button>
                 </div>
             </td>
         </form>
@@ -179,10 +196,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     </div>
-    <div style="padding-top: 45px;">
+    <div style="padding-top: 75px;">
         <!--        correct back button-->
-        <a class="btn btn-outline-light" href="dashboard.php" role="button"
-           style="height: 35px; width: 150px; padding-right:10px;margin-right: 10px;">Back</a>
+        <a class="btn btn-outline-light fas fa-arrow-left" href="dashboard.php" role="button"
+           style="height: 35px; width: 150px; padding-right:10px;margin-right: 10px;"> Back</a>
     </div>
 
 </div>
@@ -192,19 +209,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <ul>
         <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedc" autocomplete="off"
                    onclick="Notification()">
-            <label class="btn btn-outline-primary" for="btn_check_outlinedc"><p
+            <label class="btn btn-outline-light" for="btn_check_outlinedc" style="border-color: white;"><p
                         style="font-weight: bold;width:150px; height:10px;">Confirm Messages</p></label><br>
         </li>
         <br>
         <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedI" autocomplete="off"
                    onclick="Notification()">
-            <label class="btn btn-outline-primary" for="btn_check_outlinedI"><p
+            <label class="btn btn-outline-light" for="btn_check_outlinedI" style="border-color: white;"><p
                         style="font-weight: bold;width:150px; height:10px;">Inbox Messages</p></label><br>
         </li>
         <br>
         <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedS" autocomplete="off"
                    onclick="Notification()">
-            <label class="btn btn-outline-primary" for="btn_check_outlinedS"><p
+            <label class="btn btn-outline-light" for="btn_check_outlinedS" style="border-color: white;"><p
                         style="font-weight: bold;width:150px; height:10px;">Sent Messages</p></label>
         </li>
         <fieldset id="Sent" style="display: none;">
@@ -212,14 +229,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li>
                 <input type="radio" name="e" class="btn-check" id="btn_check_outlinedT" autocomplete="off"
                        onclick="Notification()">
-                <label class="btn btn-outline-success" for="btn_check_outlinedT"><p
+                <label class="btn btn-outline-info" for="btn_check_outlinedT"><p
                             style="font-weight: bold;width:150px; height:10px;">Time Allocation</p></label>
             </li>
             <br>
             <li>
                 <input type="radio" name="e" class="btn-check" id="btn_check_outlinedR" autocomplete="off"
                        onclick="Notification()">
-                <label class="btn btn-outline-success" for="btn_check_outlinedR"><p
+                <label class="btn btn-outline-info" for="btn_check_outlinedR"><p
                             style="font-weight: bold;width:150px; height:10px;">Confirmations</p></label>
             </li>
         </fieldset>
@@ -229,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 
-<div class="Center">
+<div class="Center" style="padding-top: 150px;">
     <fieldset id="confirmation_message" style="display: none;">
         <div>
             <table class="table table-primary table-hover">
@@ -317,9 +334,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <td><?php echo $notification_details['content']; ?></td>
                             <td>
                                 <a href="Time_slot.php?application_id=<?php echo $row['application_id']; ?>">
-                                    <button type="button" class="btn btn-outline-success"><img src="Image/Add1.jpg"
-                                                                                               alt="">Add
-                                        reply
+                                    <button type="button" class="btn btn-outline-success"><i class="fas fa-plus"></i> Add reply
                                     </button>
                                 </a></td>
                         </tr>
@@ -421,7 +436,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </fieldset>
 </div>
-
+</div>
 
 </body>
 </html>
