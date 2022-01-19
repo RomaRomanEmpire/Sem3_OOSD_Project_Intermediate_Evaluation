@@ -41,7 +41,8 @@ class DB_OP
         return self::$db;
     }
 
-    public function login_attempt($uname_or_email, $password)
+    public
+    function login_attempt($uname_or_email, $password)
     {
         $sql = "SELECT * FROM user_details where username=? or email = ?";
         if ($stmt = $this->link->prepare($sql)) {
@@ -177,23 +178,23 @@ class DB_OP
     }
 
     public
-    function issue_ID($applicant_id, $issue_date, $nic_object)
+    function issue_NIC($application_id, $nic_object)
     {
-        $sql = "INSERT INTO issued_id_history (applicant_id,issue_date, nic_object) VALUES (?,?,?)";
+        $sql = "INSERT INTO issued_id_history (application_id,issue_date, nic_object) VALUES (?,?,?)";
         if ($stmt = $this->link->prepare($sql)) {
 
             // Bind variables to the prepared statement as parameters
 
-            $stmt->bind_param("iss", $param_applicant_id, $param_issue_date, $param_nic_object);
+            $stmt->bind_param("iss", $param_application_id, $param_issue_date, $param_nic_object);
 
             // Set parameters
-            $param_applicant_id = $applicant_id;
-            $param_issue_date = $issue_date;
+            $param_application_id = $application_id;
+            $param_issue_date = $nic_object->getIssuedDate();
             $param_nic_object = serialize($nic_object);
 
             if ($stmt->execute()) {
                 // Redirect to login page
-                echo "<script type='text/javascript'>alert('The request has been send successfully!'); window.location.href = 'new_view_request.html';</script>";
+                echo "<script type='text/javascript'>alert('The request has been send successfully!'); </script>";
 
             } else {
                 echo "<script type='text/javascript'>alert('Ooops! Something went wrong!'); window.location.href = 'newRequest.php';</script>";
@@ -268,7 +269,36 @@ class DB_OP
     }
 
     public
-    function save_state_of_application($application_object)
+    function application_processed($applicant_id, $application_object)
+    {
+        $sql = "INSERT INTO application_history(application_id, applicant_id ,basic_division, ds, application_object) VALUES (?,?,?,?,?)";
+        if ($stmt = $this->link->prepare($sql)) {
+
+            // Bind variables to the prepared statement as parameters
+
+            $stmt->bind_param("iisss", $param_app_id, $param_applicant_id, $param_gn_div_or_address, $param_ds, $param_application_object);
+
+            // Set parameters
+            $param_app_id= $application_object->getRowId();
+            $param_applicant_id = $applicant_id;
+            $param_gn_div_or_address = $application_object->getGnDivOrAddress();
+            $param_ds = $application_object->getDs();
+            $param_application_object = serialize($application_object);
+
+            if ($stmt->execute()) {
+                // Redirect
+                echo "<script type='text/javascript'>alert('Application moved to history!');</script>";
+            } else {
+                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
+            }
+
+            // Close statement
+            $stmt->close();
+        }
+    }
+
+    public
+    function save_state_of_application($application_object): ?bool
     {
         $sql = "UPDATE application_details SET application_object=?, stat=? WHERE app_id=?";
         if ($stmt = $this->link->prepare($sql)) {
@@ -298,7 +328,7 @@ class DB_OP
     }
 
     public
-    function save_state_of_notification($n_object)
+    function save_state_of_notification($n_object): ?bool
     {
         $sql = "UPDATE notification_details SET n_object=? WHERE n_id=?";
         if ($stmt = $this->link->prepare($sql)) {
@@ -325,20 +355,14 @@ class DB_OP
     }
 
     public
-    function remove_application($key, $key_value)
+    function remove_application($key, $key_value): ?bool
     {
         $sql = "DELETE FROM 'application details' WHERE $key=?";
         if ($stmt = $this->link->prepare($sql)) {
 
             // Bind variables to the prepared statement as parameters
 
-            $stmt->bind_param("s", $param_application_object, $param_stat, $param_app_id);
-
-            // Set parameters
-
-            $param_stat = $application_object->getState()->getState();
-            $param_app_id = $app_id;
-            $param_application_object = serialize($application_object);
+            $stmt->bind_param("s", $key_value);
 
             if ($stmt->execute()) {
                 // Redirect

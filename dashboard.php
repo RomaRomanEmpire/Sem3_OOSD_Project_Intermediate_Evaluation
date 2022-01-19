@@ -46,6 +46,15 @@ if($u_type!= 'db_manager'){
             display: none;
      }</style>";
 }
+if($user instanceof R_A_P){
+    echo "<style>#nic-issuer{
+            display: none;
+     }</style>";
+}elseif($u_type == 'ni'){
+    echo "<style>#view_application_rap{
+            display: none;
+     }</style>";
+}
 ?>
 
 <!DOCTYPE html>
@@ -66,6 +75,7 @@ if($u_type!= 'db_manager'){
 
         #view_application_db:hover,
         #view_application_rap:hover,
+        #nic-issuer:hover,
         #view_database:hover,
         #view_notifications:hover{
             background-color: rgb(246, 245, 248);
@@ -159,6 +169,9 @@ if($u_type!= 'db_manager'){
                     <a href="View_Applications_Details.php">
                         <button id="view_application_rap">  <i class="fas fa-hand-point-right"></i>View Applications Details</button>
                     </a><br><br>
+                    <a href="DBM_Notification.php">
+                        <button id="nic-issuer">  <i class="fas fa-hand-point-right"></i>View Applications Details</button>
+                    </a>
                 </div>
             </div>
         <?php } ?>

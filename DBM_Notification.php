@@ -152,7 +152,7 @@ if($type == 'db_manager'){
                         <td style="color: whitesmoke;"><?php echo $row['app_id']; ?></td>
                         <td style="color: whitesmoke;"><?php echo $application_details['approved_date']; ?></td>
                         <td style="color: whitesmoke;">
-                        <a href="ID_Details.php"><button type="button" class="btn btn-sm btn-outline-danger"><b>Application Details</b></button></a>
+                        <a href="ID_Details.php?$application_id=<?php echo $row['app_id']; ?>"><button type="button" class="btn btn-sm btn-outline-danger"><b>Application Details</b></button></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

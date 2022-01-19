@@ -1,4 +1,17 @@
+<?php
+include 'autoloader.php';
+session_start();
+$conn = DB_OP::get_connection();
+$application = unserialize($conn->get_column_value("application_details", "app_id", "=", $_GET['application_id'], "application_object", ""));
+$nic_issuer = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
+$nic_issuer->set_db($conn);
+$application_details = $application->accept($nic_issuer);
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $applicant_id = $conn->get_column_value("application_details", "app_id", "=", $_GET['application_id'], "applicant_id", "");
+    $nic_issuer->issue_NIC($applicant_id, $application, $_POST);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +31,12 @@
             border-radius: 4px;
             cursor: pointer;
         }
+
         input[type=submit]:hover {
-            background-color:rgb(30, 17, 71) ;
+            background-color: rgb(30, 17, 71);
         }
-        input[type="text"],input[type="email"],input[type="password"],input[type="number"],input[type="date"],select{
+
+        input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], select {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
@@ -34,17 +49,19 @@
 
 
         }
-        ::placeholder{
+
+        ::placeholder {
             color: black;
         }
+
         .div1 {
             border-radius: 5px;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             top: 470px;
             left: 50%;
 
             position: absolute;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
             box-sizing: border-box;
             padding: 20px 20px;
             width: 1220px;
@@ -55,16 +72,21 @@
             color: whitesmoke;
 
         }
-        td{
+
+        td {
             font-size: 20px;
             text-align: left;
         }
-        body{
-           min-height: 100vh;}
-        label{
+
+        body {
+            min-height: 100vh;
+        }
+
+        label {
             font-size: 20px;
             font-weight: bolder;
         }
+
         .header1 {
             position: absolute;
             top: 0;
@@ -75,18 +97,21 @@
             align-items: center;
             justify-content: right;
             z-index: 3;
-            background: rgba(0,0,0,0.5);
-       
+            background: rgba(0, 0, 0, 0.5);
+
         }
-        h1{
+
+        h1 {
             text-align: center;
             color: whitesmoke;
         }
+
         ::placeholder {
             color: black;
             opacity: 1;
             font-size: 15px;
         }
+
         .hero-image {
             background-image: url("Image/T.jpg");
             background-color: #cccccc;
@@ -95,53 +120,66 @@
             background-repeat: no-repeat;
             background-size: cover;
             position: relative;
-      
-    }
+
+        }
 
     </style>
-    
+
 </head>
 <body>
 <div class="hero-image">
-<div class="header1">
+    <div class="header1">
 
-    <div style="justify-content: center;margin-right:460px;margin-top:5px;" ><b><h1 style="font-size:60px;font-family:'Times New Roman', Times, serif">Applicant Details</h1> </b>   </div>
-    <a href="DBM_Notification.php"><button class="btn btn-outline-light fas fa-arrow-left" id="Back"  style="width: 140px;margin-top:5px;margin-right:8px; ">
-            
-            Back</button></a>
+        <div style="justify-content: center;margin-right:460px;margin-top:5px;"><b><h1
+                        style="font-size:60px;font-family:'Times New Roman', Times, serif">Applicant Details</h1></b>
+        </div>
+        <a href="DBM_Notification.php">
+            <button class="btn btn-outline-light fas fa-arrow-left" id="Back"
+                    style="width: 140px;margin-top:5px;margin-right:8px; ">
+
+                Back
+            </button>
+        </a>
 
 
-</div>
+    </div>
 
-<div class="div1" >
+    <div class="div1">
+        <form id="ID_details_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" disabled="disabled" method="POST">
+            <!-- <h1><span id="msgx"></span></h1> -->
+            <b> <label for="full_nameid">Full Name</label></b>
+            <input type="text" id="full_nameid" name="fullname"
+                   value="<?php echo $application_details['familyName'] . ' ' . $application_details['name'] . ' ' . $application_details['surname']; ?>">
+            <br>
+            <b> <label for="photoid">Photograph</label></b>
+            <input type="hidden" id="photoid" name="photograph" value="<?php echo $application_details['photograph']; ?>">
+            <?php
+            $receive_file = $application_details['photograph'];
+            echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
+													<embed src=\"$receive_file\", width=100px height=100px>"; ?>
 
-    <form id="ID_details_form"  >
-        <!-- <h1><span id="msgx"></span></h1> -->
-        <b> <label for="full_nameid">Full Name</label></b>
-        <input type="text" id="full_nameid" name="fullname"  >
-        <br>
-        <b> <label for="photoid">Photograph</label></b>
-        
-        <br>
-        <b> <label for="genid">Gender</label></b>
-        <input type="text" id="genid"  name="gender" >
-        <br>
-        <b> <label for="BDateid">Birthday</label></b>
-        <input type="date" id="BDateid" name="Birthday" >
-        <br>
-        <b> <label for="Bplaceid">Birth Place</label></b>
-        <input type="text" id="Bplaceid"name="Bplace" >
-        <br>
-        <b> <label for="address_">Address</label></b>
-        <input type="text" id="address_" name="Address"  >
-        <br>
-        <b> <label for="jobid">Job</label></b>
-        <input type="text" id="jobid" name="job"  >
-        <br>
-        <!-- <input type="submit" id="button" style="font-size: 17px;color:whitesmoke;font-weight:bolder;"> -->
+            <br>
+            <b> <label for="genid">Gender</label></b>
+            <input type="text" id="genid" name="gender" value="<?php echo $application_details['gender']; ?>">
+            <br>
+            <b> <label for="BDateid">Birthday</label></b>
+            <input type="date" id="BDateid" name="birthday" value="<?php echo $application_details['birthday']; ?>">
+            <br>
+            <b> <label for="Bplaceid">Birth Place</label></b>
+            <input type="text" id="Bplaceid" name="bPlace"
+                   value="<?php echo $application_details['placeOfBirth'] ?? $application_details['birthCity'] . ', ' . $application_details['countryOfBirth']; ?>">
+            <br>
+            <b> <label for="address_">Address</label></b>
+            <input type="text" id="address_" name="address"
+                   value="<?php echo $application_details['permHouseName'] . ', ' . $application_details['permRoad'] . ', ' . $application_details['permVillage']; ?>">
+            <br>
+            <b> <label for="jobid">Job</label></b>
+            <input type="text" id="jobid" name="job" value="<?php echo $application_details['profession']; ?>">
+            <br>
+            <input type="submit" id="button" style="font-size: 17px;color:whitesmoke;font-weight:bolder;">
 
-    </form>
-</div>
+        </form>
+    </div>
 </div>
 </body>
 </html>

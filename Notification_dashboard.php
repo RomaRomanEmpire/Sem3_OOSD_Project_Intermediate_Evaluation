@@ -238,6 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <tr>
                     <th scope="col">ID Number</th>
                     <th scope="col">Applicant Name</th>
+                    <th scope="col">Sender</th>
                     <th scope="col">content</th>
                     <th scope="col">Attachment</th>
                 </tr>
@@ -249,20 +250,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "No notifications!";
                 } else {
                     foreach ($result_receive_confirmation as $i => $row):
-                        $notification = $conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order);
+                        $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order));
                         $notification_details = $notification->accept($staff_member);
-                    ?>
+                        ?>
                         <tr>
-                            <td><?php echo $row['id']; ?></td>
+                            <td><?php echo $row['n_id']; ?></td>
                             <td><?php
                                 $applicant_id = $conn->get_column_value('application_details', 'app_id', '=', $row['application_id'], 'applicant_id', $order);
                                 $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
                                 echo $applicant;
                                 ?></td>
+                            <td><?php
+                                $sender = $conn->get_column_value('user_details', 'user_id', '=', $notification->getFromId(), 'username', "");
+                                echo $sender;
+                                ?></td>
                             <td><?php echo $notification_details['content']; ?></td>
                             <td><?php
 
-                                $receive_file = $notification_details['attachment'];
+                                $receive_file = $notification_details['attachment'] ?? NULL;
                                 if (isset($receive_file)) {
                                     echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
 													<embed src=\"$receive_file\", width=100px height=100px>";
@@ -312,7 +317,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <td><?php echo $notification_details['content']; ?></td>
                             <td>
                                 <a href="Time_slot.php?application_id=<?php echo $row['application_id']; ?>">
-                                    <button type="button" class="btn btn-outline-success"><img src="Image/Add1.jpg" alt="">Add
+                                    <button type="button" class="btn btn-outline-success"><img src="Image/Add1.jpg"
+                                                                                               alt="">Add
                                         reply
                                     </button>
                                 </a></td>
@@ -343,17 +349,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_appointment_schedules = $conn->database_details_2('notification_details', 'from_id','n_type','=', '=',$_SESSION['user_id'],'appointment',$order);
+                $result_appointment_schedules = $conn->database_details_2('notification_details', 'from_id', 'n_type', '=', '=', $_SESSION['user_id'], 'appointment', $order);
                 if (is_null($result_appointment_schedules)) {
                     echo "No notifications!";
                 } else {
                     foreach ($result_appointment_schedules as $i => $row):
                         $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order));
                         $notification_details = $notification->accept($staff_member);
-                    ?>
+                        ?>
                         <tr>
                             <th scope="row"><?php echo $row['application_id']; ?></th>
-                            <td><?php echo $row['n_type'];?></td>
+                            <td><?php echo $row['n_type']; ?></td>
                             <td><?php
                                 $applicant_id = $conn->get_column_value('application_details', 'app_id', '=', $row['application_id'], 'applicant_id', $order);
                                 $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
