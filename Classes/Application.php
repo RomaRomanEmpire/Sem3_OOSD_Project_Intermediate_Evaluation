@@ -159,6 +159,9 @@ class Application implements IVisitable
         return $this->ds;
     }
 
+    /**
+     *
+     */
     public function setApprovedDate(){
         date_default_timezone_set('Asia/Colombo');
         $this->application_details['approved_date'] = date('Y/m/d H:i:s');

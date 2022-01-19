@@ -10,11 +10,6 @@ abstract class R_A_P extends L_P_User implements IApprover, IVisitor
         $this->staff_id = $attributeArray['staff_id'];
     }
 
-//    public function view_application()
-//    {
-//        // code...
-//    }
-//
 //    public function send_time_slots()
 //    {
 //        // code...
@@ -29,7 +24,7 @@ abstract class R_A_P extends L_P_User implements IApprover, IVisitor
     public function reject_application($application,$notification){
         $application->reject($this,$notification);
         $this->db->save_state_of_application($application);
-        $this->db->delete_application();
+        $this->db->remove_application('app_id', $application->getRowId());
     }
 
     function visitApplication($application)

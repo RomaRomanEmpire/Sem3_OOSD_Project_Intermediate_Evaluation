@@ -627,9 +627,10 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                     <div class="Form-group">
                         <dl>
                             <dt>Purpose of application</dt>
-                            <dd><input type="text" id="purpose" name="purpose"
-                                       value="<?php echo $application_details['purpose']; ?>" placeholder="Email..."
-                                       required>
+                            <dd><label for="purpose"></label>
+                                <input type="text" id="purpose" name="purpose"
+                                                                    value="<?php echo $application_details['purpose']; ?>" placeholder="Email..."
+                                                                    required>
                         </dl>
                     </div>
                     <div class="Form-group">
