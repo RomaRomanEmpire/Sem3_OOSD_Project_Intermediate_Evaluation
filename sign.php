@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>PHP Signature Pad Example - Tutsmake.com</title>
     <link rel="stylesheet" type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css">
-
+    <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="jquery/jquery.min.js"></script>
     <link type="text/css" href="jquery-ui/jquery-ui.css" rel="stylesheet">
     <script type="text/javascript" src="jquery-ui/jquery-ui.min.js"></script>
@@ -72,11 +72,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             height: auto;
 
         }
+        .header1 {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 16vh;
+            width: 100%;
+            /* background-color: #00b4db; */
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            z-index: 3;
+            padding-right: 10px;
+
+        }
     </style>
 
 </head>
 <body>
-
+<div class="header1">
+<a href="Filled_Application.php">
+                                <button type="button" class="btn btn-sm btn-outline-light fas fa-arrow-left"
+                                        style="width: 100px;font-size:18px;color:black;height:30px;"><b>Back</b>
+                                </button>
+                            </a>
+</div>
 <div class="container">
     <form id="" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?
         application_id=<?php echo $_GET['application_id']; ?>&sign_no=<?php echo $_GET['sign_no']; ?>" method="POST">
