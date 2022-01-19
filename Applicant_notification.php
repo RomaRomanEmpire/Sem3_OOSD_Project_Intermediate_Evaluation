@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $order = "ORDER BY n_id DESC";
     if (isset($_GET['ref_id'])) {
         $ref_notification = unserialize($conn->get_column_value("notification_details", "n_id", "=", $_GET['ref_id'], "n_object", ""));
-
+        $notification_details = $ref_notification->accept($applicant);
         if ($_GET['type'] == 'confirm') {
             $notification = $applicant->prepare_notification('confirmation', 'date confirmed');
         } else {
@@ -23,8 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $notification->setFromId($_SESSION['user_id']);
         $notification->setToId($ref_notification->getFromId());
         $notification->setApplicationId($ref_notification->getApplicationId());
-        $notification->setAppointmentDate($ref_notification->getAppointmentDate());
-        $notification->setAppointmentTime($ref_notification->getAppointmentTime());
+        $notification->setAppointmentDate($notification_details['appointment_date'] );
+        $notification->setAppointmentTime($notification_details['appointment_time'] );
         $ref_notification->setHasReferenceNotificationId(true);
 
         if ($conn->save_state_of_notification($ref_notification))
@@ -41,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Notification</title>
     <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" href="style2.css">
+    <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -64,6 +65,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border: none;
             cursor: pointer;
         }
+       .container1  .header2 {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 120px;
+                width: 85%;
+                background-color: #050213fd;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 8px rgba(77, 51, 51, 0.2);
+                z-index: 3;
+            }
 
         .header2 button:hover {
             background-color: #525252;
@@ -77,31 +91,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             height: 35px;
             width: 150px;
             text-align: center;
-            background-color: #203169;
+            /* background-color: #203169; */
+            background: rgba(0,0,0,0.1);
             color: white;
+            border-color: white;
         }
-
+        .header2 button:hover {
+            background: white;
+            color: black;
+        }
         .header2 select {
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
-            margin-top: 6px;
-            margin-bottom: 16px;
+            /* margin-top: 6px;
+            margin-bottom: 16px; */
             resize: vertical;
             height: 35px;
-            width: 150px;
+            width: 250px;
             text-align: center;
-            background-color: #203169;
+            /* background-color: #203169; */
+            background: rgba(0,0,0,0.1);
             color: white;
+        }
+        .header2 select:hover {
+            background: white;
+            color: black;
+        }
+        .header2 .hover_button a{
+            height: 35px;
+             width: 150px; 
+             background: rgba(0,0,0,0.1);
+              margin-top:30px;
+               margin-right: 10px;
+        }
+     
+        .header2 .hover_button a:hover{
+            background: white;
+            color: black;
         }
 
         table {
             table-layout: fixed;
+            text-align: center;
         }
 
         td {
             word-wrap: break-word;
             padding-left: 10px;
+            padding-right: 10px;
+            
         }
 
         .container1 {
@@ -109,44 +148,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             right: 0;
             width: 100%;
             min-height: 100vh;
-            background: linear-gradient(mediumpurple, white);
+            
+            /* background: linear-gradient(mediumpurple, white); */
         }
     </style>
     <script src="Javascipt_File.js">
     </script>
 </head>
 <body>
-<div class="container1">
-    <div class="header2" style="background-color:lightblue;">
+<div class="BackGround_Image">
+<div class="container1 ">
+    <div class="header2" style="background: rgba(0,0,0,0.5);">
         <div class="nav">
-            <div>
-                <h1 style="color: black; padding-left:600px; padding-top:20px;"><p id="Topic1">Notifications</p></h1>
+            <div style="height: 20px;padding-top:0%;place-content: center;padding-bottom:5px;">
+                <h1 style="color: black; padding-left:500px; padding-top:0px;"><p id="Topic1">Appoinment Time</p></h1>
             </div>
             <table>
 
                 <tbody>
                 <tr>
 
-                    <div class="input-group mb-3" style="width: 50%;p adding-left: 30px "></div>
+                    <!-- <div class="input-group mb-3" style="width: 50%; padding-left: 0px; "></div> -->
 
 
                     <form id="order-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                        <td style="padding-top: 10px;padding-left:150px;">
-                            <div>
+                      <div style="padding-top: 80px;padding-left:200px;">
+                       <td >
+                            
 
                                 <select name="order" class="form-select" aria-label="Default select example">
                                     <option value="latest" selected="selected">Latest</option>
                                     <option value="oldest">Oldest</option>
 
                                 </select>
-                            </div>
-                        </td>
-                        <td style="margin-left:10px;">
+                            
+                        </td> 
+                        <td >
                             <div>
                                 <button type="submit" class="btn btn-success">Apply Filter
                                 </button>
                             </div>
-                        </td>
+                        </td></div>
                     </form>
                 </tr>
                 </tbody>
@@ -156,20 +198,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         </div>
 
-        <div style="padding-top: 50px;">
-            <a class="btn btn-outline-light" href="dashboard.php" role="button"
-               style="height: 35px; width: 150px; background-color:#1cdb92; margin-top:30px; margin-right: 10px;">Back</a>
+        <div style="padding-top: 50px;" class="hover_button">
+            <a class="btn btn-outline-light fas fa-arrow-left" href="dashboard.php" role="button"
+               > Back</a>
         </div>
 
     </div>
-    <div class="side_menu1" style="padding-top: 200px; padding-left:0px; background-color: lightblue;">
+    <div class="side_menu1" style="padding-top: 200px; padding-left:0px; background: rgba(0,0,0,0.5);">
 
 
         <ul>
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedT1" autocomplete="off"
                        onclick="Notification1()">
-                <label class="btn btn-outline-primary" for="btn_check_outlinedT1"><p
-                            style="font-weight: bold;width:100px; height:25px; text-align: center;">Appoinment Time</p>
+                <label class="btn btn-outline-secondary" for="btn_check_outlinedT1" style="border-color:white;"><p
+                            style="width:100px; height:25px; text-align: center;color:white;"><i class="fas fa-angle-double-right"></i>Appoinment Time</p>
                 </label><br>
             </li>
 
@@ -177,16 +219,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li>
                 <input type="radio" name="h" class="btn-check" id="btn_check_outlinedR1" autocomplete="off"
                        onclick="Notification1()">
-                <label class="btn btn-outline-primary" for="btn_check_outlinedR1"><p
-                            style="font-weight: bold;width:100px; height:25px; text-align: center;">Confirmation</p>
+                <label class="btn btn-outline-secondary" for="btn_check_outlinedR1" style="border-color:white;"><p
+                            style="width:100px; height:25px; text-align: center;color:white;"><i class="fas fa-angle-double-right"></i>Confirmed Message</p>
                 </label>
             </li>
             <br>
 
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedS1" autocomplete="off"
                        onclick="Notification1()">
-                <label class="btn btn-outline-primary" for="btn_check_outlinedS1"><p
-                            style="font-weight: bold;width:100px; height:25px; text-align: center;">Sent Messages</p>
+                <label class="btn btn-outline-secondary" for="btn_check_outlinedS1" style="border-color:white;"><p
+                            style="width:100px; height:25px; text-align: center;color:white; "><i class="fas fa-angle-double-right"></i>Sent Messages</p>
                 </label>
             </li>
 
@@ -197,152 +239,151 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="Center">
 
-        <fieldset id="Time1" style="display: block;">
+<fieldset id="Time1" style="display: block;">
 
-            <table class="table table-primary table-hover">
+    <table class="table table-primary table-hover">
 
-                <thead>
+        <thead>
+        <tr>
+
+            <th scope="col">Authorize officer</th>
+            <th scope="col">Appointment Date</th>
+            <th scope="col">Appointment Time</th>
+            <th scope="col">Confirm</th>
+            <th scope="col">Ask another date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $result_receive_appointment = $conn->database_details_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'appointment', $order);
+        if (is_null($result_receive_appointment))
+            echo "No notifications!";
+        else {
+            foreach ($result_receive_appointment as $i => $row):
+                $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order));
+                $notification_details = $notification->accept($applicant);
+                ?>
+
                 <tr>
+                    <td><?php
+                        $officer = unserialize($conn->get_column_value('user_details', 'user_id', '=', $notification->getFromId(), 'u_object', $order));
+                        echo $officer->get_user_type() . ' ' . $officer->get_user_name(); ?></td>
+                    <td><?php echo $notification_details['appointment_date']; ?></td>
+                    <td><?php echo $notification_details['appointment_time']; ?></td>
 
-                    <th scope="col">Authorize officer</th>
-                    <th scope="col">Appointment Date</th>
-                    <th scope="col">Appointment Time</th>
-                    <th scope="col">Confirm</th>
-                    <th scope="col">Ask another date</th>
+                    <td>
+                        <form id=""
+                              action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?type=confirm&ref_id=<?php echo $row['n_id']; ?>"
+                              method="POST">
+                            <button type="submit" name="confirm_time" class="btn btn-outline-success"
+                                    <?php if ($notification_details['has_reference_notification_id']){ ?>disabled<?php } ?>>
+                                Confirm
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <form id=""
+                              action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?type=another_date&ref_id=<?php echo $row['n_id']; ?>"
+                              method="POST">
+
+                            <button type="submit" name="request_time" class="btn btn-outline-success"
+                                    <?php if ($notification_details['has_reference_notification_id']){ ?>disabled<?php } ?>>
+                                Another Date
+                            </button>
+
+                        </form>
+                    </td>
+
                 </tr>
-                </thead>
-                <tbody>
-                <?php
-                $result_receive_appointment = $conn->database_details_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'appointment', $order);
-                if (is_null($result_receive_appointment))
-                    echo "No notifications!";
-                else {
-                    foreach ($result_receive_appointment as $i => $row):
-                        $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order));
-                        $notification_details = $notification->accept($applicant);
-                        ?>
 
-                        <tr>
-                            <td><?php
-                                $officer = unserialize($conn->get_column_value('user_details', 'user_id', '=', $notification->getFromId(), 'u_object', $order));
-                                echo $officer->get_user_type() . ' ' . $officer->get_user_name(); ?></td>
-                            <td><?php echo $notification_details['appointment_date']; ?></td>
-                            <td><?php echo $notification_details['appointment_time']; ?></td>
+            <?php endforeach;
+        } ?>
 
-                            <td>
-                                <form id=""
-                                      action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?type=confirm&ref_id=<?php echo $row['n_id']; ?>"
-                                      method="POST">
-                                    <button type="submit" name="confirm_time" class="btn btn-outline-success"
-                                            <?php if ($notification_details['has_reference_notification_id']){ ?>disabled<?php } ?>>
-                                        Confirm
-                                    </button>
-                                </form>
-                            </td>
-                            <td>
-                                <form id=""
-                                      action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?type=another_date&ref_id=<?php echo $row['n_id']; ?>"
-                                      method="POST">
+        </tbody>
+    </table>
 
-                                    <button type="submit" name="request_time" class="btn btn-outline-success"
-                                            <?php if ($notification_details['has_reference_notification_id']){ ?>disabled<?php } ?>>
-                                        Another Date
-                                    </button>
-
-                                </form>
-                            </td>
-
-                        </tr>
-
-                    <?php endforeach;
-                } ?>
-
-                </tbody>
-            </table>
-
-        </fieldset>
+</fieldset>
 
 
-        <fieldset id="Reject_message1" style="display: none;">
-            <div>
-                <table class="table table-primary table-hover">
+<fieldset id="Reject_message1" style="display: none;">
+    <div>
+        <table class="table table-primary table-hover">
 
-                    <thead>
-                    <tr style="text-align: center">
+            <thead>
+            <tr style="text-align: center">
 
-                        <th scope="col">Authorize officer</th>
-                        <th scope="col">Received Date</th>
-                        <th scope="col">Content</th>
-                        <th scope="col">Attachment</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    $result_receive_confirmations = $conn->database_details_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'confirmation', $order);
-                    if (is_null($result_receive_confirmations)) {
-                        echo "No notifications!";
-                    } else {
-                        foreach ($result_receive_confirmations as $i => $row):
-                            $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', ""));
-                            $notification_details = $notification->accept($applicant);
-                        ?>
-                            <tr>
-                                <td><?php echo $notification->getFromId(); ?></td>
-                                <td><?php echo $notification_details['send_date']; ?></td>
-                                <td><?php echo $notification_details['content']; ?></td>
-                                <td><?php
-                                    $receive_file = $notification_details['attachment'];
-                                    if (isset($receive_file)) {
-                                        echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
-													<embed src=\"$receive_file\" width=100px height=100px>";
-                                    } ?></td>
-
-                            </tr>
-                        <?php endforeach;
-                    } ?>
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
-
-        <fieldset id="Sent_message1" style="display:none;">
-            <div>
-                <table class="table table-primary table-hover">
-
-                    <thead>
+                <th scope="col">Authorize officer</th>
+                <th scope="col">Received Date</th>
+                <th scope="col">Content</th>
+                <th scope="col">Attachment</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $result_receive_confirmations = $conn->database_details_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'confirmation', $order);
+            if (is_null($result_receive_confirmations)) {
+                echo "No notifications!";
+            } else {
+                foreach ($result_receive_confirmations as $i => $row):
+                    $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', ""));
+                    $notification_details = $notification->accept($applicant);
+                ?>
                     <tr>
-                        <th scope="col">Receiving officer</th>
-                        <th scope="col">Send Date</th>
-                        <th scope="col">Content</th>
+                        <td><?php echo $notification->getFromId(); ?></td>
+                        <td><?php echo $notification_details['send_date']; ?></td>
+                        <td><?php echo $notification_details['content']; ?></td>
+                        <td><?php
+                            $receive_file = $notification_details['attachment'];
+                            if (isset($receive_file)) {
+                                echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
+                                            <embed src=\"$receive_file\" width=100px height=100px>";
+                            } ?></td>
 
                     </tr>
-                    </thead>
-                    <tbody>
-                    <?php
-                    $result_sent_notifications = $conn->database_details('notification_details', 'from_id', $_SESSION['user_id'], "");
-                    if (is_null($result_sent_notifications)) {
-                        echo "No notifications!";
-                    } else {
-                        foreach ($result_sent_notifications as $i => $row):
-                            $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', ""));
-                            $notification_details = $notification->accept($applicant);
-                            $receiver = unserialize($conn->get_column_value('user_details', 'user_id', '=', $row['to_id'], 'u_object', ""));
-                            ?>
-                            <tr>
-
-                                <th scope="row"><?php echo $receiver->get_user_type() . ' ' . $receiver->get_user_name(); ?></th>
-                                <td><?php echo $notification_details['send_date']; ?></td>
-                                <td><?php echo $notification_details['content']; ?></td>
-                            </tr>
-
-                        <?php endforeach;
-                    } ?>
-
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
+                <?php endforeach;
+            } ?>
+            </tbody>
+        </table>
     </div>
+</fieldset>
+
+<fieldset id="Sent_message1" style="display:none;">
+    <div>
+        <table class="table table-primary table-hover">
+
+            <thead>
+            <tr>
+                <th scope="col">Receiving officer</th>
+                <th scope="col">Send Date</th>
+                <th scope="col">Content</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $result_sent_notifications = $conn->database_details('notification_details', 'from_id', $_SESSION['user_id'], "");
+            if (is_null($result_sent_notifications)) {
+                echo "No notifications!";
+            } else {
+                foreach ($result_sent_notifications as $i => $row):
+                    $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', ""));
+                    $notification_details = $notification->accept($applicant);
+                    $receiver = unserialize($conn->get_column_value('user_details', 'user_id', '=', $row['to_id'], 'u_object', ""));
+                    ?>
+                    <tr>
+
+                        <th scope="row"><?php echo $receiver->get_user_type() . ' ' . $receiver->get_user_name(); ?></th>
+                        <td><?php echo $notification_details['send_date']; ?></td>
+                        <td><?php echo $notification_details['content']; ?></td>
+                    </tr>
+
+                <?php endforeach;
+            } ?>
+
+            </tbody>
+        </table>
+    </div>
+</fieldset>
 </div>
 
 </body>
