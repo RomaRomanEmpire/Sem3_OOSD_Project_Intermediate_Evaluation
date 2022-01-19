@@ -412,8 +412,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="Form-group">
                         <dl>
                             <dt><b><label for="certificateNo">4.2. Certificate Number</label></b></dt>
-                            <dd><input type="number" id="certificateNoSelect" name="certificateNo"
-                                       value="<?php echo $_POST['certificateNo']??NULL?>" placeholder="Certificate Number..."></dd>
+                            <dd><input type="number" id="certificateNoSelect" name="certificateNo_9"
+                                       value="<?php echo $_POST['certificateNo_9']??NULL?>" placeholder="Certificate Number..."></dd>
                         </dl>
                     </div>
 

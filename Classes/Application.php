@@ -41,7 +41,7 @@ class Application implements IVisitable
         $this->application_details['citizenshipCertificateNo'] = $attributeArray['citizenshipCertificateNo'] ?? NULL;
         $this->application_details['citizenshipCertificateType'] = $attributeArray['citizenshipCertificateType'] ?? NULL;
 
-        $this->application_details['certificateNo_9.1'] = $attributeArray['certificateNo_9.1'] ?? NULL;
+        $this->application_details['certificateNo_9'] = $attributeArray['certificateNo_9'] ?? NULL;
         $this->application_details['citizenshipCertificateDate'] = $attributeArray['citizenshipCertificateDate'] ?? NULL;
         $this->application_details['residenceTelNo'] = $attributeArray['residenceTelNo'] ?? NULL;
         $this->application_details['mobileTelNo'] = $attributeArray['mobileTelNo'] ?? NULL;

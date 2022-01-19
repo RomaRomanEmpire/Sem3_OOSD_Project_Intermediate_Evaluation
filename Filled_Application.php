@@ -577,8 +577,8 @@ if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == 
                 <div class="Form-group">
                     <dl>
                         <dt><b><label for="certificateNo">Certificate Number</label></b></dt>
-                        <dd><input type="number" id="certificateNo" name="certificateNo_9.1"
-                                   value="<?php echo $application_details['certificateNo_9.1']; ?>"
+                        <dd><input type="number" id="certificateNo" name="certificateNo_9"
+                                   value="<?php echo $application_details['certificateNo_9']; ?>"
                                    placeholder="Certificate Number..." required></dd>
                     </dl>
                 </div>
