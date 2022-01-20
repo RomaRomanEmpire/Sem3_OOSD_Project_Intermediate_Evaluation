@@ -55,6 +55,9 @@ class DatabaseManager extends User implements IVisitor
         return $notification->getNotificationDetails();
     }
 
+    public function getNextStaffId(){
+        return ($this->db->get_column_value("user_details", "staff_id", ">", "0", "staff_id", "ORDER BY staff_id DESC") ?? 0)+1;
+    }
 
     public function fetchGnCode($div, $div2)
     {
