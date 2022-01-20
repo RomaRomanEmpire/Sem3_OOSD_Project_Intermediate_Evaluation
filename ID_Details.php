@@ -61,13 +61,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background: rgba(0, 0, 0, 0.5);
             top: 470px;
             left: 50%;
-
+            margin-top: 80px;
             position: absolute;
             transform: translate(-50%, -50%);
             box-sizing: border-box;
             padding: 20px 20px;
             width: 1220px;
-            height: 750px;
+            height: 900px;
             padding-bottom: 20px;
             bottom: 200px;
             z-index: 2;
@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .hero-image {
             background-image: url("Image/T.jpg");
             background-color: #cccccc;
-            height: 850px;
+            height: 1000px;
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -135,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div style="justify-content: center;margin-right:460px;margin-top:5px;"><b><h1
                         style="font-size:60px;font-family:'Times New Roman', Times, serif">Applicant Details</h1></b>
         </div>
-        <a href="DBM_Notification.php">
+        <a href="DBM_NI_visitables.php">
             <button class="btn btn-outline-light fas fa-arrow-left" id="Back"
                     style="width: 140px;margin-top:5px;margin-right:8px; ">
 
@@ -179,7 +179,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" id="jobid" name="job" value="<?php echo $application_details['profession']; ?>">
             <br>
             <input type="submit" id="button" style="font-size: 17px;color:whitesmoke;font-weight:bolder;">
-
+            <br>
+            <br>
         </form>
     </fieldset>
 </div>
