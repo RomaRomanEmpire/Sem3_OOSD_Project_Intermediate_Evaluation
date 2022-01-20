@@ -56,10 +56,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         #uploadBtn {
             height: 40px;
             width: 60%;
-            position: absolute;
+            position: relative;
             bottom: 0;
             top: 55%;
-            left: 30%;
+            /*left: 30%;*/
             border: 1px solid;
             /* transform: translateX(-50%); */
             /* text-align: center; */
@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
            <br>
             <div class="form-group" style=" margin-bottom:40px;">
                 
-                <label for="file" id="uploadBtn" style="width: 200px;left:100px; height:35px;border-color:white;padding-top:5px;padding-left:10px;border-radius:5px;" >Choose A Profile Photo</label>
+                <label for="file" id="uploadBtn" style="width: 200px; height:35px;border-color:white;padding-top:5px;padding-left:10px;border-radius:5px;" >Choose A Profile Photo</label>
                 <input type="file" class="form-control-file" name="profile_photo" id="file">
             </div>
             <div class="mb-3">
