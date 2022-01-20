@@ -8,10 +8,12 @@ $user->set_db($conn);
 
 $application = unserialize($user->fetch_value("application_details", "app_id", $_GET['application_id'], "application_object"));
 $application_id = $_GET['application_id'];
+$applicant_id = $user->fetch_value('application_details', 'app_id', $application_id, 'applicant_id');
 
 
 if ($_GET['sign_no'] == 4) {
     $notification = $user->prepare_notification('confirmation', 'application confirmation by '.$user->get_user_type());
+    $notification->setApplicantId($applicant_id);
     $user->approve_application($application,$notification);
     header("location: Filled_Application.php?application_id=$application_id");
 }
@@ -20,16 +22,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sign = uploadSign($_POST['signed']);
 
     if ($_GET['sign_no'] == 1) {
-        //refine
         $user->add_applicant_sign($application, $sign);
     } elseif ($_GET['sign_no'] == 2) {
         $application->setRapSign($sign);
         $notification = $user->prepare_notification('confirmation', 'application confirmation by '.$user->get_user_type());
+        $notification->setApplicantId($applicant_id);
         $user->approve_application($application,$notification);
 
     } elseif ($_GET['sign_no'] == 3) {
         $application->setDsSign($sign);
         $notification = $user->prepare_notification('confirmation', 'application confirmation by '.$user->get_user_type());
+        $notification->setApplicantId($applicant_id);
         $user->approve_application($application,$notification);
 
     }
@@ -89,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 <div class="header1">
-<a href="Filled_Application.php">
+<a href="Filled_Application.php?application_id=<?php echo $_GET['application_id'];?>">
                                 <button type="button" class="btn btn-sm btn-outline-light fas fa-arrow-left"
                                         style="width: 100px;font-size:18px;color:black;height:30px;"><b>Back</b>
                                 </button>

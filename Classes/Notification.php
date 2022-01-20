@@ -92,6 +92,9 @@ class Notification implements IVisitable
         $this->notification_details['appointment_time'] = $appointment_time;
     }
 
+    public function setApplicantId($applicant_id){
+        $this->notification_details['applicant_id'] = $applicant_id;
+    }
 
     /**
      * @param mixed $from_id

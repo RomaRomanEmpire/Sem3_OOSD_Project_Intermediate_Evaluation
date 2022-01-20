@@ -355,29 +355,6 @@ class DB_OP
         return NULL;
     }
 
-//    public
-//    function remove_application($key, $key_value): ?bool
-//    {
-//        $sql = "DELETE FROM 'application details' WHERE $key=?";
-//        if ($stmt = $this->link->prepare($sql)) {
-//
-//            // Bind variables to the prepared statement as parameters
-//
-//            $stmt->bind_param("s", $key_value);
-//
-//            if ($stmt->execute()) {
-//                // Redirect
-//                return true;
-//            } else {
-//                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
-//            }
-//
-//            // Close statement
-//            $stmt->close();
-//        }
-//        return NULL;
-//    }
-
     public
     function get_column_value($table, $key, $operator, $key_value, $id_name,$order)
     {
@@ -390,9 +367,7 @@ class DB_OP
             // just execute the prepared statement not checking values
             if ($stmt->execute()) {
                 $result = $stmt->get_result();
-
-                // Check if Username exists, if yes then verify Password
-                //check is there are exactly one entry or not
+                
                 if ($result->num_rows >= 1) {
 
                     $row = $result->fetch_assoc();
@@ -536,7 +511,7 @@ class DB_OP
             if ($stmt->execute()) {
                 return true;
             }else {
-                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
+                echo "<script type='text/javascript'>alert('Oops! Something went wrong!');</script>";
             }
             $stmt->close();
         }

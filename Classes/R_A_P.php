@@ -10,10 +10,13 @@ abstract class R_A_P extends L_P_User implements IApprover, IVisitor
         $this->staff_id = $attributeArray['staff_id'];
     }
 
-//    public function send_time_slots()
-//    {
-//        // code...
-//    }
+    /**
+     * @return mixed
+     */
+    public function getStaffId()
+    {
+        return $this->staff_id;
+    }
 
     public function updateApplicationDetails($application)
     {
@@ -58,13 +61,7 @@ abstract class R_A_P extends L_P_User implements IApprover, IVisitor
         return $this->db->database_details_2($table,$key1, $key2, $operator1, $operator2, $key_value1, $key_value2, $order);
     }
 
-    /**
-     * @return mixed
-     */
-    public function getStaffId()
-    {
-        return $this->staff_id;
-    }
+
 
 
 

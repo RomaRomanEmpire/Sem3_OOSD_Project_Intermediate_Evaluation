@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include 'functions.php';
     $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
     $user->set_db($conn);
-    $user->set_row_id($_SESSION['user_id']);
 
     $application = unserialize($user->fetch_value("application_details", "app_id", $_GET['application_id'], "application_object"));
 
@@ -15,16 +14,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $notification = $user->prepare_notification('confirmation', $_POST['reason']);
 
-    if (isset($_FILES['file'])) {
-        $attach_succeed = checkFileValidity($_POST['file']);
-        if(isset($attach_succeed)){
-            $notification->setAttachment($attach_succeed);
+    $applicant_id = $user->fetch_value('application_details', 'app_id', $application_id, 'applicant_id');
+    $notification->setApplicantId($applicant_id);
+    
+
+    if (isset($_FILES['attachment'])) {
+        $attachment = checkFileValidity("attachment");
+        if(isset($attachment)){
+            $notification->setAttachment($attachment);
             $user->reject_application($application,$notification);
-            header("location:Filled_Application.php?application_id=$application_id");
+            header("location:View_Applications_Details.php");
         }
     }else{
         $user->reject_application($application,$notification);
-        header("location:Filled_Application.php?application_id=$application_id");
+        header("location:View_Applications_Details.php");
     }
 }
 
@@ -87,8 +90,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <fieldset id="time_slot">
         <h1 class="display-3">Reject Application</h1>
         <br>
-        <form id="appointment-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?application_id=<?php
-        echo $_GET['application_id']; ?>" method="POST">
+        <form id="reject-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?application_id=<?php
+        echo $_GET['application_id']; ?>" method="POST" enctype="multipart/form-data">
             <label for="floatingTextarea2">The reason for rejecting the application :</label>
             <br><br>
             <div class="form-floating">
@@ -99,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <br>
             <label for="file">Attachments :</label>
             <br>
-            <input type="file" id="file" name="file">
+            <input type="file" id="file" name="attachment">
             <br>
 
             <br>
