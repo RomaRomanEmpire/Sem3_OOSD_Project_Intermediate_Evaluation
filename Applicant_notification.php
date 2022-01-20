@@ -27,8 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $notification->setAppointmentTime($notification_details['appointment_time'] );
         $ref_notification->setHasReferenceNotificationId(true);
 
-        if ($applicant->updateNotificationDetails($ref_notification))
+        if ($applicant->updateNotificationDetails($ref_notification)){
             $applicant->send_notification($notification);
+            header("location:Applicant_notification.php");
+        }
+
+
     }
 }
 ?>
@@ -324,7 +328,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "No notifications!";
             } else {
                 foreach ($result_receive_confirmations as $i => $row):
-                    $notification = unserialize($applicant->fetch_object('notification_details', 'n_id', $row['n_id'], 'n_object'));
+                    $notification = unserialize($applicant->fetch_value('notification_details', 'n_id', $row['n_id'], 'n_object'));
                     $notification_details = $notification->accept($applicant);
                 ?>
                     <tr>

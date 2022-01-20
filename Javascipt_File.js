@@ -292,9 +292,40 @@ function Notification() {
     }
 }
 
+
+
+
+
+// class file{
+
+//       constructor(RequirdFilePath,CurrentFilePath){
+//             this.RequirdFilePath=RequirdFilePath;//file path that is necessary to load
+//             this.CurrentFilePath=CurrentFilePath;//the current file path
+//       }
+//       static FilePath=[];
+//        GoToFile(){
+
+//             window.location.href= this.FilePath[0].RequirdFilePath;
+//       }
+//        ReturnBack(){
+
+//              window.location.href= this.FilePath[0].CurrentFilePath;
+//       }
+//       remove(){
+//             FilePath.pop();
+//       }
+
+// }
+
+
+// function BodyLoad(){
+//       var file1=new file("Profile_Details.php","RAP_dashboard.php");
+//       file.FilePath.push(file1); 
+
+// }
 function Notification1() {
     if (document.getElementById("btn_check_outlinedT1").checked) {
-        document.getElementById("Topic1").innerHTML = "Appointment Time";
+        document.getElementById("Topic1").innerHTML = "Appoinment Time";
         document.getElementById("Time1").style.display = "block";
         document.getElementById("Reject_message1").style.display = "none";
         document.getElementById("Sent_message1").style.display = "none";
@@ -370,11 +401,39 @@ function PasswordValidity() {
         return true;
     }
     else {
-        alert("Password conformation is wrong!! and must give strong password length.Character length must be in 8 to 14 range");
+        alert("Password conformation is wrong!! and must give strong password length.Charctor length must be in 8 to 14 range");
         return false;
     }
 }
+//========================================================================
+// class StaticVariable{
+//    static Page_number=0;
+//    constructor(Page_number){
+//     this.Page_number=Page_number;
+//     // document.write(StaticVariable.Page_number);
+//    }
+//    static getPage_number(){
+//        return this.Page_number;
+//    }
+   
+// } 
 
+// function Change_File_Number(Page_number){
+//  StaticVariable.Page_number=Page_number;
+// //  document.write(StaticVariable.Page_number);
+    
+// }
+// function redirect(){
+//     document.write(StaticVariable.Page_number);
+//     if(StaticVariable.Page_number==1){
+//         document.write(StaticVariable.Page_number);
+//         // window.location="DatabaseManagerDashboard.php";
+//     }
+//     else{
+//         // window.location="DatabaseManagerDashboard.php";
+//         document.write("hello");
+//     }
+// }
 
 
 

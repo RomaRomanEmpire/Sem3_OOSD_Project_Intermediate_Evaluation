@@ -4,7 +4,7 @@ include 'NIC.php';
 /**
  *
  */
-class NIC_Issuer extends L_P_User implements IApprover
+class NIC_Issuer extends L_P_User implements IApprover ,IVisitor
 {
     private $staff_id;
 
@@ -14,6 +14,15 @@ class NIC_Issuer extends L_P_User implements IApprover
         $this->u_type = "ni";
         $this->staff_id = $attributeArray['staff_id'];
     }
+    function visitApplication($application)
+	{
+		return $application->getApplicationDetails();
+	}
+
+	function visitNotification($notification)
+	{
+		return $notification->getNotificationDetails();
+	}
 
 //    public function fetch_NIC_details($value = '')
 //    {

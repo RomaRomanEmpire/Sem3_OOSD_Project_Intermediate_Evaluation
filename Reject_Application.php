@@ -43,23 +43,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 20px;
             font-weight: bolder;
-            color: black;
+            color: bisque;
             min-height: 100vh;
-            /*background: rgb(2, 0, 36);*/
-            /*background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 1%, rgba(0, 212, 255, 1) 100%);*/
-            background: rgb(108,190,209);
-            background: linear-gradient(0deg, rgba(108,190,209,1) 0%, rgba(247,236,201,1) 79%);
+            background: rgb(2, 0, 36);
+            background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 1%, rgba(0, 212, 255, 1) 100%);
 
         }
 
         .Center {
-            padding: 80px 50px 50px;
+            padding: 150px 50px 50px;
             border-color: black;
 
         }
 
         .header1 {
-            /*position: fixed;*/
+            position: fixed;
             top: 0;
             right: 0;
             height: 13vh;
@@ -78,7 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <div class="header1" style="padding-right:10px;">
     <a href="Filled_Application.php">
-        <button type="submit" class="btn btn-sm btn-outline-light" style="width: 100px; height: 40px; font-size:18px; background-color: saddlebrown">Back</b>
+        <button type="submit" class="btn btn-sm btn-outline-light" style="width: 100px;font-size:18px;"><b
+                    style="color:#000; ">Back</b>
         </button>
     </a>
 </div>
@@ -94,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <br><br>
             <div class="form-floating">
                 <textarea class="form-control" name="reason" placeholder="The reason for rejection of application......"
-                          id="floatingTextarea2" style="height: 200px; background-color: ghostwhite;"></textarea>
+                          id="floatingTextarea2" style="height: 200px; background-color:bisque;"></textarea>
 
             </div>
             <br>

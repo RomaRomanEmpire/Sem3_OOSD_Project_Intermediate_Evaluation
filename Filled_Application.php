@@ -334,7 +334,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
 
 
                         <td id="admin_approve_button"><a
-                                    href="sign.php.php?sign_no=<?php echo 4; ?>&application_id=<?php echo $_GET['application_id']; ?>">
+                                    href="sign.php?sign_no=<?php echo 4; ?>&application_id=<?php echo $_GET['application_id']; ?>">
                                 <button type="submit" class="btn btn-sm btn-outline-primary"
                                         style="color:black;width:150px; font-size:15px;"><b>Approve</b>
                                 </button>
@@ -349,7 +349,8 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                                 </button>
                             </a></td>
 
-                        <td><a href="View_Applications_Details.php">
+                        <td><a href="<?php echo $user->get_user_type()=='applicant'?'dashboard.php':'View_Applications_Details.php'?>">
+
                                 <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-left"
                                         style="width: 100px; height: 40px; font-size:18px; color:black; background-color: #5c636a; padding-top: 10px; "><b>Back</b>
                                 </button>

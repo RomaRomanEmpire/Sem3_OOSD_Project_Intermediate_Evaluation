@@ -12,7 +12,7 @@ abstract class R_A_P_1 extends R_A_P
 
     public function send_time_slot($notification)
     {
-        $this->send_notification($notification);
+        $this->send_notification($notification,"");
     }
 
     public function add_applicant_sign($application,$file){
