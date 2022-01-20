@@ -88,7 +88,7 @@ class Applicant extends L_P_User implements IApprover, IVisitor
     public function fetchGnCode($div, $div2)
     {
         $ds_id = $this->db->get_column_value('ds', 'DS', '=', $div2, 'DS_code', '');
-        return $this->db->get_column_value2('gn', 'basic_division', 'DS_code', '=', $div, $ds_id, 'division_id', "");
+        return $this->db->get_column_value2('gn', 'basic_division', 'DS_code', $div, $ds_id, 'division_id');
     }
 
     public function getAutoloadArray($table, $column, $value)
