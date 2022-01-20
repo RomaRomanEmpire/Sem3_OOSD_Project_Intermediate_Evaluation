@@ -20,6 +20,7 @@ class Notification implements IVisitable
     public function __construct($type, $content)
     {
         $this->type = $type;
+        $this->notification_details = array();
         $this->notification_details['content'] = $content;
 
         date_default_timezone_set('Asia/Colombo');
