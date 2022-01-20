@@ -73,7 +73,6 @@ function uploadSign($sign): string
 
 function createStaffMember($dataArray)
 {
-    include 'autoloader.php';
     if ($dataArray['officer'] == "Database_Manager") {
         $staff_member = new DatabaseManager($dataArray);
     } else if ($dataArray['officer'] == "Admin") {
