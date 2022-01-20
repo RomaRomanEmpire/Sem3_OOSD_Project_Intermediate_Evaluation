@@ -651,6 +651,7 @@ if (($type == "admin" || $type == "db_manager") && !isset($application_details['
 
                 <dl>
                     <div>
+                        <h2>Receipt</h2>
                         <?php
                         $receive_file = $application_details['receipt'];
                         echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
@@ -704,6 +705,13 @@ if (($type == "admin" || $type == "db_manager") && !isset($application_details['
                             </dd>
                             <dd><input type="date" id="policeReportDate" name="policeReportDate"
                                        value="<?php echo $application_details['policeReportDate']; ?>">
+                            </dd>
+                            <dd>
+                                <h2>Police Report</h2>
+                            <?php
+                            $receive_file = $application_details['policeReport']??NULL;
+                            echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
+													<embed src=\"$receive_file\", width=100px height=100px>"; ?>
                             </dd>
                         </dl>
                     </div>

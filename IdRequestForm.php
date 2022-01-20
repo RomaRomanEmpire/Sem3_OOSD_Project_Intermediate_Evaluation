@@ -8,12 +8,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $photograph = checkFileValidity("photographs");
     $receipt = checkFileValidity("receipt");
-    if (!empty($photograph.$receipt)) {
+
+    $policeReport = checkFileValidity("policeReport");
+    if (!empty($photograph) && !empty($receipt) && !empty(isset($_FILES['policeReport'])?$policeReport:' ')){
         $applicant = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
         $application = $applicant->getApplication();
         $application->setGnDivOrAddress($_GET['basic']);
         $application->setDs($_GET['ds']);
-        $application->setDetails($photograph, $receipt, $_POST, $applicant, $_GET['id']);
+        $application->setDetails($photograph, $receipt,$policeReport, $_POST, $applicant, $_GET['id']);
 
         $applicant->set_db($conn);
 
