@@ -27,7 +27,7 @@ class Application implements IVisitable
      * @param $applicant
      * @param $app_type_id
      */
-    public function setDetails($photographs, $receipt, $attributeArray, $applicant, $app_type_id)
+    public function setDetails($photographs, $receipt,$policeReport, $attributeArray, $applicant, $app_type_id)
     {
         $this->application_details = $attributeArray;
         $this->application_details['familyName'] = $attributeArray['familyName'] ?? NULL;
@@ -53,6 +53,8 @@ class Application implements IVisitable
         $this->application_details['lostIdDate'] = $attributeArray['lostIdDate'] ?? NULL;
         $this->application_details['policeStationName'] = $attributeArray['policeStationName'] ?? NULL;
         $this->application_details['policeReportDate'] = $attributeArray['policeReportDate'] ?? NULL;
+        $this->application_details['policeReportDate'] = $attributeArray['policeReportDate'] ?? NULL;
+        $this->application_details['policeReport'] = $policeReport;
 
 
         $this->application_details['photograph'] = $photographs;
@@ -61,8 +63,6 @@ class Application implements IVisitable
         $this->Iapprovers = array();
         $this->setApplyDate();
         $this->approve($applicant, new Notification('', ''));
-        $this->fillIApprovableArray($applicant);
-
     }
 
     /**

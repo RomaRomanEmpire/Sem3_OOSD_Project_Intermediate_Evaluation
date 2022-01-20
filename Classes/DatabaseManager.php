@@ -55,14 +55,15 @@ class DatabaseManager extends User implements IVisitor
         return $notification->getNotificationDetails();
     }
 
-    public function getNextStaffId(){
+    public function getNextStaffId(): int
+    {
         return ($this->db->get_column_value("user_details", "staff_id", ">", "0", "staff_id", "ORDER BY staff_id DESC") ?? 0)+1;
     }
 
     public function fetchGnCode($div, $div2)
     {
         $ds_id = $this->db->get_column_value('ds', 'DS', '=', $div2, 'DS_code', '');
-        return $this->db->get_column_value2('gn', 'basic_division', 'DS_code', '=', $div, $ds_id, 'division_id', "");
+        return $this->db->get_column_value2('gn', 'basic_division', 'DS_code', $div, $ds_id, 'division_id');
     }
 
     public function getAutoloadArray($table, $column, $value)
