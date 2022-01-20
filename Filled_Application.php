@@ -9,6 +9,7 @@ $user->set_db($conn);
 
 $application = unserialize($user->fetch_value("application_details", "app_id", $_GET['application_id'], "application_object"));
 $application_details = $application->accept($user);
+$state = $application->getState()->getState();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['para_1']))
@@ -51,7 +52,6 @@ if ($type == "applicant") {
 } elseif ($user instanceof R_A_P_1) {
     $already_sent = $user->fetch_value_3('notification_details', 'application_id', 'from_id', 'n_type',
         $_GET['application_id'], $_SESSION['user_id'], 'appointment', 'n_id');
-    $state = $application->getState()->getState();
     if ($already_sent || $state == "sent_to_ds" || $state == "sent_to_admin") {
         echo "<style>#send-time {
             display: none;
@@ -107,16 +107,16 @@ if ($user instanceof R_A_P) {
 }
 
 if ($type == 'admin') {
-    $already_sent = $user->fetch_value_3('notification_details', 'application_id', 'from_id', 'n_type',
-        $_GET['application_id'], $_SESSION['user_id'], 'confirmation', 'n_id');
-    if ($already_sent) {
-        echo "<style>#reject_button {
-            display: none;
-        }</style>";
-        echo "<style>#admin_approve_button {
-            display: none;
-        }</style>";
-    }
+//    $already_sent = $user->fetch_value_3('notification_details', 'application_id', 'from_id', 'n_type',
+//        $_GET['application_id'], $_SESSION['user_id'], 'confirmation', 'n_id');
+//    if ($already_sent) {
+//        echo "<style>#reject_button {
+//            display: none;
+//        }</style>";
+//        echo "<style>#admin_approve_button {
+//            display: none;
+//        }</style>";
+//    }
 
     if ($application_details['app_type_id'] == 1){
         echo "<style>body {
@@ -136,7 +136,7 @@ if (!($user instanceof R_A_P_1)) {
         }</style>";
 }
 
-if ($type == "db_manager" || $type == "applicant") {
+if ($type == "db_manager" || $type == "applicant" || $state == "approved") {
 
     echo "<style>#reject_button {
             display: none;
