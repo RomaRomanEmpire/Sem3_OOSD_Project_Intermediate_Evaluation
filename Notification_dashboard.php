@@ -10,7 +10,7 @@ $order = "";
 $type = $staff_member->get_user_type();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if ($_POST['order'] == 'latest')
+    if (isset($_POST['order']) && $_POST['order'] == 'latest')
         $order = "ORDER BY n_id DESC";
 }
 
@@ -229,8 +229,8 @@ if ($type == "admin") {
                        onclick="Notification()">
                 <label id="confirm" class="btn btn-outline-light" for="btn_check_outlinedc"
                        style="border-color: white;"><p
-                            style="font-weight: bold;width:100px; height:25px;"><i
-                                class="fas fa-angle-double-right"></i>Confirm Messages</p></label><br>
+                            style="font-weight: bold;width:150px; height:10px;"><i
+                                class="fas fa-angle-double-right"></i>Confirmations</p></label><br>
             </li>
             <br>
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedI" autocomplete="off"
