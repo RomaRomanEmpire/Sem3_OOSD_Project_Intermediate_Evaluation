@@ -20,7 +20,7 @@ h1,h2{
 .hero-image {
       background-image: url("Image/x.jpeg");
       background-color: #cccccc;
-      height: 585px;
+      height: 750px;
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -360,7 +360,7 @@ h1,h2{
       right: 0;
       width: 100%;
       min-height: 100vh;
-      background: #f1f1f1;
+      /* background: #f1f1f1; */
 }
 
 .container1 .header2{
@@ -368,8 +368,9 @@ h1,h2{
       top: 0;
       right: 0;
       height: 120px;
-      width: 100%;
-      background-color: #050213fd;
+      width: 85%;
+      /* background-color: #050213fd; */
+      background: rgba(0,0,0,0.5);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -437,7 +438,8 @@ h1,h2{
 }
 .side_menu1{
       position: fixed;
-      background-color: #050213fd;
+      /* background-color: #050213fd; */
+      background: rgba(0,0,0,0.5);
       width: 15%;
       height: 100%;
       justify-content: left;
