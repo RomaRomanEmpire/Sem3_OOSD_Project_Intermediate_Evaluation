@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .header1 {
-            position: fixed;
+            position: absolute;
             top: 0;
             right: 0;
             height: 19vh;
@@ -248,7 +248,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
 
 <div class="header1"><a href="dashboard.php">
         <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-left"
-                style="width: 100px;font-size:18px;margin-right:20px;color:black;"> Back
+                style="width: 100px; height: 40px; text-align: center; font-size:18px;margin-right:20px;color:black; background-color: #20c997"> Back
         </button>
     </a></div>
 
