@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['order']) && $_POST['order'] == 'latest')
         $order = "ORDER BY n_id DESC";
     if (isset($_GET['ref_id'])) {
-        $ref_notification = unserialize($applicant->fetch_object("notification_details", "n_id", $_GET['ref_id'], "n_object"));
+        $ref_notification = unserialize($applicant->fetch_value("notification_details", "n_id", '=',$_GET['ref_id'], "n_object"));
         $notification_details = $ref_notification->accept($applicant);
         if ($_GET['type'] == 'confirm') {
             $notification = $applicant->prepare_notification('confirmation', 'date confirmed');
@@ -255,18 +255,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </thead>
         <tbody>
         <?php
-        $result_receive_appointment = $applicant->getReceiveAppointments($order);
+        $result_receive_appointment = $applicant->fetch_array_2('notification_details', 'to_id', 'n_type','=','=', $_SESSION['user_id'], 'appointment', $order);
         if (is_null($result_receive_appointment))
             echo "No notifications!";
         else {
             foreach ($result_receive_appointment as $i => $row):
-                $notification = unserialize($applicant->fetch_object('notification_details', 'n_id', $row['n_id'], 'n_object'));
+                $notification = unserialize($applicant->fetch_value('notification_details', 'n_id','=', $row['n_id'], 'n_object'));
                 $notification_details = $notification->accept($applicant);
                 ?>
 
                 <tr>
                     <td><?php
-                        $officer = unserialize($applicant->fetch_object('user_details', 'user_id', $notification->getFromId(), 'u_object'));
+                        $officer = unserialize($applicant->fetch_value('user_details', 'user_id','=', $notification->getFromId(), 'u_object'));
                         echo $officer->get_user_type() . ' ' . $officer->get_user_name(); ?></td>
                     <td><?php echo $notification_details['appointment_date']; ?></td>
                     <td><?php echo $notification_details['appointment_time']; ?></td>
@@ -319,7 +319,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </thead>
             <tbody>
             <?php
-            $result_receive_confirmations = $applicant->fetch_array_2('notification_details', 'to_id', 'n_type', $_SESSION['user_id'], 'confirmation', $order);
+            $result_receive_confirmations = $applicant->fetch_array_2('notification_details', 'to_id', 'n_type','=','=', $_SESSION['user_id'], 'confirmation', $order);
             if (is_null($result_receive_confirmations)) {
                 echo "No notifications!";
             } else {
@@ -360,14 +360,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </thead>
             <tbody>
             <?php
-            $result_sent_notifications = $applicant->fetch_array('notification_details', 'from_id', $_SESSION['user_id']);
+            $result_sent_notifications = $applicant->fetch_array('notification_details', 'from_id', $_SESSION['user_id'],$order);
             if (is_null($result_sent_notifications)) {
                 echo "No notifications!";
             } else {
                 foreach ($result_sent_notifications as $i => $row):
-                    $notification = unserialize($applicant->fetch_object('notification_details', 'n_id', $row['n_id'], 'n_object'));
+                    $notification = unserialize($applicant->fetch_value('notification_details', 'n_id','=', $row['n_id'], 'n_object'));
                     $notification_details = $notification->accept($applicant);
-                    $receiver = unserialize($applicant->fetch_object('user_details', 'user_id', $row['to_id'], 'u_object'));
+                    $receiver = unserialize($applicant->fetch_value('user_details', 'user_id','=', $row['to_id'], 'u_object'));
                     ?>
                     <tr>
 

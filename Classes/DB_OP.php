@@ -407,9 +407,9 @@ class DB_OP
     }
 
     public
-    function get_column_value2($table, $key1, $key2, $operator, $key_value1, $key_value2, $id_name)
+    function get_column_value2($table, $key1, $key2, $key_value1, $key_value2, $id_name)
     {
-        $sql = "SELECT $id_name FROM $table WHERE $key1 $operator ? and $key2 $operator ?";
+        $sql = "SELECT $id_name FROM $table WHERE $key1 = ? and $key2 = ?";
         if ($stmt = $this->link->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param('ss', $key_value1, $key_value2);

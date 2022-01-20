@@ -70,9 +70,9 @@ class Applicant extends L_P_User implements IApprover, IVisitor
         return $notification->getNotificationDetails();
     }
 
-    public function fetch_object($table, $key, $key_value, $object)
+    public function fetch_value($table, $key, $operator, $key_value, $object)
     {
-        return $this->db->get_column_value($table, $key, '=', $key_value, $object, "");
+        return $this->db->get_column_value($table, $key, $operator, $key_value, $object, "");
     }
 
     public function fetch_array($table, $key, $key_value, $order)
@@ -80,19 +80,20 @@ class Applicant extends L_P_User implements IApprover, IVisitor
         return $this->db->database_details($table, $key, $key_value, $order);
     }
 
-    public function fetch_array_2($table, $key1, $key2, $key_value1, $key_value2, $order)
+    public function fetch_array_2($table, $key1, $key2, $operator1, $operator2, $key_value1, $key_value2, $order)
     {
-        return $this->db->database_details_2($table, $key1, $key2, '=', '=', $key_value1, $key_value2, $order);
+        return $this->db->database_details_2($table, $key1, $key2, $operator1, $operator2, $key_value1, $key_value2, $order);
     }
 
-    public function fetchGnCode($div, $div2){
+    public function fetchGnCode($div, $div2)
+    {
         $ds_id = $this->db->get_column_value('ds', 'DS', '=', $div2, 'DS_code', '');
         return $this->db->get_column_value2('gn', 'basic_division', 'DS_code', '=', $div, $ds_id, 'division_id', "");
     }
 
     public function getAutoloadArray($table, $column, $value)
     {
-        return $this->db->get_table_info($table,$column, $value);
+        return $this->db->get_table_info($table, $column, $value);
     }
 
     public function updateNotificationDetails($notification)
@@ -102,7 +103,7 @@ class Applicant extends L_P_User implements IApprover, IVisitor
 
     public function isAlreadyApplied($user_id): bool
     {
-        return $this->db->get_column_value("application_details", "applicant_id", "=", $user_id, "app_id", "") !== null;
+        return (bool)$this->db->get_column_value("application_details", "applicant_id", '=', $user_id, "app_id", "");
     }
 }
 
