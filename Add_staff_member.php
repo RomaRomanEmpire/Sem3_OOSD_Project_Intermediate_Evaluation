@@ -10,16 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $staff_member = createStaffMember($_POST);
 
-
-
     if ($_POST['officer'] == "Grama_Niladari") {
         if (!empty($_POST['gdivision'])) {
             $table = 'gn';
             $div = $_POST['gdivision'];
             $div2 = $_POST['ds1'];
             $table2 = 'ds';
-            $array = $_SESSION['val_array2'];
-            $array2 = $_SESSION['val_array5'];
 
             $gnCode = $db_manager->fetchGnCode($div, $div2);
 

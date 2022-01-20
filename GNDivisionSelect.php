@@ -11,8 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_GET['id'];
     $application = $applicant->getApplication();
     if (!empty($_POST['DS_division'])) {
-        $array = $_SESSION['val_array3'];
-        $array2 = $_SESSION['val_array4'];
 
         $gnCode = $applicant->fetchGnCode($_POST['GN_division'], $_POST['DS_division']);
 
