@@ -44,15 +44,19 @@ if ($type == "applicant") {
         }</style>";
     }else{
         echo "<style>body {
-            min-height: 1200%;
+            min-height: 1120%;
         }</style>";
     }
 
 } elseif ($user instanceof R_A_P_1) {
     $already_sent = $user->fetch_value_3('notification_details', 'application_id', 'from_id', 'n_type',
         $_GET['application_id'], $_SESSION['user_id'], 'appointment', 'n_id');
-    if ($already_sent) {
+    $state = $application->getState()->getState();
+    if ($already_sent || $state == "sent_to_ds" || $state == "sent_to_admin") {
         echo "<style>#send-time {
+            display: none;
+        }</style>";
+        echo "<style>#reject_button {
             display: none;
         }</style>";
     }
@@ -92,11 +96,11 @@ if ($user instanceof R_A_P) {
     }
     if ($application_details['app_type_id'] == 1){
         echo "<style>body {
-            min-height: 900%;
+            min-height: 1140%;
         }</style>";
     }else{
         echo "<style>body {
-            min-height: 1200%;
+            min-height: 1280%;
         }</style>";
     }
 
@@ -111,6 +115,16 @@ if ($type == 'admin') {
         }</style>";
         echo "<style>#admin_approve_button {
             display: none;
+        }</style>";
+    }
+
+    if ($application_details['app_type_id'] == 1){
+        echo "<style>body {
+            min-height: 1180%;
+        }</style>";
+    }else{
+        echo "<style>body {
+            min-height: 1300%;
         }</style>";
     }
 }
@@ -336,7 +350,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                         <td id="admin_approve_button"><a
                                     href="sign.php?sign_no=<?php echo 4; ?>&application_id=<?php echo $_GET['application_id']; ?>">
                                 <button type="submit" class="btn btn-sm btn-outline-primary"
-                                        style="color:black;width:150px; font-size:15px;"><b>Approve</b>
+                                        style="color:black;width:100px; height: 40px; font-size:18px; background-color: firebrick"><b>Approve</b>
                                 </button>
                             </a></td>
 
