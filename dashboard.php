@@ -157,23 +157,30 @@ if($user instanceof R_A_P){
                         <button id="view_application_db">  <i class="fas fa-hand-point-right"></i> View Application Details</button>
                     </a>
                     <br><br><br>
-                    <a href="DBM_Notification.php">
+                    <a href="DBM_NI_visitables.php">
                         <button id="view_notifications">  <i class="fas fa-hand-point-right"></i>View Notification Details</button>
                     </a>
                     <br><br>
                 </div>
-            </div><?php } else { ?>
+            </div><?php } elseif ($u_type == "ni") { ?>
             <div class="card">
                 <div id="rap_links" class="icon_case">
                     <br><br><br><br>
-                    <a href="View_Applications_Details.php">
-                        <button id="view_application_rap">  <i class="fas fa-hand-point-right"></i>View Applications Details</button>
-                    </a><br><br>
-                    <a href="DBM_Notification.php">
+                    <a href="DBM_NI_visitables.php">
                         <button id="nic-issuer">  <i class="fas fa-hand-point-right"></i>View Applications Details</button>
                     </a>
                 </div>
             </div>
+        <?php } else { ?>
+          <div class="card">
+              <div id="rap_links" class="icon_case">
+                  <br><br><br><br>
+                  <a href="View_Applications_Details.php">
+                      <button id="view_application_rap">  <i class="fas fa-hand-point-right"></i>View Applications Details</button>
+                  </a><br><br>
+                  </div>
+          </div>
+
         <?php } ?>
     </div>
 
