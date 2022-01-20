@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="submit" value="Login">
 
         <br>
-        <a href="a">Forget password</a><br>
+<!--        <a href="a">Forget password</a><br>-->
         <a href="Create_Account.php">If you don't have account!!!</a>
     </form>
 </div>
