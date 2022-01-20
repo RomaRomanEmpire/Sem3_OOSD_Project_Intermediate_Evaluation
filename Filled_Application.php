@@ -7,7 +7,7 @@ $conn = DB_OP::get_connection();
 $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $user->set_db($conn);
 
-$application = unserialize($user->fetch_value("application_details", "app_id", "=", $_GET['application_id'], "application_object"));
+$application = unserialize($user->fetch_value("application_details", "app_id", $_GET['application_id'], "application_object"));
 $application_details = $application->accept($user);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
