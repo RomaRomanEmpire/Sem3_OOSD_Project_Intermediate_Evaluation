@@ -7,12 +7,24 @@ $staff_member = unserialize($conn->get_column_value("user_details", "user_id", "
 $staff_member->set_db($conn);
 $staff_member->set_row_id($_SESSION['user_id']);
 $order = "";
+$type = $staff_member->get_user_type();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST['order'] == 'latest')
         $order = "ORDER BY n_id DESC";
 }
 
+if ($type == "admin") {
+    echo "<style>#confirm {
+            display: none;
+        }</style>";
+    echo "<style>#inbox {
+            display: none;
+        }</style>";
+    echo "<style>#time{
+            display: none;
+        }</style>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -215,19 +227,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <ul>
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedc" autocomplete="off"
                        onclick="Notification()">
-                <label class="btn btn-outline-light" for="btn_check_outlinedc" style="border-color: white;"><p
-                            style="font-weight: bold;width:150px; height:25px;"><i class="fas fa-angle-double-right"></i>Confirm Messages</p></label><br>
+                <label id="confirm"class="btn btn-outline-light" for="btn_check_outlinedc" style="border-color: white;"><p
+                            style="font-weight: bold;width:100px; height:25px;"><i class="fas fa-angle-double-right"></i>Confirm Messages</p></label><br>
             </li>
             <br>
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedI" autocomplete="off"
                        onclick="Notification()">
-                <label class="btn btn-outline-light" for="btn_check_outlinedI" style="border-color: white;"><p
+                <label id="inbox"class="btn btn-outline-light" for="btn_check_outlinedI" style="border-color: white;"><p
                             style="font-weight: bold;width:150px; height:10px;"><i class="fas fa-angle-double-right"></i>Inbox Messages</p></label><br>
             </li>
             <br>
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedS" autocomplete="off"
                        onclick="Notification()">
-                <label class="btn btn-outline-light" for="btn_check_outlinedS" style="border-color: white;"><p
+                <label id="sent" class="btn btn-outline-light" for="btn_check_outlinedS" style="border-color: white;"><p
                             style="font-weight: bold;width:150px; height:10px;"><i class="fas fa-angle-double-right"></i>Sent Messages</p></label>
             </li>
             <fieldset id="Sent" style="display: none;">
@@ -235,14 +247,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <li>
                     <input type="radio" name="e" class="btn-check" id="btn_check_outlinedT" autocomplete="off"
                            onclick="Notification()">
-                    <label class="btn btn-outline-info" for="btn_check_outlinedT"><p
+                    <label id="time" class="btn btn-outline-info" for="btn_check_outlinedT"><p
                                 style="font-weight: bold;width:150px; height:10px;"><i class="fas fa-angle-double-right"></i>Time Allocation</p></label>
                 </li>
                 <br>
                 <li>
                     <input type="radio" name="e" class="btn-check" id="btn_check_outlinedR" autocomplete="off"
                            onclick="Notification()">
-                    <label class="btn btn-outline-info" for="btn_check_outlinedR"><p
+                    <label id="confirmations" class="btn btn-outline-info" for="btn_check_outlinedR"><p
                                 style="font-weight: bold;width:150px; height:10px;"><i class="fas fa-angle-double-right"></i>Confirmations</p></label>
                 </li>
             </fieldset>
