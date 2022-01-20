@@ -336,10 +336,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <td><?php echo $notification_details['send_date']; ?></td>
                         <td><?php echo $notification_details['content']; ?></td>
                         <td><?php
-                            $receive_file = $notification_details['attachment'];
+                            $receive_file = $notification_details['attachment']??NULL;
                             if (isset($receive_file)) {
-                                echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
-                                            <embed src=\"$receive_file\" width=100px height=100px>";
+                                echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>";
                             } ?></td>
 
                     </tr>

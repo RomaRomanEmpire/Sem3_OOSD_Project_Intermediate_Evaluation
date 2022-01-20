@@ -227,20 +227,25 @@ if ($type == "admin") {
         <ul>
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedc" autocomplete="off"
                        onclick="Notification()">
-                <label id="confirm"class="btn btn-outline-light" for="btn_check_outlinedc" style="border-color: white;"><p
-                            style="font-weight: bold;width:100px; height:25px;"><i class="fas fa-angle-double-right"></i>Confirm Messages</p></label><br>
+                <label id="confirm" class="btn btn-outline-light" for="btn_check_outlinedc"
+                       style="border-color: white;"><p
+                            style="font-weight: bold;width:100px; height:25px;"><i
+                                class="fas fa-angle-double-right"></i>Confirm Messages</p></label><br>
             </li>
             <br>
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedI" autocomplete="off"
                        onclick="Notification()">
-                <label id="inbox"class="btn btn-outline-light" for="btn_check_outlinedI" style="border-color: white;"><p
-                            style="font-weight: bold;width:150px; height:10px;"><i class="fas fa-angle-double-right"></i>Inbox Messages</p></label><br>
+                <label id="inbox" class="btn btn-outline-light" for="btn_check_outlinedI" style="border-color: white;">
+                    <p
+                            style="font-weight: bold;width:150px; height:10px;"><i
+                                class="fas fa-angle-double-right"></i>Inbox Messages</p></label><br>
             </li>
             <br>
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedS" autocomplete="off"
                        onclick="Notification()">
                 <label id="sent" class="btn btn-outline-light" for="btn_check_outlinedS" style="border-color: white;"><p
-                            style="font-weight: bold;width:150px; height:10px;"><i class="fas fa-angle-double-right"></i>Sent Messages</p></label>
+                            style="font-weight: bold;width:150px; height:10px;"><i
+                                class="fas fa-angle-double-right"></i>Sent Messages</p></label>
             </li>
             <fieldset id="Sent" style="display: none;">
                 <br>
@@ -248,14 +253,16 @@ if ($type == "admin") {
                     <input type="radio" name="e" class="btn-check" id="btn_check_outlinedT" autocomplete="off"
                            onclick="Notification()">
                     <label id="time" class="btn btn-outline-info" for="btn_check_outlinedT"><p
-                                style="font-weight: bold;width:150px; height:10px;"><i class="fas fa-angle-double-right"></i>Time Allocation</p></label>
+                                style="font-weight: bold;width:150px; height:10px;"><i
+                                    class="fas fa-angle-double-right"></i>Time Allocation</p></label>
                 </li>
                 <br>
                 <li>
                     <input type="radio" name="e" class="btn-check" id="btn_check_outlinedR" autocomplete="off"
                            onclick="Notification()">
                     <label id="confirmations" class="btn btn-outline-info" for="btn_check_outlinedR"><p
-                                style="font-weight: bold;width:150px; height:10px;"><i class="fas fa-angle-double-right"></i>Confirmations</p></label>
+                                style="font-weight: bold;width:150px; height:10px;"><i
+                                    class="fas fa-angle-double-right"></i>Confirmations</p></label>
                 </li>
             </fieldset>
         </ul>
@@ -301,11 +308,9 @@ if ($type == "admin") {
                                     ?></td>
                                 <td><?php echo $notification_details['content']; ?></td>
                                 <td><?php
-
                                     $receive_file = $notification_details['attachment'] ?? NULL;
                                     if (isset($receive_file)) {
-                                        echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
-													<embed src=\"$receive_file\", width=100px height=100px>";
+                                        echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>";
                                     } ?></td>
                             </tr>
                         <?php endforeach;
@@ -421,7 +426,7 @@ if ($type == "admin") {
                         <th scope="col">ID Number</th>
                         <th scope="col">Applicant Name</th>
                         <th scope="col">Send Date</th>
-                        <th scope="col">View Message</th>
+                        <th scope="col">Attachment</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -441,11 +446,12 @@ if ($type == "admin") {
                                     echo $applicant;
                                     ?></td>
                                 <td><?php echo $notification_details['send_date']; ?></td>
-                                <td><a href="view_message.php?n_id=<?php echo $row['n_id'] ?>">
-                                        <button type="button" class="btn btn-outline-primary" style="width: 100px;"><img
-                                                    src="Image/view.png"> view
-                                        </button>
-                                    </a></td>
+                                <td>
+                                    <?php
+                                    $receive_file = $notification_details['attachment'] ?? NULL;
+                                    if (isset($receive_file)) {
+                                        echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>"; } ?>
+                                </td>
                             </tr>
                         <?php endforeach;
                     } ?>
