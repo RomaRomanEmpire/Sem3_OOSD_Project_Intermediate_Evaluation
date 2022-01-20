@@ -12,7 +12,7 @@ $u_type = $user->get_user_type();
 if ($u_type === "applicant") {
     $already_applied = $user->isAlreadyApplied($_SESSION['user_id']);
 
-    if (!$already_applied) {
+    if ($already_applied) {
         echo "<style>#view_application_app:hover{
             background-color: rgb(246, 245, 248);
             color: #f05462;
@@ -129,19 +129,19 @@ if($user instanceof R_A_P){
                 <br><br><br><br>
                 <a href="GNDivisionSelect.php?id=<?php echo 1 ?>">
                     <!--                    <button>Applying New Identity Card</button>-->
-                    <button id="new_application"<?php if (!$already_applied) { ?> disabled <?php } ?>>
+                    <button id="new_application"<?php if ($already_applied) { ?> disabled <?php } ?>>
                     <i class="fas fa-hand-point-right"></i> Applying New Identity Card
                     </button>
                 </a><br><br><br>
 
                 <a href="GNDivisionSelect.php?id=<?php echo 2 ?>">
-                    <button id="lost_application"<?php if (!$already_applied) { ?> disabled<?php } ?>> <i class="fas fa-hand-point-right"></i> Applying For lost Identity
+                    <button id="lost_application"<?php if ($already_applied) { ?> disabled<?php } ?>> <i class="fas fa-hand-point-right"></i> Applying For lost Identity
                         Card
                     </button>
                 </a><br><br><br>
 
                 <a href="Filled_Application.php?application_id=<?php echo $user->getApplicationId() ?>">
-                    <button id="view_application_app"<?php if ($already_applied) { ?> disabled<?php } ?>>  <i class="fas fa-hand-point-right"></i> View application details in
+                    <button id="view_application_app"<?php if (!$already_applied) { ?> disabled<?php } ?>>  <i class="fas fa-hand-point-right"></i> View application details in
                         process
                     </button>
                 </a>

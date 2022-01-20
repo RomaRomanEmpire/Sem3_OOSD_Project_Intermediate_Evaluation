@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //        }
 
             $ds_id = $conn->get_column_value('ds', 'DS', '=', $div2, 'DS_code', '');
-            $gnCode = $conn->get_column_value2('gn', 'basic_division', 'DS_code', '=', $div, $ds_id, 'division_id', "");
+            $gnCode = $conn->get_column_value2('gn', 'basic_division', 'DS_code', $div, $ds_id, 'division_id');
 
             if (!is_null($gnCode)) {
                 $db_manager->add_user($table, $div, $_POST['staff_id'], $staff_member);
