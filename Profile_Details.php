@@ -99,7 +99,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="container">
     <div class="header1" style="z-index: 4;background-color:#03031b;">
         <div>
+            <a href="dashboard.php">
             <button type="button" class="btn btn-outline-light" id="Back" >Back</button>
+            </a>
         </div>
     </div>
     <div style="padding: 100px; " class="Profile_box">

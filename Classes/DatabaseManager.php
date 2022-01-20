@@ -55,12 +55,26 @@ class DatabaseManager extends User implements IVisitor
         return $notification->getNotificationDetails();
     }
 
-    public function fetch_object($table, $key, $key_value, $object){
+
+    public function fetchGnCode($div, $div2)
+    {
+        $ds_id = $this->db->get_column_value('ds', 'DS', '=', $div2, 'DS_code', '');
+        return $this->db->get_column_value2('gn', 'basic_division', 'DS_code', '=', $div, $ds_id, 'division_id', "");
+    }
+
+    public function getAutoloadArray($table, $column, $value)
+    {
+        return $this->db->get_table_info($table,$column, $value);
+    }
+
+    public function fetch_object($table, $key, $key_value, $object)
+    {
         return $this->db->get_column_value($table, $key, '=', $key_value, $object, "");
     }
 
-    public function fetch_array($table, $key, $key_value){
-        return $this->db->database_details($table,$key, $key_value, "");
+    public function fetch_array($table, $key, $key_value)
+    {
+        return $this->db->database_details($table, $key, $key_value, "");
     }
 }
 

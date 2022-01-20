@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $not_content = 'appointment is scheduled on '.$_POST['date'].' '.$_POST['time']. 'Please confirm!';
     $application_id = $_GET['application_id'];
-    $applicant_id = $conn->get_column_value("application_details", "app_id", "=", $application_id, "applicant_id", "");
+    $applicant_id = $user->fetch_value("application_details", "app_id", $application_id, "applicant_id");
 
 
     $notification = $user->prepare_notification('appointment',$not_content);

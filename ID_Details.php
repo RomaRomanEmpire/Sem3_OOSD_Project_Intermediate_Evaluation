@@ -2,13 +2,14 @@
 include 'autoloader.php';
 session_start();
 $conn = DB_OP::get_connection();
-$application = unserialize($conn->get_column_value("application_details", "app_id", "=", $_GET['application_id'], "application_object", ""));
+
 $nic_issuer = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $nic_issuer->set_db($conn);
+$application = unserialize($nic_issuer->fetch_object("application_details", "app_id", $_GET['application_id'], "application_object"));
 $application_details = $application->accept($nic_issuer);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $applicant_id = $conn->get_column_value("application_details", "app_id", "=", $_GET['application_id'], "applicant_id", "");
+    $applicant_id = $nic_issuer->fetch_object("application_details", "app_id", $_GET['application_id'], "applicant_id");
     $nic_issuer->issue_NIC($applicant_id, $application, $_POST);
 }
 ?>

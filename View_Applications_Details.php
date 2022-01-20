@@ -29,11 +29,11 @@ $user->set_db($con);
 <div>
     <div style="width: 100%; height: 70px;  display: flex; position: fixed;top: 0; right: 0;z-index: 3;box-shadow: 0 4px 8px rgba(77, 51, 51, 0.2); justify-content: right;">
 
-        <!-- <a class="btn btn-outline-light" href="RAP_dashboard.php" role="button"
-           style="height: 40px; width: 150px; padding-top:10px;margin:10px;">Back</a> -->
+        <a href="dashboard.php">
         <button class="btn btn-sm btn-outline-light fas fa-arrow-left" id="Back"
-                style="height: 30px; width: 100px; padding-top:10px;margin:10px;" onclick=" GoPreviousFile()"> Back
+                style="height: 30px; width: 100px; padding-top:10px;margin:10px;"> Back
         </button>
+        </a>
 
     </div>
     <br><br><br><br>
@@ -69,20 +69,20 @@ $user->set_db($con);
 
 
                     if ($user->get_user_type() == "db_manager") {
-                        $result = $con->database_details('application_details', '', '', '');
+                        $result = $user->fetch_array('application_details', '', '', '');
                     } else if ($user->get_user_type() == "admin") {
-                        $result = $con->database_details_2('application_details', 'stat', 'stat', '!=', '!=', 'sent_to_rap_1', 'sent_to_ds', "");
+                        $result = $user->fetch_array_2('application_details', 'stat', 'stat', '!=', '!=', 'sent_to_rap_1', 'sent_to_ds', "");
                     } else if ($user instanceof R_A_P_1) {
-                        $result = $con->database_details('application_details', 'gn_div_or_address', $user->getGnDivOrAddress(), "");
+                        $result = $user->fetch_array('application_details', 'gn_div_or_address', $user->getGnDivOrAddress(), "");
                     } else if ($user->get_user_type() == "ds") {
-                        $result = $con->database_details_2('application_details', 'ds', 'stat', '=', '!=', $user->getDs(), 'sent_to_rap_1', "");
+                        $result = $user->fetch_array_2('application_details', 'ds', 'stat', '=', '!=', $user->getDs(), 'sent_to_rap_1', "");
 //                    } else if ($user->get_user_type() == "ni") {
                     } else {
-                        $result = $con->database_details('application_details', 'stat', 'approved', "");
+                        $result = $user->fetch_array('application_details', 'stat', 'approved', "");
                     }
 
                     foreach ($result as $i => $row):
-                        $applicant = $con->get_column_value("user_details", "user_id", "=", $row['applicant_id'], "username", "") ?>
+                        $applicant = $user->fetch_value("user_details", "user_id", $row['applicant_id'], "username") ?>
                         <tr>
                             <?php if ($user->get_user_type() != "applicant") { ?>
                                 <th scope="row"><?php echo $row['app_id'] ?></th>

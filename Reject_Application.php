@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user->set_db($conn);
     $user->set_row_id($_SESSION['user_id']);
 
-    $application = unserialize($conn->get_column_value("application_details", "app_id", "=", $_GET['application_id'], "application_object", ""));
+    $application = unserialize($user->fetch_value("application_details", "app_id", $_GET['application_id'], "application_object"));
 
     $application_id = $_GET['application_id'];
 

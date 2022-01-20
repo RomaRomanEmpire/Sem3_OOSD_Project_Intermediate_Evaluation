@@ -14,8 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $array = $_SESSION['val_array3'];
         $array2 = $_SESSION['val_array4'];
 
-        $ds_id = $conn->get_column_value('ds', 'DS', '=', $_POST['DS_division'], 'DS_code', '');
-        $gnCode = $conn->get_column_value2('gn', 'basic_division', 'DS_code', '=', $_POST['GN_division'], $ds_id, 'division_id', "");
+        $gnCode = $applicant->fetchGnCode($_POST['GN_division'], $_POST['DS_division']);
 
         if (!is_null($gnCode)) {
 
@@ -207,10 +206,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div>
     <div class="header1">
         <div>
-            <button class="btn btn-outline-light" id="Back"
+            <a href='dashboard.php'
+               style="float: right;">
+            <button type="button" class="btn btn-outline-light" id="Back"
                     style="background-color: pink; float: right; margin-right: 50px; height: 50px; width: 100px; "
-                    onclick=" GoPreviousFile()">Back
+                    ">Back
             </button>
+            </a>
         </div>
     </div>
 
@@ -251,7 +253,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <script>
                             $(function () {
                                 <?php
-                                $php_array = $conn->get_table_info("schools", "basic_division", "1");
+                                $php_array = $applicant->getAutoloadArray("schools", "basic_division", "1");
                                 $_SESSION['val_array1'] = $php_array;
                                 $js_array = json_encode($php_array);
 
@@ -283,7 +285,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <script>
                             $(function () {
                                 <?php
-                                $php_array = $conn->get_table_info("estates", "basic_division", "1");
+                                $php_array = $applicant->getAutoloadArray("estates", "basic_division", "1");
                                 $_SESSION['val_array2'] = $php_array;
                                 $js_array = json_encode($php_array);
 
@@ -311,7 +313,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <script>
                             $(function () {
                                 <?php
-                                $php_array = $conn->get_table_info("ds", "DS", "1");
+                                $php_array = $applicant->getAutoloadArray("ds", "DS", "1");
                                 $_SESSION['val_array3'] = $php_array;
                                 $js_array = json_encode($php_array);
 
@@ -342,7 +344,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <script>
                             $(function () {
                                 <?php
-                                $php_array = $conn->get_table_info("gn", "basic_division", "1");
+                                $php_array = $applicant->getAutoloadArray("gn", "basic_division", "1");
                                 $_SESSION['val_array4'] = $php_array;
                                 $js_array = json_encode($php_array);
 

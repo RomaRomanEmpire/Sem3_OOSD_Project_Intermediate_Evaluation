@@ -279,7 +279,7 @@ class DB_OP
             $stmt->bind_param("iisss", $param_app_id, $param_applicant_id, $param_gn_div_or_address, $param_ds, $param_application_object);
 
             // Set parameters
-            $param_app_id= $application_object->getRowId();
+            $param_app_id = $application_object->getRowId();
             $param_applicant_id = $applicant_id;
             $param_gn_div_or_address = $application_object->getGnDivOrAddress();
             $param_ds = $application_object->getDs();
@@ -379,9 +379,9 @@ class DB_OP
     }
 
     public
-    function get_column_value($table, $key, $operator, $key_value, $id_name, $order)
+    function get_column_value($table, $key, $operator, $key_value, $id_name)
     {
-        $sql = "SELECT $id_name FROM $table WHERE $key $operator ? $order";
+        $sql = "SELECT $id_name FROM $table WHERE $key $operator ?";
         if ($stmt = $this->link->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param('s', $key_value);
@@ -407,9 +407,9 @@ class DB_OP
     }
 
     public
-    function get_column_value2($table, $key1, $key2, $operator, $key_value1, $key_value2, $id_name, $order)
+    function get_column_value2($table, $key1, $key2, $operator, $key_value1, $key_value2, $id_name)
     {
-        $sql = "SELECT $id_name FROM $table WHERE $key1 $operator ? and $key2 $operator ? $order";
+        $sql = "SELECT $id_name FROM $table WHERE $key1 $operator ? and $key2 $operator ?";
         if ($stmt = $this->link->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param('ss', $key_value1, $key_value2);
@@ -435,9 +435,9 @@ class DB_OP
     }
 
     public
-    function get_column_value3($table, $key1, $key2, $key3, $operator, $key_value1, $key_value2, $key_value3, $id_name, $order)
+    function get_column_value3($table, $key1, $key2, $key3, $key_value1, $key_value2, $key_value3, $id_name)
     {
-        $sql = "SELECT $id_name FROM $table WHERE $key1 $operator ? and $key2 $operator ? and $key3 $operator ? $order";
+        $sql = "SELECT $id_name FROM $table WHERE $key1 = ? and $key2 = ? and $key3 = ?";
         if ($stmt = $this->link->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param('sss', $key_value1, $key_value2, $key_value3);
@@ -460,29 +460,6 @@ class DB_OP
         }
         return NULL;
     }
-
-//    public
-//    function approve_application($application_id, $approve_level)
-//    {
-//        $sql = "UPDATE application_details SET stat=? WHERE app_id =?";
-//
-//        if ($stmt = $this->link->prepare($sql)) {
-//
-//            // Bind variables to the prepared statement as parameters
-//            $stmt->bind_param('si', $approve_level, $application_id);
-//
-//            // Attempt to execute the prepared statement
-//            // just execute the prepared statement not checking values
-//            if ($stmt->execute()) {
-//
-//            } else {
-//                echo "Oops! Something went wrong. Please try again later.";
-//            }
-//
-//            // Close statement
-//            $stmt->close();
-//        }
-//    }
 
     public
     function database_details($table, $key, $key_value, $order)

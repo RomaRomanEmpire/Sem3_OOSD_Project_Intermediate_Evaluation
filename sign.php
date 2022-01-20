@@ -3,14 +3,12 @@ session_start();
 include 'autoloader.php';
 $conn = DB_OP::get_connection();
 
-
-$application = unserialize($conn->get_column_value("application_details", "app_id", "=", $_GET['application_id'], "application_object", ""));
-$application->setRowId($_GET['application_id']);
-$application_id = $_GET['application_id'];
-
 $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $user->set_db($conn);
-$user->set_row_id($_SESSION['user_id']);
+
+$application = unserialize($user->fetch_value("application_details", "app_id", $_GET['application_id'], "application_object"));
+$application_id = $_GET['application_id'];
+
 
 if ($_GET['sign_no'] == 4) {
     $notification = $user->prepare_notification('confirmation', 'application confirmation by '.$user->get_user_type());

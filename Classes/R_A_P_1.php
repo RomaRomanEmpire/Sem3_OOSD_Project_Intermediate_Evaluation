@@ -20,6 +20,11 @@ abstract class R_A_P_1 extends R_A_P
         $this->db->save_state_of_application($application);
     }
 
+    public function updateApplicationDetails($application)
+    {
+        $this->db->save_state_of_application($application);
+    }
+
 
 
   

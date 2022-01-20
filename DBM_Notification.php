@@ -100,7 +100,7 @@ if($type == 'db_manager'){
                 <?php
                 $result = $user->fetch_array('notification_details', '', '','');
                 foreach ($result as $i => $row):
-                    $notification = $user->fetch_object('notification_details', 'n_id', $row['n_id'], 'n_object');
+                    $notification = unserialize($user->fetch_object('notification_details', 'n_id', $row['n_id'], 'n_object'));
                     $notification_details = $notification->accept($user);
                     ?>
                     <tr scope="row" style="font-size: large;">
@@ -108,13 +108,13 @@ if($type == 'db_manager'){
                         <td style="color: whitesmoke;"><?php echo $notification_details['send_date']; ?></td>
                         <td style="color: whitesmoke;">
                             <?php
-                            $sender = unserialize($user->fetch_object('user_details', 'user_id', $notification->getFromId(), 'username'));
+                            $sender = unserialize($user->fetch_object('user_details', 'user_id', $notification->getFromId(), 'u_object'));
                             echo $sender->get_user_type() . ' ' . $sender->get_user_name();
                             ?>
                         </td>
                         <td style="color: whitesmoke;">
                             <?php
-                            $receiver = unserialize($user->fetch_object('user_details', 'user_id', $notification->getToId(), 'username'));
+                            $receiver = unserialize($user->fetch_object('user_details', 'user_id', $notification->getToId(), 'u_object'));
                             echo $receiver->get_user_type() . ' ' . $receiver->get_user_name();
                             ?>
                         </td>

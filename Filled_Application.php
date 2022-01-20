@@ -3,13 +3,10 @@ include 'autoloader.php';
 session_start();
 $conn = DB_OP::get_connection();
 
-$application = unserialize($conn->get_column_value("application_details", "app_id", "=", $_GET['application_id'], "application_object", ""));
-
-//$application->setState(Sent_To_DS::getSentToDs());
-
 $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $user->set_db($conn);
 
+$application = unserialize($user->fetch_object("application_details", "app_id", $_GET['application_id'], "application_object"));
 $application_details = $application->accept($user);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -19,8 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $application->setCertificationDetails2($_POST['certifyName2']);
 
     $application_id = $_GET['application_id'];
-    //refine
-    $conn->save_state_of_application($application);
+    $user->updateApplicationDetails($application);
     $sign_no = $_GET['sign_no'];
     header("location: sign.php?application_id=$application_id&sign_no=$sign_no");
 }
@@ -42,8 +38,8 @@ if ($type == "applicant") {
         }</style>";
 
 } elseif ($user instanceof R_A_P_1) {
-    $already_sent = $conn->get_column_value3('notification_details', 'application_id', 'from_id', 'n_type',
-        '=', $_GET['application_id'], $_SESSION['user_id'], 'appointment', 'n_id', "");
+    $already_sent = $user->fetch_value_3('notification_details', 'application_id', 'from_id', 'n_type',
+         $_GET['application_id'], $_SESSION['user_id'], 'appointment', 'n_id', "");
     if ($already_sent) {
         echo "<style>#send-time {
             display: none;
@@ -62,8 +58,8 @@ if ($type != "admin") {
 
 }
 if ($user instanceof R_A_P) {
-    $already_sent = $conn->get_column_value3('notification_details', 'application_id', 'from_id', 'n_type',
-        '=', $_GET['application_id'], $_SESSION['user_id'], 'confirmation', 'n_id', "");
+    $already_sent = $user->fetch_value_3('notification_details', 'application_id', 'from_id', 'n_type',
+        $_GET['application_id'], $_SESSION['user_id'], 'confirmation', 'n_id');
     if ($already_sent) {
         echo "<style>#reject_button {
             display: none;
@@ -72,8 +68,8 @@ if ($user instanceof R_A_P) {
 }
 
 if ($type == 'admin') {
-    $already_sent = $conn->get_column_value3('notification_details', 'application_id', 'from_id', 'n_type',
-        '=', $_GET['application_id'], $_SESSION['user_id'], 'confirmation', 'n_id', "");
+    $already_sent = $user->fetch_value_3('notification_details', 'application_id', 'from_id', 'n_type',
+        $_GET['application_id'], $_SESSION['user_id'], 'confirmation', 'n_id');
     if ($already_sent) {
         echo "<style>#reject_button {
             display: none;
@@ -102,7 +98,7 @@ if ($type == "db_manager" || $type == "applicant") {
 
 }
 
-if (($type == "admin" || $type == "db_manager") && $application->getDsSign() == null) {
+if (($type == "admin" || $type == "db_manager") && isset($application_details['ds_sign'])) {
 
     echo "<style>#ds_sign {
             display: none;

@@ -1,5 +1,9 @@
 <?php
-
+session_start();
+include 'autoloader.php';
+$conn = DB_OP::get_connection();
+$user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
+$user->set_db($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,8 +94,8 @@
             <td>Otto</td>
 
             <td><?php
-                $applicant_id = $conn->get_column_value('application_details', 'app_id', '=', $application_id, 'applicant_id', "");
-                $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', "");
+                $applicant_id = $user->fetch_value('application_details', 'app_id', $application_id, 'applicant_id');
+                $applicant = $user->fetch_value('user_details', 'user_id', '=', $applicant_id, 'username', "");
                 echo $applicant;
                 ?></td>
             <?php }?>
