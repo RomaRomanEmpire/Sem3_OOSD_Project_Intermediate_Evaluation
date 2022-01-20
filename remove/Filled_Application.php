@@ -7,7 +7,7 @@ $application = unserialize($conn->get_column_value("application_details", "app_i
 $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $user->set_db($conn);
 $user->set_row_id($_SESSION['user_id']);
-$already_sent = $conn->get_column_value3('notification_details', $key1, $key2,$key3, $operator, $key_value1, $key_value2,$key_value3, $id_name, $order);
+$already_sent = $conn->get_column_value3('notification_details', $key1, $key2,$key3, $key_value1, $key_value2,$key_value3, $id_name);
 $type = $user->get_user_type();
 
 if ($type == "applicant") {
