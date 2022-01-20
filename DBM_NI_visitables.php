@@ -101,33 +101,29 @@ if ($type == 'db_manager') {
                 $result = $user->fetch_array('notification_details', '', '', '');
                foreach ($result as $i => $row):
                    $notification = unserialize($user->fetch_value('notification_details', 'n_id', $row['n_id'], 'n_object'));
-                //    $notification_details = $notification->accept($user);
+                    $notification_details = $notification->accept($user);
                    ?>
-                   <!-- <tr scope="row" style="font-size: large;"> -->
-                       <!-- <td style="color: whitesmoke;"><?php //echo $row['n_id']; ?></td> -->
-<!--                        <td style="color: whitesmoke;">--><?php //echo $notification_details['send_date']; ?><!--</td>-->
-<!--                        <td style="color: whitesmoke;">-->
-<!--                            --><?php
-//                            $sender = unserialize($user->fetch_object('user_details', 'user_id', $notification->getFromId(), 'u_object'));
-//                            echo $sender->get_user_type() . ' ' . $sender->get_user_name();
-//                            ?>
-<!--                        </td>-->
-<!--                        <td style="color: whitesmoke;">-->
-<!--                            --><?php
-//                            $receiver = unserialize($user->fetch_object('user_details', 'user_id', $notification->getToId(), 'u_object'));
-//                            echo $receiver->get_user_type() . ' ' . $receiver->get_user_name();
-//                            ?>
-<!--                        </td>-->
-<!--                        <td style="color: whitesmoke;">--><?php //echo $notification->getType(); ?><!--</td>-->
-                   <!-- </tr> -->
+                    <tr scope="row" style="font-size: large;">
+                        <td style="color: whitesmoke;"><?php echo $row['n_id']; ?></td>
+                        <td style="color: whitesmoke;"><?php echo $notification_details['send_date']; ?></td>
+                        <td style="color: whitesmoke;">
+                            <?php
+                            $sender = unserialize($user->fetch_value('user_details', 'user_id', $notification->getFromId(), 'u_object'));
+                            echo $sender->get_user_type() . ' ' . $sender->get_user_name();
+                           ?>
+                        </td>
+                        <td style="color: whitesmoke;">
+                            <?php
+                            $receiver = unserialize($user->fetch_value('user_details', 'user_id', $notification->getToId(), 'u_object'));
+                            echo $receiver->get_user_type() . ' ' . $receiver->get_user_name();
+                      ?>
+                        </td>
+                        <td style="color: whitesmoke;"><?php echo $notification->getType(); ?></td>
+                    </tr>
               <?php endforeach; ?>
                </tbody>
            </table>
-<!---->
-<!---->
        </fieldset>
-<!---->
-<!---->
    </div>
 </fieldset>
 <div id="nic_issuer">
@@ -161,7 +157,7 @@ if ($type == 'db_manager') {
                 </td>
             </tr>
         <?php endforeach; ?>
-        </tbody> -->
+        </tbody>
     </table>
 
 
