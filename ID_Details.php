@@ -145,9 +145,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     </div>
-
-    <fieldset class="div1" disabled>
-        <form id="ID_details_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?application_id=<?php echo $_GET["application_id"];?>" disabled="disabled" method="POST">
+    <div class="div1">
+    <form id="ID_details_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?application_id=<?php echo $_GET["application_id"];?>" disabled="disabled" method="POST">
+    <fieldset  disabled>
+       
             <!-- <h1><span id="msgx"></span></h1> -->
             <b> <label for="full_nameid">Full Name</label></b>
             <input type="text" id="full_nameid" name="fullname"
@@ -178,11 +179,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <b> <label for="jobid">Job</label></b>
             <input type="text" id="jobid" name="job" value="<?php echo $application_details['profession']; ?>">
             <br>
-            <input type="submit" id="button" style="font-size: 17px;color:whitesmoke;font-weight:bolder;">
-            <br>
-            <br>
-        </form>
+            
     </fieldset>
+    <input type="submit" id="button" style="font-size: 17px;color:whitesmoke;font-weight:bolder;">
+            <br>
+            <br>
+        </form></div>
 </div>
 </body>
 </html>

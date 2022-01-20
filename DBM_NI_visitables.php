@@ -82,7 +82,7 @@ if ($type == 'db_manager') {
         </a>
    </div>
 </div>
-
+<?php if ($user->get_user_type()=="db_manager"){ ?>
 <fieldset id="db-manager">
    <div style="padding: 200px 100px 100px;color: white; background: rgb(10,30,235);background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%, rgba(15,30,135,1) 100%, rgba(101,181,198,1) 100%);">
        <fieldset id="table_detils">
@@ -126,7 +126,8 @@ if ($type == 'db_manager') {
        </fieldset>
    </div>
 </fieldset>
-<div id="nic_issuer">
+<?php } else { ?>
+<fieldset id="nic_issuer">
     
        <div style="padding: 200px 100px 100px;color: white; background: rgb(10,30,235);background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%, rgba(15,30,135,1) 100%, rgba(101,181,198,1) 100%);" >
        <!-- style="padding: 300px 100px 100px;color: white; background: rgb(10,30,235);background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%, rgba(15,30,135,1) 100%, rgba(101,181,198,1) 100%);" -->
@@ -165,6 +166,7 @@ if ($type == 'db_manager') {
 
 
        </div>
-</div>
+</fieldset>
+<?php } ?>
 </body>
 </html>
