@@ -77,7 +77,7 @@ function createStaffMember($dataArray)
         $staff_member = new DatabaseManager($dataArray);
     } else if ($dataArray['officer'] == "Admin") {
         $staff_member = new Admin($dataArray);
-    } else if ($dataArray['officer'] == "authorized_person") {
+    } else if ($dataArray['officer'] == "admin") {
         $staff_member = new Admin($dataArray);
     } else if ($dataArray['officer'] == "Estate_Superintendent") {
         $staff_member = new E_S($dataArray);
@@ -90,7 +90,7 @@ function createStaffMember($dataArray)
     } else if ($dataArray['officer'] == "National_Identity_Card_Issuer") {
         $staff_member = new NIC_Issuer($dataArray);
     } else if ($dataArray['officer'] == 'authorized_person') {
-        $staff_member = new AuthorizedPPerson($dataArray);
+        $staff_member = new Authorized_Person($dataArray);
     }
     return $staff_member;
 }
