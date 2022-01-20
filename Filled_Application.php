@@ -3,10 +3,11 @@ include 'autoloader.php';
 session_start();
 $conn = DB_OP::get_connection();
 
+
 $user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $user->set_db($conn);
 
-$application = unserialize($user->fetch_object("application_details", "app_id", $_GET['application_id'], "application_object"));
+$application = unserialize($user->fetch_value("application_details", "app_id", "=", $_GET['application_id'], "application_object"));
 $application_details = $application->accept($user);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -16,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $application->setCertificationDetails2($_POST['certifyName2']);
 
     $application_id = $_GET['application_id'];
+    //refine
     $user->updateApplicationDetails($application);
     $sign_no = $_GET['sign_no'];
     header("location: sign.php?application_id=$application_id&sign_no=$sign_no");
@@ -36,10 +38,19 @@ if ($type == "applicant") {
     echo "<style>#ds_sign {
             display: none;
         }</style>";
+    if ($application_details['app_type_id'] == 1){
+        echo "<style>body {
+            min-height: 980%;
+        }</style>";
+    }else{
+        echo "<style>body {
+            min-height: 1200%;
+        }</style>";
+    }
 
 } elseif ($user instanceof R_A_P_1) {
     $already_sent = $user->fetch_value_3('notification_details', 'application_id', 'from_id', 'n_type',
-         $_GET['application_id'], $_SESSION['user_id'], 'appointment', 'n_id', "");
+        $_GET['application_id'], $_SESSION['user_id'], 'appointment', 'n_id');
     if ($already_sent) {
         echo "<style>#send-time {
             display: none;
@@ -50,6 +61,20 @@ if ($type == "applicant") {
         }</style>";
 
 }
+
+
+if ($type == "db_manager"){
+    if ($application_details['app_type_id'] == 1){
+        echo "<style>body {
+            min-height: 1200%;
+        }</style>";
+    }else{
+        echo "<style>body {
+            min-height: 1300%;
+        }</style>";
+    }
+}
+
 if ($type != "admin") {
 
     echo "<style>#admin_approve_button {
@@ -65,6 +90,16 @@ if ($user instanceof R_A_P) {
             display: none;
         }</style>";
     }
+    if ($application_details['app_type_id'] == 1){
+        echo "<style>body {
+            min-height: 900%;
+        }</style>";
+    }else{
+        echo "<style>body {
+            min-height: 1200%;
+        }</style>";
+    }
+
 }
 
 if ($type == 'admin') {
@@ -119,38 +154,30 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
     <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
     <title>ID Requesting</title>
     <style>
-
-        html {
-            min-height: 850%;
-        }
-
         body {
             /* background: #21669b; */
             /* background: #667EEA; */
-            min-height: 860vh;
-
-            background-image: radial-gradient(circle farthest-corner at 22.4% 21.7%, rgba(4, 189, 228, 1) 0%, rgba(2, 83, 185, 1) 100.2%);
-
-
+            /*min-height: 1000%;*/
+            background: rgb(209,167,108);
+            background: linear-gradient(0deg, rgba(209,167,108,1) 0%, rgba(247,207,201,1) 54%);
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         td {
             padding-left: 10px;
             padding-right: 30px;
             /* padding-bottom: 20px; */
-
-
         }
 
         h1 {
             text-align: center;
-            font-size: 30px;
-            font-style: italic;
+            font-size: 40px;
+            /*font-style: italic;*/
         }
 
         h2 {
             font-size: 20px;
-            font-style: oblique;
         }
 
         p {
@@ -182,13 +209,6 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
             padding: 5px;
         }
 
-
-        input[type="text"]:hover,
-        input[type="number"]:hover,
-        input[type="date"]:hover {
-            border-color: #fff;
-        }
-
         input[type="text"],
         input[type="email"],
         input[type="password"],
@@ -207,18 +227,13 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
             border-color: rgb(1, 15, 15);
         }
 
-        ::placeholder {
-            color: black;
-        }
-
-
         .step.active {
             display: block;
         }
 
         .container {
             left: 50%;
-            /* padding-top: 100px; */
+            /*padding-top: 100px; */
             margin-top: 160px;
             align-self: center;
             position: absolute;
@@ -226,8 +241,8 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
             box-sizing: border-box;
             padding: 20px 20px;
             width: 1000px;
-            /* background-color: #a6d8ff ; */
-            background-image: linear-gradient(to right, #00b4db, #0083b0);
+            background-color: lightyellow;
+            /*background-image: linear-gradient(to right, #00b4db, #0083b0);*/
             border-radius: 50px;
             border-color: #000;
 
@@ -238,43 +253,41 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
             position: fixed;
             top: 0;
             right: 0;
-            height: 16vh;
+            height: 135px;
             width: 100%;
-            background-color: #00b4db;
+            background-color: rosybrown;
             display: flex;
             align-items: center;
             justify-content: right;
             z-index: 3;
-
         }
 
-        button.next-btn,
-        button.previous-btn,
-        button.submit-btn {
-            float: right;
-            margin-top: 20px;
-            padding: 10px 30px;
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
             border: none;
             outline: none;
-            background-color: rgb(180, 220, 255);
-            font-family: 'Montserrat';
-            font-size: 10px;
+            background-color: midnightblue;
+            color: white;
             cursor: pointer;
+            padding: 15px;
+            border-radius: 30px;
+            font-size: 18px;
         }
 
-        button.previous-btn {
-            float: left;
-        }
-
-        button.submit-btn {
-            background-color: seagreen;
-
+        #myBtn:hover {
+            background-color: #555;
         }
 
         .header1 button:hover {
             background-color: white;
         }
 
+        section{
+            padding-top: 20px;
+        }
 
     </style>
 
@@ -282,6 +295,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
 </head>
 
 <body>
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 <div class="header1">
     <table>
         <tbody>
@@ -293,12 +307,12 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
             </tr>
         </div>
         <fieldset class="input-group" style="margin-left: 10px;margin-top:70px;" disabled>
-            <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>State</b></span>
+            <span class="input-group-text" style="background-color:darkkhaki;color:black;"><b>State</b></span>
             <textarea class="form-control" aria-label="With textarea"
-                      style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"><?php echo $application->getState()->getState(); ?></textarea>
-            <span class="input-group-text" style="background-color:#00b4db;color:black;"><b>Applied Date</b></span>
+                      style="margin-right:10px;width:100px;height:35px;background-color:white;color:black;"><?php echo $application->getState()->getState(); ?></textarea>
+            <span class="input-group-text" style="background-color:darkkhaki;color:black;"><b>Applied Date</b></span>
             <textarea class="form-control" aria-label="With textarea"
-                      style="margin-right:10px;width:100px;height:35px;background-color:#00b4db;color:black;"><?php echo $application->getApplyDate(); ?></textarea>
+                      style="margin-right:10px;width:100px;height:35px;background-color:white;color:black;"><?php echo $application->getApplyDate(); ?></textarea>
         </fieldset>
         <div>
             <div>
@@ -315,7 +329,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                                     href="Time_slot.php?application_id=<?php echo $_GET['application_id']; ?>">
 
                                 <button type="submit" class="btn btn-sm btn-outline-primary"
-                                        style="color: black;width:150px; font-size:15px;"><b>Send Time</b>
+                                        style="color:black;width:100px; height: 40px; font-size:15px; background-color: firebrick"><b>Send Time</b>
                                 </button></td>
 
 
@@ -331,13 +345,13 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                         <td id="reject_button"><a
                                     href="Reject_Application.php?application_id=<?php echo $_GET['application_id']; ?>">
                                 <button type="submit" class="btn btn-sm btn-outline-primary"
-                                        style="color:black;width:150px; font-size:15px;"><b>Reject</b>
+                                        style="color:black;width:100px; height: 40px; font-size:18px; background-color: firebrick"><b>Reject</b>
                                 </button>
                             </a></td>
 
                         <td><a href="View_Applications_Details.php">
                                 <button type="submit" class="btn btn-sm btn-outline-light fas fa-arrow-left"
-                                        style="width: 100px;font-size:18px;color:black;"><b>Back</b>
+                                        style="width: 100px; height: 40px; font-size:18px; color:black; background-color: #5c636a; padding-top: 10px; "><b>Back</b>
                                 </button>
                             </a></td>
                     </tr>
@@ -362,16 +376,12 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                         <dt>Name in full</dt>
                         <dd><b><label for="familyName">Family Name</label></b></dd>
                         <dd><input type="text" id="familyNname" name="familyName"
-                                   value="<?php echo $application_details['familyName']; ?>"
-                                   placeholder="Family name..."
-                                   required></dd>
+                                   value="<?php echo $application_details['familyName']; ?>"></dd>
                         <dd><b> <label for="name">Name</label></b></dd>
-                        <dd><input type="text" id="name" name="name" value="<?php echo $application_details['name']; ?>"
-                                   placeholder="Name..." required></dd>
+                        <dd><input type="text" id="name" name="name" value="<?php echo $application_details['name']; ?>" required></dd>
                         <dd><b> <label for="surname">Surname</label></b></dd>
                         <dd><input type="text" id="surname" name="surname"
-                                   value="<?php echo $application_details['surname']; ?>" placeholder="Surname..."
-                                   required></dd>
+                                   value="<?php echo $application_details['surname']; ?>"></dd>
                     </dl>
                 </div>
                 <div class="Form-group">
@@ -379,16 +389,12 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                         <dt>Name to be appeared in the Identity Card</dt>
                         <dd><b><label for="familyName">Family Name</label></b></dd>
                         <dd><input type="text" id="familyNname" name="familyName"
-                                   value="<?php echo $application_details['familyName']; ?>"
-                                   placeholder="Family name..."
-                                   required></dd>
+                                   value="<?php echo $application_details['familyName']; ?>"></dd>
                         <dd><b> <label for="name">Name</label></b></dd>
-                        <dd><input type="text" id="name" name="name" value="<?php echo $application_details['name']; ?>"
-                                   placeholder="Name..." required></dd>
+                        <dd><input type="text" id="name" name="name" value="<?php echo $application_details['name']; ?>" required></dd>
                         <dd><b> <label for="surname">Surname</label></b></dd>
                         <dd><input type="text" id="surname" name="surname"
-                                   value="<?php echo $application_details['surname']; ?>" placeholder="Surname..."
-                                   required></dd>
+                                   value="<?php echo $application_details['surname']; ?>" ></dd>
                     </dl>
                 </div>
 
@@ -412,7 +418,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                     <dl>
                         <dt><b><label for="profession">Profession/Occupation/Designation</label></b></dt>
                         <dd><input type="text" id="profession" name="profession"
-                                   value="<?php echo $application_details['profession']; ?>" placeholder="Profession..."
+                                   value="<?php echo $application_details['profession']; ?>"
                                    required></dd>
                     </dl>
                 </div>
@@ -434,8 +440,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                     <dl>
                         <dt><b><label for="certificateNo">Birth Certificate No</label></b></dt>
                         <dd><input type="number" id="certificateNo" name="birthCertificateNo"
-                                   value="<?php echo $application_details['birthCertificateNo']; ?>"
-                                   placeholder="Birth Certificate No..." required></dd>
+                                   value="<?php echo $application_details['birthCertificateNo']; ?>"></dd>
                     </dl>
                 </div>
 
@@ -443,8 +448,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                     <dl>
                         <dt><b><label for="placeOfBirth">Place of Birth</label></b></dt>
                         <dd><input type="text" id="placeOfBirth" name="placeOfBirth"
-                                   value="<?php echo $application_details['placeOfBirth']; ?>"
-                                   placeholder="Place of Birth..." required></dd>
+                                   value="<?php echo $application_details['placeOfBirth']; ?>"></dd>
                     </dl>
                 </div>
 
@@ -452,9 +456,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                     <dl>
                         <dt><b><label for="division">Division</label></b></dt>
                         <dd><input type="text" id="division" name="birthDivision"
-                                   value="<?php echo $application_details['birthDivision']; ?>"
-                                   placeholder="Division..."
-                                   required>
+                                   value="<?php echo $application_details['birthDivision']; ?>">
                         </dd>
                     </dl>
                 </div>
@@ -463,9 +465,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                     <dl>
                         <dt><b><label for="district">District</label></b></dt>
                         <dd><input type="text" id="district" name="birthDistrict"
-                                   value="<?php echo $application_details['birthDistrict']; ?>"
-                                   placeholder="District..."
-                                   required>
+                                   value="<?php echo $application_details['birthDistrict']; ?>">
                         </dd>
                     </dl>
                 </div>
@@ -478,8 +478,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                     <dl>
                         <dt><b><label for="countryOfBirth">Country of Birth</label></b></dt>
                         <dd><input type="text" id="countryOfBirth" name="countryOfBirth"
-                                   value="<?php echo $application_details['countryOfBirth']; ?>"
-                                   placeholder="Country of Birth..."></dd>
+                                   value="<?php echo $application_details['countryOfBirth']; ?>"></dd>
                     </dl>
                 </div>
 
@@ -487,7 +486,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                     <dl>
                         <dt><b><label for="city">City</label></b></dt>
                         <dd><input type="text" id="city" name="birthCity"
-                                   value="<?php echo $application_details['birthCity']; ?>" placeholder="City...">
+                                   value="<?php echo $application_details['birthCity']; ?>">
                         </dd>
                     </dl>
                 </div>
@@ -496,8 +495,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                     <dl>
                         <dt><b><label for="certificateNo">Certificate No.</label></b></dt>
                         <dd><input type="number" id="certificateNo" name="f citizenshipCertificateNo"
-                                   value="<?php echo $application_details['citizenshipCertificateNo']; ?>"
-                                   placeholder="Certificate No...">
+                                   value="<?php echo $application_details['citizenshipCertificateNo']; ?>">
                         </dd>
                     </dl>
                 </div>
@@ -512,21 +510,20 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                         <dt>Permanent Address</dt>
                         <dd><b><label for="houseName">Name or number of the House</label></b></dd>
                         <dd><input type="text" id="houseName" name="permHouseName"
-                                   value="<?php echo $application_details['permHouseName']; ?>"
-                                   placeholder="Name or number of the House..." required></dd>
+                                   value="<?php echo $application_details['permHouseName']; ?>" required></dd>
                         <dd><b> <label for="road">Road/Street/Lane/Place/Garden </label></b></dd>
                         <dd><input type="text" id="road" name="permRoad"
-                                   value="<?php echo $application_details['permRoad']; ?>" placeholder="Road..."
+                                   value="<?php echo $application_details['permRoad']; ?>"
                                    required></dd>
                         <dd><b> <label for="village">Village/City</label></b></dd>
                         <dd><input type="text" id="village" name="permVillage"
-                                   value="<?php echo $application_details['permVillage']; ?>" placeholder="Village..."
+                                   value="<?php echo $application_details['permVillage']; ?>"
                                    required>
                         </dd>
                         <dd><b> <label for="village">Postal Code</label></b></dd>
                         <dd><input type="number" id="postalCode" name="permPostalCode"
                                    value="<?php echo $application_details['permPostalCode']; ?>"
-                                   placeholder="Postal Code..." required>
+                                   required>
                         </dd>
                     </dl>
                 </div>
@@ -537,20 +534,20 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                         <dd><b><label for="houseName">Name or number of the House</label></b></dd>
                         <dd><input type="text" id="houseName" name="postalHouseName"
                                    value="<?php echo $application_details['postalHouseName']; ?>"
-                                   placeholder="Name or number of the House..." required></dd>
+                                   required></dd>
                         <dd><b> <label for="road">Road/Street/Lane/Place/Garden </label></b></dd>
                         <dd><input type="text" id="road" name="postalRoad"
-                                   value="<?php echo $application_details['postalRoad']; ?>" placeholder="Road..."
+                                   value="<?php echo $application_details['postalRoad']; ?>"
                                    required></dd>
                         <dd><b> <label for="village">Village/City</label></b></dd>
                         <dd><input type="text" id="village" name="postalVillage"
-                                   value="<?php echo $application_details['postalVillage']; ?>" placeholder="Village..."
+                                   value="<?php echo $application_details['postalVillage']; ?>"
                                    required>
                         </dd>
                         <dd><b> <label for="village">Postal Code</label></b></dd>
                         <dd><input type="number" id="postalCode" name="postalPostalCode"
                                    value="<?php echo $application_details['postalPostalCode']; ?>"
-                                   placeholder="Postal Code..." required></dd>
+                                   required></dd>
                     </dl>
                 </div>
 
@@ -565,8 +562,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                         <dt><label for="Account_Type">Account Type</label></dt>
 
                         <dd><input type="text" name="citizenshipCertificateType"
-                                   value="<?php echo $application_details['citizenshipCertificateType']; ?>"
-                                   placeholder="Postal Code..." required></dd>
+                                   value="<?php echo $application_details['citizenshipCertificateType']; ?>"></dd>
                     </dl>
                 </div>
 
@@ -574,8 +570,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                     <dl>
                         <dt><b><label for="certificateNo">Certificate Number</label></b></dt>
                         <dd><input type="number" id="certificateNo" name="certificateNo_9"
-                                   value="<?php echo $application_details['certificateNo_9']; ?>"
-                                   placeholder="Certificate Number..." required></dd>
+                                   value="<?php echo $application_details['certificateNo_9']; ?>"></dd>
                     </dl>
                 </div>
 
@@ -583,7 +578,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                     <dl>
                         <dt><b><label for="certificateDate">Date of issue of Certificate </label></b></dt>
                         <dd><input type="date" id="certificateDate" name="citizenshipCertificateDate"
-                                   value="<?php echo $application_details['citizenshipCertificateDate']; ?>" required>
+                                   value="<?php echo $application_details['citizenshipCertificateDate']; ?>">
                         </dd>
                     </dl>
                 </div>
@@ -594,13 +589,11 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                         <dt><b><label for="telephoneNo">Telephone Number</label></b></dt>
                         <dd><b><label for="residence">Residence</label></b></dd>
                         <dd><input type="tel" id="residence" name="residenceTelNo"
-                                   value="<?php echo $application_details['residenceTelNo']; ?>"
-                                   placeholder="Residence..." required>
+                                   value="<?php echo $application_details['residenceTelNo']; ?>">
                         </dd>
                         <dd><b><label for="mobile">Mobile</label></b></dd>
                         <dd><input type="tel" id="mobile" name="mobileTelNo"
-                                   value="<?php echo $application_details['mobileTelNo']; ?>" placeholder="Mobile..."
-                                   required>
+                                   value="<?php echo $application_details['mobileTelNo']; ?>">
                         </dd>
                     </dl>
                 </div>
@@ -609,71 +602,15 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
                     <dl>
                         <dt><b><label for="email">Email</label></b></dt>
                         <dd><input type="email" id="email" name="email"
-                                   value="<?php echo $application_details['email']; ?>" placeholder="Email..." required>
+                                   value="<?php echo $application_details['email']; ?>">
                         </dd>
                     </dl>
                 </div>
 
 
             </div>
-            <?php if ($application_details['app_type_id'] == 2) { ?>
-                <div class="step step-5">
-                    <h2>If the duplicate of the Identity Card is applied for, please complete this section.</h2>
 
-                    <div class="Form-group">
-                        <dl>
-                            <dt>Purpose of application</dt>
-                            <dd><label for="purpose"></label>
-                                <input type="text" id="purpose" name="purpose"
-                                                                    value="<?php echo $application_details['purpose']; ?>" placeholder="Email..."
-                                                                    required>
-                        </dl>
-                    </div>
-                    <div class="Form-group">
-                        <dl>
-                            <dt><b><label for="lostIdNum">Lost or last obtained Identity Card Number</label></b>
-                            </dt>
-                            <dd><input type="text" id="lostIdNum" name="lostIdNum"
-                                       value="<?php echo $application_details['lostIdNum']; ?>"
-                                       placeholder="Lost or last obtained Identity Card Number">
-                            </dd>
-                        </dl>
-                    </div>
-
-                    <div class="Form-group">
-                        <dl>
-                            <dt><b><label for="lostIdDate">Date of the issue of the Identity Card</label></b></dt>
-                            <dd><input type="date" id="lostIdDate" name="lostIdDate"
-                                       value="<?php echo $application_details['lostIdDate']; ?>"
-                                       placeholder="Date of the issue of the Identity Card">
-                            </dd>
-                        </dl>
-                    </div>
-
-                    <div class="Form-group">
-                        <dl>
-                            <dt><b><label for="policeStationDetails">Details of the police report or other document
-                                        pertaining to the lost Identity Card</label></b></dt>
-                            <dd><b><label for="policeStationName">Name of the Police Station</label></b></dd>
-                            <dd><input type="text" id="policeStationName" name="policeStationName"
-                                       value="<?php echo $application_details['policeStationName']; ?>"
-                                       placeholder="Name of the Police Station">
-                            </dd>
-                            <dd><b><label for="policeReportDate">Date of the issue of the Police report</label></b>
-                            </dd>
-                            <dd><input type="date" id="policeReportDate" name="policeReportDate"
-                                       value="<?php echo $application_details['policeReportDate']; ?>">
-                            </dd>
-                        </dl>
-                    </div>
-
-                    <!-- <button type="button" class="previous-btn">Previous</button>
-                    <button type="button" class="next-btn">Next</button> -->
-
-                </div>
-            <?php } ?>
-
-            <div class="step step=6">
+            <div class="step step=5">
                 <dl>
                     <div class="Form-group">
                         <h2>Photographs</h2>
@@ -688,14 +625,13 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
 
             </div>
 
-            <div class="step step-7">
+            <div class="step step-6">
                 <h2>Attestation of the Certifying Officer</h2>
 
                 <dl>
                     <dt><b><label for="receiptNo">Number of the receipt or the certificate</label></b></dt>
                     <dd><input type="number" id="receiptNo" name="receiptNo"
-                               value="<?php echo $application_details['receiptNo']; ?>"
-                               placeholder="Number of the receipt or the certificate" required></dd>
+                               value="<?php echo $application_details['receiptNo']; ?>" required></dd>
                 </dl>
 
                 <dl>
@@ -709,6 +645,56 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
 
 
             </div>
+
+            <?php if ($application_details['app_type_id'] == 2) { ?>
+                <div class="step step-7">
+                    <h2>If the duplicate of the Identity Card is applied for, please complete this section.</h2>
+
+                    <div class="Form-group">
+                        <dl>
+                            <dt>Purpose of application</dt>
+                            <dd><label for="purpose"></label>
+                                <input type="text" id="purpose" name="purpose"
+                                       value="<?php echo $application_details['purpose']; ?>">
+                        </dl>
+                    </div>
+                    <div class="Form-group">
+                        <dl>
+                            <dt><b><label for="lostIdNum">Lost or last obtained Identity Card Number</label></b>
+                            </dt>
+                            <dd><input type="text" id="lostIdNum" name="lostIdNum"
+                                       value="<?php echo $application_details['lostIdNum']; ?>">
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="Form-group">
+                        <dl>
+                            <dt><b><label for="lostIdDate">Date of the issue of the Identity Card</label></b></dt>
+                            <dd><input type="date" id="lostIdDate" name="lostIdDate"
+                                       value="<?php echo $application_details['lostIdDate']; ?>">
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="Form-group">
+                        <dl>
+                            <dt><b><label for="policeStationDetails">Details of the police report or other document
+                                        pertaining to the lost Identity Card</label></b></dt>
+                            <dd><b><label for="policeStationName">Name of the Police Station</label></b></dd>
+                            <dd><input type="text" id="policeStationName" name="policeStationName"
+                                       value="<?php echo $application_details['policeStationName']; ?>">
+                            </dd>
+                            <dd><b><label for="policeReportDate">Date of the issue of the Police report</label></b>
+                            </dd>
+                            <dd><input type="date" id="policeReportDate" name="policeReportDate"
+                                       value="<?php echo $application_details['policeReportDate']; ?>">
+                            </dd>
+                        </dl>
+                    </div>
+
+                </div>
+            <?php } ?>
         </fieldset>
         <form id="attestation-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?
         application_id=<?php echo $_GET['application_id']; ?>&sign_no=<?php echo 1; ?>" method="POST">
@@ -779,8 +765,7 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
 
                     } else {
                         ?>
-                        <a href="sign.php?sign_no=<?php echo 2; ?>&application_id=<?php echo $_GET['application_id'] ?>"
-                           style="float: right;">
+                        <a href="sign.php?sign_no=<?php echo 2; ?>&application_id=<?php echo $_GET['application_id'] ?>">
                             <button type="button" class="btn btn-sm btn-outline-success " style="color: black;">
                                 <b>
                                     Add the signature </b></button>
@@ -827,7 +812,24 @@ if (($type == "admin" || $type == "db_manager") && isset($application_details['d
     </div>
 
 </section>
+<script>
+    mybutton = document.getElementById("myBtn");
 
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
 
 </body>
 
