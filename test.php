@@ -1,11 +1,5 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo $_POST['hi'];
-
+$a = 1;
+if($a==1 && !empty(' ')){
+    echo 'fuck';
 }
-?>
-<html>
-<form id="signin-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-    <input type="submit" value="Login">
-</form>
-</html>
