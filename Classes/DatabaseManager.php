@@ -67,7 +67,7 @@ class DatabaseManager extends User implements IVisitor
         return $this->db->get_table_info($table,$column, $value);
     }
 
-    public function fetch_object($table, $key, $key_value, $object)
+    public function fetch_value($table, $key, $key_value, $object)
     {
         return $this->db->get_column_value($table, $key, '=', $key_value, $object, "");
     }

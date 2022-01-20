@@ -144,14 +144,14 @@ if ($type == 'db_manager') {
         <?php
         $result = $user->fetch_array('application_details', 'stat', 'approved', $order);
         foreach ($result as $i => $row):
-            $application = unserialize($user->fetch_object('application_details', 'app_id', $row['app_id'], 'application_object'));
+            $application = unserialize($user->fetch_value('application_details', 'app_id', $row['app_id'], 'application_object'));
             $application_details = $application->accept($user);
             ?>
              <tr scope="row" style="font-size: large;">
                 <td style="color: whitesmoke;"><?php echo $row['app_id']; ?></td>
                 <td style="color: whitesmoke;"><?php echo $application_details['approved_date']; ?></td>
                 <td style="color: whitesmoke;">
-                    <a href="ID_Details.php?$application_id=<?php echo $row['app_id']; ?>">
+                    <a href="ID_Details.php?application_id=<?php echo $row['app_id']; ?>">
                         <button type="button" class="btn btn-sm btn-outline-danger"><b>Application Details</b></button>
                     </a>
                 </td>

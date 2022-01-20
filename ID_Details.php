@@ -5,12 +5,13 @@ $conn = DB_OP::get_connection();
 
 $nic_issuer = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $nic_issuer->set_db($conn);
-$application = unserialize($nic_issuer->fetch_object("application_details", "app_id", $_GET['application_id'], "application_object"));
+$application = unserialize($nic_issuer->fetch_value("application_details", "app_id", $_GET['application_id'], "application_object"));
 $application_details = $application->accept($nic_issuer);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $applicant_id = $nic_issuer->fetch_object("application_details", "app_id", $_GET['application_id'], "applicant_id");
+    $applicant_id = $nic_issuer->fetch_value("application_details", "app_id", $_GET['application_id'], "applicant_id");
     $nic_issuer->issue_NIC($applicant_id, $application, $_POST);
+    header("location:DBM_NI_visitables.php");
 }
 ?>
 <!DOCTYPE html>
@@ -145,8 +146,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </div>
 
-    <div class="div1">
-        <form id="ID_details_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" disabled="disabled" method="POST">
+    <fieldset class="div1" disabled>
+        <form id="ID_details_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?application_id=<?php echo $_GET["application_id"];?>" disabled="disabled" method="POST">
             <!-- <h1><span id="msgx"></span></h1> -->
             <b> <label for="full_nameid">Full Name</label></b>
             <input type="text" id="full_nameid" name="fullname"
@@ -180,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="submit" id="button" style="font-size: 17px;color:whitesmoke;font-weight:bolder;">
 
         </form>
-    </div>
+    </fieldset>
 </div>
 </body>
 </html>
