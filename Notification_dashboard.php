@@ -216,19 +216,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedc" autocomplete="off"
                        onclick="Notification()">
                 <label class="btn btn-outline-light" for="btn_check_outlinedc" style="border-color: white;"><p
-                            style="font-weight: bold;width:150px; height:10px;">Confirm Messages</p></label><br>
+                            style="font-weight: bold;width:150px; height:25px;"><i class="fas fa-angle-double-right"></i>Confirm Messages</p></label><br>
             </li>
             <br>
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedI" autocomplete="off"
                        onclick="Notification()">
                 <label class="btn btn-outline-light" for="btn_check_outlinedI" style="border-color: white;"><p
-                            style="font-weight: bold;width:150px; height:10px;">Inbox Messages</p></label><br>
+                            style="font-weight: bold;width:150px; height:10px;"><i class="fas fa-angle-double-right"></i>Inbox Messages</p></label><br>
             </li>
             <br>
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedS" autocomplete="off"
                        onclick="Notification()">
                 <label class="btn btn-outline-light" for="btn_check_outlinedS" style="border-color: white;"><p
-                            style="font-weight: bold;width:150px; height:10px;">Sent Messages</p></label>
+                            style="font-weight: bold;width:150px; height:10px;"><i class="fas fa-angle-double-right"></i>Sent Messages</p></label>
             </li>
             <fieldset id="Sent" style="display: none;">
                 <br>
@@ -236,14 +236,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="radio" name="e" class="btn-check" id="btn_check_outlinedT" autocomplete="off"
                            onclick="Notification()">
                     <label class="btn btn-outline-info" for="btn_check_outlinedT"><p
-                                style="font-weight: bold;width:150px; height:10px;">Time Allocation</p></label>
+                                style="font-weight: bold;width:150px; height:10px;"><i class="fas fa-angle-double-right"></i>Time Allocation</p></label>
                 </li>
                 <br>
                 <li>
                     <input type="radio" name="e" class="btn-check" id="btn_check_outlinedR" autocomplete="off"
                            onclick="Notification()">
                     <label class="btn btn-outline-info" for="btn_check_outlinedR"><p
-                                style="font-weight: bold;width:150px; height:10px;">Confirmations</p></label>
+                                style="font-weight: bold;width:150px; height:10px;"><i class="fas fa-angle-double-right"></i>Confirmations</p></label>
                 </li>
             </fieldset>
         </ul>
