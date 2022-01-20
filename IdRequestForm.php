@@ -383,7 +383,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                        value="<?php echo $_POST['postalHouseName']??NULL?>" placeholder="Name or number of the House..." required></dd>
                             <dd><b> <label class="required_" for="road">3.2.2. Road/Street/Lane/Place/Garden </label></b></dd>
                             <dd><input type="text" id="road" name="postalRoad" value="<?php echo $_POST['postalRoad']??NULL?>" placeholder="Road..." required></dd>
-                            <dd><b> <label class="required" for="village">3.2.3. Village/City</label></b></dd>
+                            <dd><b> <label class="required_" for="village">3.2.3. Village/City</label></b></dd>
                             <dd><input type="text" id="village" name="postalVillage" value="<?php echo $_POST['postalVillage']??NULL?>" placeholder="Village..." required>
                             </dd>
                             <dd><b> <label class="required_" for="village">3.2.4. Postal Code</label></b></dd>
