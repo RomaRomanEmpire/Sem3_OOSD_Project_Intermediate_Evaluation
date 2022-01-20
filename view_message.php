@@ -70,7 +70,7 @@ $user->set_db($conn);
 
         <tr class="table-danger">
             <?php
-            $u_type = $_GET['u_type'];
+            $u_type = $user->get_user_type();
             if($u_type!='applicant'){?>
             <th scope="col">ID Number</th>
             <th scope="col">Applicant Name</th>
@@ -85,7 +85,9 @@ $user->set_db($conn);
         </tbody>
         <tbody>
         <?php
-        $n_id = $_GET['n_id'];
+//        $n_id = $_GET['n_id'];
+        $notification = unserialize($user->fetch_value('notification_details', 'n_id', $_GET['n_id'], 'n_object'));
+        $notification_details = $notification->accept($user);
         $application_id = $_GET['application_id'];
         ?>
         <tr>

@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $applicant_id = $user->fetch_value('application_details', 'app_id', $application_id, 'applicant_id');
     $notification->setApplicantId($applicant_id);
-    
+
 
     if (isset($_FILES['attachment'])) {
         $attachment = checkFileValidity("attachment");

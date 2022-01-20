@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $application->setCertificationDetails2($_POST['certifyName2']);
 
     $application_id = $_GET['application_id'];
-    //refine
+
     $user->updateApplicationDetails($application);
     $sign_no = $_GET['sign_no'];
     header("location: sign.php?application_id=$application_id&sign_no=$sign_no");
@@ -721,7 +721,7 @@ if (($type == "admin" || $type == "db_manager") && !isset($application_details['
         </fieldset>
         <form id="attestation-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?
         application_id=<?php echo $_GET['application_id']; ?>&sign_no=<?php echo 1; ?>" method="POST">
-            <fieldset <?php if (isset($application_details['para_1'])) { ?>disabled<?php } ?>>
+            <fieldset <?php if (isset($application_details['applicant_sign'])) { ?>disabled<?php } ?>>
 
                 <div class="step step-8" style="display: block;">
                     <h2>Attestation of the Certifying Officer</h2>
@@ -827,9 +827,6 @@ if (($type == "admin" || $type == "db_manager") && !isset($application_details['
 
                 </dl>
 
-
-                <!-- <button type="submit" class="submit-btn">Submit</button> -->
-                <!--    </form>-->
             </form>
         </div>
     </div>

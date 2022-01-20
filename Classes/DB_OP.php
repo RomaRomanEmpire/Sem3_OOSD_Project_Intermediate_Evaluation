@@ -89,17 +89,17 @@ class DB_OP
     function create_user_account($staff_id, $u_object): ?bool
     {
         if ($staff_id) {
-            $sql = "INSERT INTO user_details (user_id, staff_id, u_type, username, email, pwd ,u_object) VALUES (?,?,?,?,?,?,?)";
+            $sql = "INSERT INTO user_details (staff_id, u_type, username, email, pwd ,u_object) VALUES (?,?,?,?,?,?)";
 
             if ($stmt = $this->link->prepare($sql)) {
 
                 // Bind variables to the prepared statement as parameters
-                $stmt->bind_param("iisssss", $param_user_id, $param_staff_id, $param_u_type, $param_username, $param_email, $param_pwd, $param_u_object);
+                $stmt->bind_param("isssss", $param_staff_id, $param_u_type, $param_username, $param_email, $param_pwd, $param_u_object);
 
                 // Set parameters
-                $param_user_id = ($this->get_column_value("user_details", "user_id", ">", "0",
+                $row_id = ($this->get_column_value("user_details", "user_id", ">", "0",
                             "user_id", "ORDER BY user_id DESC") ?? 0) + 1;
-                $u_object->set_row_id($param_user_id);
+                $u_object->set_row_id($row_id);
                 $param_staff_id = $staff_id;
                 $param_u_type = $u_object->get_user_type();
                 $param_username = $u_object->get_user_name();
@@ -120,15 +120,15 @@ class DB_OP
             }
 
         } else {
-            $sql = "INSERT INTO user_details (user_id,u_type,username, email, pwd ,u_object) VALUES (?,?,?,?,?,?)";
+            $sql = "INSERT INTO user_details (u_type,username, email, pwd ,u_object) VALUES (?,?,?,?,?)";
             if ($stmt = $this->link->prepare($sql)) {
                 // Bind variables to the prepared statement as parameters
-                $stmt->bind_param("isssss", $param_user_id, $param_u_type, $param_username, $param_email, $param_pwd, $param_u_object);
+                $stmt->bind_param("sssss", $param_u_type, $param_username, $param_email, $param_pwd, $param_u_object);
 
                 // Set parameters
-                $param_user_id = ($this->get_column_value("user_details", "user_id", ">", "0",
+                $row_id = ($this->get_column_value("user_details", "user_id", ">", "0",
                             "user_id", "ORDER BY user_id DESC") ?? 0) + 1;
-                $u_object->set_row_id($param_user_id);
+                $u_object->set_row_id($row_id);
                 $param_u_type = $u_object->get_user_type();
                 $param_username = $u_object->get_user_name();
                 $param_email = $u_object->get_user_email();
@@ -180,7 +180,7 @@ class DB_OP
     public
     function issue_NIC($application_id, $nic_object)
     {
-        $sql = "INSERT INTO issued_id_history (application_id,issue_date, nic_object) VALUES (?,?,?)";
+        $sql = "INSERT INTO issued_id_history (application_id, issue_date, nic_object) VALUES (?,?,?)";
         if ($stmt = $this->link->prepare($sql)) {
 
             // Bind variables to the prepared statement as parameters
@@ -193,11 +193,11 @@ class DB_OP
             $param_nic_object = serialize($nic_object);
 
             if ($stmt->execute()) {
-                // Redirect to login page
+                // Redirect
                 echo "<script type='text/javascript'>alert('NIC has being issued!'); </script>";
 
             } else {
-                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
+                echo "<script type='text/javascript'>alert('Oops! Something went wrong!');</script>";
             }
 
             // Close statement
@@ -208,15 +208,15 @@ class DB_OP
     public
     function add_notification($n_object)
     {
-        $sql = "INSERT INTO notification_details (n_id,application_id, n_type, from_id, to_id, n_object) VALUES (?,?,?,?,?,?)";
+        $sql = "INSERT INTO notification_details (application_id, n_type, from_id, to_id, n_object) VALUES (?,?,?,?,?)";
 
         if ($stmt = $this->link->prepare($sql)) {
 
-            $stmt->bind_param("iisiis", $param_n_id, $param_application_id, $param_n_type, $param_from_id, $param_to_id, $param_n_object);
+            $stmt->bind_param("isiis", $param_application_id, $param_n_type, $param_from_id, $param_to_id, $param_n_object);
 
-            $param_n_id = ($this->get_column_value("notification_details", "n_id", ">", "0",
+            $row_id = ($this->get_column_value("notification_details", "n_id", ">", "0",
                         "n_id", "ORDER BY n_id DESC") ?? 0) + 1;
-            $n_object->setRowId($param_n_id);
+            $n_object->setRowId($row_id);
             $param_application_id = $n_object->getApplicationId();
             $param_n_type = $n_object->getType();
             $param_from_id = $n_object->getFromId();
@@ -238,17 +238,17 @@ class DB_OP
     public
     function add_application($applicant_id, $table, $application_object)
     {
-        $sql = "INSERT INTO application_details (app_id, applicant_id,stat,apply_date, gn_div_or_address,ds,address_type,application_object) VALUES (?,?,?,?,?,?,?,?)";
+        $sql = "INSERT INTO application_details (applicant_id,stat,apply_date, gn_div_or_address,ds,address_type,application_object) VALUES (?,?,?,?,?,?,?)";
         if ($stmt = $this->link->prepare($sql)) {
 
             // Bind variables to the prepared statement as parameters
 
-            $stmt->bind_param("iissssss", $param_app_id, $param_applicant_id, $param_stat, $param_apply_date, $param_gn_div_or_address, $param_ds, $param_address_type, $param_application_object);
+            $stmt->bind_param("issssss", $param_applicant_id, $param_stat, $param_apply_date, $param_gn_div_or_address, $param_ds, $param_address_type, $param_application_object);
 
             // Set parameters
-            $param_app_id = ($this->get_column_value("application_details", "app_id", ">", "0",
+            $row_id = ($this->get_column_value("application_details", "app_id", ">", "0",
                         "app_id", "ORDER BY app_id DESC") ?? 0) + 1;
-            $application_object->setRowId($param_app_id);
+            $application_object->setRowId($row_id);
             $param_applicant_id = $applicant_id;
             $param_stat = $application_object->getState()->getState();
             $param_apply_date = $application_object->getApplyDate();
@@ -367,7 +367,7 @@ class DB_OP
             // just execute the prepared statement not checking values
             if ($stmt->execute()) {
                 $result = $stmt->get_result();
-                
+
                 if ($result->num_rows >= 1) {
 
                     $row = $result->fetch_assoc();
