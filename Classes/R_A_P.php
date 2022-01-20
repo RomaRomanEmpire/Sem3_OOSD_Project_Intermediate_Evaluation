@@ -15,6 +15,11 @@ abstract class R_A_P extends L_P_User implements IApprover, IVisitor
 //        // code...
 //    }
 
+    public function updateApplicationDetails($application)
+    {
+        $this->db->save_state_of_application($application);
+    }
+
     public function approve_application($application,$notification)
     {
         $application->approve($this,$notification);
@@ -24,7 +29,7 @@ abstract class R_A_P extends L_P_User implements IApprover, IVisitor
     public function reject_application($application,$notification){
         $application->reject($this,$notification);
         $this->db->save_state_of_application($application);
-        $this->db->remove_application('app_id', $application->getRowId());
+        $this->db->delete_row('application_details','app_id', $application->getRowId());
     }
 
     function visitApplication($application)
@@ -52,6 +57,16 @@ abstract class R_A_P extends L_P_User implements IApprover, IVisitor
     public function fetch_array_2($table, $key1, $key2,$operator1, $operator2, $key_value1, $key_value2, $order){
         return $this->db->database_details_2($table,$key1, $key2, $operator1, $operator2, $key_value1, $key_value2, $order);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getStaffId()
+    {
+        return $this->staff_id;
+    }
+
+
 
 
 

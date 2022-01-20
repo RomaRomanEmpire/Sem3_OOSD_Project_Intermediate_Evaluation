@@ -194,10 +194,10 @@ class DB_OP
 
             if ($stmt->execute()) {
                 // Redirect to login page
-                echo "<script type='text/javascript'>alert('The request has been send successfully!'); </script>";
+                echo "<script type='text/javascript'>alert('NIC has being issued!'); </script>";
 
             } else {
-                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!'); window.location.href = 'newRequest.php';</script>";
+                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
             }
 
             // Close statement
@@ -355,29 +355,28 @@ class DB_OP
         return NULL;
     }
 
-    public
-    function remove_application($key, $key_value): ?bool
-    {
-        $sql = "DELETE FROM 'application details' WHERE $key=?";
-        if ($stmt = $this->link->prepare($sql)) {
-
-            // Bind variables to the prepared statement as parameters
-
-            $stmt->bind_param("s", $key_value);
-
-            if ($stmt->execute()) {
-                // Redirect
-                echo "<script type='text/javascript'>alert('Signature added successfully!');</script>";
-                return true;
-            } else {
-                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
-            }
-
-            // Close statement
-            $stmt->close();
-        }
-        return NULL;
-    }
+//    public
+//    function remove_application($key, $key_value): ?bool
+//    {
+//        $sql = "DELETE FROM 'application details' WHERE $key=?";
+//        if ($stmt = $this->link->prepare($sql)) {
+//
+//            // Bind variables to the prepared statement as parameters
+//
+//            $stmt->bind_param("s", $key_value);
+//
+//            if ($stmt->execute()) {
+//                // Redirect
+//                return true;
+//            } else {
+//                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
+//            }
+//
+//            // Close statement
+//            $stmt->close();
+//        }
+//        return NULL;
+//    }
 
     public
     function get_column_value($table, $key, $operator, $key_value, $id_name,$order)
@@ -508,7 +507,7 @@ class DB_OP
     }
 
     public
-    function remove_data($table, $key, $key_value): bool
+    function delete_row($table, $key, $key_value): bool
     {
         $sql = "DELETE FROM $table WHERE $key = ?";
 
@@ -517,9 +516,27 @@ class DB_OP
             $stmt->bind_param('s', $key_value);
 
             if ($stmt->execute()) {
-
                 return true;
+            }else {
+                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
+            }
+            $stmt->close();
+        }
+        return false;
+    }
 
+    public
+    function delete_traces($table, $column, $col_value, $key, $key_value): bool
+    {
+        $sql = "UPDATE $table SET $column = ? WHERE $key = ?";
+        if ($stmt = $this->link->prepare($sql)) {
+
+            $stmt->bind_param('is', $col_value, $key_value);
+
+            if ($stmt->execute()) {
+                return true;
+            }else {
+                echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
             }
             $stmt->close();
         }

@@ -19,22 +19,20 @@ class NIC_Issuer extends L_P_User implements IApprover ,IVisitor
 		return $application->getApplicationDetails();
 	}
 
-	function visitNotification($notification)
+    /**
+     * @throws Exception
+     */
+    function visitNotification($notification)
 	{
-		return $notification->getNotificationDetails();
+		throw new Exception('No notifications for NIC Issuer');
 	}
-
-//    public function fetch_NIC_details($value = '')
-//    {
-//        // code...
-//    }
 
     public function issue_NIC($applicant_id, $application, $details)
     {
         $nic =  new NIC($details);
         $this->db->issue_NIC($application->getRowId(), $nic);
         $this->db->application_processed($applicant_id, $application);
-        $this->db->remove_application('app_id', $application->getRowId());
+        $this->db->delete_row('application_details','app_id', $application->getRowId());
     }
 
     /**
@@ -61,6 +59,15 @@ class NIC_Issuer extends L_P_User implements IApprover ,IVisitor
     public function fetch_array($table, $key, $key_value){
         return $this->db->database_details($table,$key, $key_value, "");
     }
+
+    /**
+     * @return mixed
+     */
+    public function getStaffId()
+    {
+        return $this->staff_id;
+    }
+
 }
 
 

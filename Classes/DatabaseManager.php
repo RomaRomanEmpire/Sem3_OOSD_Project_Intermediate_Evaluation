@@ -22,9 +22,18 @@ class DatabaseManager extends User implements IVisitor
 
     }
 
-    public function remove_L_P_User($user_id)
+    public function remove_L_P_User($table, $key, $key_value)
     {
-        $this->db->remove_data("user_details", "user_id", $user_id);
+        $this->db->delete_row($table, $key, $key_value);
+        $this->clearL_P_UserTraces($key, $key_value);
+
+    }
+
+    public function clearL_P_UserTraces($key, $key_value){
+        $this->db->delete_traces('gn', 'staff_id', 0, $key, $key_value);
+        $this->db->delete_traces('ds', 'staff_id', 0, $key, $key_value);
+        $this->db->delete_traces('schools', 'staff_id', 0, $key, $key_value);
+        $this->db->delete_traces('estates', 'staff_id', 0, $key, $key_value);
     }
 
     /**
@@ -80,6 +89,16 @@ class DatabaseManager extends User implements IVisitor
     {
         return $this->db->database_details($table, $key, $key_value, "");
     }
+
+    /**
+     * @return mixed
+     */
+    public function getStaffId()
+    {
+        return $this->staff_id;
+    }
+
+
 }
 
 
