@@ -98,7 +98,7 @@ class Applicant extends L_P_User implements IApprover, IVisitor
 
     public function updateNotificationDetails($notification)
     {
-        $this->db->save_state_of_notification($notification);
+        return $this->db->save_state_of_notification($notification);
     }
 
     public function isAlreadyApplied($user_id): bool

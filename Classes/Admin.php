@@ -52,11 +52,16 @@ class Admin extends L_P_User implements IVisitor
 		return $notification->getNotificationDetails();
 	}
 
-	public function fetch_object($table, $key, $key_value, $object){
+	public function fetch_value($table, $key, $key_value, $object){
 		return $this->db->get_column_value($table, $key, '=', $key_value, $object, "");
 	}
 
 	public function fetch_array($table, $key, $key_value,$order){
 		return $this->db->database_details($table,$key, $key_value, $order);
 	}
+
+    public function fetch_array_2($table, $key1, $key2, $operator1, $operator2, $key_value1, $key_value2, $order)
+    {
+        return $this->db->database_details_2($table, $key1, $key2, $operator1, $operator2, $key_value1, $key_value2, $order);
+    }
 }

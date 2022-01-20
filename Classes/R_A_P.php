@@ -38,7 +38,7 @@ abstract class R_A_P extends L_P_User implements IApprover, IVisitor
     }
 
     public function fetch_value($table, $key, $key_value, $object){
-        return $this->db->get_column_value($table, $key, '=', $key_value, $object);
+        return $this->db->get_column_value($table, $key, '=', $key_value, $object,'');
     }
 
     public function fetch_value_3($table, $key1, $key2, $key3, $key_value1, $key_value2, $key_value3, $object){

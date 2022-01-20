@@ -206,7 +206,7 @@ class DB_OP
     }
 
     public
-    function add_notification($n_object)
+    function add_notification($n_object): ?bool
     {
         $sql = "INSERT INTO notification_details (n_id,application_id, n_type, from_id, to_id, n_object) VALUES (?,?,?,?,?,?)";
 
@@ -224,14 +224,14 @@ class DB_OP
             $param_n_object = serialize($n_object);
 
             if ($stmt->execute()) {
-                echo "<script type='text/javascript'>alert('Notification has been sent. Keep in touch!');</script>";
+                echo "<script type='text/javascript'>alert('Notification has been sent!');</script>";
+                return true;
             } else {
                 echo "<script type='text/javascript'>alert('Oops!! Something wend wrong!!');</script>";
             }
             $stmt->close();
-        } else {
-            echo "<script type='text/javascript'>alert('prepare failed!');</script>";
         }
+        return NULL;
     }
 
     public
@@ -379,9 +379,9 @@ class DB_OP
     }
 
     public
-    function get_column_value($table, $key, $operator, $key_value, $id_name)
+    function get_column_value($table, $key, $operator, $key_value, $id_name, $order)
     {
-        $sql = "SELECT $id_name FROM $table WHERE $key $operator ?";
+        $sql = "SELECT $id_name FROM $table WHERE $key $operator ? $order";
         if ($stmt = $this->link->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bind_param('s', $key_value);
