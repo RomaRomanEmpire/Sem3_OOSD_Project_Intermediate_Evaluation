@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style2.css">
     <title>Profile</title>
+    <script src="https://kit.fontawesome.com/78dc5e953b.js" crossorigin="anonymous"></script>
     <script type="text/javascript" src="Javascipt_File.js"></script>
     <style>
         /* .profile-pic-div{
@@ -100,7 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="header1" style="z-index: 4;background-color:#03031b;">
         <div>
             <a href="dashboard.php">
-            <button type="button" class="btn btn-outline-light" id="Back" >Back</button>
+            <button type="button" class="btn btn-outline-light fas fa-arrow-left" id="Back" >Back</button>
             </a>
         </div>
     </div>
