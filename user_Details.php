@@ -4,6 +4,9 @@ include 'autoloader.php';
 $con = DB_OP::get_connection();
 $db_manager = unserialize($con->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $db_manager->set_db($con);
+// echo "<style>#applicant {
+//     display: none;
+// }</style>";
 
 
 ?>
@@ -59,7 +62,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                     <h2 style="color: black;  ">View Database Details</h2>
                     <br>
                     <div class="mb-3 form-check">
-                        <input type="radio" class="form-check-input" name="officer" value="Database_Manager"
+                        <input type="radio" class="form-check-input" name="officer" value="Estate_Superintendent"
                                id="Officer_E" onclick="show_details()" required>
                         <label class="form-check-label" for="Officer_E">Estate Superintendent</label>
                     </div>
@@ -118,9 +121,9 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
 
                 } ?>
 
-
+                <?php if($o_type=="applicant"){ ?>
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
-                       id="applicant">
+                       id="applicant" >
                     <thead style="font-size:20px;">
                     <tr class="table-info">
                         <th scope="col" id="IdNumber">ID Number</th>
@@ -147,8 +150,8 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                     ?>
                     </tbody>
                 </table>
-
-
+                       
+                        <?php } else if($o_type=="ni"){ ?>
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
                        id="ni">
                     <thead style="font-size:20px;">
@@ -171,7 +174,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                                 echo $nic_issuer->get_full_name(); ?></td>
                             <td class="Username"
                                 style="color: whitesmoke;"><?php echo $nic_issuer->get_user_name(); ?></td>
-                            <td class="Email" style="color: whitesmoke;"><?php $nic_issuer->get_user_email(); ?></td>
+                            <td class="Email" style="color: whitesmoke;"><?php echo $nic_issuer->get_user_email(); ?></td>
                             <td class="Action">
 
                                 <input type="hidden" name="id">
@@ -188,7 +191,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                     </tbody>
                 </table>
 
-
+                <?php } else if($o_type=="admin"){ ?>
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
                        id="admin">
                     <thead style="font-size:20px;">
@@ -227,7 +230,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
 
                     </tbody>
                 </table>
-
+                <?php } else if($o_type=="gn"){ ?>        
 
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
                        id="gn">
@@ -237,9 +240,9 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                         <th scope="col" id="Fullname">Full Name</th>
                         <th scope="col" id="Username">Username</th>
                         <th scope="col" id="Email">Email</th>
-                        <th scope="col" id="Grama_Niladari_Divition" style="display: none;">Grama Niladhari Division
+                        <th scope="col" id="Grama_Niladari_Divition" >Grama Niladhari Division
                         </th>
-                        <th scope="col" id="Divitional_Secretariat" style="display: none;">Divisional Secretariat</th>
+                        <th scope="col" id="Divitional_Secretariat" >Divisional Secretariat</th>
                         <th scope="col" id="Action">Action</th>
                     </tr>
                     </thead>
@@ -255,9 +258,9 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <td class="Username" style="color: whitesmoke;"><?php echo $gn->get_user_name(); ?></td>
                             <td class="Email" style="color: whitesmoke;"><?php echo $gn->get_user_email(); ?></td>
 
-                            <td class="Grama_Niladari_Divition"
-                                style="display: none;"><?php $gn->getGnDivOrAddress(); ?></td>
-                            <td class="Divitional_Secretariat" style="display: none;"><?php $gn->getDs(); ?></td>
+                            <td class="Grama_Niladari_Divition" style="color: whitesmoke;"
+                                ><?php echo $gn->getGnDivOrAddress(); ?></td>
+                            <td class="Divitional_Secretariat"  style="color: whitesmoke;"><?php echo $gn->getDs(); ?></td>
 
                             <td class="Action">
                                 <input type="hidden" name="id">
@@ -273,7 +276,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
 
                     </tbody>
                 </table>
-
+                <?php } else if($o_type=="principal"){ ?>
 
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
                        id="principal">
@@ -283,7 +286,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                         <th scope="col" id="Fullname">Full Name</th>
                         <th scope="col" id="Username">Username</th>
                         <th scope="col" id="Email">Email</th>
-                        <th scope="col" id="School_Name" style="display: none;">School Name</th>
+                        <th scope="col" id="School_Name" >School Name</th>
                         <th scope="col" id="Action">Action</th>
                     </tr>
                     </thead>
@@ -303,8 +306,8 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <td class="Email"
                                 style="color: whitesmoke;"><?php echo $principal->get_user_email(); ?></td>
 
-                            <td class="School_Name"
-                                style="display: none;"><?php echo $principal->getGnDivOrAddress(); ?></td>
+                            <td class="School_Name" style="color: whitesmoke;"
+                                ><?php echo $principal->getGnDivOrAddress(); ?></td>
                             <td class="Action">
                                 <input type="hidden" name="id">
                                 <a href="remove_data.php?id=<?php echo $row['user_id'] ?>">
@@ -319,8 +322,8 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
 
                     </tbody>
                 </table>
-
-
+                        
+                <?php } else if($o_type=="es"){ ?>
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
                        id="es">
                     <thead style="font-size:20px;">
@@ -329,7 +332,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                         <th scope="col" id="Fullname">Full Name</th>
                         <th scope="col" id="Username">Username</th>
                         <th scope="col" id="Email">Email</th>
-                        <th scope="col" class="Estate_Address" style="display: none;">Estate Address</th>
+                        <th scope="col" class="Estate_Address" >Estate Address</th>
 
                         <th scope="col" id="Action">Action</th>
                     </tr>
@@ -347,8 +350,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                                 echo $es->get_full_name(); ?></td>
                             <td class="Username" style="color: whitesmoke;"><?php echo $es->get_user_name(); ?></td>
                             <td class="Email" style="color: whitesmoke;"><?php echo $es->get_user_email(); ?></td>
-                            <td class="Estate_Address"
-                                style="display: none;"><?php echo $es->getGnDivOrAddress(); ?></td>
+                            <td class="Estate_Address" style="color: whitesmoke;"><?php echo $es->getGnDivOrAddress(); ?></td>
 
                             <td class="Action">
                                 <input type="hidden" name="id">
@@ -365,7 +367,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
 
                     </tbody>
                 </table>
-
+                <?php } else if($o_type=="ds"){ ?>
 
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
                        id="ds">
@@ -375,7 +377,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                         <th scope="col" id="Fullname">Full Name</th>
                         <th scope="col" id="Username">Username</th>
                         <th scope="col" id="Email">Email</th>
-                        <th scope="col" id="Divitional_Secretariat" style="display: none;">Divitional Secretariat</th>
+                        <th scope="col" id="Divitional_Secretariat"  >Divitional Secretariat</th>
                         <th scope="col" id="Action">Action</th>
                     </tr>
                     </thead>
@@ -393,7 +395,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <td class="Username" style="color: whitesmoke;"><?php echo $ds->get_user_name(); ?></td>
                             <td class="Email" style="color: whitesmoke;"><?php echo $ds->get_user_email(); ?></td>
 
-                            <td class="Divitional_Secretariat" style="display: none;"><?php echo $ds->getDs(); ?></td>
+                            <td class="Divitional_Secretariat" style="color: whitesmoke;"><?php echo $ds->getDs(); ?></td>
 
                             <td class="Action">
 
@@ -411,6 +413,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
 
                     </tbody>
                 </table>
+                <?php } ?>
                 <!--                <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "-->
                 <!--                       id="applicant">-->
                 <!--                    <thead style="font-size:20px;">-->
@@ -419,12 +422,12 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                 <!--                        <th scope="col" id="Username">Username</th>-->
                 <!--                        <th scope="col" id="Email">Email</th>-->
                 <!--                        <!-- ================================================================================ -->
-                -->
+                
                 <!--                        <!-- <th scope="col" class="Estate_Address" style="display: none;">Estate Address</th>-->
                 <!--                        <th scope="col" id="Grama_Niladari_Divition" style="display: none;">Grama Niladari Divition</th>-->
                 <!--                        <th scope="col" id="Divitional_Secretariat" style="display: none;">Divitional Secretariat</th>-->
                 <!--                        <th scope="col" id="School_Name" style="display: none;">School Name</th>  -->
-                -->
+              
                 <!--                        <th scope="col" id="Action">Action</th>-->
                 <!--                    </tr>-->
                 <!--                    </thead>-->
@@ -444,16 +447,16 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                 <!--                            <!--<td class="Estate_Address" style="display: none;">Estate Address</td>-->
                 <!--                            <td class="Grama_Niladari_Divition" style="display: none;">34</td>-->
                 <!--                            <td class="Divitional_Secretariat" style="display: none;">24</td>-->
-                <!--                            <td class="School_Name" style="display: none;">234</td> -->-->
+                <!--                            <td class="School_Name" style="display: none;">234</td> -->
                 <!--                            <td class="Action">-->
-                <!--                                <!-- <form style="display: inline-block" > -->-->
+                <!--                                <!-- <form style="display: inline-block" > -->
                 <!--                                <input type="hidden" name="id">-->
                 <!--                                <a href="remove_data.php?id=-->
                 <?php //echo $row['user_id'] ?><!--">-->
                 <!--                                    <button type="submit" class="btn btn-sm btn-outline-danger"><b>Remove Account</b>-->
                 <!--                                    </button>-->
                 <!--                                </a>-->
-                <!--                                <!-- </form> -->-->
+                <!--                                <!-- </form> -->
                 <!--                            </td>-->
                 <!--                        </tr>-->
                 <!---->
@@ -470,12 +473,12 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                 <!--                        <th scope="col" id="Username">Username</th>-->
                 <!--                        <th scope="col" id="Email">Email</th>-->
                 <!--                        <!-- ================================================================================ -->
-                -->
+                
                 <!--                        <!-- <th scope="col" class="Estate_Address" style="display: none;">Estate Address</th>-->
                 <!--                        <th scope="col" id="Grama_Niladari_Divition" style="display: none;">Grama Niladari Divition</th>-->
                 <!--                        <th scope="col" id="Divitional_Secretariat" style="display: none;">Divitional Secretariat</th>-->
                 <!--                        <th scope="col" id="School_Name" style="display: none;">School Name</th>  -->
-                -->
+                
                 <!--                        <th scope="col" id="Action">Action</th>-->
                 <!--                    </tr>-->
                 <!--                    </thead>-->
@@ -495,16 +498,16 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                 <!--                            <!--<td class="Estate_Address" style="display: none;">Estate Address</td>-->
                 <!--                            <td class="Grama_Niladari_Divition" style="display: none;">34</td>-->
                 <!--                            <td class="Divitional_Secretariat" style="display: none;">24</td>-->
-                <!--                            <td class="School_Name" style="display: none;">234</td> -->-->
+                <!--                            <td class="School_Name" style="display: none;">234</td> -->
                 <!--                            <td class="Action">-->
-                <!--                                <!-- <form style="display: inline-block" > -->-->
+                <!--                                <!-- <form style="display: inline-block" > -->
                 <!--                                <input type="hidden" name="id">-->
                 <!--                                <a href="remove_data.php?id=-->
                 <?php //echo $row['user_id'] ?><!--">-->
                 <!--                                    <button type="submit" class="btn btn-sm btn-outline-danger"><b>Remove Account</b>-->
                 <!--                                    </button>-->
                 <!--                                </a>-->
-                <!--                                <!-- </form> -->-->
+                <!--                                <!-- </form> -->
                 <!--                            </td>-->
                 <!--                        </tr>-->
                 <!---->
