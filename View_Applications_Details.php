@@ -68,7 +68,7 @@ $user->set_db($con);
                     <?php
 
 
-                    if ($user->get_user_type() == "db_manager") {
+                    if ($user->get_user_type() == "db_manager" || $user->get_user_type() == "aup") {
                         $result = $user->fetch_array('application_details', '', '', '');
                     } else if ($user->get_user_type() == "admin") {
                         $result = $user->fetch_array_2('application_details', 'stat', 'stat', '!=', '!=', 'sent_to_rap_1', 'sent_to_ds', "");
