@@ -262,23 +262,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_receive_confirmation = $conn->database_details_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'confirmation', $order);
+                $result_receive_confirmation = $staff_member->fetch_array_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'confirmation', $order);
                 if (is_null($result_receive_confirmation)) {
                     echo "No notifications!";
                 } else {
                     foreach ($result_receive_confirmation as $i => $row):
-                        $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order));
+                        $notification = unserialize($staff_member->fetch_value('notification_details', 'n_id', $row['n_id'], 'n_object'));
                         $notification_details = $notification->accept($staff_member);
                         ?>
                         <tr>
                             <td><?php echo $row['n_id']; ?></td>
                             <td><?php
-                                $applicant_id = $conn->get_column_value('application_details', 'app_id', '=', $row['application_id'], 'applicant_id', $order);
-                                $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
+                                $applicant_id = $staff_member->fetch_value('application_details', 'app_id', $row['application_id'], 'applicant_id');
+                                $applicant = $staff_member->fetch_value('user_details', 'user_id',  $applicant_id, 'username');
                                 echo $applicant;
                                 ?></td>
                             <td><?php
-                                $sender = $conn->get_column_value('user_details', 'user_id', '=', $notification->getFromId(), 'username', "");
+                                $sender = $staff_member->fetch_value('user_details', 'user_id', $notification->getFromId(), 'username');
                                 echo $sender;
                                 ?></td>
                             <td><?php echo $notification_details['content']; ?></td>
@@ -314,19 +314,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_appointment_reschedules = $conn->database_details_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'appointment', $order);
+                $result_appointment_reschedules = $staff_member->fetch_array_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'appointment', $order);
                 if (is_null($result_appointment_reschedules)) {
                     echo "No notifications!";
                 } else {
                     foreach ($result_appointment_reschedules as $i => $row):
-                        $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order));
+                        $notification = unserialize($staff_member->fetch_value('notification_details', 'n_id', $row['n_id'], 'n_object'));
                         $notification_details = $notification->accept($staff_member);
                         ?>
                         <tr>
                             <th scope="row"><?php echo $row['n_id']; ?></th>
                             <td><?php
-                                $applicant_id = $conn->get_column_value('application_details', 'app_id', '=', $row['application_id'], 'applicant_id', $order);
-                                $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
+                                $applicant_id =$staff_member->fetch_value('application_details', 'app_id', $row['application_id'], 'applicant_id');
+                                $applicant = $staff_member->fetch_value('user_details', 'user_id', $applicant_id, 'username');
                                 echo $applicant;
                                 ?></td>
                             <td><?php echo $notification_details['appointment_date']; ?></td>
@@ -364,20 +364,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_appointment_schedules = $conn->database_details_2('notification_details', 'from_id', 'n_type', '=', '=', $_SESSION['user_id'], 'appointment', $order);
+                $result_appointment_schedules = $staff_member->fetch_array_2('notification_details', 'from_id', 'n_type', '=', '=', $_SESSION['user_id'], 'appointment', $order);
                 if (is_null($result_appointment_schedules)) {
                     echo "No notifications!";
                 } else {
                     foreach ($result_appointment_schedules as $i => $row):
-                        $notification = unserialize($conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order));
+                        $notification = unserialize($staff_member->fetch_value('notification_details', 'n_id', $row['n_id'], 'n_object'));
                         $notification_details = $notification->accept($staff_member);
                         ?>
                         <tr>
                             <th scope="row"><?php echo $row['application_id']; ?></th>
                             <td><?php echo $row['n_type']; ?></td>
                             <td><?php
-                                $applicant_id = $conn->get_column_value('application_details', 'app_id', '=', $row['application_id'], 'applicant_id', $order);
-                                $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
+                                $applicant_id = $staff_member->fetch_value('application_details', 'app_id',  $row['application_id'], 'applicant_id');
+                                $applicant = $staff_member->fetch_value('user_details', 'user_id',  $applicant_id, 'username');
                                 echo $applicant;
                                 ?></td>
                             <td><?php echo $notification_details['appointment_date']; ?></td>
@@ -407,19 +407,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                 <?php
-                $result_confirmations = $conn->database_details_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'confirmation', $order);
+                $result_confirmations = $staff_member->fetch_array_2('notification_details', 'to_id', 'n_type', '=', '=', $_SESSION['user_id'], 'confirmation', $order);
                 if (is_null($result_confirmations)) {
                     echo "No notifications!";
                 } else {
                     foreach ($result_confirmations as $i => $row):
-                        $notification = $conn->get_column_value('notification_details', 'n_id', '=', $row['n_id'], 'n_object', $order);
+                        $notification = $staff_member->fetch_value('notification_details', 'n_id', $row['n_id'], 'n_object');
                         $notification_details = $notification->accept($staff_member);
                         ?>
                         <tr>
                             <th scope="row"><?php echo $row['id']; ?></th>
                             <td><?php
-                                $applicant_id = $conn->get_column_value('application_details', 'app_id', '=', $row['application_id'], 'applicant_id', $order);
-                                $applicant = $conn->get_column_value('user_details', 'user_id', '=', $applicant_id, 'username', $order);
+                                $applicant_id = $staff_member->fetch_value('application_details', 'app_id', '=', $row['application_id'], 'applicant_id');
+                                $applicant = $staff_member->fetch_value('user_details', 'user_id', $applicant_id, 'username');
                                 echo $applicant;
                                 ?></td>
                             <td><?php echo $notification_details['send_date']; ?></td>
