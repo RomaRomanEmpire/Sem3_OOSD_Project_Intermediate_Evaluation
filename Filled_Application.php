@@ -147,7 +147,7 @@ if ($type == "db_manager" || $type == "applicant") {
 
 }
 
-if (($type == "admin" || $type == "db_manager") && isset($application_details['ds_sign'])) {
+if (($type == "admin" || $type == "db_manager") && !isset($application_details['ds_sign'])) {
 
     echo "<style>#ds_sign {
             display: none;

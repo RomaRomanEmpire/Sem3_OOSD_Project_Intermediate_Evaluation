@@ -53,6 +53,7 @@ class Application implements IVisitable
         $this->application_details['lostIdDate'] = $attributeArray['lostIdDate'] ?? NULL;
         $this->application_details['policeStationName'] = $attributeArray['policeStationName'] ?? NULL;
         $this->application_details['policeReportDate'] = $attributeArray['policeReportDate'] ?? NULL;
+        $this->application_details['policeReportDate'] = $attributeArray['policeReportDate'] ?? NULL;
 
 
         $this->application_details['photograph'] = $photographs;
@@ -61,8 +62,6 @@ class Application implements IVisitable
         $this->Iapprovers = array();
         $this->setApplyDate();
         $this->approve($applicant, new Notification('', ''));
-        $this->fillIApprovableArray($applicant);
-
     }
 
     /**

@@ -5,28 +5,7 @@ $con = DB_OP::get_connection();
 $db_manager = unserialize($con->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
 $db_manager->set_db($con);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if ($_POST['officer'] == "Estate_Superintendent") {
-        $o_type = 'es';
-
-    } else if ($_POST['officer'] == "Grama_Niladari") {
-        $o_type = 'gn';
-
-    } else if ($_POST['officer'] == "Principal") {
-        $o_type = 'principal';
-
-    } else if ($_POST['officer'] == "Divisional_Secretary") {
-        $o_type = 'ds';
-
-    } else if ($_POST['officer'] == "National_Identity_Card_Issuer") {
-        $o_type = 'ni';
-
-    } else if ($_POST['officer'] == "Applicant") {
-        $o_type = 'applicant';
-
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,8 +94,29 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                 </fieldset>
             </form>
         </div>
-        <?php if ($_SERVER["REQUEST_METHOD"] == "POST") { ?>
-            <fieldset id="table_detils">
+
+        <fieldset id="table_detils">
+            <?php if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+                if ($_POST['officer'] == "Estate_Superintendent") {
+                    $o_type = 'es';
+
+                } else if ($_POST['officer'] == "Grama_Niladari") {
+                    $o_type = 'gn';
+
+                } else if ($_POST['officer'] == "Principal") {
+                    $o_type = 'principal';
+
+                } else if ($_POST['officer'] == "Divisional_Secretary") {
+                    $o_type = 'ds';
+
+                } else if ($_POST['officer'] == "National_Identity_Card_Issuer") {
+                    $o_type = 'ni';
+
+                } else if ($_POST['officer'] == "Applicant") {
+                    $o_type = 'applicant';
+
+                } ?>
 
 
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
@@ -189,10 +189,6 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                 </table>
 
 
-
-
-
-
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
                        id="admin">
                     <thead style="font-size:20px;">
@@ -233,10 +229,6 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                 </table>
 
 
-
-
-
-
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
                        id="gn">
                     <thead style="font-size:20px;">
@@ -245,7 +237,8 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                         <th scope="col" id="Fullname">Full Name</th>
                         <th scope="col" id="Username">Username</th>
                         <th scope="col" id="Email">Email</th>
-                        <th scope="col" id="Grama_Niladari_Divition" style="display: none;">Grama Niladhari Division</th>
+                        <th scope="col" id="Grama_Niladari_Divition" style="display: none;">Grama Niladhari Division
+                        </th>
                         <th scope="col" id="Divitional_Secretariat" style="display: none;">Divisional Secretariat</th>
                         <th scope="col" id="Action">Action</th>
                     </tr>
@@ -262,8 +255,9 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <td class="Username" style="color: whitesmoke;"><?php echo $gn->get_user_name(); ?></td>
                             <td class="Email" style="color: whitesmoke;"><?php echo $gn->get_user_email(); ?></td>
 
-                            <td class="Grama_Niladari_Divition" style="display: none;"><?php $gn->getGnDivOrAddress();?></td>
-                            <td class="Divitional_Secretariat" style="display: none;"><?php $gn->getDs();?></td>
+                            <td class="Grama_Niladari_Divition"
+                                style="display: none;"><?php $gn->getGnDivOrAddress(); ?></td>
+                            <td class="Divitional_Secretariat" style="display: none;"><?php $gn->getDs(); ?></td>
 
                             <td class="Action">
                                 <input type="hidden" name="id">
@@ -279,9 +273,6 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
 
                     </tbody>
                 </table>
-
-
-
 
 
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
@@ -307,10 +298,13 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <td class="Fullname" style="color: whitesmoke;"><?php
                                 $principal = unserialize($db_manager->fetch_value('user_details', 'user_id', $row['user_id'], 'u_object'));
                                 echo $principal->get_full_name(); ?></td>
-                            <td class="Username" style="color: whitesmoke;"><?php echo $principal->get_user_name(); ?></td>
-                            <td class="Email" style="color: whitesmoke;"><?php echo $principal->get_user_email(); ?></td>
+                            <td class="Username"
+                                style="color: whitesmoke;"><?php echo $principal->get_user_name(); ?></td>
+                            <td class="Email"
+                                style="color: whitesmoke;"><?php echo $principal->get_user_email(); ?></td>
 
-                            <td class="School_Name" style="display: none;"><?php echo $principal->getGnDivOrAddress();?></td>
+                            <td class="School_Name"
+                                style="display: none;"><?php echo $principal->getGnDivOrAddress(); ?></td>
                             <td class="Action">
                                 <input type="hidden" name="id">
                                 <a href="remove_data.php?id=<?php echo $row['user_id'] ?>">
@@ -325,9 +319,6 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
 
                     </tbody>
                 </table>
-
-
-
 
 
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
@@ -356,7 +347,8 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                                 echo $es->get_full_name(); ?></td>
                             <td class="Username" style="color: whitesmoke;"><?php echo $es->get_user_name(); ?></td>
                             <td class="Email" style="color: whitesmoke;"><?php echo $es->get_user_email(); ?></td>
-                            <td class="Estate_Address" style="display: none;"><?php echo $es->getGnDivOrAddress();?></td>
+                            <td class="Estate_Address"
+                                style="display: none;"><?php echo $es->getGnDivOrAddress(); ?></td>
 
                             <td class="Action">
                                 <input type="hidden" name="id">
@@ -373,8 +365,6 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
 
                     </tbody>
                 </table>
-
-
 
 
                 <table class="table table-striped table-hover" style="text-align: center;font-weight:bolder; "
@@ -403,7 +393,7 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                             <td class="Username" style="color: whitesmoke;"><?php echo $ds->get_user_name(); ?></td>
                             <td class="Email" style="color: whitesmoke;"><?php echo $ds->get_user_email(); ?></td>
 
-                            <td class="Divitional_Secretariat" style="display: none;"><?php echo $ds->getDs();?></td>
+                            <td class="Divitional_Secretariat" style="display: none;"><?php echo $ds->getDs(); ?></td>
 
                             <td class="Action">
 
@@ -523,8 +513,9 @@ background: linear-gradient(90deg, rgba(10,30,235,1) 0%, rgba(15,132,139,1) 41%,
                 <!---->
                 <!--                    </tbody>-->
                 <!--                </table>-->
-            </fieldset>
-        <?php } ?>
+            <?php } ?>
+        </fieldset>
+        
     </div>
 </div>
 </body>
