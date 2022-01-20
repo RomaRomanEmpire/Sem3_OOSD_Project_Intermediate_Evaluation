@@ -16,8 +16,6 @@ class Application implements IVisitable
 
     public function __construct()
     {
-        $this->setState(Unfilled::getUnfilled());
-        $this->application_details = array();
     }
 
     /**
@@ -27,8 +25,12 @@ class Application implements IVisitable
      * @param $applicant
      * @param $app_type_id
      */
-    public function setDetails($photographs, $receipt,$policeReport, $attributeArray, $applicant, $app_type_id)
+    public function setDetails($photographs, $receipt, $policeReport, $attributeArray, $applicant, $app_type_id)
     {
+        $this->setState(Unfilled::getUnfilled());
+        $this->application_details = array();
+        $this->Iapprovers = array();
+
         $this->application_details = $attributeArray;
         $this->application_details['familyName'] = $attributeArray['familyName'] ?? NULL;
         $this->application_details['surname'] = $attributeArray['surname'] ?? NULL;
@@ -54,13 +56,13 @@ class Application implements IVisitable
         $this->application_details['policeStationName'] = $attributeArray['policeStationName'] ?? NULL;
         $this->application_details['policeReportDate'] = $attributeArray['policeReportDate'] ?? NULL;
         $this->application_details['policeReportDate'] = $attributeArray['policeReportDate'] ?? NULL;
-        $this->application_details['policeReport'] = $policeReport;
+        $this->application_details['policeReport'] = $policeReport ?? NULL;
 
 
         $this->application_details['photograph'] = $photographs;
         $this->application_details['receipt'] = $receipt;
 
-        $this->Iapprovers = array();
+
         $this->setApplyDate();
         $this->approve($applicant, new Notification('', ''));
     }
@@ -162,7 +164,8 @@ class Application implements IVisitable
     /**
      *
      */
-    public function setApprovedDate(){
+    public function setApprovedDate()
+    {
         date_default_timezone_set('Asia/Colombo');
         $this->application_details['approved_date'] = date('Y/m/d H:i:s');
     }

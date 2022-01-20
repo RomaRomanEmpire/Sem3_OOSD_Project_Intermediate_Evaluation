@@ -29,7 +29,8 @@ class DatabaseManager extends User implements IVisitor
 
     }
 
-    public function clearL_P_UserTraces($key, $key_value){
+    public function clearL_P_UserTraces($key, $key_value)
+    {
         $this->db->delete_traces('gn', 'staff_id', 0, $key, $key_value);
         $this->db->delete_traces('ds', 'staff_id', 0, $key, $key_value);
         $this->db->delete_traces('schools', 'staff_id', 0, $key, $key_value);
@@ -53,6 +54,13 @@ class DatabaseManager extends User implements IVisitor
         throw new Exception("No divisions for Database Manager");
     }
 
+    /**
+     * @return mixed
+     */
+    public function getStaffId()
+    {
+        return $this->staff_id;
+    }
 
     function visitApplication($application)
     {
@@ -66,7 +74,7 @@ class DatabaseManager extends User implements IVisitor
 
     public function getNextStaffId(): int
     {
-        return ($this->db->get_column_value("user_details", "staff_id", ">", "0", "staff_id", "ORDER BY staff_id DESC") ?? 0)+1;
+        return ($this->db->get_column_value("user_details", "staff_id", ">", "0", "staff_id", "ORDER BY staff_id DESC") ?? 0) + 1;
     }
 
     public function fetchGnCode($div, $div2)
@@ -77,7 +85,7 @@ class DatabaseManager extends User implements IVisitor
 
     public function getAutoloadArray($table, $column, $value)
     {
-        return $this->db->get_table_info($table,$column, $value);
+        return $this->db->get_table_info($table, $column, $value);
     }
 
     public function fetch_value($table, $key, $key_value, $object)
@@ -88,14 +96,6 @@ class DatabaseManager extends User implements IVisitor
     public function fetch_array($table, $key, $key_value)
     {
         return $this->db->database_details($table, $key, $key_value, "");
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStaffId()
-    {
-        return $this->staff_id;
     }
 
 
