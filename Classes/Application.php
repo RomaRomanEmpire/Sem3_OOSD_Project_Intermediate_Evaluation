@@ -32,32 +32,10 @@ class Application implements IVisitable
         $this->Iapprovers = array();
 
         $this->application_details = $attributeArray;
-        $this->application_details['familyName'] = $attributeArray['familyName'] ?? NULL;
-        $this->application_details['surname'] = $attributeArray['surname'] ?? NULL;
-        $this->application_details['birthCertificateNo'] = $attributeArray['birthCertificateNo'] ?? NULL;
-        $this->application_details['placeOfBirth'] = $attributeArray['placeOfBirth'] ?? NULL;
-        $this->application_details['birthDivision'] = $attributeArray['birthDivision'] ?? NULL;
-        $this->application_details['birthDistrict'] = $attributeArray['birthDistrict'] ?? NULL;
-        $this->application_details['countryOfBirth'] = $attributeArray['countryOfBirth'] ?? NULL;
-        $this->application_details['birthCity'] = $attributeArray['birthCity'] ?? NULL;
-        $this->application_details['citizenshipCertificateNo'] = $attributeArray['citizenshipCertificateNo'] ?? NULL;
-        $this->application_details['citizenshipCertificateType'] = $attributeArray['citizenshipCertificateType'] ?? NULL;
 
-        $this->application_details['certificateNo_9'] = $attributeArray['certificateNo_9'] ?? NULL;
-        $this->application_details['citizenshipCertificateDate'] = $attributeArray['citizenshipCertificateDate'] ?? NULL;
-        $this->application_details['residenceTelNo'] = $attributeArray['residenceTelNo'] ?? NULL;
-        $this->application_details['mobileTelNo'] = $attributeArray['mobileTelNo'] ?? NULL;
-        $this->application_details['email'] = $attributeArray['email'] ?? NULL;
         $this->application_details['app_type_id'] = $app_type_id;
         //for lost id
-        $this->application_details['purpose'] = $attributeArray['purpose'] ?? NULL;
-        $this->application_details['lostIdNum'] = $attributeArray['lostIdNum'] ?? NULL;
-        $this->application_details['lostIdDate'] = $attributeArray['lostIdDate'] ?? NULL;
-        $this->application_details['policeStationName'] = $attributeArray['policeStationName'] ?? NULL;
-        $this->application_details['policeReportDate'] = $attributeArray['policeReportDate'] ?? NULL;
-        $this->application_details['policeReportDate'] = $attributeArray['policeReportDate'] ?? NULL;
         $this->application_details['policeReport'] = $policeReport ?? NULL;
-
 
         $this->application_details['photograph'] = $photographs;
         $this->application_details['receipt'] = $receipt;
@@ -263,7 +241,6 @@ class Application implements IVisitable
      */
     private function notifyIApprovers($user, $notification)
     {
-
         foreach ($this->getIApprovers() as $approver):
             $notification->setFromId($user->getRowId());
             $notification->setToId($approver->getRowId());
