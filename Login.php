@@ -24,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             color: whitesmoke;
             opacity: 1;
             font-size: 15px;
+            
         }
         .hero-image {
             background-image: url("Image/R.jpg");
@@ -33,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-repeat: no-repeat;
             background-size: cover;
             position: relative;
+            
       
     }
     </style>
@@ -46,8 +48,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
 </div> -->
 <div class="hero-image ">
-<div class="loginbox" >
+    <h1 style="font-size: 70px;padding-top:14px;font-family:'Times New Roman', Times, serif;color:bisque;">Online ID Card Requesting System
+</h1>
+<div class="loginbox" style="margin-top:50px ;" >
     <!-- <img src="Image/icon.png" class="Idimage" > -->
+    <h1></h1>
     <br>
     <h1 >Login Here</h1>
     <br>

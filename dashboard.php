@@ -71,6 +71,7 @@ if($user instanceof R_A_P){
         h1{
             font-size: 50px;
             font-family: 'Times New Roman', Times, serif;
+           
         }
 
         #view_application_db:hover,
@@ -112,9 +113,10 @@ if($user instanceof R_A_P){
             <div class="user">
 
 
-                <div class="img-case">
+                <!-- <div class="img-case">
 
-                </div>
+                </div> -->
+                <div style="padding-left:800px;color:antiquewhite;"><i class="fas fa-user-circle "></i><?php echo "  ".$user->get_user_name(); ?></div>
 
                 <a href="logout.php" class="btn" ><i class="fas fa-sign-out-alt"></i> Log Out</a>
 
