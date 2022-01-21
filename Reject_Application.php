@@ -18,7 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $notification->setApplicantId($applicant_id);
 
 
-    if (isset($_FILES['attachment'])) {
+    if (isset($_POST['attachment'])) {
+        echo "hi";
         $attachment = checkFileValidity("attachment");
         if(isset($attachment)){
             $notification->setAttachment($attachment);
