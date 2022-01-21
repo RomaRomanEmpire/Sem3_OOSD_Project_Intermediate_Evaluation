@@ -35,6 +35,10 @@ if ($u_type === "applicant") {
     echo "<style>#notification-panel{
             display: none;
      }</style>";
+     echo "<style>#instruction{
+        display: none;
+ }</style>";
+
 }
 if(!($user instanceof R_A_P) && $u_type !== 'admin'){
     echo "<style>#notification-panel1{
@@ -82,6 +86,32 @@ if($user instanceof R_A_P){
             background-color: rgb(246, 245, 248);
             color: #f05462;
         }
+        select {
+            height: 45px;
+            width: 220px;
+            padding-left: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+           
+            resize: vertical;
+            /* background-color: none; */
+            background: rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+        option{
+            height: 45px;
+            width: 220px;
+            padding-left: 12px;
+            border: 1px solid #ccc;
+            /* border-radius: 4px;
+            box-sizing: border-box; */
+           
+            resize: vertical;
+            /* background-color: none; */
+            
+            color: black;
+        }
 
     </style>
 </head>
@@ -101,6 +131,15 @@ if($user instanceof R_A_P){
             <a href="Notification_dashboard.php"><li id="notification-panel1">&nbsp;<span><i class="far fa-comment-alt"></i> Notification</span></li></a>
             <a href="Add_staff_member.php" ><li id="add-staff">&nbsp;<span>
             <i class="fas fa-user-plus"></i> Add Officer </span></li></a>
+            <br> 
+            <div id="instruction">
+                <br>
+            <h3 style="color: whitesmoke;font-size:25px;text-align:center;">Download Instructions</h3>
+            <br>
+            <a href="files/Instruction.pdf" download=""> <li>&nbsp;<span>  </i> <i class="fas fa-download"></i> In English</span></li></a>
+            <a href="files/sec.pdf" download=""> <li>&nbsp;<span>  <i class="fas fa-download"></i> In Sinhala</span></li></a>
+            </div>
+            
         </ul>
     </div>
 </div>
