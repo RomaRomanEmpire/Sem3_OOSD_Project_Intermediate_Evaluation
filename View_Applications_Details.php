@@ -30,9 +30,9 @@ $user->set_db($con);
     <div style="width: 100%; height: 70px;  display: flex; position: fixed;top: 0; right: 0;z-index: 3;box-shadow: 0 4px 8px rgba(77, 51, 51, 0.2); justify-content: right;">
 
         <a href="dashboard.php">
-        <button class="btn btn-sm btn-outline-light fas fa-arrow-left" id="Back"
-                style="height: 30px; width: 100px; padding-top:10px;margin:10px;"> Back
-        </button>
+            <button class="btn btn-sm btn-outline-light fas fa-arrow-left" id="Back"
+                    style="height: 30px; width: 100px; padding-top:10px;margin:10px;"> Back
+            </button>
         </a>
 
     </div>

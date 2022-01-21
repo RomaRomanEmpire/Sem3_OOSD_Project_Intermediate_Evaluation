@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 <div class="header1" style="padding-right:10px;">
-    <a href="Filled_Application.php">
+    <a href="Filled_Application.php?application_id=<?php echo $_GET['application_id'];?>">
         <button type="submit" class="btn btn-sm btn-outline-light" style="width: 100px;font-size:18px;"><b
                     style="color:#000; ">Back</b>
         </button>

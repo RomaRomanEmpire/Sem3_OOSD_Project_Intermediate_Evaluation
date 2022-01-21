@@ -22,7 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sign = uploadSign($_POST['signed']);
 
     if ($_GET['sign_no'] == 1) {
+        echo "<script type='text/javascript'>alert('Sign eke 1 before ');</script>";
         $user->add_applicant_sign($application, $sign);
+        echo "<script type='text/javascript'>alert('Sign eke 1 before after');</script>";
     } elseif ($_GET['sign_no'] == 2) {
         $application->setRapSign($sign);
         $notification = $user->prepare_notification('confirmation', 'application confirmation by '.$user->get_user_type());
@@ -36,7 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user->approve_application($application,$notification);
 
     }
-
 
     header("location: Filled_Application.php?application_id=$application_id");
 }

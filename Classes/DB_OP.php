@@ -5,6 +5,11 @@
  */
 class DB_OP
 {
+    private $DB_SERVER;
+    private $DB_USERNAME;
+    private $DB_PASSWORD;
+    private $DB_NAME;
+
     private $link;
     private static DB_OP $db;
 
@@ -17,13 +22,13 @@ class DB_OP
     private
     function connect()
     {
-        $DB_SERVER = 'localhost';
-        $DB_USERNAME = 'root';
-        $DB_PASSWORD = '';
-        $DB_NAME = 'projectid';
+        $this->DB_SERVER = 'localhost';
+        $this->DB_USERNAME = 'root';
+        $this->DB_PASSWORD = '';
+        $this->DB_NAME = 'projectid';
 
         /* Attempt to connect to MySQL database */
-        $this->link = new mysqli($DB_SERVER, $DB_USERNAME, $DB_PASSWORD, $DB_NAME);
+        $this->link = new mysqli($this->DB_SERVER, $this->DB_USERNAME, $this->DB_PASSWORD, $this->DB_NAME);
 
         // Check connection
         if ($this->link->connect_error === false) {
@@ -85,6 +90,19 @@ class DB_OP
         }
     }
 
+    private
+    function getNextAutoIncrementValue($table)
+    {
+        $sql = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = '$this->DB_NAME' AND TABLE_NAME = '$table'";
+        if (!$result = $this->link->query($sql)) {
+            die('There was an error running the query [' . $this->link->error . ']');
+        }
+
+        $row = $result->fetch_assoc();
+
+        return $row['AUTO_INCREMENT'];
+    }
+
     public
     function create_user_account($staff_id, $u_object): ?bool
     {
@@ -97,8 +115,7 @@ class DB_OP
                 $stmt->bind_param("isssss", $param_staff_id, $param_u_type, $param_username, $param_email, $param_pwd, $param_u_object);
 
                 // Set parameters
-                $row_id = ($this->get_column_value("user_details", "user_id", ">", "0",
-                            "user_id", "ORDER BY user_id DESC") ?? 0) + 1;
+                $row_id = $this->getNextAutoIncrementValue('user_details');
                 $u_object->set_row_id($row_id);
                 $param_staff_id = $staff_id;
                 $param_u_type = $u_object->get_user_type();
@@ -126,8 +143,7 @@ class DB_OP
                 $stmt->bind_param("sssss", $param_u_type, $param_username, $param_email, $param_pwd, $param_u_object);
 
                 // Set parameters
-                $row_id = ($this->get_column_value("user_details", "user_id", ">", "0",
-                            "user_id", "ORDER BY user_id DESC") ?? 0) + 1;
+                $row_id = $this->getNextAutoIncrementValue('user_details');
                 $u_object->set_row_id($row_id);
                 $param_u_type = $u_object->get_user_type();
                 $param_username = $u_object->get_user_name();
@@ -214,8 +230,7 @@ class DB_OP
 
             $stmt->bind_param("isiis", $param_application_id, $param_n_type, $param_from_id, $param_to_id, $param_n_object);
 
-            $row_id = ($this->get_column_value("notification_details", "n_id", ">", "0",
-                        "n_id", "ORDER BY n_id DESC") ?? 0) + 1;
+            $row_id = $this->getNextAutoIncrementValue('notification_details');
             $n_object->setRowId($row_id);
             $param_application_id = $n_object->getApplicationId();
             $param_n_type = $n_object->getType();
@@ -246,8 +261,7 @@ class DB_OP
             $stmt->bind_param("issssss", $param_applicant_id, $param_stat, $param_apply_date, $param_gn_div_or_address, $param_ds, $param_address_type, $param_application_object);
 
             // Set parameters
-            $row_id = ($this->get_column_value("application_details", "app_id", ">", "0",
-                        "app_id", "ORDER BY app_id DESC") ?? 0) + 1;
+            $row_id = $this->getNextAutoIncrementValue('application_details');
             $application_object->setRowId($row_id);
             $param_applicant_id = $applicant_id;
             $param_stat = $application_object->getState()->getState();
@@ -356,7 +370,7 @@ class DB_OP
     }
 
     public
-    function get_column_value($table, $key, $operator, $key_value, $id_name,$order)
+    function get_column_value($table, $key, $operator, $key_value, $id_name, $order)
     {
         $sql = "SELECT $id_name FROM $table WHERE $key $operator ? $order";
         if ($stmt = $this->link->prepare($sql)) {
@@ -492,7 +506,7 @@ class DB_OP
 
             if ($stmt->execute()) {
                 return true;
-            }else {
+            } else {
                 echo "<script type='text/javascript'>alert('Ooops! Something went wrong!');</script>";
             }
             $stmt->close();
@@ -510,7 +524,7 @@ class DB_OP
 
             if ($stmt->execute()) {
                 return true;
-            }else {
+            } else {
                 echo "<script type='text/javascript'>alert('Oops! Something went wrong!');</script>";
             }
             $stmt->close();
