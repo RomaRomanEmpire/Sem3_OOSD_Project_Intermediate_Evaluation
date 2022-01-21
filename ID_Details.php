@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         .hero-image {
-            background-image: url("Image/T.jpg");
+            background-image: url("Image/lee-campbell-DtDlVpy-vvQ-unsplash.jpg");
             background-color: #cccccc;
             height: 1000px;
             background-position: center;
@@ -133,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="header1">
 
         <div style="justify-content: center;margin-right:460px;margin-top:5px;"><b><h1
-                        style="font-size:60px;font-family:'Times New Roman', Times, serif">Applicant Details</h1></b>
+                        style="font-size:60px;font-family:'Times New Roman', Times, serif">NIC Details</h1></b>
         </div>
         <a href="DBM_NI_visitables.php">
             <button class="btn btn-outline-light fas fa-arrow-left" id="Back"
@@ -146,42 +146,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </div>
     <div class="div1">
-    <form id="ID_details_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?application_id=<?php echo $_GET["application_id"];?>" disabled="disabled" method="POST">
-    <fieldset  disabled>
-       
-            <!-- <h1><span id="msgx"></span></h1> -->
-            <b> <label for="full_nameid">Full Name</label></b>
-            <input type="text" id="full_nameid" name="fullname"
-                   value="<?php echo $application_details['familyName'] . ' ' . $application_details['name'] . ' ' . $application_details['surname']; ?>">
-            <br>
-            <b> <label for="photoid">Photograph</label></b>
-            <input type="hidden" id="photoid" name="photograph" value="<?php echo $application_details['photograph']; ?>">
-            <?php
-            $receive_file = $application_details['photograph'];
-            echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
+        <form id="ID_details_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?application_id=<?php echo $_GET["application_id"];?>" disabled="disabled" method="POST">
+            <fieldset  disabled>
+
+                <!-- <h1><span id="msgx"></span></h1> -->
+                <b> <label for="full_nameid">Full Name</label></b>
+                <input type="text" id="full_nameid" name="fullname" style="font-weight: 1000;"
+                       value="<?php echo $application_details['familyName'] . ' ' . $application_details['name'] . ' ' . $application_details['surname']; ?>">
+                <br>
+                <b> <label for="photoid">Photograph</label></b>
+                <input type="hidden" id="photoid" name="photograph" style="font-weight: 1000;" value="<?php echo $application_details['photograph']; ?>">
+                <?php
+                $receive_file = $application_details['photograph'];
+                echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
 													<embed src=\"$receive_file\", width=100px height=100px>"; ?>
 
-            <br>
-            <b> <label for="genid">Gender</label></b>
-            <input type="text" id="genid" name="gender" value="<?php echo $application_details['gender']; ?>">
-            <br>
-            <b> <label for="BDateid">Birthday</label></b>
-            <input type="date" id="BDateid" name="birthday" value="<?php echo $application_details['birthday']; ?>">
-            <br>
-            <b> <label for="Bplaceid">Birth Place</label></b>
-            <input type="text" id="Bplaceid" name="bPlace"
-                   value="<?php echo $application_details['placeOfBirth'] ?? $application_details['birthCity'] . ', ' . $application_details['countryOfBirth']; ?>">
-            <br>
-            <b> <label for="address_">Address</label></b>
-            <input type="text" id="address_" name="address"
-                   value="<?php echo $application_details['permHouseName'] . ', ' . $application_details['permRoad'] . ', ' . $application_details['permVillage']; ?>">
-            <br>
-            <b> <label for="jobid">Job</label></b>
-            <input type="text" id="jobid" name="job" value="<?php echo $application_details['profession']; ?>">
-            <br>
-            
-    </fieldset>
-    <input type="submit" id="button" style="font-size: 17px;color:whitesmoke;font-weight:bolder;">
+                <br>
+                <b> <label for="genid">Gender</label></b>
+                <input type="text" id="genid" name="gender" style="font-weight: 1000;" value="<?php echo $application_details['gender']; ?>">
+                <br>
+                <b> <label for="BDateid">Birthday</label></b>
+                <input type="date" id="BDateid" name="birthday" style="font-weight: 1000;" value="<?php echo $application_details['birthday']; ?>">
+                <br>
+                <b> <label for="Bplaceid">Birth Place</label></b>
+                <input type="text" id="Bplaceid" name="bPlace" style="font-weight: 1000;"
+                       value="<?php echo $application_details['placeOfBirth'] ?? $application_details['birthCity'] . ', ' . $application_details['countryOfBirth']; ?>">
+                <br>
+                <b> <label for="address_">Address</label></b>
+                <input type="text" id="address_" name="address" style="font-weight: 1000;"
+                       value="<?php echo $application_details['permHouseName'] . ', ' . $application_details['permRoad'] . ', ' . $application_details['permVillage']; ?>">
+                <br>
+                <b> <label for="jobid">Job</label></b>
+                <input type="text" id="jobid" name="job" style="font-weight: 1000;" value="<?php echo $application_details['profession']; ?>">
+                <br>
+
+            </fieldset>
+            <input type="submit" id="button" style="font-size: 17px;color:whitesmoke;font-weight:bolder;">
             <br>
             <br>
         </form></div>

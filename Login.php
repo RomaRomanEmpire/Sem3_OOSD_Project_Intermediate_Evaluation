@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
         }
         .hero-image {
-            background-image: url("Image/R.jpg");
+            background-image: url("Image/nikita-kachanovsky-OVbeSXRk_9E-unsplash.jpg");
             background-color: #cccccc;
             height: 750px;
             background-position: center;
@@ -54,11 +54,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- <img src="Image/icon.png" class="Idimage" > -->
     <h1></h1>
     <br>
-    <h1 >Login Here</h1>
+    <h1 >Sign-in</h1>
     <br>
     <form id="signin-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
         <p>Username or Email address</p>
-        <input type="text" name="username" value="<?php echo $_POST['username']??NULL?>" placeholder="enter username or email">
+        <input type="text" name="username" value="<?php echo $_POST['username']??NULL?>" placeholder="Enter username or email">
         <p>Password</p>
         <input type="password" name="password" placeholder="Enter Password">
         <br><br>
