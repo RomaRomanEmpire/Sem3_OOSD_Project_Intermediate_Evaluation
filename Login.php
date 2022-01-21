@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
 </div> -->
 <div class="hero-image ">
-    <h1 style="font-size: 70px;padding-top:14px;font-family:'Times New Roman', Times, serif;color:bisque;">Online ID Card Requesting System
+    <h1 style="font-size: 70px;padding-top:14px;font-family:'Times New Roman', Times, serif;color:#38ACEC;">Online ID Card Requesting System
 </h1>
 <div class="loginbox" style="margin-top:50px ;" >
     <!-- <img src="Image/icon.png" class="Idimage" > -->
