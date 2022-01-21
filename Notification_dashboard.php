@@ -24,6 +24,31 @@ if ($type == "admin") {
     echo "<style>#time{
             display: none;
         }</style>";
+    echo "<style>#sent{
+            display: none;
+        }</style>";
+    echo "<style>#confirmations{
+            display: none;
+        }</style>";
+    echo "<style>#Topic1{
+            display: none;
+        }</style>";
+    echo "<style>#Topic2{
+            display: block;
+        }</style>";
+        echo "<style>#msgb{
+            display: block;
+        }</style>";    
+
+}
+else{
+    echo "<style>#Topic2{
+        display: none;
+    }</style>";
+    echo "<style>#msgb{
+        display: none;
+    }</style>";
+
 }
 ?>
 <!DOCTYPE html>
@@ -44,8 +69,6 @@ if ($type == "admin") {
 
             text-align: center;
             min-height: 100vh;
-            /* background: rgb(2, 0, 36); */
-            /* background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 1%, rgba(0, 212, 255, 1) 100%); */
 
         }
 
@@ -147,12 +170,19 @@ if ($type == "admin") {
         .BackGround_Image .container1 .header2 .nav ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
             color: white;
         }
-
-        /* Microsoft Edge */
-        /* .BackGround_Image .container1 .header2 .nav     ::-ms-input-placeholder { */
-
-        /* color: white;} */
-
+        .side_menu1 .buttonh button {
+            /* height: 35px;
+            width: 150px; */
+            margin: 3px;
+            background: rgba(0, 0, 0, 0.1);
+            color: white;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        /* .side_menu1 .buttonh button:hover {
+            background: white;
+            color: black;
+        } */
     </style>
     <script src="Javascipt_File.js">
     </script>
@@ -162,9 +192,10 @@ if ($type == "admin") {
     <div class="container1">
         <div class="header2">
             <div class="nav">
-                <div>
-                    <h2 style="color: white;padding-left:400px;padding-top:20px;"><p id="Topic">Inbox Messages</p></h2>
-                </div>
+                <div id="Topic1">
+                    <h2 style="color: white;padding-left:400px;padding-top:20px;"><p id="Topic">Inbox Messages</p></h2> </div>
+                <div id="Topic2"><h2 style="color: white;padding-left:400px;padding-top:20px;"><p id="Topic">Sent Messages</p></h2> </div>
+               
 
 
                 <table>
@@ -222,7 +253,11 @@ if ($type == "admin") {
 
     </div>
     <div class="side_menu1" style="padding-top: 200px; padding-left:0px;">
-
+       <div id="msgb"> <ul style="padding-left:0px;" class="buttonh">
+            <li >
+            <button><h1 id="sent_hTag" ><b>Messages Box</b></h1></button>    
+            </li>
+        </ul></div>
 
         <ul>
             <li><input type="radio" name="h" class="btn-check" id="btn_check_outlinedc" autocomplete="off"
@@ -272,13 +307,14 @@ if ($type == "admin") {
 
 
     <div class="Center" style="padding-top: 150px;">
+
         <fieldset id="confirmation_message" style="display: none;">
             <div>
                 <table class="table table-primary table-hover">
 
                     <thead>
                     <tr>
-                        <th scope="col">ID Number</th>
+                        <th scope="col">Notification No.</th>
                         <th scope="col">Applicant Name</th>
                         <th scope="col">Sender</th>
                         <th scope="col">content</th>
@@ -321,13 +357,13 @@ if ($type == "admin") {
                 </table>
             </div>
         </fieldset>
-        <fieldset id="Inbox_message" style="display: block;">
+        <fieldset id="Inbox_message" style="display: none;">
             <div>
                 <table class="table table-primary table-hover">
 
                     <thead>
                     <tr>
-                        <th scope="col">ID Number</th>
+                        <th scope="col">Notification No.</th>
                         <th scope="col">Applicant Name</th>
                         <th scope="col">Appointment Date</th>
                         <th scope="col">Appointment Time</th>
@@ -371,6 +407,7 @@ if ($type == "admin") {
                 </table>
             </div>
         </fieldset>
+
 
         <fieldset id="Sent_message" style="display:none;">
             <div>
@@ -417,14 +454,15 @@ if ($type == "admin") {
                 </table>
             </div>
         </fieldset>
-        <fieldset id="Reject_message" style="display: none;">
+        <fieldset id="Reject_message" style="display: block;">
             <div>
                 <table class="table table-primary table-hover">
 
                     <thead>
                     <tr>
-                        <th scope="col">ID Number</th>
+                        <th scope="col">Notification No.</th>
                         <th scope="col">Applicant Name</th>
+                        <th scope="col">Receiver</th>
                         <th scope="col">Send Date</th>
                         <th scope="col">Attachment</th>
                     </tr>
@@ -441,10 +479,8 @@ if ($type == "admin") {
                             ?>
                             <tr>
                                 <th scope="row"><?php echo $row['n_id']; ?></th>
-                                <td><?php
-                                    $applicant = $staff_member->fetch_value('user_details', 'user_id', $notification_details['applicant_id'], 'username');
-                                    echo $applicant;
-                                    ?></td>
+                                <td><?php echo $staff_member->fetch_value('user_details', 'user_id', $notification_details['applicant_id'], 'username'); ?></td>
+                                <td><?php echo $staff_member->fetch_value('user_details', 'user_id', $notification->getToId(), 'username'); ?></td>
                                 <td><?php echo $notification_details['send_date']; ?></td>
                                 <td>
                                     <?php
