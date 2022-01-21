@@ -72,6 +72,11 @@ class DatabaseManager extends User implements IVisitor
         return $notification->getNotificationDetails();
     }
 
+    function visitNIC($nic)
+    {
+        return $nic->getNicDetails();
+    }
+
     public function getNextStaffId(): int
     {
         return ($this->db->get_column_value("user_details", "staff_id", ">", "0", "staff_id", "ORDER BY staff_id DESC") ?? 0) + 1;

@@ -23,4 +23,5 @@ class Authorized_Person extends R_A_P_1
     {
         throw new Exception("No District Secretariat for Authorized Person");
     }
+
 }

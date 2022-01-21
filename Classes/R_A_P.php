@@ -45,6 +45,11 @@ abstract class R_A_P extends L_P_User implements IApprover, IVisitor
         return $notification->getNotificationDetails();
     }
 
+    function visitNIC($nic)
+    {
+        return $nic->getNicDetails();
+    }
+
     public function fetch_value($table, $key, $key_value, $object){
         return $this->db->get_column_value($table, $key, '=', $key_value, $object,"");
     }

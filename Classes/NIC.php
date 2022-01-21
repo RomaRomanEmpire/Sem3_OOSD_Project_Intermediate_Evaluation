@@ -3,15 +3,10 @@
 /**
  *
  */
-class NIC
+class NIC implements IVisitable
 {
-    private $fullname;
-    private $photograph;
-    private $gender;
-    private $birthday;
-    private $bPlace;
-    private $address;
-    private $job;
+    private array $nic_details;
+
     private $issuedDate;
 
     /**
@@ -19,13 +14,14 @@ class NIC
      */
     public function __construct($attributeArray)
     {
-        $this->fullname = $attributeArray['fullname'];
-        $this->photograph = $attributeArray['photograph'];
-        $this->gender = $attributeArray['gender'];
-        $this->birthday =$attributeArray['birthday'];
-        $this->bPlace = $attributeArray['bPlace'];
-        $this->address = $attributeArray['address'];
-        $this->job = $attributeArray['job'];
+        $this->nic_details=array();
+        $this->nic_details['fullname'] = $attributeArray['fullname'];
+        $this->nic_details['photograph'] = $attributeArray['photograph'];
+        $this->nic_details['gender'] = $attributeArray['gender'];
+        $this->nic_details['birthday'] =$attributeArray['birthday'];
+        $this->nic_details['bPlace'] = $attributeArray['bPlace'];
+        $this->nic_details['address'] = $attributeArray['address'];
+        $this->nic_details['job'] = $attributeArray['job'];
     }
     public function setIssuedDate(){
         date_default_timezone_set('Asia/Colombo');
@@ -40,5 +36,17 @@ class NIC
         return $this->issuedDate;
     }
 
+    /**
+     * @return array
+     */
+    public function getNicDetails(): array
+    {
+        return $this->nic_details;
+    }
 
+
+    function accept($visitor)
+    {
+        return $visitor->visitNIC($this);
+    }
 }

@@ -29,6 +29,14 @@ class NIC_Issuer extends L_P_User implements IApprover, IVisitor
         throw new Exception('No notifications for NIC Issuer');
     }
 
+    /**
+     * @throws Exception
+     */
+    function visitNIC($nic)
+    {
+        throw new Exception('No NIC"S views for NIC Issuer');
+    }
+
     public function issue_NIC($applicant_id, $application, $details)
     {
         $nic = new NIC($details);

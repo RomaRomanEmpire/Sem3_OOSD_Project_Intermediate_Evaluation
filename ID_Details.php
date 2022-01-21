@@ -3,15 +3,20 @@ include 'autoloader.php';
 session_start();
 $conn = DB_OP::get_connection();
 
-$nic_issuer = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
-$nic_issuer->set_db($conn);
-$application = unserialize($nic_issuer->fetch_value("application_details", "app_id", $_GET['application_id'], "application_object"));
-$application_details = $application->accept($nic_issuer);
+$user = unserialize($conn->get_column_value("user_details", "user_id", "=", $_SESSION['user_id'], "u_object", ""));
+$user->set_db($conn);
+if ($user->get_user_type() == 'ni') {
+    $visitable = unserialize($user->fetch_value("application_details", "app_id", $_GET['application_id'], "application_object"));
+} else {
+    $visitable = unserialize($user->fetch_value("issued_id_history", "application_id", $_GET['application_id'], "nic_object"));
+}
+$visitable_details = $visitable->accept($user);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $applicant_id = $nic_issuer->fetch_value("application_details", "app_id", $_GET['application_id'], "applicant_id");
-    $nic_issuer->issue_NIC($applicant_id, $application, $_POST);
+    $applicant_id = $user->fetch_value("application_details", "app_id", $_GET['application_id'], "applicant_id");
+    $user->issue_NIC($applicant_id, $visitable, $_POST);
     header("location:DBM_NI_visitables.php");
+
 }
 ?>
 <!DOCTYPE html>
@@ -135,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div style="justify-content: center;margin-right:460px;margin-top:5px;"><b><h1
                         style="font-size:60px;font-family:'Times New Roman', Times, serif">NIC Details</h1></b>
         </div>
-        <a href="DBM_NI_visitables.php">
+        <a href=<?php echo ($user->get_user_type()=='ni')?"DBM_NI_visitables.php":'dashboard.php'?>>
             <button class="btn btn-outline-light fas fa-arrow-left" id="Back"
                     style="width: 140px;margin-top:5px;margin-right:8px; ">
 
@@ -146,45 +151,94 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     </div>
     <div class="div1">
-        <form id="ID_details_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?application_id=<?php echo $_GET["application_id"];?>" disabled="disabled" method="POST">
-            <fieldset  disabled>
+        <form id="ID_details_form"
+              action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?application_id=<?php echo $_GET["application_id"]; ?>"
+              disabled="disabled" method="POST">
+            <div id="nic-issuer">
+                <fieldset disabled>
 
-                <!-- <h1><span id="msgx"></span></h1> -->
-                <b> <label for="full_nameid">Full Name</label></b>
-                <input type="text" id="full_nameid" name="fullname" style="font-weight: 1000;"
-                       value="<?php echo $application_details['familyName'] . ' ' . $application_details['name'] . ' ' . $application_details['surname']; ?>">
-                <br>
-                <b> <label for="photoid">Photograph</label></b>
-                <input type="hidden" id="photoid" name="photograph" style="font-weight: 1000;" value="<?php echo $application_details['photograph']; ?>">
-                <?php
-                $receive_file = $application_details['photograph'];
-                echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
+                    <!-- <h1><span id="msgx"></span></h1> -->
+                    <b> <label for="full_nameid">Full Name</label></b>
+                    <input type="text" id="full_nameid" name="fullname" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['familyName'] . ' ' . $visitable_details['name'] . ' ' . $visitable_details['surname']; ?>">
+                    <br>
+                    <b> <label for="photoid">Photograph</label></b>
+                    <input type="hidden" id="photoid" name="photograph" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['photograph']; ?>">
+                    <?php
+                    $receive_file = $visitable_details['photograph'];
+                    echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
 													<embed src=\"$receive_file\", width=100px height=100px>"; ?>
 
-                <br>
-                <b> <label for="genid">Gender</label></b>
-                <input type="text" id="genid" name="gender" style="font-weight: 1000;" value="<?php echo $application_details['gender']; ?>">
-                <br>
-                <b> <label for="BDateid">Birthday</label></b>
-                <input type="date" id="BDateid" name="birthday" style="font-weight: 1000;" value="<?php echo $application_details['birthday']; ?>">
-                <br>
-                <b> <label for="Bplaceid">Birth Place</label></b>
-                <input type="text" id="Bplaceid" name="bPlace" style="font-weight: 1000;"
-                       value="<?php echo $application_details['placeOfBirth'] ?? $application_details['birthCity'] . ', ' . $application_details['countryOfBirth']; ?>">
-                <br>
-                <b> <label for="address_">Address</label></b>
-                <input type="text" id="address_" name="address" style="font-weight: 1000;"
-                       value="<?php echo $application_details['permHouseName'] . ', ' . $application_details['permRoad'] . ', ' . $application_details['permVillage']; ?>">
-                <br>
-                <b> <label for="jobid">Job</label></b>
-                <input type="text" id="jobid" name="job" style="font-weight: 1000;" value="<?php echo $application_details['profession']; ?>">
-                <br>
+                    <br>
+                    <b> <label for="genid">Gender</label></b>
+                    <input type="text" id="genid" name="gender" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['gender']; ?>">
+                    <br>
+                    <b> <label for="BDateid">Birthday</label></b>
+                    <input type="date" id="BDateid" name="birthday" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['birthday']; ?>">
+                    <br>
+                    <b> <label for="Bplaceid">Birth Place</label></b>
+                    <input type="text" id="Bplaceid" name="bPlace" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['placeOfBirth'] ?? $visitable_details['birthCity'] . ', ' . $visitable_details['countryOfBirth']; ?>">
+                    <br>
+                    <b> <label for="address_">Address</label></b>
+                    <input type="text" id="address_" name="address" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['permHouseName'] . ', ' . $visitable_details['permRoad'] . ', ' . $visitable_details['permVillage']; ?>">
+                    <br>
+                    <b> <label for="jobid">Job</label></b>
+                    <input type="text" id="jobid" name="job" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['profession']; ?>">
+                    <br>
 
-            </fieldset>
-            <input type="submit" id="button" style="font-size: 17px;color:whitesmoke;font-weight:bolder;">
+                </fieldset>
+                <input type="submit" id="button" style="font-size: 17px;color:whitesmoke;font-weight:bolder;">
+            </div>
+            <div id="db_manager">
+                <fieldset disabled>
+
+                    <!-- <h1><span id="msgx"></span></h1> -->
+                    <b> <label for="full_nameid">Full Name</label></b>
+                    <input type="text" id="full_nameid" name="fullname" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['fullname']; ?>">
+                    <br>
+                    <b> <label for="photoid">Photograph</label></b>
+                    <input type="hidden" id="photoid" name="photograph" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['photograph']; ?>">
+                    <?php
+                    $receive_file = $visitable_details['photograph'];
+                    echo "<a href='view_file.php?path=" . $receive_file . "' target='_blank'' style='color:blue;'>" . "View in Full" . "</a><br><br>
+													<embed src=\"$receive_file\" width=100px height=100px>"; ?>
+
+                    <br>
+                    <b> <label for="genid">Gender</label></b>
+                    <input type="text" id="genid" name="gender" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['gender']; ?>">
+                    <br>
+                    <b> <label for="BDateid">Birthday</label></b>
+                    <input type="date" id="BDateid" name="birthday" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['birthday']; ?>">
+                    <br>
+                    <b> <label for="Bplaceid">Birth Place</label></b>
+                    <input type="text" id="Bplaceid" name="bPlace" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['bPlace']; ?>">
+                    <br>
+                    <b> <label for="address_">Address</label></b>
+                    <input type="text" id="address_" name="address" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['address']; ?>">
+                    <br>
+                    <b> <label for="jobid">Job</label></b>
+                    <input type="text" id="jobid" name="job" style="font-weight: 1000;"
+                           value="<?php echo $visitable_details['job']; ?>">
+                    <br>
+
+                </fieldset>
+            </div>
             <br>
             <br>
-        </form></div>
+        </form>
+    </div>
 </div>
 </body>
 </html>

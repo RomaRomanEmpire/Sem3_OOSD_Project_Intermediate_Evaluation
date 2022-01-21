@@ -70,9 +70,17 @@ class Applicant extends L_P_User implements IApprover, IVisitor
         return $notification->getNotificationDetails();
     }
 
+    /**
+     * @throws Exception
+     */
+    function visitNIC($nic)
+    {
+        throw new Exception("applicant can't view NIC's");
+    }
+
     public function fetch_value($table, $key, $key_value, $object)
     {
-        return $this->db->get_column_value($table, $key,"=", $key_value, $object, "");
+        return $this->db->get_column_value($table, $key, "=", $key_value, $object, "");
     }
 
     public function fetch_array($table, $key, $key_value, $order)
@@ -98,7 +106,7 @@ class Applicant extends L_P_User implements IApprover, IVisitor
 
     public function updateNotificationDetails($notification)
     {
-       return $this->db->save_state_of_notification($notification);
+        return $this->db->save_state_of_notification($notification);
     }
 
     public function isAlreadyApplied($user_id): bool
