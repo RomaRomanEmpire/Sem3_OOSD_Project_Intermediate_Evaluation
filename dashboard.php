@@ -202,6 +202,12 @@ if($user instanceof R_A_P){
                         <button id="view_notifications">  <i class="fas fa-hand-point-right"></i>View Notification Details</button>
                     </a>
                     <br><br>
+
+
+                  <a href="NIC_Dashboard.php">
+                      <button id="view_application_rap">  <i class="fas fa-hand-point-right"></i>View NIC Details</button>
+                  </a><br><br>
+                 
                 </div>
             </div><?php } elseif ($u_type == "ni") { ?>
             <div class="card">
@@ -212,7 +218,22 @@ if($user instanceof R_A_P){
                     </a>
                 </div>
             </div>
-        <?php } else { ?>
+        
+        <?php }else if($u_type=="admin" ){?>
+          
+          <div class="card">
+            <div id="rap_links" class="icon_case">
+                <br><br><br><br>
+                <a href="NIC_Dashboard.php">
+                    <button id="view_application_rap">  <i class="fas fa-hand-point-right"></i>View NIC Details</button>
+                </a><br><br>
+                
+                  <a href="View_Applications_Details.php">
+                      <button id="view_application_rap">  <i class="fas fa-hand-point-right"></i>View Applications Details</button>
+                  </a><br>
+                </div>
+        </div>
+        <?php }  else { ?>
           <div class="card">
               <div id="rap_links" class="icon_case">
                   <br><br><br><br>
@@ -221,8 +242,8 @@ if($user instanceof R_A_P){
                   </a><br><br>
                   </div>
           </div>
-
-        <?php } ?>
+          <?php }   ?>
+       
     </div>
 
 </div>

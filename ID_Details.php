@@ -14,7 +14,7 @@ $visitable_details = $visitable->accept($user);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $applicant_id = $user->fetch_value("application_details", "app_id", $_GET['application_id'], "applicant_id");
-    $user->issue_NIC($applicant_id, $visitable, $_POST);
+    $user->issue_NIC($applicant_id, $visitable, $visitable_details);
     header("location:DBM_NI_visitables.php");
 
 }
@@ -153,7 +153,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="div1">
         <form id="ID_details_form"
               action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?application_id=<?php echo $_GET["application_id"]; ?>"
-              disabled="disabled" method="POST">
+               method="POST">
+            <?php if($user->get_user_type()=="ni"){?>
             <div id="nic-issuer">
                 <fieldset disabled>
 
@@ -195,6 +196,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </fieldset>
                 <input type="submit" id="button" style="font-size: 17px;color:whitesmoke;font-weight:bolder;">
             </div>
+            <?php } else{ ?>
             <div id="db_manager">
                 <fieldset disabled>
 
@@ -237,8 +239,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <br>
             <br>
+            <?php }?>
         </form>
     </div>
+
 </div>
 </body>
 </html>
