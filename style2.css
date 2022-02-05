@@ -24,8 +24,8 @@ h1,h2{
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
-      position: relative;
-      
+      /*position: relative;*/
+      background-attachment: fixed;
     }
 .BackGround_Image {
       background-image: url("Image/x.jpeg");
@@ -34,7 +34,8 @@ h1,h2{
       background-position: center;
       background-repeat: no-repeat;
       background-size: cover;
-      position: relative;
+      /*position: relative;*/
+      background-attachment: fixed;
       
     }
 

@@ -191,7 +191,7 @@ if($user instanceof R_A_P){
                 <div id="db_manager-links" class="icon_case">
                     <br><br><br><br>
                     <a href="user_Details.php">
-                        <button id="view_database">  <i class="fas fa-hand-point-right"></i> View Database Details</button>
+                        <button id="view_database">  <i class="fas fa-hand-point-right"></i> View User Details</button>
                     </a>
                     <br><br><br>
                     <a href="View_Applications_Details.php">
@@ -201,7 +201,7 @@ if($user instanceof R_A_P){
                     <a href="DBM_NI_visitables.php">
                         <button id="view_notifications">  <i class="fas fa-hand-point-right"></i>View Notification Details</button>
                     </a>
-                    <br><br>
+                    <br><br><br>
 
 
                   <a href="NIC_Dashboard.php">

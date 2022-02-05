@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <br>
 <!--        <a href="a">Forget password</a><br>-->
-        <a href="Create_Account.php">If you don't have account!!!</a>
+        <a href="Create_Account.php">If you don't have an applicant account!!!</a>
     </form>
 </div>
 </div>
